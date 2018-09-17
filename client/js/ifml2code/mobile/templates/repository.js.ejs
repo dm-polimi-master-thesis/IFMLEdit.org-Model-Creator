@@ -16,14 +16,14 @@ function Repository(options) {
         filename: '<%=name%>',
         inMemoryOnly: true
     }));
-    this.db.insert(require('./default'));
+    this.db.insert(require('./mock'));
     // TODO: remove this END
 }
 
 Repository.prototype.findById = function (id) {
     // TODO: implement the accessor to the datasource which returns a promise
     // TODO: remove this BEGIN
-    return this.db.findOneAsync({id: id});
+    return this.db.findOneAsync({ id: id });
     // TODO: remove this END
 };
 

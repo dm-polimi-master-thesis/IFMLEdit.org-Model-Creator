@@ -8,7 +8,7 @@ var ko = require('knockout'),
     actions = require('./actions'),
     Promise = require('bluebird');
 
-Promise.config({cancellation: true});
+Promise.config({ cancellation: true });
 
 controls.register();
 // TODO: register any custom control
@@ -19,7 +19,7 @@ function ApplicationViewModel() {
     this.context = {
         repositories: repos,
         navigations: navigations.createNavigations({}),
-        actions: actions.createActions({repositories: repos}),
+        actions: actions.createActions({ repositories: repos }),
         vms: {},
         runningActionsByContainer: {}
     };

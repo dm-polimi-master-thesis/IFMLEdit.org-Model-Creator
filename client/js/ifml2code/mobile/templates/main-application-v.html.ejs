@@ -1,12 +1,21 @@
 <ul class="side-nav" id="landmarks">
 <% for (var i = 0; i < landmarks.length; i += 1) { -%>
-    <li data-bind="click: landmark.bind($data,'<%= landmarks[i].id %>'), css: {active: active() === '<%= landmarks[i].id %>'}"><a><%= landmarks[i].name %></a></li>
+    <li data-bind="click: landmark.bind($data,'<%= landmarks[i].id %>'), css: {active: active() === '<%= landmarks[i].id %>'}">
+        <a>
+            <%= landmarks[i].name %>
+        </a>
+    </li>
 <% } -%>
 </ul>
 <div class="navbar-fixed">
     <nav class="cyan darken-1">
         <div class="nav-wrapper">
-            <a href="#" data-activates="landmarks" class="button-collapse"><i class="material-icons tiny">menu</i></a>
+            <a href="#" data-activates="landmarks" 
+                class="button-collapse">
+                <i class="material-icons tiny">
+                    menu
+                </i>
+            </a>
         </div>
     </nav>
 </div>

@@ -7,7 +7,7 @@ exports.createNavigation = function () { // add "options" parameter if needed
         data = data || {};
         var packet = {
 <%     for (var i = 0; i < bindings.length; i += 1) { -%>
-            <%= i !== 0 ? ',' : '' %>'<%= bindings[i].input %>' : data['<%= bindings[i].output %>']
+            '<%= bindings[i].input %>' : data['<%= bindings[i].output %>'],
 <%     } -%>
         };
         var promise = context.actions['<%= target %>']({filters: packet});

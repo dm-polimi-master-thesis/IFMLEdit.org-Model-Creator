@@ -10,7 +10,7 @@ function ViewModel(params) {
     /*
     example:
     // let's trigger after 1 second
-    self.timer = setInterval(function(){
+    self.timer = setInterval(function () {
         params.trigger();
     }, 1000);
     */
@@ -20,12 +20,12 @@ function ViewModel(params) {
     self.trigger = params.trigger;
 }
 
-ViewModel.prototype.dispose = function() {
-  // TODO: Teardown everything you setup to listen for the event
-  /*
-  example [continue]:
-  clearInterval(this.timer);
-  */
+ViewModel.prototype.dispose = function () {
+    // TODO: Teardown everything you setup to listen for the event
+    /*
+    example [continue]:
+    clearInterval(this.timer);
+    */
 }
 
 ViewModel.prototype.id = '<%= id %>';

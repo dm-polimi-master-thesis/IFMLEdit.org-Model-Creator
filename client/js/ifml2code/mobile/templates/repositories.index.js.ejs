@@ -2,9 +2,11 @@
 "use strict";
 
 exports.createRepositories = function (options) {
-    var repositories = {}
+    return {
 <% for(var i = 0; i < collections.length; ++i) { -%>
-    repositories['<%= collections[i] %>'] = require('./<%= collections[i] %>').createRepository(options);
+        // ==============
+        '<%= collections[i] %>': require('./<%= collections[i] %>').createRepository(options),
 <% } -%>
-    return repositories;
+<%= collections.length !== 0 ? '        // ==============' : ''%>
+    };
 };

@@ -6,6 +6,7 @@
 
 var _ = require('lodash'),
     almost = require('almost'),
+    ifml = require('../../ifml').ifml,
     Rule = almost.Rule,
     createRule = almost.createRule,
     AException = almost.Exception;
@@ -49,6 +50,7 @@ exports.rules = [
             return {
                 '': {isFolder: true, children: 'mobileexample'},
                 'mobileexample' : { isFolder: true, name: 'mobileexample', children: ['src', 'package', 'config', 'gulp', 'gitignore']},
+                //'ifml': {name: 'ifml.json', content: JSON.stringify(model)},
                 'package': {name: 'package.json', content: require('./templates/package.json.ejs')()},
                 'config': {name: 'config.xml', content: require('./templates/config.xml.ejs')()},
                 'gitignore': {name: '.gitignore', content: require('./templates/gitignore.ejs')()},
@@ -95,7 +97,7 @@ exports.rules = [
             _.each(collections, function (c) {
                 obj[c.name + '-Repository'] = {isFolder: true, name: c.name, children: [c.name + '-Repository-Index', c.name + '-Repository-Default']};
                 obj[c.name + '-Repository-Index'] = {name: 'index.js', content: require('./templates/repository.js.ejs')({name: c.name})};
-                obj[c.name + '-Repository-Default'] = {name: 'default.json', content: require('./templates/default.json.ejs')({fields: c.fields})};
+                obj[c.name + '-Repository-Default'] = {name: 'mock.json', content: require('./templates/default.json.ejs')({fields: c.fields})};
             });
             return obj;
         }

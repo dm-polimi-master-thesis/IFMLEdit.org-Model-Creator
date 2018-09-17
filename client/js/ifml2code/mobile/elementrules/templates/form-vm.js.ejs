@@ -21,11 +21,11 @@ ViewModel.prototype.id = '<%= id %>';
 ViewModel.prototype.waitForStatusChange = function () {
 <% if (incomings.length) { -%>
     return this._propagating ||
-           this._initializing ||
+        this._initializing ||
 <% } else { -%>
     return this._initializing ||
 <% } -%>
-           Promise.resolve();
+        Promise.resolve();
 };
 
 ViewModel.prototype._compute = function () {
@@ -70,7 +70,7 @@ ViewModel.prototype._allComputed = function () {
 <%     } -%>
     return true;
 };
-ViewModel.prototype._firstNotReady = function() {
+ViewModel.prototype._firstNotReady = function () {
 <%     for (var i = 0; i < incomings.length; i += 1) { -%>
     if (!this.context.vms['<%= incomings[i].source %>']) {
         return Promise.reject();
@@ -93,7 +93,7 @@ ViewModel.prototype._waitForDependencies = function () {
     }
 };
 
-ViewModel.prototype._propagate = function() {
+ViewModel.prototype._propagate = function () {
     if (this._propagating) {
         this._propagating.cancel();
     }

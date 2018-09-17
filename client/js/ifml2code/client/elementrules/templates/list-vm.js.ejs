@@ -28,9 +28,9 @@ function ViewModel(params) {
 ViewModel.prototype.id = '<%= id %>';
 
 ViewModel.prototype.fields = {
-    id: 1
+    id: 1,
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-    ,'<%= fields[i]%>': 1
+    '<%= fields[i]%>': 1,
 <% } -%>
 };
 

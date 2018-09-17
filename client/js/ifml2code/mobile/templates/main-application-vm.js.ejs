@@ -6,7 +6,7 @@ var ko = require('knockout'),
 
 exports.register = function () {
     ko.components.register('main-application', {
-        viewModel: function(params) {
+        viewModel: function (params) {
             var self = this,
 <% if (defaultChild) { -%>
                 defaultChild = '<%= defaultChild %>';

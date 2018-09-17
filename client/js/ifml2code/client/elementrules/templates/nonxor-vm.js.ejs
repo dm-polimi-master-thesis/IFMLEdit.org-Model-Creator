@@ -25,7 +25,7 @@ function ViewModel(params) {
 ViewModel.prototype.id = '<%= id %>';
 ViewModel.prototype.children = [
 <% for (var i = 0; i < children.length; i += 1) { -%>
-    <%= i !== 0 ? ',': '' %>'<%= children[i].id %>' // <%= children[i].name %>
+    '<%= children[i].id %>', // <%= children[i].name %>
 <% } -%>
 ];
 

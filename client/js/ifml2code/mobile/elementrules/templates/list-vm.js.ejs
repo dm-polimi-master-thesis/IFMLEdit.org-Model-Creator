@@ -12,7 +12,7 @@ function ViewModel(params) {
     self.selected = ko.observable(undefined);
     self.items = ko.observableArray([]);
 
-    self.select = function() {
+    self.select = function () {
         self.selected(this.id);
         self.output = this;
 <% if (selection) { -%>
@@ -28,24 +28,24 @@ function ViewModel(params) {
 ViewModel.prototype.id = '<%= id %>';
 
 ViewModel.prototype.fields = {
-    id: 1
+    id: 1,
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-    ,'<%= fields[i]%>': 1
+    '<%= fields[i]%>': 1,
 <% } -%>
 };
 
 ViewModel.prototype.waitForStatusChange = function () {
 <% if (incomings.length) { -%>
     return this._propagating ||
-           this._computing ||
+        this._computing ||
 <% } else { -%>
     return this._computing ||
 <% } -%>
-           this._initializing ||
-           Promise.resolve();
+        this._initializing ||
+        Promise.resolve();
 };
 
-ViewModel.prototype._compute = function() {
+ViewModel.prototype._compute = function () {
 <% if (incomings.length) { -%>
     if (this._propagating) {
         this._propagating.cancel();
@@ -69,7 +69,7 @@ ViewModel.prototype._compute = function() {
 };
 
 <% if (incomings.length) { -%>
-ViewModel.prototype._allComputed = function() {
+ViewModel.prototype._allComputed = function () {
 <%     for (var i = 0; i < incomings.length; i += 1) { -%>
     if (!this.context.vms['<%= incomings[i].source %>'] || this.context.vms['<%= incomings[i].source %>'].status() !== 'computed') {
         return false;
@@ -78,7 +78,7 @@ ViewModel.prototype._allComputed = function() {
     return true;
 };
 
-ViewModel.prototype._firstNotReady = function() {
+ViewModel.prototype._firstNotReady = function () {
 <%     for (var i = 0; i < incomings.length; i += 1) { -%>
     if (!this.context.vms['<%= incomings[i].source %>']) {
         return Promise.reject();
@@ -90,7 +90,7 @@ ViewModel.prototype._firstNotReady = function() {
     return Promise.resolve();
 };
 
-ViewModel.prototype._waitForDependencies = function() {
+ViewModel.prototype._waitForDependencies = function () {
     if (this._allComputed()) {
         return Promise.resolve();
     } else {
@@ -101,7 +101,7 @@ ViewModel.prototype._waitForDependencies = function() {
     }
 };
 
-ViewModel.prototype._propagate = function() {
+ViewModel.prototype._propagate = function () {
     if (this._propagating) {
         this._propagating.cancel();
     }
