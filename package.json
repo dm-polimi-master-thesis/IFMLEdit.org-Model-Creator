@@ -1,5 +1,5 @@
 {
-  "name": "ifmledit.org",
+  "name": "ifmledit",
   "version": "1.6.1",
   "description": "A basic IFML WebEditor",
   "private": true,
@@ -8,20 +8,20 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp",
     "postinstall": "npm run build",
-    "start": "pm2 start --name=IFMLEdit.org index.js",
+    "start": "pm2 start --name=IFMLEdit index.js",
     "poststart": "node -e \"require('open')('http://localhost:3000')\"",
-    "stop": "pm2 stop IFMLEdit.org"
+    "stop": "pm2 stop IFMLEdit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/B3rn475/IFMLEdit.org.git"
+    "url": "git+https://gitlab.com/ifml-editors/ifmledit"
   },
-  "author": "Carlo Bernaschina",
+  "author": "IFML Editors",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/B3rn475/IFMLEdit.org/issues"
+    "url": "https://gitlab.com/ifml-editors/ifmledit/issues"
   },
-  "homepage": "https://github.com/B3rn475/IFMLEdit.org#README",
+  "homepage": "https://gitlab.com/ifml-editors/ifmledit",
   "devDependencies": {
     "open": "0.0.5",
     "pm2": "^2.7.2"

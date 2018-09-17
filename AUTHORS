@@ -1,7 +1,12 @@
 # Below is a list of people and organizations that have contributed
-# to the IFMLEdit.org. Names should be added to the list like so:
+# to the IFMLEdit. Names should be added to the list like so:
 #
 #   Name/Organization <email address> (url)
+
+Davide Molinelli <davide.molinelli@mail.polimi.it>
+Emanuele Falzone <emanuele.falzone@mail.polimi.it>
+
+# Based on work from:
 
 Politecnico di Milano
 Carlo Bernaschina <b3rn4@hotmail.it> (www.bernaschina.com)
@@ -11,7 +16,7 @@ Emanuele Falzone <emanuele.falzone@mail.polimi.it>
 Google LLC
 Carlo Bernaschina <cbernaschina@google.com> (www.bernaschina.com)
 
-# Based on work from:
+# which is based on work from:
 
 WebRatio
 Aldo Bongio <aldo.bongio@webratio.com> (www.webratio.com)
