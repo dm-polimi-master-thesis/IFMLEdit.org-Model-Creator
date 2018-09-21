@@ -1,0 +1,33 @@
+<div id="pattern-selection">
+  <div class="table-responsive">
+    <table data-bind="if: patterns">
+      <thead>
+        <tr>
+          <td>List</td>
+          <td>Preview <span data-bind="text: selected().title"></span></td>
+        </tr>
+      </thead>
+      <tboby>
+        <tr rowspan="5">
+          <td>
+            <center>
+              <table class="table table-hover">
+                <tbody data-bind="foreach: patterns">
+                  <tr data-bind="click: $parent.select, attr:{id: title}">
+                    <td data-bind="text: title">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </center>
+          </td>
+          <td>
+            <center>
+              <img data-bind="attr:{src: selected().image}">
+            </center>
+          </td>
+        </tr>
+      </tboby>
+    </table>
+  </div>
+</div>

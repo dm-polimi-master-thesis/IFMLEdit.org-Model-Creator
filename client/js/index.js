@@ -24,7 +24,9 @@ var _ = require('lodash'),
     createModalStatistics = require('./modalstatistics').ModalStatistics,
     createModalDB = require('./modaldb').ModalDB,
     createModalExamples = require('./modalexamples').ModalExamples,
+    createModalPatterns = require('./modalpatterns').ModalPatterns,
     examples = require('./examples').examples,
+    patterns = require('./patterns').patterns,
     ifml2code = require('./ifml2code').ifml2code,
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
@@ -208,6 +210,11 @@ $('#ifml > .sidebar .modal-example').click(function () {
     }});
     return false;
 }).click();
+
+$('#ifml > .sidebar .modal-pattern').click(function () {
+    createModalPatterns({patterns: patterns, load: function (pattern) {}});
+    return false;
+});
 
 $('#statistics > input[type=file]').change(function () {
     var reader = new FileReader(),
