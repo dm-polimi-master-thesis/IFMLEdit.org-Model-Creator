@@ -1,31 +1,44 @@
 <div id="pattern-selection">
-  <div class="table-responsive">
-    <table data-bind="if: patterns">
+  <div class="table-responsive table-patterns-container">
+    <table class="table-modal-patterns" data-bind="if: patterns">
       <thead>
         <tr>
-          <td>List</td>
-          <td>Preview <span data-bind="text: selected().title"></span></td>
+          <th>List</th>
+          <th>Preview <span data-bind="text: selected().title"></span></th>
         </tr>
       </thead>
       <tboby>
-        <tr rowspan="5">
-          <td>
+        <tr>
+          <td rowspan="5" class="pattern-list-cell">
             <center>
-              <table class="table table-hover">
-                <tbody data-bind="foreach: patterns">
-                  <tr data-bind="click: $parent.select, attr:{id: title}">
-                    <td data-bind="text: title">
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <ul class="pattern-list" data-bind="foreach: patterns">
+                <li><span data-bind="text: title, click: $parent.select, attr:{id: id}"></span></li>
+              </ul>
             </center>
           </td>
-          <td>
+          <td class="table-patterns-image-preview">
             <center>
-              <img data-bind="attr:{src: selected().image}">
+              <img class="img-responsive" data-bind="attr:{src: selected().image}">
             </center>
           </td>
+        </tr>
+        <tr>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td><text class="table-pattern-text-description" data-bind="text: selected().description"></text></td>
+        </tr>
+        <tr><td></td></tr>
+        <tr><td></td</tr>
+        <tr>
+          <td>
+            <center>
+              <div class="form-group">
+                <input type="text" class="search" data-bind="event: { keyup: search }" placeholder="Search" title="Type in a name">
+              </div>
+            </center>
+          </td>
+          <td></td>
         </tr>
       </tboby>
     </table>

@@ -199,3 +199,103 @@ html, body {
     height: calc(100vh - 265px);
     overflow: auto;
 }
+
+.table-patterns-image-preview {
+    background: url(../img/linen_bg_tile.jpg);
+}
+
+.table-pattern-text-description {
+    overflow: auto;
+    max-height: 140px;
+    display: block;
+    padding: 15px;
+}
+
+.table-modal-patterns {
+    /*border: 3px solid black;*/
+}
+
+.table-modal-patterns td {
+    padding: 2px;
+}
+
+.table-modal-patterns th {
+    background-color: black;
+    color: white;
+    padding: 8px;
+    font-size: 15px;
+}
+
+.table-modal-patterns th,td {
+    max-width: 375px;
+}
+
+.table-patterns-container {
+    padding-top: 30px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+	  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	  background-color: #FFF;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #555;
+	  background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, .2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, .2) 50%,
+											  rgba(255, 255, 255, .2) 75%,
+											  transparent 75%,
+											  transparent);
+}
+
+.search {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  max-width: 125px;
+  font-size: 15px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+.pattern-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: block;
+  overflow: auto;
+  max-height: 375px;
+  text-align: initial;
+  max-width: 165px;
+  width: 100%;
+  min-width: 165px;
+}
+
+.pattern-list-cell {
+  max-width: 170px;
+  vertical-align: top;
+}
+
+.pattern-list li span {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 13px;
+  color: black;
+  display: block
+}
+
+.pattern-list li span:hover:not(.header) {
+  background-color: #eee;
+}

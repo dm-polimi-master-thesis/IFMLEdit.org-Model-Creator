@@ -14,11 +14,32 @@ function PatternViewModel(options, close){
     self.patterns = ko.observableArray(options.patterns);
     self.selected = ko.observable(self.patterns()[0]);
     self.config = ko.observable(undefined);
+    self.close = close;
+
     self.load = function(){
         //options.load();
         self.close();
     }
-    self.close = close;
+
+    self.search = function () {
+      var input, filter, ul, li, span;
+      input = document.getElementsByClassName("search")[0];
+      filter = input.value.toUpperCase();
+      ul = document.getElementsByClassName("pattern-list")[0];
+      li = ul.getElementsByTagName("li");
+      for (var i = 0; i < li.length; i++) {
+        span = li[i].getElementsByTagName("span")[0];
+        if (span.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+
+    self.select = function() {
+      self.selected(this);
+    }
 }
 
 function ModalPatterns(options){
