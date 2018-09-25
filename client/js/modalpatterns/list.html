@@ -4,16 +4,20 @@
       <thead>
         <tr>
           <th>List</th>
-          <th>Preview <span data-bind="text: selected().title"></span></th>
+          <th><span data-bind="text: selected().title"></span><span class="type-pattern" data-bind="text: selected().type.replace(/-/g, ' ').toUpperCase()"></span></th>
         </tr>
       </thead>
       <tboby>
         <tr>
           <td rowspan="5" class="pattern-list-cell">
             <center>
-              <ul class="pattern-list" data-bind="foreach: patterns">
-                <li><span data-bind="text: title, click: $parent.select, attr:{id: id}"></span></li>
-              </ul>
+              <div class="pattern-list" data-bind="foreach: patterns">
+                <!-- ko if: category === $root.category() || $root.category() === "All"-->
+                <ul data-bind="foreach: $data.list">
+                  <li><span data-bind="text: title, click: $root.select, attr:{id: id}"></span></li>
+                </ul>
+                <!-- /ko -->
+              </div>
             </center>
           </td>
           <td class="table-patterns-image-preview">
@@ -38,7 +42,9 @@
               </div>
             </center>
           </td>
-          <td></td>
+          <td>
+            <select class="pattern-filter" data-bind="options: categories, value: category"></select>
+          </td>
         </tr>
       </tboby>
     </table>

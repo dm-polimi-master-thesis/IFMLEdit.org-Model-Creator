@@ -11,9 +11,11 @@ var _ = require('lodash'),
 
 function PatternViewModel(options, close){
     var self = this;
+    self.categories = options.categories;
     self.patterns = ko.observableArray(options.patterns);
-    self.selected = ko.observable(self.patterns()[0]);
+    self.selected = ko.observable(self.patterns()[0].list[0]);
     self.config = ko.observable(undefined);
+    self.category = ko.observableArray();
     self.close = close;
 
     self.load = function(){
@@ -55,7 +57,12 @@ function ModalPatterns(options){
     var patterns = options.patterns,
         load = options.load,
         el = $(require('./modal.html')),
-        list = $(require('./list.html'));
+        list = $(require('./list.html')),
+        categories = ['All'];
+
+        $.each(options.patterns, function (index, obj){
+          categories.push(obj.category);
+        });
 
     $(document.body).append(el);
     $(el.find('.content')[0]).append(list);
@@ -64,9 +71,9 @@ function ModalPatterns(options){
         el.remove();
     }
 
-    ko.applyBindings(new PatternViewModel({patterns:patterns, load:load}, function () { el.modal('hide'); }), el.find('.modal-content')[0]);
+    ko.applyBindings(new PatternViewModel({patterns:patterns, categories:categories, load:load}, function () { el.modal('hide'); }), el.find('.modal-content')[0]);
 
-    el.modal('show').on('hidden.bd.modal', tearDown);
+    el.modal('show').on('hidden.bs.modal', tearDown);
 }
 
 exports.ModalPatterns = ModalPatterns;

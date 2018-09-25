@@ -256,46 +256,64 @@ html, body {
 }
 
 .search {
-  background-image: url('/css/searchicon.png');
-  background-position: 10px 12px;
-  background-repeat: no-repeat;
-  width: 100%;
-  max-width: 125px;
-  font-size: 15px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
+    background-image: url('/css/searchicon.png');
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    width: 100%;
+    max-width: 125px;
+    font-size: 15px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
 }
 
 .pattern-list {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  display: block;
-  overflow: auto;
-  max-height: 375px;
-  text-align: initial;
-  max-width: 165px;
-  width: 100%;
-  min-width: 165px;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: block;
+    overflow: auto;
+    max-height: 375px;
+    text-align: initial;
+    max-width: 165px;
+    width: 100%;
+    min-width: 165px;
 }
 
 .pattern-list-cell {
-  max-width: 170px;
-  vertical-align: top;
+    max-width: 170px;
+    vertical-align: top;
+}
+
+.pattern-list ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
 }
 
 .pattern-list li span {
-  border: 1px solid #ddd;
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 13px;
-  color: black;
-  display: block
+    border: 1px solid #ddd;
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #f6f6f6;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 13px;
+    color: black;
+    display: block
 }
 
 .pattern-list li span:hover:not(.header) {
-  background-color: #eee;
+    background-color: #eee;
+}
+
+.type-pattern {
+    float: right;
+    font-size: 7px;
+}
+
+.form-group {
+    margin-bottom: 0px !important;
+}
+
+.pattern-filter {
+    margin-left: 20px;
 }
