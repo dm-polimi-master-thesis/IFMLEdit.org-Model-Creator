@@ -9,7 +9,7 @@ var _ = require('lodash'),
     ko = require('knockout'),
     document = require('document');
 
-function PatternViewModel(options, close){
+function PatternViewModel(options, close) {
     var self = this;
     self.categories = options.categories;
     self.patterns = ko.observableArray(options.patterns);
@@ -18,9 +18,9 @@ function PatternViewModel(options, close){
     self.category = ko.observableArray();
     self.close = close;
 
-    self.load = function(){
-        //options.load();
-        self.close();
+    self.load = function () {
+        options.load();
+        //self.close();
     }
 
     self.search = function () {
@@ -39,12 +39,43 @@ function PatternViewModel(options, close){
       }
     }
 
-    self.select = function() {
+    self.select = function () {
       self.selected(this);
+    }
+
+    self.nextStep = function () {
+      var el = $(self.selected().html);
+      $('#pattern-modal-home').removeClass()
+                              .addClass("modal-pattern-home-out")
+                              .bind('oanimationend animationend webkitAnimationEnd', function () {
+                                $(this).hide();
+                                $('.content').append(el)
+                                             .addClass('modal-pattern-settings-in');
+                                $('.btn-close').replaceWith('<a href="#!" class="btn btn-default btn-back" data-bind="click: back">Back</a>');
+                                $('.btn-selection').replaceWith('<a href="#!" class="btn btn-default btn-load" data-bind="click: load">Load</a>');
+                              });
+      
+
+      self.pattern = ko.observable(self.selected().js.createPattern(), el.find('.modal-content-in-settings')[0]);
+    }
+
+    self.back = function () {
+      console.log("Back");
+      $('#pattern-modal-settings').removeClass()
+                                  .addClass("modal-pattern-settings-out")
+                                  .bind('oanimationend animationend webkitAnimationEnd', function () {
+                                    $(this).hide();
+                                  });
+      $('#pattern-modal-home').addClass("modal-pattern-home-back-in");
+
+      $('.btn-close').replaceWith('<a href="#!" class="btn btn-default btn-close" data-dismiss="modal">Close</a>');
+      $('.btn-selection').replaceWith('<a href="#!" class="btn btn-default btn-selection" data-bind="click: nextStep">Select</a>');
+
+      self.pattern = ko.observable(self.selected().js.createPattern(), el.find('.modal-content-in-settings')[0]);
     }
 }
 
-function ModalPatterns(options){
+function ModalPatterns(options) {
     if(!(this instanceof ModalPatterns)){
         return new ModalPatterns(options);
     }

@@ -53,7 +53,7 @@ html, body {
     position: absolute;
     display: block;
     visibility: visible;
-    top: 50px;
+    top: 20px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -248,8 +248,8 @@ html, body {
     background-color: #555;
 	  background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, .2) 25%,
 											  transparent 25%,
-											  transparent 50%,
-											  rgba(255, 255, 255, .2) 50%,
+											  transparent 20%,
+											  rgba(255, 255, 255, .2) 20%,
 											  rgba(255, 255, 255, .2) 75%,
 											  transparent 75%,
 											  transparent);
@@ -316,4 +316,124 @@ html, body {
 
 .pattern-filter {
     margin-left: 20px;
+}
+
+.modal-pattern-home-in {
+    opacity: 0;
+    position:relative;
+    animation: modalContentHomeIn 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+}
+
+.modal-pattern-home-out {
+    opacity: 1;
+    position:relative;
+    animation: modalContentHomeOut 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+}
+
+.modal-pattern-settings-in{
+    opacity: 0;
+    left: 20px;
+    position:relative;
+    animation: modalContentNextIn .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+}
+
+.modal-pattern-settings-out {
+    opacity: 1;
+    position:relative;
+    animation: modalContentNextOut 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+}
+
+.modal-pattern-home-back-in {
+    opacity: 0;
+    left: -20px;
+    position:relative;
+    animation: modalContentBackIn 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+}
+
+.modal-pattern-home-back-out {
+    opacity: 1;
+    position:relative;
+    animation: modalContentBackOut 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+}
+
+@keyframes modalContentHomeIn {
+  0% {
+    opacity: 0;
+    top: -20px;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+@keyframes modalContentHomeOut {
+  0% {
+    opacity: 1;
+    left: 0px;
+
+  }
+  100% {
+    opacity: 0;
+    left: -20px;
+  }
+}
+
+@keyframes modalContentNextIn {
+  0% {
+    opacity: 0;
+    left: 20px;
+
+  }
+  100% {
+    opacity: 1;
+    left: 0px;
+  }
+}
+
+@keyframes modalContentNextOut {
+  0% {
+    opacity: 1;
+    left: 0px;
+
+  }
+  100% {
+    opacity: 0;
+    left: 20px;
+  }
+}
+
+@keyframes modalBackNextIn {
+  0% {
+    opacity: 1;
+    left: 20px;
+
+  }
+  100% {
+    opacity: 1;
+    left: 0px;
+  }
+}
+
+@keyframes modalBackNextOut {
+  0% {
+    opacity: 1;
+    left: 0px;
+
+  }
+  100% {
+    opacity: 0;
+    left: 20px;
+  }
+}
+
+@keyframes modalContentBackIn {
+  0% {
+    opacity: 0;
+    left: -20px;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
 }
