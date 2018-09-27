@@ -1,0 +1,50 @@
+<div class="table-responsive table-patterns-container">
+  <table class="pattern-home-table" data-bind="if: patterns">
+    <thead>
+      <tr>
+        <th>List</th>
+        <th><span data-bind="text: selected().title"></span><span class="type" data-bind="text: selected().type.replace(/-/g, ' ').toUpperCase()"></span></th>
+      </tr>
+    </thead>
+    <tboby>
+      <tr>
+        <td rowspan="5" class="list-cell">
+          <center>
+            <div class="list-pattern" data-bind="foreach: patterns">
+              <!-- ko if: category === $root.category() || $root.category() === "All"-->
+              <ul data-bind="foreach: $data.list">
+                <li><span data-bind="text: title, click: $root.select, attr:{id: id}"></span></li>
+              </ul>
+              <!-- /ko -->
+            </div>
+          </center>
+        </td>
+        <td class="image-preview">
+          <center>
+            <img class="img-responsive" data-bind="attr:{src: selected().image}">
+          </center>
+        </td>
+      </tr>
+      <tr>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><text class="text-description" data-bind="text: selected().description"></text></td>
+      </tr>
+      <tr><td></td></tr>
+      <tr><td></td</tr>
+      <tr>
+        <td>
+          <center>
+            <div class="form-group">
+              <input type="text" class="search" data-bind="event: { keyup: search }" placeholder="Search" title="Type in a name">
+            </div>
+          </center>
+        </td>
+        <td>
+          <select class="filter" data-bind="options: categories, value: category"></select>
+        </td>
+      </tr>
+    </tboby>
+  </table>
+</div>

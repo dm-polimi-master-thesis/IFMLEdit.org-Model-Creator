@@ -8,12 +8,20 @@
             <div class="modal-body">
                 <center>
                     <div class="content">
+                      <div id="pattern-home" class="pattern-home-in"></div>
+                      <div id="pattern-settings"></div>
                     </div>
                 </center>
             </div>
-            <div class="modal-footer">
+            <div id="pattern-modal" class="modal-footer">
+                <!-- ko if: firstStep() -->
                 <a href="#!" class="btn btn-default btn-close" data-dismiss="modal">Close</a>
                 <a href="#!" class="btn btn-default btn-selection" data-bind="click: nextStep">Select</a>
+                <!-- /ko -->
+                <!-- ko ifnot: firstStep() -->
+                <a href="#!" class="btn btn-default btn-close" data-bind="click: back">Back</a>
+                <a href="#!" class="btn btn-default btn-selection" data-bind="click: load">Load</a>
+                <!-- /ko -->
             </div>
         </div>
     </div>

@@ -1,77 +1,78 @@
-// Copyright (c) 2018, the IFMLEdit project authors. Please see the
-// AUTHORS file for details. All rights reserved. Use of this source code is
-// governed by the MIT license that can be found in the LICENSE file.
-/*jslint node: true, nomen: true */
-"use strict";
-
-var _ = require('lodash'),
-    $ = require('jquery'),
-    ko = require('knockout'),
-    document = require('document');
-
-function PatternViewModel(options, close) {
+function ModalPatternsViewModel(options, close) {
     var self = this;
-    self.categories = options.categories;
-    self.patterns = ko.observableArray(options.patterns);
-    self.selected = ko.observable(self.patterns()[0].list[0]);
-    self.config = ko.observable(undefined);
-    self.category = ko.observableArray();
+
+    self.home = options.createHome({ patterns: options.patterns });
+
     self.close = close;
+    self.firstStep = ko.observable(true);
 
     self.load = function () {
         options.load();
         //self.close();
     }
 
-    self.search = function () {
-      var input, filter, ul, li, span;
-      input = document.getElementsByClassName("search")[0];
-      filter = input.value.toUpperCase();
-      ul = document.getElementsByClassName("pattern-list")[0];
-      li = ul.getElementsByTagName("li");
-      for (var i = 0; i < li.length; i++) {
-        span = li[i].getElementsByTagName("span")[0];
-        if (span.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          li[i].style.display = "";
-        } else {
-          li[i].style.display = "none";
-        }
-      }
-    }
-
-    self.select = function () {
-      self.selected(this);
-    }
-
     self.nextStep = function () {
-      var el = $(self.selected().html);
-      $('#pattern-modal-home').removeClass()
-                              .addClass("modal-pattern-home-out")
-                              .bind('oanimationend animationend webkitAnimationEnd', function () {
-                                $(this).hide();
-                                $('.content').append(el)
-                                             .addClass('modal-pattern-settings-in');
-                                $('.btn-close').replaceWith('<a href="#!" class="btn btn-default btn-back" data-bind="click: back">Back</a>');
-                                $('.btn-selection').replaceWith('<a href="#!" class="btn btn-default btn-load" data-bind="click: load">Load</a>');
-                              });
-      
+      console.log("Next Step");
+      $('#pattern-home').removeClass()
+          .addClass('pattern-home-out')
+          .animate({opacity:0,left:'-20px'},1000, function () {
+            $(this).hide();
 
-      self.pattern = ko.observable(self.selected().js.createPattern(), el.find('.modal-content-in-settings')[0]);
+            if(self.pattern === undefined || self.pattern.id !== self.home.selected().id){
+              if(!(self.pattern === undefined)){
+                console.log("Different Pattern");
+                $(self.pattern.id + '-settings-content').remove();
+              }
+              var el = $(self.home.selected().html);
+              $('#pattern-settings').append(el)
+                  .addClass('pattern-settings-in')
+                  .animate({opacity:1,left:'0px'},800, function () {});
+
+              console.log("New Pattern");
+              self.pattern = self.home.selected().createPattern({ id: self.home.selected().id });
+            } else {
+              console.log("Same Pattern");
+              $('#pattern-settings').addClass('pattern-settings-in')
+                .animate({opacity:1,left:'0px'},800, function () {})
+                .show();
+            }
+            self.firstStep(false);
+          });
+          /*.bind('oanimationend animationend webkitAnimationEnd', function () {
+              $(this).hide();
+
+              if(self.pattern === undefined || self.pattern.id !== self.home.selected().id){
+                if(!(self.pattern === undefined)){
+                  console.log("Different Pattern");
+                  $(self.pattern.id + '-settings-content').remove();
+                }
+                var el = $(self.home.selected().html);
+                $('#pattern-settings').append(el)
+                    .addClass('pattern-settings-in');
+
+                console.log("New Pattern");
+                self.pattern = self.home.selected().createPattern({ id: self.home.selected().id });
+              } else {
+                console.log("Same Pattern");
+                $('#pattern-settings').addClass('pattern-settings-in').show();
+              }
+              self.firstStep(false);
+              //self.pattern.trafficLight();
+          });*/
     }
 
     self.back = function () {
       console.log("Back");
-      $('#pattern-modal-settings').removeClass()
-                                  .addClass("modal-pattern-settings-out")
-                                  .bind('oanimationend animationend webkitAnimationEnd', function () {
-                                    $(this).hide();
-                                  });
-      $('#pattern-modal-home').addClass("modal-pattern-home-back-in");
-
-      $('.btn-close').replaceWith('<a href="#!" class="btn btn-default btn-close" data-dismiss="modal">Close</a>');
-      $('.btn-selection').replaceWith('<a href="#!" class="btn btn-default btn-selection" data-bind="click: nextStep">Select</a>');
-
-      self.pattern = ko.observable(self.selected().js.createPattern(), el.find('.modal-content-in-settings')[0]);
+      $('#pattern-settings').removeClass()
+          .addClass('pattern-settings-out')
+          .animate({opacity: 0, left: '20px'},800, function(){
+            $(this).hide();
+            self.firstStep(true);
+            $('#pattern-home').removeClass()
+                .addClass("pattern-home-back-in")
+                .animate({opacity:1,left:'0px'},800, function () {})
+                .show();
+          });
     }
 }
 
@@ -88,21 +89,15 @@ function ModalPatterns(options) {
     var patterns = options.patterns,
         load = options.load,
         el = $(require('./modal.html')),
-        list = $(require('./list.html')),
-        categories = ['All'];
-
-        $.each(options.patterns, function (index, obj){
-          categories.push(obj.category);
-        });
+        createHome = require('../../patterns/home/index.js').HomePatterns;
 
     $(document.body).append(el);
-    $(el.find('.content')[0]).append(list);
 
     function tearDown(){
         el.remove();
     }
 
-    ko.applyBindings(new PatternViewModel({patterns:patterns, categories:categories, load:load}, function () { el.modal('hide'); }), el.find('.modal-content')[0]);
+    ko.applyBindings(new ModalPatternsViewModel({ patterns: patterns, load: load, createHome: createHome}, function () { el.modal('hide'); }), el.find('#pattern-modal')[0]);
 
     el.modal('show').on('hidden.bs.modal', tearDown);
 }
