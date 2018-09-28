@@ -1,3 +1,70 @@
-<div data-bind="attr: {id: id + '-settings-content'}">
-  <text data-bind="text: flag()"></text>
+<div id="wizard-settings-content" class="table-responsive table-patterns-container">
+  <center>
+    <h3 class="pattern-settings-title">Wizard</h3>
+  </center>
+  <table class="wizard-settings-table" >
+    <thead>
+      <tr>
+        <th>Steps</th>
+        <th><span data-bind="text: selected().name"></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td  rowspan="3" class="step-cell">
+          <center>
+              <ul class="list-steps" data-bind="foreach: steps">
+                <li>
+                  <div class="right-inner-addon">
+                    <span  data-bind="text: name, click: $root.select"></span>
+                    <a  href="#" data-bind="click: $parent.deleteStep"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </center>
+        </td>
+        <td class="name-step-field wizard-form-input">
+          <span class="wizard-form-label">Form Name:</span>
+          <input class="form-control" type="text" data-bind="value: selected().form">
+        </td>
+      </tr>
+      <tr>
+        <td class="name-step-field wizard-form-input">
+          <span class="wizard-form-label">Field:</span>
+          <div class="right-inner-addon">
+            <input class="form-control" type="text" data-bind="executeOnEnter: addField" placeholder="Add new field...">
+            <a href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <center>
+          <div class="list-fields" data-bind="foreach: selected().fields">
+            <ul>
+              <li>
+                <div class="right-inner-addon">
+                  <span data-bind="text: $data"></span>
+                  <a href="#" data-bind="click: $parent.deleteField"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </center>
+      </tr>
+      <tr>
+        <td>
+          <div class="right-inner-addon">
+            <input class="form-control" type="text" data-bind="executeOnEnter: addStep" placeholder="Add new Step...">
+            <a href="#" data-bind="click: addStep"><i class="glyphicon glyphicon-plus-sign"></i></a>
+          </div>
+        </td>
+        <td>
+          <div class="right-inner-addon">
+            <input class="form-control" type="text" data-bind="executeOnEnter: addPatternName" placeholder="Give a name to the pattern...">
+            <a href="#" data-bind="click: addPatternName"><i class="glyphicon glyphicon-plus-sign"></i></a>
+          </div>
+        </td>
+    </tbody>
+  </table>
 </div>

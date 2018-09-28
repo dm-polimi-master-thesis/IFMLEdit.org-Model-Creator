@@ -47,7 +47,7 @@ function HomePatterns(options) {
 
     var homePatternsVm = new HomePatternsViewModel({ patterns:patterns, categories:categories });
 
-    ko.applyBindings(homePatternsVm, $('#pattern-home')[0]);
+    ko.applyBindings(homePatternsVm, $('#home-content')[0]);
 
     return homePatternsVm;
 }

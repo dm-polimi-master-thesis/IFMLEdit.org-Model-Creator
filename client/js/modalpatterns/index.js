@@ -12,57 +12,32 @@ function ModalPatternsViewModel(options, close) {
     }
 
     self.nextStep = function () {
-      console.log("Next Step");
       $('#pattern-home').removeClass()
           .addClass('pattern-home-out')
           .animate({opacity:0,left:'-20px'},1000, function () {
-            $(this).hide();
-
-            if(self.pattern === undefined || self.pattern.id !== self.home.selected().id){
-              if(!(self.pattern === undefined)){
-                console.log("Different Pattern");
-                $(self.pattern.id + '-settings-content').remove();
-              }
-              var el = $(self.home.selected().html);
-              $('#pattern-settings').append(el)
-                  .addClass('pattern-settings-in')
-                  .animate({opacity:1,left:'0px'},800, function () {});
-
-              console.log("New Pattern");
-              self.pattern = self.home.selected().createPattern({ id: self.home.selected().id });
-            } else {
-              console.log("Same Pattern");
-              $('#pattern-settings').addClass('pattern-settings-in')
-                .animate({opacity:1,left:'0px'},800, function () {})
-                .show();
-            }
-            self.firstStep(false);
-          });
-          /*.bind('oanimationend animationend webkitAnimationEnd', function () {
               $(this).hide();
 
               if(self.pattern === undefined || self.pattern.id !== self.home.selected().id){
                 if(!(self.pattern === undefined)){
-                  console.log("Different Pattern");
-                  $(self.pattern.id + '-settings-content').remove();
+                  $('#' + self.pattern.id + '-settings-content').remove();
                 }
                 var el = $(self.home.selected().html);
                 $('#pattern-settings').append(el)
-                    .addClass('pattern-settings-in');
+                    .addClass('pattern-settings-in')
+                    .animate({opacity:1,left:'0px'},800, function () {})
+                    .show();
 
-                console.log("New Pattern");
-                self.pattern = self.home.selected().createPattern({ id: self.home.selected().id });
+                    self.pattern = self.home.selected().createPattern({ id: self.home.selected().id });
               } else {
-                console.log("Same Pattern");
-                $('#pattern-settings').addClass('pattern-settings-in').show();
+                $('#pattern-settings').addClass('pattern-settings-in')
+                .animate({opacity:1,left:'0px'},800, function () {})
+                .show();
               }
               self.firstStep(false);
-              //self.pattern.trafficLight();
-          });*/
+          });
     }
 
     self.back = function () {
-      console.log("Back");
       $('#pattern-settings').removeClass()
           .addClass('pattern-settings-out')
           .animate({opacity: 0, left: '20px'},800, function(){

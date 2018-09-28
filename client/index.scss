@@ -200,7 +200,7 @@ html, body {
     overflow: auto;
 }
 
-.pattern-home-table{
+.pattern-home-table {
     td {
         padding: 2px;
     }
@@ -226,7 +226,7 @@ html, body {
         font-size: 7px;
     }
 
-    .list-pattern {
+    .list-pattern{
         padding: 0;
         margin: 0;
         list-style-type: none;
@@ -236,7 +236,7 @@ html, body {
         text-align: initial;
         max-width: 165px;
         width: 100%;
-        min-width: 165px;
+        min-width: 174px;
 
         ul {
             list-style-type: none;
@@ -273,18 +273,6 @@ html, body {
 
     .form-group {
         margin-bottom: 0px !important;
-
-        .search {
-            background-image: url('/css/searchicon.png');
-            background-position: 10px 12px;
-            background-repeat: no-repeat;
-            width: 100%;
-            max-width: 125px;
-            font-size: 15px;
-            padding: 12px 20px 12px 40px;
-            border: 1px solid #ddd;
-        }
-
     }
 
     .filter {
@@ -325,6 +313,61 @@ html, body {
     left: 0px;
     position:relative;
     //animation: patternContentSettingsOut 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+}
+
+.left-inner-addon {
+    position: relative;
+
+    input {
+        padding-left: 30px;
+    }
+
+    i {
+        position: absolute;
+        padding: 10px 12px;
+        pointer-events: none;
+    }
+}
+
+.right-inner-addon {
+    position: relative;
+
+    i {
+        position: absolute;
+        right: 0px;
+        padding: 10px 12px;
+    }
+}
+
+.list-steps {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+
+    li span {
+        min-width: fit-content;
+        border: 1px solid #ddd;
+        margin-top: -1px; /* Prevent double borders */
+        background-color: #f6f6f6;
+        padding: 8px;
+        text-decoration: none;
+        font-size: 13px;
+        color: black;
+        display: block;
+
+        &:hover:not(.header) {
+            background-color: #eee;
+          }
+    }
+}
+
+.wizard-form-input{
+    position: relative;
+    display: inline-flex;
+}
+
+.wizard-form-label {
+    min-width: fit-content;
 }
 
 @keyframes patternContentHomeIn {

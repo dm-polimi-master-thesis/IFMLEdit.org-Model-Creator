@@ -1,29 +1,38 @@
 function SettingsPatternViewModel(options) {
-  console.log("PatternViewModel!");
 
   var self = this;
 
-  var boss = "FLG{youareaboss}";
-  var loser = "FLG{youarealoser}";
-  var count = true;
-
-  self.flag = ko.observable(boss);
   self.id = options.id;
+  self.steps = ko.observableArray([{ name: "Step 1", form: "Form 1", fileds: [] }, { name: "Step 2", form: "Form 2", fields: [] }]);
+  self.selected = ko.observable(self.steps()[0]);
 
-  self.trafficLight = function () {
-    console.log("Traffic Light");
-    setInterval(function(){
-      if(count){
-        self.flag(loser);
-      } else {
-        self.flag(boss);
-      }
-      count = !count;
-    }, 1000);
+  self.addStep = function () {
+    console.log("Add Step");
+  }
+
+  self.addField = function () {
+    console.log("Add Field");
+  }
+
+  self.deleteStep = function () {
+    console.log("Delete Step");
+  }
+
+  self.deleteField = function () {
+    console.log("Delete Field");
+  }
+
+  self.addPatternName = function () {
+    console.log("Add Pattern Name");
   }
 
   self.load = function () {
-    console.log("Load");
+    if(self.steps().length < 2){
+      $.notify({message: 'Your request cannot be processed. The wizard pattern require a minimum of two steps.'},
+        {allow_dismiss: true, type: 'danger'});
+    } else {
+      // TODO: process the request
+    }
   }
 }
 
@@ -34,8 +43,7 @@ function SettingsPattern(options) {
     options = options || {};
 
     var pattern = new SettingsPatternViewModel(options);
-
-    ko.applyBindings(pattern, $('#pattern-settings')[0]);
+    ko.applyBindings(pattern, $('#wizard-settings-content')[0]);
 
     return pattern;
 }
