@@ -5,64 +5,76 @@
   <table class="wizard-settings-table" >
     <thead>
       <tr>
-        <th>Steps</th>
-        <th><span data-bind="text: selected().name"></span></th>
+        <th class="trace-line th-left">Steps</th>
+        <th class="trace-line-padding th-right"><span data-bind="text: selected().name"></span></th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td  rowspan="3" class="step-cell">
-          <center>
+        <td  rowspan="3" class="step-cell trace-line">
+          <center class="list-steps-container">
               <ul class="list-steps" data-bind="foreach: steps">
                 <li>
                   <div class="right-inner-addon">
-                    <span  data-bind="text: name, click: $root.select"></span>
-                    <a  href="#" data-bind="click: $parent.deleteStep"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <span data-bind="text: name, click: $root.select"></span>
+                    <a href="#" data-bind="click: $parent.deleteStep"><i class="glyphicon glyphicon-minus-sign"></i></a>
                   </div>
                 </li>
               </ul>
             </div>
           </center>
         </td>
-        <td class="name-step-field wizard-form-input">
+        <td class="name-step-field wizard-form-input trace-line-padding">
           <span class="wizard-form-label">Form Name:</span>
-          <input class="form-control" type="text" data-bind="value: selected().form">
-        </td>
-      </tr>
-      <tr>
-        <td class="name-step-field wizard-form-input">
-          <span class="wizard-form-label">Field:</span>
-          <div class="right-inner-addon">
-            <input class="form-control" type="text" data-bind="executeOnEnter: addField" placeholder="Add new field...">
-            <a href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="value: selected().form, valueUpdate: 'keypress'"/>
+            </div>
           </div>
         </td>
       </tr>
       <tr>
-        <center>
-          <div class="list-fields" data-bind="foreach: selected().fields">
-            <ul>
+        <td class="name-step-field wizard-form-input trace-line-padding">
+          <span class="wizard-form-label">Field:</span>
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="value: fieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField"/>
+              <div class="input-group-addon">
+                <a href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="trace-line-padding">
+          <center class="list-fields-container">
+            <ul class="list-fields" data-bind="foreach: fields">
               <li>
                 <div class="right-inner-addon">
-                  <span data-bind="text: $data"></span>
+                  <span data-bind="text: name"></span>
                   <a href="#" data-bind="click: $parent.deleteField"><i class="glyphicon glyphicon-minus-sign"></i></a>
                 </div>
               </li>
             </ul>
-          </div>
-        </center>
+          </center>
       </tr>
       <tr>
-        <td>
-          <div class="right-inner-addon">
-            <input class="form-control" type="text" data-bind="executeOnEnter: addStep" placeholder="Add new Step...">
-            <a href="#" data-bind="click: addStep"><i class="glyphicon glyphicon-plus-sign"></i></a>
-          </div>
+        <td class="trace-line td-add-step">
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" placeholder="Add new step" type="text" data-bind="value: stepToAdd, valueUpdate: 'afterkeydown', executeOnEnter: addStep"/>
+                <div class="input-group-addon">
+                  <a href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                </div>
+              </div>
+            </div>
         </td>
-        <td>
-          <div class="right-inner-addon">
-            <input class="form-control" type="text" data-bind="executeOnEnter: addPatternName" placeholder="Give a name to the pattern...">
-            <a href="#" data-bind="click: addPatternName"><i class="glyphicon glyphicon-plus-sign"></i></a>
+        <td class="td-pattern-name trace-line-padding">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="value: name, valueUpdate: 'afterkeydown'"/>
+            </div>
           </div>
         </td>
     </tbody>

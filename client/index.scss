@@ -200,6 +200,10 @@ html, body {
     overflow: auto;
 }
 
+.modal-body {
+    min-height: 507px;
+}
+
 .pattern-home-table {
     td {
         padding: 2px;
@@ -234,7 +238,6 @@ html, body {
         overflow: auto;
         max-height: 375px;
         text-align: initial;
-        max-width: 165px;
         width: 100%;
         min-width: 174px;
 
@@ -271,12 +274,164 @@ html, body {
         padding: 15px;
     }
 
+    .filter {
+        margin-left: 20px;
+    }
+}
+
+.wizard-settings-table {
+
+    .list-steps, .list-fields {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        list-style-type: none;
+        display: block;
+        overflow: auto;
+        text-align: initial;
+        min-width: 174px;
+
+        li span {
+            min-width: fit-content;
+            border-top: 1px solid #ddd;
+            margin-top: -1px;
+            background-color: #f6f6f6;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            color: black;
+            display: block;
+
+            &:hover:not(.header) {
+                background-color: #eee;
+              }
+        }
+    }
+
+    .list-steps-container {
+        height: 200px;
+    }
+
+    .list-fields-container {
+        height: 100px;
+    }
+
+    .list-steps-container, .list-fields-container {
+        overflow: auto;
+        border: 1px #8080804d solid;
+    }
+
+    .wizard-form-input{
+        position: relative;
+        display: inline-flex;
+    }
+
+    .wizard-form-label {
+        min-width: fit-content;
+        padding-top: 7px;
+        padding-right: 20px;
+        padding-left: 30px;
+    }
+
+    .step-cell {
+        padding-right: 50px;
+        padding-top: 20px;
+        padding-bottom: 35px;
+        padding-left: 70px;
+    }
+
+    .form-control {
+        padding-right: 50px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
+    }
+
+    .td-add-step {
+        padding-right: 50px !important;
+        padding-left: 70px;
+    }
+
+    .form-smooth {
+        -webkit-border-radius: 20px !important;
+        -moz-border-radius: 20px !important;
+        border-radius: 20px !important;
+    }
+
     .form-group {
         margin-bottom: 0px !important;
     }
 
-    .filter {
-        margin-left: 20px;
+    .input-group-addon {
+        color:#555555;
+        background-color: #ffffff;
+        border-radius: 0px 0px 20px 0px;
+        padding-right: 15px;
+    }
+
+    .name-pattern-label {
+        max-width: 250px;
+    }
+
+    .th-left {
+      text-align: right;
+      padding-right: 30px;
+    }
+
+    .th-right {
+      padding-left: 30px;
+    }
+
+    td {
+        width: 350px;
+        padding: 20px;
+    }
+
+    th {
+      font-size: 20px;
+    }
+}
+
+.pattern-home-table, .wizard-settings-table {
+    .form-control {
+        padding-right: 50px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
+    }
+
+    .form-smooth {
+        -webkit-border-radius: 20px !important;
+        -moz-border-radius: 20px !important;
+        border-radius: 20px !important;
+    }
+
+    .td-pattern-name {
+        padding-left: 0px !important;
+
+    }
+
+    .form-pattern-name {
+        min-width: fit-content;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+    }
+
+    .input-group-addon {
+        color:#555555;
+        background-color: #ffffff;
+        border-radius: 0px 0px 20px 0px;
+        padding-right: 15px;
+    }
+
+    .trace-line {
+        border-right: 2px black solid;
+    }
+
+    .trace-line-padding {
+        padding-left: 30px !important;
     }
 }
 
@@ -291,42 +446,24 @@ html, body {
     opacity: 1;
     left: 0px;
     position:relative;
-    //animation: patternContentHomeOut 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
 }
 
 .pattern-home-back-in {
     opacity: 0;
     left: -20px;
     position:relative;
-    //animation: patternContentHomeBackIn 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
 }
 
 .pattern-settings-in{
     opacity: 0;
     left: 20px;
     position:relative;
-    //animation: patternContentSettingsIn .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
 }
 
 .pattern-settings-out {
     opacity: 1;
     left: 0px;
     position:relative;
-    //animation: patternContentSettingsOut 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
-}
-
-.left-inner-addon {
-    position: relative;
-
-    input {
-        padding-left: 30px;
-    }
-
-    i {
-        position: absolute;
-        padding: 10px 12px;
-        pointer-events: none;
-    }
 }
 
 .right-inner-addon {
@@ -339,94 +476,8 @@ html, body {
     }
 }
 
-.list-steps {
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-
-    li span {
-        min-width: fit-content;
-        border: 1px solid #ddd;
-        margin-top: -1px; /* Prevent double borders */
-        background-color: #f6f6f6;
-        padding: 8px;
-        text-decoration: none;
-        font-size: 13px;
-        color: black;
-        display: block;
-
-        &:hover:not(.header) {
-            background-color: #eee;
-          }
-    }
-}
-
-.wizard-form-input{
-    position: relative;
-    display: inline-flex;
-}
-
-.wizard-form-label {
-    min-width: fit-content;
-}
-
-@keyframes patternContentHomeIn {
-  0% {
-    opacity: 0;
-    top: -20px;
-  }
-  100% {
-    opacity: 1;
-    top: 0;
-  }
-}
-
-@keyframes patternContentHomeOut {
-  0% {
-    opacity: 1;
-    left: 0px;
-
-  }
-  100% {
-    opacity: 0;
-    left: -20px;
-  }
-}
-
-@keyframes patternContentHomeBackIn {
-  0% {
-    opacity: 0;
-    left: -20px;
-
-  }
-  100% {
-    opacity: 1;
-    left: 0px;
-  }
-}
-
-@keyframes patternContentSettingsIn {
-  0% {
-    opacity: 0;
-    left: 20px;
-
-  }
-  100% {
-    opacity: 1;
-    left: 0px;
-  }
-}
-
-@keyframes patternContentSettingsOut {
-  0% {
-    opacity: 1;
-    left: 0px;
-
-  }
-  100% {
-    opacity: 0;
-    left: 20px;
-  }
+.pattern-settings-title {
+    margin-bottom: 40px;
 }
 
 ::-webkit-scrollbar {
@@ -447,4 +498,15 @@ html, body {
 											  rgba(255, 255, 255, .2) 75%,
 											  transparent 75%,
 											  transparent);
+}
+
+@keyframes patternContentHomeIn {
+  0% {
+    opacity: 0;
+    top: -20px;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
 }
