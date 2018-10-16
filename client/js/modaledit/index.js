@@ -244,6 +244,8 @@ function ModalEdit(options) {
         board.stopUndoSequence();
     }
 
+    console.log("ElementViewModel");
+
     ko.applyBindings(new ElementViewModel({cell: cell, fields: fields}, function () { el.modal('hide'); }), el.find('.modal-content')[0]);
 
     el.modal('show').on('hidden.bs.modal', tearDown);

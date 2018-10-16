@@ -7,6 +7,9 @@
 var elements = require('../elements').elements,
     links = require('../links').links;
 
+/**
+  * Create a list ViewComponent element and an event to keeping track of the selected content in the list
+  */
 function createList() {
     var component = new elements.ViewComponent({position: {x: 0, y: 0}, stereotype: 'list'}),
         selected = new elements.Event({position: {x: 140, y: 50}, name: {text: 'selected', vertical: 'bottom', horizontal: 'right'}, stereotype: 'selection'});

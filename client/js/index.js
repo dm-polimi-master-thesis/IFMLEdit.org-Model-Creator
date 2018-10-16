@@ -5,6 +5,7 @@
 /*globals BASE_PATH */
 "use strict";
 
+// Import dependences
 var _ = require('lodash'),
     $ = require('jquery'),
     document = require('document'),
@@ -32,7 +33,35 @@ var _ = require('lodash'),
     createIFClient = require('./ifclient').IFClient,
     AException = require('almost').Exception;
 
+/**
+  * Return a function to generate an element
+  * @param {Object} Element - the element that the function must generate
+  */
 function toBuilder(Element) { return function () { return [new Element()]; }; }
+
+/**
+  * Variables initialization
+  *   - ifmlModel           : reference to a joint Graph, that represents the structure of the model diagram
+  *   - ifmlBuilders        : array of model element constructors
+  *   - ifmlBoard           : reference to an almost-joint Board, created to manage the joint Paper (and, consequently, the joint Graph) of the model
+  *                           The functionalities made available by the Board allow the interactions of the user with the UI of the model editor,
+  *                           so that he can create, delete, move, resize, connect and (more generally) graphically manipulate elements
+  *                           (The corresponding view is positioned on the center of the model editor)
+  *   - ifmlMenu            : reference to the menu elements builder (whose view is positioned on the right side bar of the model editor)
+  *   - statisticsModel     : reference to a joint Graph, that represents the structure of the statistics model diagram
+  *   - statisticsBoard     : reference to an almost-joint Board, created to manage the joint Paper (and, consequently, the joint Graph) of the statistics model
+  *   - statisticsMenuColor :
+  *   - statisticsMenuIn    :
+  *   - statisticsMenuOut   :
+  *   - pcnModel            : reference to a joint Graph, that represents the structure of the pcn model diagram
+  *   - pcnBuilders         : array of pcn element constructors
+  *   - pcnBoard            : reference to an almost-joint Board, created to manage the joint Paper (and, consequently, the joint Graph) of the pcn model
+  *   - pcnMenu             :
+  *   - pcnSimulator        :
+  *   - ifbrowser           :
+  *   - ifclient            :
+  *   - ifmobile            :
+  */
 
 var ifmlModel = new joint.dia.Graph(),
     ifmlBuilders = _.values(ifml.elements).map(toBuilder).concat(_.values(ifml.nets)),
@@ -114,6 +143,7 @@ var ifmlModel = new joint.dia.Graph(),
     }),
     ifclient = createIFClient({el: '#web-client .ifclient', BASE_PATH: BASE_PATH + 'web-client/'}),
     ifmobile = createIFClient({el: '#mobile .ifmobile-wrapper', BASE_PATH: BASE_PATH + 'mobile/', scrolling: 'no'});
+
 
 ifmlBoard.zoomE();
 statisticsBoard.zoomE();

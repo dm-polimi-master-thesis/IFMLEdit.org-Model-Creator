@@ -7,6 +7,9 @@
 var elements = require('../elements').elements,
     links = require('../links').links;
 
+/**
+  * Create a details ViewComponent element
+  */
 function createDetails() {
     return [
         new elements.ViewComponent({position: {x: 0, y: 0}, stereotype: 'details'})

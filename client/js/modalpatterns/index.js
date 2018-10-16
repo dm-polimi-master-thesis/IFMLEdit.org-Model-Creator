@@ -1,3 +1,9 @@
+// Copyright (c) 2018, the IFMLEdit project authors. Please see the
+// AUTHORS file for details. All rights reserved. Use of this source code is
+// governed by the MIT license that can be found in the LICENSE file.
+/*jslint node: true, nomen: true */
+"use strict";
+
 function ModalPatternsViewModel(options, close) {
     var self = this;
 
@@ -7,8 +13,23 @@ function ModalPatternsViewModel(options, close) {
     self.firstStep = ko.observable(true);
 
     self.load = function () {
-        options.load();
-        //self.close();
+      if(self.pattern.steps().length < 2){
+        $.notify({message: 'Your request cannot be processed. The wizard pattern require a minimum of two steps.'},
+          {allow_dismiss: true, type: 'danger'});
+      } else {
+
+        var model = self.pattern.transform();
+        /*
+        var result = pattern.toJSON();
+        var start = new Date();
+
+        ifmlModel.addCells(ifml.fromJSON(JSON.parse(result)));
+        ifmlBoard.clearHistory();
+        $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
+        loaded_at = new Date();*/
+
+        self.close();
+      }
     }
 
     self.nextStep = function () {
