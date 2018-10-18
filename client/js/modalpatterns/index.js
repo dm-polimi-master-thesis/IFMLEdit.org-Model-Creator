@@ -18,7 +18,9 @@ function ModalPatternsViewModel(options, close) {
           {allow_dismiss: true, type: 'danger'});
       } else {
 
-        var model = self.pattern.transform();
+        self.pattern.transform();
+
+        var model = [];
         /*
         var result = pattern.toJSON();
         var start = new Date();

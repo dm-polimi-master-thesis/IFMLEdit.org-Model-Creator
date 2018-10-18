@@ -4,10 +4,14 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-function toId(word, tail) {
-  return word.toLowerCase()
-             .replace(/\W/g,"-")
-             .concat(tail);
+function idValidator(pattern,model) {
+  var count = 0;
+
+  word.toLowerCase()
+      .replace(/\W/g,"-")
+      .concat(tail);
+
+  return "miao";
 }
 
-exports.toId = toId;
+exports.idValidator = idValidator;

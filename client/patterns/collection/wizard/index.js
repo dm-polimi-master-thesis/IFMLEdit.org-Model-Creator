@@ -4,6 +4,10 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
+var _ = require('lodash'),
+    parser = require('./new_parser.js').parser;
+
+
 function SettingsPatternViewModel(options) {
 
   var self = this;
@@ -12,7 +16,7 @@ function SettingsPatternViewModel(options) {
   self.name = ko.observable("Wizard Pattern");
   self.stepToAdd = ko.observable("");
   self.fieldToAdd = ko.observable("");
-  self.steps = ko.observableArray([{ name: "Step 1", form: "Step 1 Form", fields: [] }, { name: "Step 2", form: "Step 2 Form", fields: [] }]);
+  self.steps = ko.observableArray([{ name: "Step 1", formName: "Step 1 Form", fields: [] }, { name: "Step 2", formName: "Step 2 Form", fields: [] }]);
   self.fields = ko.observableArray([]);
   self.selected = ko.observable(self.steps()[0]);
 
@@ -23,7 +27,7 @@ function SettingsPatternViewModel(options) {
         {allow_dismiss: true, type: 'danger'});
     } else {
       var name = self.stepToAdd();
-      var form = name + "Form";
+      var formName = name + " Form";
       var duplicate = false;
 
       ko.utils.arrayForEach(self.steps(), function(step) {
@@ -35,7 +39,7 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        self.steps.push({ name: name, form: form, fields: [] });
+        self.steps.push({ name: name, formName: formName, fields: [] });
         self.stepToAdd("");
       }
     }
@@ -82,22 +86,20 @@ function SettingsPatternViewModel(options) {
 
   self.select = function () {
     self.selected().fields = _.map(self.fields.removeAll(), 'name');
-    console.log('old',self.selected());
     self.selected(this);
     self.fields(_.map(this.fields, function(field) { return { name : field }; }));
-    console.log('new',self.selected());
   }
 
   self.transform = function () {
     self.selected().fields = _.map(self.fields.removeAll(), 'name');
 
-    var wizard = {};
-    wizard.name = self.name();
-    wizard.steps = self.steps();
+    var wizard = {
+      name : self.name(),
+      steps : self.steps()
+    }
 
-    console.log('wizard', wizard);
+    return parser(wizard);
 
-    return wizard;
   }
 
   self.toJSON = function () {

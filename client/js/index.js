@@ -31,7 +31,8 @@ var _ = require('lodash'),
     ifml2code = require('./ifml2code').ifml2code,
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
-    AException = require('almost').Exception;
+    AException = require('almost').Exception,
+    patternIdValidator = require('./idValidator').idValidator;
 
 /**
   * Return a function to generate an element

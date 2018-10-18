@@ -4,29 +4,42 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var almost = require('almost'),
-    Rule = almost.Rule,
-    createRule = almost.createRule;
+var _ = require('lodash'),
+    createExtender = require('almost-extend').createExtender;
 
-module.exports = [
-    createRule(
-        function (element, pattern) {
-            return model.isElementWithPosition(element);
+exports.extend = createExtender({
+    custom: {
+        isViewContainer: function (element) {
+            return element.get('type') === 'ifml.ViewContainer';
         },
-        function (element) {
-            return {
-                elements: {
-                    id: element.id,
-                    metadata: {
-                        graphics: {
-                            position: {
-                                x: element.prop('position/x'),
-                                y: element.prop('position/y')
-                            }
-                        }
-                    }
-                }
-            };
-        }
-    )
-];
+        isViewComponent: function (element) {
+            return element.get('type') === 'ifml.ViewComponent';
+        },
+        isAction: function (element) {
+            return element.get('type') === 'ifml.Action';
+        },
+        isEvent: function (element) {
+            return element.get('type') === 'ifml.Event';
+        },
+        isDataFlow: function (element) {
+            return element.get('type') === 'ifml.DataFlow';
+        },
+        isNavigationFlow: function (element) {
+            return element.get('type') === 'ifml.NavigationFlow';
+        },
+        isForm: function (element) {
+            return this.isViewComponent(element) && element.get('stereotype') === 'form';
+        },
+        isList: function (element) {
+            return this.isViewComponent(element) && element.get('stereotype') === 'list';
+        },
+        isDetails: function (element) {
+            return this.isViewComponent(element) && element.get('stereotype') === 'details';
+        },
+        isChildElement: function (element) {
+            return this.isEvent(element) || this.isViewComponent(element) || (this.isViewContainer(element)
+                && element.get('parent'));
+        },
+        is
+    }
+});
