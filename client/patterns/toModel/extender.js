@@ -40,6 +40,11 @@ exports.extend = createExtender({
             return this.isEvent(element) || this.isViewComponent(element) || (this.isViewContainer(element)
                 && element.get('parent'));
         },
-        is
+        hasChildren: function (element) {
+            return element.children !== undefined;
+        },
+        hasMetadata: function (element) {
+            return element.metadata !== undefined;
+        }
     }
 });
