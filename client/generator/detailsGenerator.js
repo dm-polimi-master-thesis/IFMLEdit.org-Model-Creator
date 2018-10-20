@@ -13,7 +13,7 @@ function detailsGenerator(options) {
           stereotype: 'details',
           id: toId(options.name,'-details-view-component'),
           name: options.name,
-          fields: options.fields,
+          fields: options.fields || [],
           collection: options.collection
           events: [],
           dataflow: [],

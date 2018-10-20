@@ -7,7 +7,22 @@
 var toId = require('./toId.js');
 
 function listGenerator(options) {
-
+  return {
+      attributes: {
+          type: 'ifml.ViewComponent',
+          stereotype: 'list',
+          id: toId(options.name,'-list-view-component'),
+          name: options.name,
+          fields: options.fields || [],
+          filters: options.filters || [],
+          collection: options.collection
+          events: [],
+          dataflow: [],
+          parent: options.parent,
+          level: 3,
+          matrixPos: options.matrixPos || {x: 1, y: 1}
+      }
+  }
 }
 
 exports.listGenerator = listGenerator;

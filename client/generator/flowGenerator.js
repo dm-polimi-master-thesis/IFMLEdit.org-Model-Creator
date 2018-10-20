@@ -26,7 +26,22 @@ function navigationFlowGenerator(options) {
 }
 
 function dataFlowGenerator(options) {
+    var bindings = _.map(options.fields, function(field){
+        return {
+            input: field,
+            output: field
+        }
+    });
 
+    return {
+        attributes: {
+            type: 'ifml.DataFlow',
+            id: 'from-' + options.source + '-to-' + options.target + "-data-flow",
+            bindings: bindings,
+            source: options.source,
+            target: options.target
+        }
+    }
 }
 
 exports.navigationFlowGenerator = navigationFlowGenerator;
