@@ -11,6 +11,38 @@ var almost = require('almost'),
 
 module.exports = [
     createRule(
+      function (element, pattern) {
+          return pattern.isNavigationFlow(element);
+      },
+      function (element) {
+          
+      }
+    ),
+    createRule(
+      function (element, pattern) {
+          return pattern.isEvent(element);
+      },
+      function (element) {
+          var navigationflow = toModel(element.flows);
+          var attributes = element.attributes;
+          attributes.size = {
+            width: 20,
+            height: 20
+          }
+          return {
+              attributes: attributes
+          }
+      }
+    ),
+    createRule(
+      function (element, pattern) {
+          return pattern.isForm();
+      },
+      function (element) {
+          if()
+      }
+    ),
+    createRule(
         function (element, pattern) {
             return pattern.isViewContainer(element);
         },
@@ -33,19 +65,4 @@ module.exports = [
             };
         }
     ),
-    createRule(
-      function (element, pattern) {
-          return pattern.isEvent(element);
-      },
-      function (element) {
-          var attributes = element.attributes;
-          attributes.size = {
-            width: 20,
-            height: 20
-          }
-          return {
-              attributes: attributes
-          }
-      }
-    )
 ];

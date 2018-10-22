@@ -4,24 +4,25 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('./toId.js');
+var toId = require('../../toId.js');
 
-function detailsGenerator(options) {
+function generateDetails(options) {
   return {
       attributes: {
-          type: 'ifml.ViewComponent',
-          stereotype: 'details',
-          id: toId(options.name,'-details-view-component'),
           name: options.name,
+          stereotype: 'details',
           fields: options.fields || [],
           collection: options.collection
-          events: [],
-          dataflow: [],
-          parent: options.parent,
-          level: 3,
-          matrixPos: options.matrixPos || {x: 1, y: 1}
-      }
+      },
+      metadata: {
+          graphics: {
+              position: options.position || { x: 0, y: 0 },
+              size: options.size || { height: 90, width: 150 }
+          }
+      },
+      id: toId(options.name, '-details'),
+      type: 'ifml.ViewComponent'
   }
 }
 
-exports.detailsGenerator = detailsGenerator;
+exports.generateDetails = generateDetails;
