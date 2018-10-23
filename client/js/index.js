@@ -185,7 +185,7 @@ $('#ifml > .sidebar .model-download').click(function () {
     return false;
 });
 
-$('#ifml > input[type=file]').change(function () {
+$('#ifml > .load > input[type=file]').change(function () {
     var reader = new FileReader();
 
     reader.onload = function (e) {
@@ -215,7 +215,92 @@ $('#ifml > input[type=file]').change(function () {
 });
 
 $('#ifml > .sidebar .model-load').click(function () {
-    $('#ifml > input[type=file]').click();
+    $('#ifml > .load > input[type=file]').click();
+    return false;
+});
+
+$('#ifml > .append > input[type=file]').change(function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        ifmlBoard.clearHistory();
+
+        function boundingBox(cells) {
+            var box = {
+                x: {
+                    min: Number.MAX_SAFE_INTEGER,
+                    max: Number.MIN_SAFE_INTEGER
+                },
+                y: {
+                    min: Number.MAX_SAFE_INTEGER,
+                    max: Number.MIN_SAFE_INTEGER
+                }
+            };
+            cells.map(function(element) {
+                if(element.attributes.type == 'ifml.ViewContainer'){
+                    if (element.attributes.position.x < box.x.min) {
+                        box.x.min = element.attributes.position.x;
+                    }
+                    if (element.attributes.position.y < box.y.min) {
+                        box.y.min = element.attributes.position.y;
+                    }
+                    if (element.attributes.position.x + element.attributes.size.width > box.x.max) {
+                        box.x.max = element.attributes.position.x + element.attributes.size.width;
+                    }
+                    if (element.attributes.position.y + element.attributes.size.height > box.y.max) {
+                        box.y.max = element.attributes.position.y + element.attributes.size.height;
+                    }
+                }
+            });
+            return box;
+        }
+
+        try {
+            var start = new Date();
+
+            loaded_at = new Date();
+
+            if (ifmlModel.attributes.cells.models.length == 0) {
+                $.notify({message: 'The board is empty, please use Load Model!'}, {allow_dismiss: true, type: 'warning'});
+                return;
+            }
+            
+            var toBeAdded = ifml.fromJSON(JSON.parse(e.target.result)),
+                boardBB = boundingBox(ifmlModel.attributes.cells.models),
+                toBeAddedBB = boundingBox(toBeAdded);
+
+            toBeAdded = _(toBeAdded).map(function(model) {
+                if (model.attributes.position) {
+                    model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                    model.attributes.position.y += boardBB.y.min - toBeAddedBB.y.min;
+                }
+                return model;
+            }).value()
+
+            ifmlModel.addCells(toBeAdded);
+            ifmlBoard.clearHistory();
+            
+            $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
+        } catch (exception) {
+            ifmlBoard.clearHistory();
+            $.notify({message: 'Invalid input file!'}, {allow_dismiss: true, type: 'danger'});
+            return;
+        }
+        ifmlBoard.zoomE();
+    };
+
+    reader.onerror = function () {
+        $.notify({message: 'Error loading file!'}, {allow_dismiss: true, type: 'danger'});
+    };
+
+    reader.readAsText(this.files[0]);
+
+    this.value = '';
+});
+
+$('#ifml > .sidebar .model-append').click(function () {
+    $('#ifml > .append > input[type=file]').click();
     return false;
 });
 

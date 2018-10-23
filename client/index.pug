@@ -64,12 +64,16 @@ html
                     .sidebar
                         ul.list-group
                             a.list-group-item.model-load(href='#!') Load Model
+                            a.list-group-item.model-append(href='#!') Append Model
                             a.list-group-item.modal-example(href='#!') Load Example
                             a.list-group-item.modal-pattern(href='#!') Pattern
                             a.list-group-item.model-download(href='#!') Download Model
                             a.list-group-item.png-download(href='#!') Download as PNG
                     .board
-                    input(type='file', style='width:0; height: 0')
+                    .load
+                        input(type='file', style='width:0; height: 0')
+                    .append
+                        input(type='file', style='width:0; height: 0')
                 #pcn.tab-pane.editor(role='tabpanel')
                     .sidebar
                         ul.list-group
