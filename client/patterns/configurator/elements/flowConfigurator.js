@@ -6,7 +6,7 @@
 
 var toId = require('../../utilities.js').toId;
 
-function configureFlow(element, relations, options) {
+function configureFlow(element, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -26,10 +26,12 @@ function configureFlow(element, relations, options) {
       graphics.vertices = options.vertices || graphics.vertices;
   }
 
-  if(element.type === 'ifml.NavigationFlow'){
-    element.id = toId(options.name,'-navigation-flow');
-  } else {
-    element.id = toId(options.name,'-data-flow');
+  if(options.name !== undefined){
+    if(element.type === 'ifml.NavigationFlow'){
+      element.id = toId(options.name,'-navigation-flow');
+    } else {
+      element.id = toId(options.name,'-data-flow');
+    }
   }
 
   dross.newId = element.id;

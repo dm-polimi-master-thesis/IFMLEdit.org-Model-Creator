@@ -13,8 +13,7 @@ function generator(relations, options) {
   if(!(options.type === 'ifml.NavigationFlow' || options.type === 'ifml.DataFlow')){
     relations.push(generateHierarchy(options));
   } else {
-    relations.push(generateSource(options));
-    relations.push(generateTarget(options));
+    relations.push(generateSource(options), generateTarget(options));
   }
 }
 

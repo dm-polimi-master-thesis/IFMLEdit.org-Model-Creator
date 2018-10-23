@@ -50,7 +50,7 @@
       },
       {
          "attributes":{
-            "name":"Basket Transaction Wizard",
+            "name":"Wizard Pattern",
             "default":false,
             "landmark":false,
             "xor":true
@@ -67,7 +67,7 @@
                }
             }
          },
-         "id":"xor-view-container",
+         "id":"wizard-pattern-view-container",
          "type":"ifml.ViewContainer"
       },
       {
@@ -90,7 +90,7 @@
                   "height":70,
                   "width":110
                },
-               "parent":"xor-view-container"
+               "parent":"wizard-pattern-view-container"
             }
          },
          "id":"validate-step-1-action",
@@ -98,7 +98,7 @@
       },
       {
          "attributes":{
-            "name":"Previous",
+            "name":"Previous Step 1",
             "parameters":[
 
             ],
@@ -116,7 +116,7 @@
                   "height":70,
                   "width":110
                },
-               "parent":"xor-view-container"
+               "parent":"wizard-pattern-view-container"
             }
          },
          "id":"previous-step-1-action",
@@ -142,7 +142,7 @@
                   "height":70,
                   "width":110
                },
-               "parent":"xor-view-container"
+               "parent":"wizard-pattern-view-container"
             }
          },
          "id":"validate-step-2-action",
@@ -150,7 +150,7 @@
       },
       {
          "attributes":{
-            "name":"Previous",
+            "name":"Previous Step 2",
             "parameters":[
 
             ],
@@ -168,7 +168,7 @@
                   "height":70,
                   "width":110
                },
-               "parent":"xor-view-container"
+               "parent":"wizard-pattern-view-container"
             }
          },
          "id":"previous-step-2-action",
@@ -375,7 +375,7 @@
       },
       {
          "attributes":{
-            "name":"Payment",
+            "name":"Step 2 Form",
             "stereotype":"form",
             "fields":[
 
@@ -393,12 +393,12 @@
                }
             }
          },
-         "id":"step-2-form",
+         "id":"step-2-form-form",
          "type":"ifml.ViewComponent"
       },
       {
          "attributes":{
-            "name":"Shipping Address",
+            "name":"Step 1 Form",
             "stereotype":"form",
             "fields":[
 
@@ -416,7 +416,7 @@
                }
             }
          },
-         "id":"step-1-form",
+         "id":"step-1-form-form",
          "type":"ifml.ViewComponent"
       },
       {
@@ -757,21 +757,21 @@
       {
          "type":"hierarchy",
          "parent":"wizard-pattern-view-container",
-         "child":"xor-view-container"
+         "child":"wizard-pattern-view-container"
       },
       {
          "type":"hierarchy",
-         "parent":"xor-view-container",
+         "parent":"wizard-pattern-view-container",
          "child":"step-2-view-container"
       },
       {
          "type":"hierarchy",
-         "parent":"xor-view-container",
+         "parent":"wizard-pattern-view-container",
          "child":"step-1-view-container"
       },
       {
          "type":"hierarchy",
-         "parent":"xor-view-container",
+         "parent":"wizard-pattern-view-container",
          "child":"review-view-container"
       },
       {
@@ -812,12 +812,12 @@
       {
          "type":"hierarchy",
          "parent":"step-2-view-container",
-         "child":"step-2-form"
+         "child":"step-2-form-form"
       },
       {
          "type":"hierarchy",
          "parent":"step-1-view-container",
-         "child":"step-1-form"
+         "child":"step-1-form-form"
       },
       {
          "type":"hierarchy",
@@ -836,17 +836,17 @@
       },
       {
          "type":"hierarchy",
-         "parent":"step-2-form",
+         "parent":"step-2-form-form",
          "child":"previous-step-2-event"
       },
       {
          "type":"hierarchy",
-         "parent":"step-2-form",
+         "parent":"step-2-form-form",
          "child":"next-step-2-event"
       },
       {
          "type":"hierarchy",
-         "parent":"step-1-form",
+         "parent":"step-1-form-form",
          "child":"next-step-1-event"
       },
       {
@@ -922,12 +922,12 @@
       {
          "type":"target",
          "flow":"ko-validate-step-1-navigation-flow",
-         "target":"step-1-form"
+         "target":"step-1-form-form"
       },
       {
          "type":"target",
          "flow":"ko-validate-step-2-navigation-flow",
-         "target":"step-2-form"
+         "target":"step-2-form-form"
       },
       {
          "type":"target",
@@ -942,7 +942,7 @@
       {
          "type":"target",
          "flow":"ok-validate-step-1-navigation-flow",
-         "target":"step-2-form"
+         "target":"step-2-form-form"
       },
       {
          "type":"target",
@@ -962,12 +962,12 @@
       {
          "type":"target",
          "flow":"to-step-1-navigation-flow",
-         "target":"step-1-form"
+         "target":"step-1-form-form"
       },
       {
          "type":"target",
          "flow":"to-step-2-navigation-flow",
-         "target":"step-2-form"
+         "target":"step-2-form-form"
       }
    ],
    "statistics":{

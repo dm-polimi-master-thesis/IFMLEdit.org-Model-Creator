@@ -54,7 +54,7 @@ gulp.task('examples', function () {
 
 gulp.task('patterns', function () {
     return merge(
-        gulp.src('./client/patterns/**/*.png').pipe(gulp.dest('./public/patterns')),
+        gulp.src('./client/patterns/**/*').pipe(gulp.dest('./public/patterns')),
     );
 });
 

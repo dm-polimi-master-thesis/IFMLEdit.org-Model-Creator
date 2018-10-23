@@ -6,7 +6,7 @@
 
 var toId = require('../../utilities.js').toId;
 
-function configureViewContainer(element, relations, options) {
+function configureViewContainer(element, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -21,10 +21,12 @@ function configureViewContainer(element, relations, options) {
   graphics.position = options.position || graphics.position;
   graphics.size = options.size || graphics.size;
 
-  element.id = toId(options.name,'-view-container');
+  if(options.name !== undefined){
+    element.id = toId(options.name,'-view-container');
+  }
 
   dross.newId = element.id;
   return dross;
 }
 
-export.configureViewContainer = configureViewContainer;
+exports.configureViewContainer = configureViewContainer;

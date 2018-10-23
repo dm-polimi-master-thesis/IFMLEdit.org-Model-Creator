@@ -9,7 +9,7 @@ var toId = require('../../utilities.js').toId;
 function generateSource(options) {
     return {
         type: 'source',
-        flow: options.flow,
+        flow: options.id,
         source: options.source
     }
 }

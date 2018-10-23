@@ -5,7 +5,7 @@
 "use strict";
 
 var _ = require('lodash'),
-    parser = require('./new_parser.js').parser;
+    parser = require('./final_parser.js').parser;
 
 
 function SettingsPatternViewModel(options) {

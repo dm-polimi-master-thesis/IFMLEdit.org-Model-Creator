@@ -6,12 +6,12 @@
 
 var toId = require('../../utilities.js').toId;
 
-function generateTarget(options) {
+function generateHierarchy(options) {
     return {
-        type: 'target',
-        flow: options.flow,
-        source: options.target
+        type: 'hierarchy',
+        parent: options.parent,
+        child: options.id
     }
 }
 
-exports.generateTarget = generateTarget;
+exports.generateHierarchy = generateHierarchy;

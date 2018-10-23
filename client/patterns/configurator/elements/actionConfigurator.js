@@ -6,7 +6,7 @@
 
 var toId = require('../../utilities.js').toId;
 
-function configureAction(element, relations, options) {
+function configureAction(element, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -21,7 +21,9 @@ function configureAction(element, relations, options) {
   graphics.size = options.size || graphics.size;
   graphics.parent = options.parent || graphics.parent;
 
-  element.id = toId(options.name,'-action');
+  if(options.name !== undefined){
+    element.id = toId(options.name,'-action');
+  }
 
   dross.newId = element.id;
   return dross;

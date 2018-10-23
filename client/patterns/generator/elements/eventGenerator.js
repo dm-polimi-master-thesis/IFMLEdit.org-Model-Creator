@@ -9,7 +9,7 @@ var toId = require('../../toId.js');
 function generateEvent(options) {
     return {
         attributes: {
-            name: options.name
+            name: options.text
         },
         metadata: {
             graphics: {

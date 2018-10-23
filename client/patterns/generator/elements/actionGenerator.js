@@ -10,8 +10,8 @@ function generateAction(options) {
   return {
      attributes: {
         name: options.name,
-        parameters: options.parameters,
-        results: options.results
+        parameters: options.parameters || [],
+        results: options.results || []
      },
      metadata: {
         graphics: {

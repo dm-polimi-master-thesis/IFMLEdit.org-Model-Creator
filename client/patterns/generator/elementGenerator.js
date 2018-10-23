@@ -35,6 +35,8 @@ function generator(relations, options) {
       return new Exception('Unexpected element type');
   }
 
+  options.id = element.id;
+  
   generateRelations(relations, options);
   return element;
 }

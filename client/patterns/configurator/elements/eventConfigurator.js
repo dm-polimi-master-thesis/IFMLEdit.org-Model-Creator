@@ -6,19 +6,21 @@
 
 var toId = require('../../utilities.js').toId;
 
-function configureEvent(element, relations, options) {
+function configureEvent(element, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
         oldId: element.id
       };
 
-  attributes.name = options.name || attributes.name;
+  attributes.name = options.text || attributes.name;
 
   graphics.position = options.position || graphics.position;
   graphics.name = options.name || graphics.name;
 
-  element.id = toId(options.name,'-event');
+  if(options.name !== undefined){
+    element.id = toId(options.name,'-event');
+  }
 
   dross.newId = element.id;
   return dross;

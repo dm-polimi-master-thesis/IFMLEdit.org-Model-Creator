@@ -29,7 +29,7 @@ function allConfigurator (type, relations, dross) {
   if(type === 'flow'){
     _.filter(relations, function (relation) { return relation.type !== 'hierarchy'; })
      .map(function(relation){
-       return relation.flow = dross.flow;
+       return relation.flow = dross.newId;
      });
   } else {
     _.forEach(relations, function(relation){

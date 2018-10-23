@@ -6,7 +6,7 @@
 
 var toId = require('../../utilities.js').toId;
 
-function configureViewComponent(element, relations, options) {
+function configureViewComponent(element, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -26,12 +26,14 @@ function configureViewComponent(element, relations, options) {
   graphics.position = options.position || graphics.position;
   graphics.size = options.size || graphics.size;
 
-  if (attributes.stereotype === 'form') {
-    element.id = toId(options.name,'-form');
-  } else if(attributes.stereotype === 'list') {
-    element.id = toId(options.name,'-list');
-  } else {
-    element.id = toId(options.name,'-details');
+  if(options.name !== undefined){
+    if (attributes.stereotype === 'form') {
+      element.id = toId(options.name,'-form');
+    } else if(attributes.stereotype === 'list') {
+      element.id = toId(options.name,'-list');
+    } else {
+      element.id = toId(options.name,'-details');
+    }
   }
 
   dross.newId = element.id;

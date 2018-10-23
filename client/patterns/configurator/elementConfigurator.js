@@ -4,7 +4,7 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var _ = require('lodash');
+var _ = require('lodash'),
     configureViewContainer = require('./elements/viewContainerConfigurator.js').configureViewContainer,
     configureViewComponent = require('./elements/viewComponentConfigurator.js').configureViewComponent,
     configureAction = require('./elements/actionConfigurator.js').configureAction,
@@ -30,7 +30,7 @@ function configurator(element, relations, options) {
     case 'ifml.NavigationFlow':
     case 'ifml.DataFlow':
       dross = configureFlow(element, options);
-      if(dross.oldId !== dross.newId; }){
+      if(dross.oldId !== dross.newId){
         relationsUpdate('flow', relations, dross);
       }
       break;
@@ -39,7 +39,7 @@ function configurator(element, relations, options) {
   }
 
   if (!(element.type === 'ifml.NavigationFlow' || element.type === 'ifml.DataFlow')) {
-    if(dross.oldId !== dross.newId; }){
+    if(dross.oldId !== dross.newId){
       relationsUpdate('general', relations, dross);
     }
   }

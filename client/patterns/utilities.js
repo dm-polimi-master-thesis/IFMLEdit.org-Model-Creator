@@ -4,7 +4,7 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var _ = require('./');
+var _ = require('lodash');
 
 function toId(word, tail) {
   return word.toLowerCase()
@@ -23,3 +23,4 @@ function toHash(collection) {
 }
 
 exports.toId = toId;
+exports.toHash = toHash;
