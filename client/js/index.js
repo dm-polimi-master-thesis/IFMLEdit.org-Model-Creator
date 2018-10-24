@@ -238,7 +238,8 @@ $('#ifml > .append > input[type=file]').change(function () {
                 }
             };
             cells.map(function(element) {
-                if(element.attributes.type == 'ifml.ViewContainer'){
+                if(element.attributes.type == 'ifml.ViewContainer' ||
+                    element.attributes.type == 'ifml.Action'){
                     if (element.attributes.position.x < box.x.min) {
                         box.x.min = element.attributes.position.x;
                     }
@@ -275,8 +276,14 @@ $('#ifml > .append > input[type=file]').change(function () {
                     model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
                     model.attributes.position.y += boardBB.y.min - toBeAddedBB.y.min;
                 }
+                if (model.attributes.vertices) {
+                    for (var i = 0; i<model.attributes.vertices.length; i++){
+                        model.attributes.vertices[i].x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                        model.attributes.vertices[i].y += boardBB.y.min - toBeAddedBB.y.min;
+                    }
+                }
                 return model;
-            }).value()
+            }).value();
 
             ifmlModel.addCells(toBeAdded);
             ifmlBoard.clearHistory();
