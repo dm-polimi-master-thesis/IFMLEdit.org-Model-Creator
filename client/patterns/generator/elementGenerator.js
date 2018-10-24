@@ -4,13 +4,13 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var _ = require('lodash');
+var _ = require('lodash'),
     generateViewContainer = require('./elements/viewContainerGenerator.js').generateViewContainer,
     generateViewComponent = require('./elements/viewComponentGenerator.js').generateViewComponent,
     generateAction = require('./elements/actionGenerator.js').generateAction,
     generateEvent= require('./elements/eventGenerator.js').generateEvent,
     generateFlow = require('./elements/flowGenerator.js').generateFlow,
-    generateRelations = require('./relationGenerator.js').generateAll;
+    generateRelations = require('./relationGenerator.js').generator;
 
 function generator(relations, options) {
   var element;
@@ -32,11 +32,10 @@ function generator(relations, options) {
       element = generateFlow(options);
       break;
     default:
-      return new Exception('Unexpected element type');
+      throw 'Unexpected element type';
   }
 
   options.id = element.id;
-  
   generateRelations(relations, options);
   return element;
 }

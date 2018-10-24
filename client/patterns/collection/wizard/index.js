@@ -40,6 +40,8 @@ function SettingsPatternViewModel(options) {
 
       if(!duplicate){
         self.steps.push({ name: name, formName: formName, fields: [] });
+        self.selected().fields = _.map(self.fields.removeAll(), 'name');
+        self.selected(self.steps()[self.steps().length - 1]);
         self.stepToAdd("");
       }
     }
@@ -72,7 +74,14 @@ function SettingsPatternViewModel(options) {
   self.deleteStep = function () {
     console.log("Delete Step");
     self.steps.remove(this);
-    self.fields.removeAll();
+    if (self.steps().length > 0 && self.selected() === this) {
+      self.fields.removeAll();
+      self.selected(self.steps()[0]);
+      self.fields(_.map(self.steps()[0].fields, function(field) { return { name : field }; }));
+    } else if (self.steps().length === 0) {
+      self.fields.removeAll();
+      self.selected({name: "", formName: "", fields: []});
+    }
   }
 
   self.deleteField = function () {

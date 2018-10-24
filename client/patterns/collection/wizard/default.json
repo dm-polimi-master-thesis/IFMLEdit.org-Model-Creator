@@ -692,7 +692,7 @@
                ]
             }
          },
-         "id":"previous-step-1-navigation-flow",
+         "id":"previous-step-2-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -711,7 +711,7 @@
                ]
             }
          },
-         "id":"previous-step-2-navigation-flow",
+         "id":"previous-review-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -896,12 +896,12 @@
       },
       {
          "type":"source",
-         "flow":"previous-step-1-navigation-flow",
+         "flow":"previous-step-2-navigation-flow",
          "source":"previous-step-2-event"
       },
       {
          "type":"source",
-         "flow":"previous-step-2-navigation-flow",
+         "flow":"previous-review-navigation-flow",
          "source":"previous-review-event"
       },
       {
@@ -951,12 +951,12 @@
       },
       {
          "type":"target",
-         "flow":"previous-step-1-navigation-flow",
+         "flow":"previous-step-2-navigation-flow",
          "target":"previous-step-1-action"
       },
       {
          "type":"target",
-         "flow":"previous-step-2-navigation-flow",
+         "flow":"previous-review-navigation-flow",
          "target":"previous-step-2-action"
       },
       {

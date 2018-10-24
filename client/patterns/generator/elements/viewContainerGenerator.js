@@ -4,7 +4,7 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../toId.js');
+var toId = require('../../utilities.js').toId;
 
 function generateViewContainer(options) {
   return {

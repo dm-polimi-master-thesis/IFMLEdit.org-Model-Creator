@@ -4,7 +4,7 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../toId.js');
+var toId = require('../../utilities.js').toId;
 
 function generateEvent(options) {
     return {
@@ -20,7 +20,7 @@ function generateEvent(options) {
                 }
             }
         },
-        id: toId(options.name, 'event'),
+        id: toId(options.name, '-event'),
         type: 'ifml.Event'
     }
 }

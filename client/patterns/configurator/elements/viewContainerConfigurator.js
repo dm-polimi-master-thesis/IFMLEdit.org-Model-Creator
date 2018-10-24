@@ -10,6 +10,7 @@ function configureViewContainer(element, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
+        type: 'element',
         oldId: element.id
       };
 

@@ -5,9 +5,9 @@
 "use strict";
 
 var _ = require('lodash'),
-    generateHierarchy = require('./relations/hierarchyGenerator.js'),
-    generateSource = require('./relations/sourceGenerator.js'),
-    generateTarget = require('./relations/targetGenerator.js');
+    generateHierarchy = require('./relations/hierarchyGenerator.js').generateHierarchy,
+    generateSource = require('./relations/sourceGenerator.js').generateSource,
+    generateTarget = require('./relations/targetGenerator.js').generateTarget;
 
 function generator(relations, options) {
   if(!(options.type === 'ifml.NavigationFlow' || options.type === 'ifml.DataFlow')){

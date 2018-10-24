@@ -9,7 +9,7 @@ var _ = require('lodash'),
     toHash = require('../../utilities.js').toHash,
     template = require('./default.json'),
     configurator = require('../../configurator/elementConfigurator.js').configurator,
-    generator = require('../../generator/relationGenerator.js').generator;
+    generator = require('../../generator/elementGenerator.js').generator;
 
 function parser(wizard){
   var format = _.cloneDeep(template);
@@ -33,12 +33,9 @@ function parser(wizard){
 
   _.slice(wizard.steps, 0, 2)
    .forEach(function(step, index, collection){
-     var errorFields = _.forEach(step.fields, function (field) {
-       return [field,'error-' + field]
+     var errorFields = _.map(step.fields, function (field) {
+       return [field,'error-' + field];
      });
-     console.log('fields', step.fields);
-     console.log('error', errorFields);
-     console.log('result', _.cloneDeep(step.fields).push(errorFields));
 
      configurator(modelElementsHash['step-' + (index + 1) + '-view-container'], relations, {
          name: step.name
@@ -50,13 +47,13 @@ function parser(wizard){
      configurator(modelElementsHash['validate-step-' + (index + 1) + '-action'], relations, {
          name: 'Validate ' + step.name,
          parameters: step.fields,
-         result: _.flattenDeep(errorFields),
+         results: _.flattenDeep(errorFields),
          parent: modelElementsHash['xor-view-container'].id
      });
      configurator(modelElementsHash['previous-step-' + (index + 1) + '-action'], relations, {
          name: 'Previous ' + step.name,
          parameters: index === 0 ? collection[index + 1].fields : [],
-         result: _.flattenDeep(errorFields),
+         results: step.fields,
          parent: modelElementsHash['xor-view-container'].id
      });
      configurator(modelElementsHash['next-step-' + (index + 1) + '-navigation-flow'], relations, {
@@ -85,13 +82,13 @@ function parser(wizard){
   if (wizard.steps.length > 2){
     var reference = [];
     _.slice(wizard.steps, 2, wizard.steps.length)
-     .forEach(function (step) {
-        var errorFields = _.forEach(step.fields, function (field) {
-            return [field,'error-' + field]
+     .forEach(function (step, index, collection) {
+        var errorFields = _.map(step.fields, function (field) {
+            return [field,'error-' + field];
         });
 
         reference['viewContainer'] = generator(relations, {
-          type: 'ifml.viewContainer',
+          type: 'ifml.ViewContainer',
           name: step.name,
           position: {
             x: modelElementsHash['review-view-container'].metadata.graphics.position.x,
@@ -103,7 +100,7 @@ function parser(wizard){
           type: 'ifml.Action',
           name: 'Validate ' + step.formName,
           parameters: step.fields,
-          result: _.flattenDeep(errorFields),
+          results: _.flattenDeep(errorFields),
           parent: toId(wizard.name, '-view-container'),
           position: {
            x: modelElementsHash['validate-step-2-action'].metadata.graphics.position.x + 400 * (1 + index),
@@ -112,13 +109,14 @@ function parser(wizard){
           parent: modelElementsHash['xor-view-container'].id
         });
         reference['previousAction'] = generator(relations, {
+          type: 'ifml.Action',
           name: 'Previous ' + step.formName,
-          parameters: (index + 1) < wizard.steps.length ? collection[index + 1].fields : [],
+          parameters: (index + 1) < collection.length ? collection[index + 1].fields : [],
           results: index === 0 ? modelElementsHash['step-2-form'].fields : reference['form'].fields,
           parent: modelElementsHash['xor-view-container'].id,
           position: {
-           x: modelElementsHash['xor-view-container'].metadata.graphics.position.x + 260 + 400 * (2 + index),
-           y: modelElementsHash['xor-view-container'].metadata.graphics.position.y - 20
+           x: modelElementsHash['previous-step-2-action'].metadata.graphics.position.x + 400 * (1 + index),
+           y: modelElementsHash['previous-step-2-action'].metadata.graphics.position.y
          },
          parent: modelElementsHash['xor-view-container'].id
         });
@@ -129,7 +127,7 @@ function parser(wizard){
           fields: step.fields,
           position: {
             x: reference['viewContainer'].metadata.graphics.position.x + 20,
-            y: reference['viewContainer'].metadata.graphics.position.x + 40
+            y: reference['viewContainer'].metadata.graphics.position.y + 40
           },
           parent: reference['viewContainer'].id
         });
@@ -149,7 +147,7 @@ function parser(wizard){
           text: 'Next',
           position: {
            x: modelElementsHash['cancel-review-event'].metadata.graphics.position.x - 20,
-           y: modelElementsHash['cancel-review-event'].metadata.graphics.position.y - 40
+           y: modelElementsHash['cancel-review-event'].metadata.graphics.position.y + 40
          },
          parent: reference['form'].id
         });
@@ -168,8 +166,8 @@ function parser(wizard){
           name: 'Ko Validate ' + step.formName,
           text: 'Ko',
           position: {
-            x: reference['validateAction'].metadata.graphics.position.x,
-            y: reference['validateAction'].metadata.graphics.position.y + (validateAction.metadata.graphics.size.height - 10)
+            x: reference['validateAction'].metadata.graphics.position.x - 10,
+            y: reference['validateAction'].metadata.graphics.position.y + (reference['validateAction'].metadata.graphics.size.height - 20)
           },
           parent: reference['validateAction'].id
         });
@@ -178,21 +176,22 @@ function parser(wizard){
           name: 'Ok Validate ' + step.formName,
           text: 'Ok',
           position: {
-            x: reference['validateAction'].metadata.graphics.position.x + validateAction.metadata.graphics.size.width,
-            y: reference['validateAction'].metadata.graphics.position.y + 10
+            x: reference['validateAction'].metadata.graphics.position.x + reference['validateAction'].metadata.graphics.size.width - 10,
+            y: reference['validateAction'].metadata.graphics.position.y
           },
           parent: reference['validateAction'].id
         });
         reference['toEvent'] = generator(relations, {
           type: 'ifml.Event',
           name: 'To ' + step.formName,
+          text: 'To',
           position: {
-            x: reference['previousAction'].metadata.graphics.position.x,
-            y: reference['previousAction'].metadata.graphics.position.y - 10
+            x: reference['previousAction'].metadata.graphics.position.x - 10,
+            y: reference['previousAction'].metadata.graphics.position.y + reference['previousAction'].metadata.graphics.size.height - 20
           },
           parent: reference['previousAction'].id
         });
-        reference['toNavigationFlow'] = generator(relations, relations, {
+        reference['toNavigationFlow'] = generator(relations, {
           type: 'ifml.NavigationFlow',
           name: 'To ' + step.formName,
           fields: step.fields,
@@ -203,31 +202,31 @@ function parser(wizard){
           source: reference['previousAction'].id,
           target: reference['form'].id
         });
-        reference['previousNavigationFlow'] = generator(relations, relations, {
+        reference['previousNavigationFlow'] = generator(relations, {
           type: 'ifml.NavigationFlow',
           name: 'Previous ' + step.formName,
           fields: step.fields,
           vertices: [{
-            x: modelElementsHash['previous-step-2-navigation-flow'].metadata.graphics.vertices[0].x + 400 * index,
-            y: modelElementsHash['previous-step-2-navigation-flow'].metadata.graphics.vertices[0].y
+            x: modelElementsHash['previous-review-navigation-flow'].metadata.graphics.vertices[0].x + 400 * index,
+            y: modelElementsHash['previous-review-navigation-flow'].metadata.graphics.vertices[0].y
           }],
           source: reference['previousEvent'].id,
           target: index === 0 ? modelElementsHash['previous-step-2-action'].id : toId('previous-' + collection[index - 1].name, '-action')
         });
-        reference['okNavigationFlow'] = generator(relations, relations, {
+        reference['okNavigationFlow'] = generator(relations, {
           type: 'ifml.NavigationFlow',
-          name: 'Ok ' + step.formName,
+          name: 'Ok Validate' + step.formName,
           source: reference['validateAction'].id,
-          target: (index + 1) < wizard.steps.length ? toId(collection[index + 1].formName, '-form') : modelElementsHash['review-details'].id
+          target: (index + 1) < collection.length ? toId(collection[index + 1].formName, '-form') : modelElementsHash['review-details'].id
         });
-        reference['koNavigationFlow'] = generator(relations, relations, {
+        reference['koNavigationFlow'] = generator(relations, {
           type: 'ifml.NavigationFlow',
-          name: 'Ko ' + step.formName,
+          name: 'Ko Validate' + step.formName,
           fields: _.flattenDeep(errorFields),
           source: reference['validateAction'].id,
           target: reference['form'].id
         });
-        reference['nextNavigationFlow'] = generator(relations, relations, {
+        reference['nextNavigationFlow'] = generator(relations, {
           type: 'ifml.NavigationFlow',
           name: 'Next ' + step.formName,
           fields: step.fields,
@@ -236,7 +235,7 @@ function parser(wizard){
         });
 
         for (var key in reference) {
-          elements.push(reference['key']);
+          elements.push(reference[key]);
         };
 
         if (index === 0) {
@@ -244,7 +243,9 @@ function parser(wizard){
            .map(function(relation) {
              relation.target = reference['form'].id
            });
-        } else if ((index + 1) === wizard.steps.length) {
+        }
+
+        if ((index + 1) === collection.length) {
           _.filter(relations, function (relation) { return (relation.type === 'target' && relation.flow === 'previous-review-navigation-flow'); })
            .map(function(relation) {
              relation.target = reference['previousAction'].id
@@ -256,7 +257,7 @@ function parser(wizard){
         modelElementsHash['review-details'].metadata.graphics.position.x += 400;
         modelElementsHash['previous-review-event'].metadata.graphics.position.x += 400;
         modelElementsHash['end-wizard-event'].metadata.graphics.position.x += 400;
-        modelElementsHash['end-navigation-flow'].metadata.graphics.position.x += 400;
+        modelElementsHash['previous-review-navigation-flow'].metadata.graphics.vertices.x += 400;
         modelElementsHash['save-action'].metadata.graphics.position.x += 400;
     });
   }

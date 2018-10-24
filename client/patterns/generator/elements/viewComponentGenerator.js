@@ -4,7 +4,7 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../toId.js');
+var toId = require('../../utilities.js').toId;
 
 function generateViewComponent(options) {
   return {
@@ -13,7 +13,7 @@ function generateViewComponent(options) {
           stereotype: options.stereotype,
           fields: options.fields || undefined,
           collection: options.collection || undefined,
-          filters: options.filters || undefined;
+          filters: options.filters || undefined
       },
       metadata: {
           graphics: {

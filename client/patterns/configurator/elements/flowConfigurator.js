@@ -10,6 +10,7 @@ function configureFlow(element, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
+        type: 'flow',
         oldId: element.id
       };
 

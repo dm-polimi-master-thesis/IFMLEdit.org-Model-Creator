@@ -4,9 +4,9 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../toId.js');
+var toId = require('../../utilities.js').toId;
 
-function generateFLow(options) {
+function generateFlow(options) {
     var bindings = _.map(options.fields, function(field){
         return {
             input: field,
@@ -20,11 +20,11 @@ function generateFLow(options) {
         },
         metadata: {
             graphics: {
-              vertices: options.vertices || undefined;
+              vertices: options.vertices || undefined
             }
         },
         id: toId(options.name, options.type === 'ifml.DataFlow' ? '-data-flow' : '-navigation-flow'),
         type: options.type
     }
 }
-exports.generateFLow = generateFLow;
+exports.generateFlow = generateFlow;

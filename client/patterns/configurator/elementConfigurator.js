@@ -30,17 +30,16 @@ function configurator(element, relations, options) {
     case 'ifml.NavigationFlow':
     case 'ifml.DataFlow':
       dross = configureFlow(element, options);
-      if(dross.oldId !== dross.newId){
-        relationsUpdate('flow', relations, dross);
-      }
       break;
     default:
-      return new Exception('Unexpected element type');
+      throw 'Unexpected element type';
   }
 
-  if (!(element.type === 'ifml.NavigationFlow' || element.type === 'ifml.DataFlow')) {
-    if(dross.oldId !== dross.newId){
-      relationsUpdate('general', relations, dross);
+  if(dross.oldId !== dross.newId){
+    if (!(element.type === 'ifml.NavigationFlow' || element.type === 'ifml.DataFlow')) {
+      relationsUpdate(relations, dross);
+    } else {
+      relationsUpdate(relations, dross);
     }
   }
 }

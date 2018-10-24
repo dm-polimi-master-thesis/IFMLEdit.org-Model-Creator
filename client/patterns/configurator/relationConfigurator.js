@@ -25,22 +25,22 @@ function configurator(relations, options) {
   }
 }
 
-function allConfigurator (type, relations, dross) {
-  if(type === 'flow'){
-    _.filter(relations, function (relation) { return relation.type !== 'hierarchy'; })
+function allConfigurator (relations, options) {
+  if(options.type === 'flow'){
+    _.filter(relations, function (relation) { return relation.type !== 'hierarchy' && relation.flow === options.oldId; })
      .map(function(relation){
-       return relation.flow = dross.newId;
+       return relation.flow = options.newId;
      });
   } else {
     _.forEach(relations, function(relation){
-      if(relation.parent === dross.oldId){
-        relation.parent = dross.newId;
-      } else if(relation.child === dross.oldId){
-        relation.child = dross.newId;
-      } else if(relation.source === dross.oldId){
-        relation.source = dross.newId;
-      } else if(relation.target === dross.oldId){
-        relation.target = dross.newId;
+      if(relation.parent === options.oldId){
+        relation.parent = options.newId;
+      } else if(relation.child === options.oldId){
+        relation.child = options.newId;
+      } else if(relation.source === options.oldId){
+        relation.source = options.newId;
+      } else if(relation.target === options.oldId){
+        relation.target = options.newId;
       }
     });
   }

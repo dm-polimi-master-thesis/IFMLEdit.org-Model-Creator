@@ -15,7 +15,7 @@
                },
                "size":{
                   "height":350,
-                  "width":1210
+                  "width":1610
                }
             }
          },
@@ -35,7 +35,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":1080,
+                  "x":1480,
                   "y":170
                },
                "size":{
@@ -50,7 +50,7 @@
       },
       {
          "attributes":{
-            "name":"Wizard Pattern",
+            "name":"xor",
             "default":false,
             "landmark":false,
             "xor":true
@@ -63,11 +63,11 @@
                },
                "size":{
                   "height":290,
-                  "width":1030
+                  "width":1430
                }
             }
          },
-         "id":"wizard-pattern-view-container",
+         "id":"xor-view-container",
          "type":"ifml.ViewContainer"
       },
       {
@@ -90,7 +90,7 @@
                   "height":70,
                   "width":110
                },
-               "parent":"wizard-pattern-view-container"
+               "parent":"xor-view-container"
             }
          },
          "id":"validate-step-1-action",
@@ -116,7 +116,7 @@
                   "height":70,
                   "width":110
                },
-               "parent":"wizard-pattern-view-container"
+               "parent":"xor-view-container"
             }
          },
          "id":"previous-step-1-action",
@@ -142,7 +142,7 @@
                   "height":70,
                   "width":110
                },
-               "parent":"wizard-pattern-view-container"
+               "parent":"xor-view-container"
             }
          },
          "id":"validate-step-2-action",
@@ -168,7 +168,7 @@
                   "height":70,
                   "width":110
                },
-               "parent":"wizard-pattern-view-container"
+               "parent":"xor-view-container"
             }
          },
          "id":"previous-step-2-action",
@@ -228,7 +228,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":840,
+                  "x":1240,
                   "y":80
                },
                "size":{
@@ -445,7 +445,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":1020,
+                  "x":1420,
                   "y":110
                },
                "name":{
@@ -469,7 +469,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":860,
+                  "x":1260,
                   "y":120
                },
                "size":{
@@ -545,7 +545,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":850,
+                  "x":1250,
                   "y":190
                },
                "name":{
@@ -564,7 +564,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":990,
+                  "x":1390,
                   "y":200
                },
                "name":{
@@ -692,7 +692,7 @@
                ]
             }
          },
-         "id":"previous-step-1-navigation-flow",
+         "id":"previous-step-2-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -711,7 +711,7 @@
                ]
             }
          },
-         "id":"previous-step-2-navigation-flow",
+         "id":"previous-review-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -751,27 +751,318 @@
          },
          "id":"to-step-2-navigation-flow",
          "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "name":"info",
+            "default":false,
+            "landmark":false,
+            "xor":false
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":840,
+                  "y":80
+               },
+               "size":{
+                  "height":150,
+                  "width":190
+               }
+            }
+         },
+         "id":"info-view-container",
+         "type":"ifml.ViewContainer"
+      },
+      {
+         "attributes":{
+            "name":"Validate info Form",
+            "parameters":[
+
+            ],
+            "results":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":1080,
+                  "y":130
+               },
+               "size":{
+                  "height":70,
+                  "width":110
+               },
+               "parent":"xor-view-container"
+            }
+         },
+         "id":"validate-info-form-action",
+         "type":"ifml.Action"
+      },
+      {
+         "attributes":{
+            "name":"Previous info Form",
+            "parameters":[
+
+            ],
+            "results":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":1080,
+                  "y":240
+               },
+               "size":{
+                  "height":70,
+                  "width":110
+               },
+               "parent":"xor-view-container"
+            }
+         },
+         "id":"previous-info-form-action",
+         "type":"ifml.Action"
+      },
+      {
+         "attributes":{
+            "name":"info Form",
+            "stereotype":"form",
+            "fields":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":860,
+                  "y":120
+               },
+               "size":{
+                  "height":90,
+                  "width":150
+               }
+            }
+         },
+         "id":"info-form-form",
+         "type":"ifml.ViewComponent"
+      },
+      {
+         "attributes":{
+            "name":"Cancel"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":1020,
+                  "y":110
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"cancel-info-form-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"Next"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":1000,
+                  "y":150
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"next-info-form-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"Previous"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":850,
+                  "y":190
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"previous-info-form-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"Ko"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":1070,
+                  "y":180
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"ko-validate-info-form-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"Ok"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":1180,
+                  "y":130
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"ok-validate-info-form-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"To"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":1070,
+                  "y":290
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"to-info-form-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
+                     "x":540,
+                     "y":300
+                  }
+               ]
+            }
+         },
+         "id":"to-info-form-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
+                     "x":860,
+                     "y":280
+                  }
+               ]
+            }
+         },
+         "id":"previous-info-form-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+
+            }
+         },
+         "id":"ok-validateinfo-form-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+
+            }
+         },
+         "id":"ko-validateinfo-form-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+
+            }
+         },
+         "id":"next-info-form-navigation-flow",
+         "type":"ifml.NavigationFlow"
       }
    ],
    "relations":[
       {
          "type":"hierarchy",
          "parent":"wizard-pattern-view-container",
-         "child":"wizard-pattern-view-container"
+         "child":"xor-view-container"
       },
       {
          "type":"hierarchy",
-         "parent":"wizard-pattern-view-container",
+         "parent":"xor-view-container",
          "child":"step-2-view-container"
       },
       {
          "type":"hierarchy",
-         "parent":"wizard-pattern-view-container",
+         "parent":"xor-view-container",
          "child":"step-1-view-container"
       },
       {
          "type":"hierarchy",
-         "parent":"wizard-pattern-view-container",
+         "parent":"xor-view-container",
          "child":"review-view-container"
       },
       {
@@ -896,12 +1187,12 @@
       },
       {
          "type":"source",
-         "flow":"previous-step-1-navigation-flow",
+         "flow":"previous-step-2-navigation-flow",
          "source":"previous-step-2-event"
       },
       {
          "type":"source",
-         "flow":"previous-step-2-navigation-flow",
+         "flow":"previous-review-navigation-flow",
          "source":"previous-review-event"
       },
       {
@@ -947,17 +1238,17 @@
       {
          "type":"target",
          "flow":"ok-validate-step-2-navigation-flow",
-         "target":"review-details"
-      },
-      {
-         "type":"target",
-         "flow":"previous-step-1-navigation-flow",
-         "target":"previous-step-1-action"
+         "target":"info-form-form"
       },
       {
          "type":"target",
          "flow":"previous-step-2-navigation-flow",
-         "target":"previous-step-2-action"
+         "target":"previous-step-1-action"
+      },
+      {
+         "type":"target",
+         "flow":"previous-review-navigation-flow",
+         "target":"previous-info-form-action"
       },
       {
          "type":"target",
@@ -968,6 +1259,106 @@
          "type":"target",
          "flow":"to-step-2-navigation-flow",
          "target":"step-2-form-form"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"xor-view-container",
+         "child":"info-view-container"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"xor-view-container",
+         "child":"validate-info-form-action"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"xor-view-container",
+         "child":"previous-info-form-action"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"info-view-container",
+         "child":"info-form-form"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"info-view-container",
+         "child":"cancel-info-form-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"info-form-form",
+         "child":"next-info-form-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"info-form-form",
+         "child":"previous-info-form-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"validate-info-form-action",
+         "child":"ko-validate-info-form-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"validate-info-form-action",
+         "child":"ok-validate-info-form-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"previous-info-form-action",
+         "child":"to-info-form-event"
+      },
+      {
+         "type":"source",
+         "flow":"to-info-form-navigation-flow",
+         "source":"previous-info-form-action"
+      },
+      {
+         "type":"target",
+         "flow":"to-info-form-navigation-flow",
+         "target":"info-form-form"
+      },
+      {
+         "type":"source",
+         "flow":"previous-info-form-navigation-flow",
+         "source":"previous-info-form-event"
+      },
+      {
+         "type":"target",
+         "flow":"previous-info-form-navigation-flow",
+         "target":"previous-step-2-action"
+      },
+      {
+         "type":"source",
+         "flow":"ok-validateinfo-form-navigation-flow",
+         "source":"validate-info-form-action"
+      },
+      {
+         "type":"target",
+         "flow":"ok-validateinfo-form-navigation-flow",
+         "target":"review-details"
+      },
+      {
+         "type":"source",
+         "flow":"ko-validateinfo-form-navigation-flow",
+         "source":"validate-info-form-action"
+      },
+      {
+         "type":"target",
+         "flow":"ko-validateinfo-form-navigation-flow",
+         "target":"info-form-form"
+      },
+      {
+         "type":"source",
+         "flow":"next-info-form-navigation-flow",
+         "source":"info-form-form"
+      },
+      {
+         "type":"target",
+         "flow":"next-info-form-navigation-flow",
+         "target":"validate-info-form-action"
       }
    ],
    "statistics":{
