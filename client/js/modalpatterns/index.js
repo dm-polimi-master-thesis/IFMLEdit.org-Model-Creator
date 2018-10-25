@@ -22,6 +22,7 @@ function ModalPatternsViewModel(options, close) {
 
         console.log('result',JSON.stringify(result));
 
+        options.load(result);
         /*
         var result = pattern.toJSON();
         var start = new Date();

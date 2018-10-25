@@ -335,7 +335,89 @@ $('#ifml > .sidebar .modal-example').click(function () {
 }).click();
 
 $('#ifml > .sidebar .modal-pattern').click(function () {
-    createModalPatterns({patterns: patterns, load: function (pattern) {}});
+    createModalPatterns({patterns: patterns, load: function (pattern) {
+
+        ifmlBoard.clearHistory();
+
+        function boundingBox(cells) {
+            var box = {
+                x: {
+                    min: Number.MAX_SAFE_INTEGER,
+                    max: Number.MIN_SAFE_INTEGER
+                },
+                y: {
+                    min: Number.MAX_SAFE_INTEGER,
+                    max: Number.MIN_SAFE_INTEGER
+                }
+            };
+            cells.map(function(element) {
+                if(element.attributes.type == 'ifml.ViewContainer' ||
+                    element.attributes.type == 'ifml.Action'){
+                    if (element.attributes.position.x < box.x.min) {
+                        box.x.min = element.attributes.position.x;
+                    }
+                    if (element.attributes.position.y < box.y.min) {
+                        box.y.min = element.attributes.position.y;
+                    }
+                    if (element.attributes.position.x + element.attributes.size.width > box.x.max) {
+                        box.x.max = element.attributes.position.x + element.attributes.size.width;
+                    }
+                    if (element.attributes.position.y + element.attributes.size.height > box.y.max) {
+                        box.y.max = element.attributes.position.y + element.attributes.size.height;
+                    }
+                }
+            });
+            return box;
+        }
+
+        try {
+            var start = new Date();
+
+            loaded_at = new Date();
+
+            var boardBB = {
+                x: {
+                    min: 0,
+                    max: 0
+                },
+                y: {
+                    min: 0,
+                    max: 0
+                }
+            };
+
+            if (ifmlModel.attributes.cells.models.length > 0) {
+                boardBB = boundingBox(ifmlModel.attributes.cells.models);
+            }
+            
+            var toBeAdded = ifml.fromJSON(pattern),
+                toBeAddedBB = boundingBox(toBeAdded);
+
+            toBeAdded = _(toBeAdded).map(function(model) {
+                if (model.attributes.position) {
+                    model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                    model.attributes.position.y += boardBB.y.min - toBeAddedBB.y.min;
+                }
+                if (model.attributes.vertices) {
+                    for (var i = 0; i<model.attributes.vertices.length; i++){
+                        model.attributes.vertices[i].x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                        model.attributes.vertices[i].y += boardBB.y.min - toBeAddedBB.y.min;
+                    }
+                }
+                return model;
+            }).value();
+
+            ifmlModel.addCells(toBeAdded);
+            ifmlBoard.clearHistory();
+            
+            $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
+        } catch (exception) {
+            ifmlBoard.clearHistory();
+            $.notify({message: 'Invalid input file!'}, {allow_dismiss: true, type: 'danger'});
+            return;
+        }
+        ifmlBoard.zoomE();
+    }});
     return false;
 });
 
