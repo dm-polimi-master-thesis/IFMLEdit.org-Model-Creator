@@ -4,9 +4,9 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator;
 
-function generateFlow(options) {
+function generateFlow(template, options) {
     var bindings = _.map(options.fields, function(field){
         return {
             input: field,
@@ -23,7 +23,7 @@ function generateFlow(options) {
               vertices: options.vertices || undefined
             }
         },
-        id: toId(options.name, options.type === 'ifml.DataFlow' ? '-data-flow' : '-navigation-flow'),
+        id: idValidator(template.elements, options.name, options.type === 'ifml.DataFlow' ? '-data-flow' : '-navigation-flow'),
         type: options.type
     }
 }

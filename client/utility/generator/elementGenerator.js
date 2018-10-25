@@ -12,24 +12,24 @@ var _ = require('lodash'),
     generateFlow = require('./elements/flowGenerator.js').generateFlow,
     generateRelations = require('./relationGenerator.js').generator;
 
-function generator(relations, options) {
+function generator(template, options) {
   var element;
   switch (options.type) {
     case 'ifml.ViewContainer':
-      element = generateViewContainer(options);
+      element = generateViewContainer(template, options);
       break;
     case 'ifml.ViewComponent':
-      element = generateViewComponent(options);
+      element = generateViewComponent(template, options);
       break;
     case 'ifml.Action':
-      element = generateAction(options);
+      element = generateAction(template, options);
       break;
     case 'ifml.Event':
-      element = generateEvent(options);
+      element = generateEvent(template, options);
       break;
     case 'ifml.NavigationFlow':
     case 'ifml.DataFlow':
-      element = generateFlow(options);
+      element = generateFlow(template, options);
       break;
     default:
       throw 'Unexpected element type';
@@ -37,7 +37,7 @@ function generator(relations, options) {
 
   options.id = element.id;
   if (! (options.type === 'ifml.Action')){
-    generateRelations(relations, options);
+    generateRelations(template.relations, options);
   }
   return element;
 }

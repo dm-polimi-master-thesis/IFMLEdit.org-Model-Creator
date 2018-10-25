@@ -4,9 +4,9 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator;
 
-function generateEvent(options) {
+function generateEvent(template, options) {
     return {
         attributes: {
             name: options.text
@@ -20,7 +20,7 @@ function generateEvent(options) {
                 }
             }
         },
-        id: toId(options.name, '-event'),
+        id: idValidator(template.elements, options.name, '-event'),
         type: 'ifml.Event'
     }
 }

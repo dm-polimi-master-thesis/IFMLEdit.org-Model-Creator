@@ -58,6 +58,12 @@ gulp.task('patterns', function () {
     );
 });
 
+gulp.task('utility', function () {
+    return merge(
+        gulp.src('./client/utility/**/*').pipe(gulp.dest('./public/utility')),
+    );
+});
+
 gulp.task('favicon', function () {
     return icongen('./client/favicon.svg', './public');
 });
@@ -319,9 +325,9 @@ gulp.task('demo-web-client', ['demo-web-client-index', 'demo-web-client-html', '
 gulp.task('demo-mobile', ['demo-mobile-index', 'demo-mobile-html', 'demo-mobile-css', 'demo-mobile-images', 'demo-mobile-js']);
 
 if (production) {
-    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns']);
+    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns', 'utility']);
 } else {
-    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns']);
+    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns', 'utility']);
 }
 
 gulp.task('default', ['clean'], function () {

@@ -5,7 +5,7 @@
 "use strict";
 
 var _ = require('lodash'),
-    parser = require('./final_parser.js').parser;
+    parser = require('./parser.js').parser;
 
 
 function SettingsPatternViewModel(options) {
@@ -21,7 +21,6 @@ function SettingsPatternViewModel(options) {
   self.selected = ko.observable(self.steps()[0]);
 
   self.addStep = function () {
-    console.log("Add Step");
     if(!(self.stepToAdd().length > 0)){
       $.notify({message: 'Void string is not accepted as step name.'},
         {allow_dismiss: true, type: 'danger'});
@@ -31,7 +30,7 @@ function SettingsPatternViewModel(options) {
       var duplicate = false;
 
       ko.utils.arrayForEach(self.steps(), function(step) {
-         if(step.name === name){
+         if(step.name.toLowerCase() === name.toLowerCase()){
            $.notify({message: 'Duplicate step name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
@@ -48,7 +47,6 @@ function SettingsPatternViewModel(options) {
   }
 
   self.addField = function () {
-    console.log("Add Field");
     if(!(self.fieldToAdd().length > 0)){
       $.notify({message: 'Void string is not accepted as field name.'},
         {allow_dismiss: true, type: 'danger'});
@@ -57,7 +55,7 @@ function SettingsPatternViewModel(options) {
       var duplicate = false;
 
       ko.utils.arrayForEach(self.fields(), function(field) {
-         if(field.name === name){
+         if(field.name.toLowerCase() === name.toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
@@ -72,7 +70,6 @@ function SettingsPatternViewModel(options) {
   }
 
   self.deleteStep = function () {
-    console.log("Delete Step");
     self.steps.remove(this);
     if (self.steps().length > 0 && self.selected() === this) {
       self.fields.removeAll();
@@ -85,12 +82,7 @@ function SettingsPatternViewModel(options) {
   }
 
   self.deleteField = function () {
-    console.log("Delete Field");
     self.fields.remove(this);
-  }
-
-  self.addPatternName = function () {
-    console.log("Add Pattern Name");
   }
 
   self.select = function () {
@@ -101,18 +93,11 @@ function SettingsPatternViewModel(options) {
 
   self.transform = function () {
     self.selected().fields = _.map(self.fields.removeAll(), 'name');
-
     var wizard = {
       name : self.name(),
       steps : self.steps()
     }
-
     return parser(wizard);
-
-  }
-
-  self.toJSON = function () {
-
   }
 }
 

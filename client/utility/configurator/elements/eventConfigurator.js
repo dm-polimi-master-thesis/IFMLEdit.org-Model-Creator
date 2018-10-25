@@ -4,9 +4,10 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator,
+    toId = require('../../utility.js').toId;
 
-function configureEvent(element, options) {
+function configureEvent(element, template, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -19,8 +20,12 @@ function configureEvent(element, options) {
   graphics.position = options.position || graphics.position;
   graphics.name = options.name || graphics.name;
 
-  if(options.name !== undefined){
-    element.id = toId(options.name,'-event');
+  if(options.name !== undefined || options.id !== undefined){
+    if(options.id !== undefined){
+      element.id = options.id;
+    } else if(toId(options.name,'-event') != element.id){
+      element.id = idValidator(template.elements, options.name,'-event');
+    }
   }
 
   dross.newId = element.id;

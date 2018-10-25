@@ -4,14 +4,14 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var toId = require('../../utility.js').toId;
 
-function generateTarget(options) {
+function generateHierarchy(options) {
     return {
-        type: 'target',
-        flow: options.id,
-        target: options.target
+        type: 'hierarchy',
+        parent: options.parent,
+        child: options.id
     }
 }
 
-exports.generateTarget = generateTarget;
+exports.generateHierarchy = generateHierarchy;

@@ -17,21 +17,8 @@ function ModalPatternsViewModel(options, close) {
         $.notify({message: 'Your request cannot be processed. The wizard pattern require a minimum of two steps.'},
           {allow_dismiss: true, type: 'danger'});
       } else {
-
         var result = self.pattern.transform();
-
-        console.log('result',JSON.stringify(result));
-
         options.load(result);
-        /*
-        var result = pattern.toJSON();
-        var start = new Date();
-
-        ifmlModel.addCells(ifml.fromJSON(JSON.parse(result)));
-        ifmlBoard.clearHistory();
-        $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
-        loaded_at = new Date();*/
-
         self.close();
       }
     }

@@ -4,9 +4,10 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator,
+    toId = require('../../utility.js').toId;
 
-function configureFlow(element, options) {
+function configureFlow(element, template, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -27,11 +28,17 @@ function configureFlow(element, options) {
       graphics.vertices = options.vertices || graphics.vertices;
   }
 
-  if(options.name !== undefined){
-    if(element.type === 'ifml.NavigationFlow'){
-      element.id = toId(options.name,'-navigation-flow');
+  if(options.name !== undefined || options.id !== undefined){
+    if(options.id !== undefined){
+      element.id = options.id;
+    } else if(element.type === 'ifml.NavigationFlow'){
+      if(toId(options.name,'-navigation-flow') != element.id){
+        element.id = idValidator(template.elements, options.name,'-navigation-flow');
+      }
     } else {
-      element.id = toId(options.name,'-data-flow');
+      if(toId(options.name,'-data-flow') != element.id){
+        element.id = idValidator(template.elements, options.name,'-data-flow');
+      }
     }
   }
 

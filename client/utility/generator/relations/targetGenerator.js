@@ -4,14 +4,14 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var toId = require('../../utility.js').toId;
 
-function generateSource(options) {
+function generateTarget(options) {
     return {
-        type: 'source',
+        type: 'target',
         flow: options.id,
-        source: options.source
+        target: options.target
     }
 }
 
-exports.generateSource = generateSource;
+exports.generateTarget = generateTarget;

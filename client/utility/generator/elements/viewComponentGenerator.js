@@ -4,9 +4,9 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator;
 
-function generateViewComponent(options) {
+function generateViewComponent(template, options) {
   return {
       attributes: {
           name: options.name,
@@ -21,7 +21,7 @@ function generateViewComponent(options) {
             size: options.size || { height: 90, width: 150 }
           }
       },
-      id: toId(options.name, '-' + options.stereotype),
+      id: idValidator(template.elements, options.name, '-' + options.stereotype),
       type: 'ifml.ViewComponent'
   }
 }

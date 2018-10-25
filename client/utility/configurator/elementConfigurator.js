@@ -12,24 +12,25 @@ var _ = require('lodash'),
     configureFlow = require('./elements/flowConfigurator.js').configureFlow,
     relationsUpdate = require('./relationConfigurator.js').allConfigurator;
 
-function configurator(element, relations, options) {
+function configurator(element, template, options) {
+  console.log('entro!');
   var dross;
   switch (element.type) {
     case 'ifml.ViewContainer':
-      dross = configureViewContainer(element, options);
+      dross = configureViewContainer(element, template, options);
       break;
     case 'ifml.ViewComponent':
-      dross = configureViewComponent(element, options);
+      dross = configureViewComponent(element, template, options);
       break;
     case 'ifml.Action':
-      dross = configureAction(element, options);
+      dross = configureAction(element, template, options);
       break;
     case 'ifml.Event':
-      dross = configureEvent(element, options);
+      dross = configureEvent(element, template, options);
       break;
     case 'ifml.NavigationFlow':
     case 'ifml.DataFlow':
-      dross = configureFlow(element, options);
+      dross = configureFlow(element, template, options);
       break;
     default:
       throw 'Unexpected element type';
@@ -37,9 +38,9 @@ function configurator(element, relations, options) {
 
   if(dross.oldId !== dross.newId){
     if (!(element.type === 'ifml.NavigationFlow' || element.type === 'ifml.DataFlow')) {
-      relationsUpdate(relations, dross);
+      relationsUpdate(template.relations, dross);
     } else {
-      relationsUpdate(relations, dross);
+      relationsUpdate(template.relations, dross);
     }
   }
 }

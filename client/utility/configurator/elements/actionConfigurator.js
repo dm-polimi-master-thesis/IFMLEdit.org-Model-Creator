@@ -4,9 +4,10 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator,
+    toId = require('../../utility.js').toId;
 
-function configureAction(element, options) {
+function configureAction(element, template, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -22,8 +23,12 @@ function configureAction(element, options) {
   graphics.size = options.size || graphics.size;
   graphics.parent = options.parent || graphics.parent;
 
-  if(options.name !== undefined){
-    element.id = toId(options.name,'-action');
+  if(options.name !== undefined || options.id !== undefined){
+    if(options.id !== undefined){
+      element.id = options.id;
+    } else if(toId(options.name,'-action') != element.id){
+      element.id = idValidator(template.elements, options.name,'-action');
+    }
   }
 
   dross.newId = element.id;

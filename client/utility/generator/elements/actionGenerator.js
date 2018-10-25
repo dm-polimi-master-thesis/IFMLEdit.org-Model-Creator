@@ -4,9 +4,9 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator;
 
-function generateAction(options) {
+function generateAction(template, options) {
   return {
      attributes: {
         name: options.name,
@@ -20,7 +20,7 @@ function generateAction(options) {
            parent: options.parent
         }
      },
-     id: toId(options.name,'-action'),
+     id: idValidator(template.elements, options.name,'-action'),
      type : 'ifml.Action'
   }
 }

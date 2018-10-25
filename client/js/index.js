@@ -32,7 +32,7 @@ var _ = require('lodash'),
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
     AException = require('almost').Exception,
-    patternIdValidator = require('./idValidator').idValidator;
+    partialModelValidator = require('../utility/utility.js').partialModelValidator;
 
 /**
   * Return a function to generate an element
@@ -266,10 +266,15 @@ $('#ifml > .append > input[type=file]').change(function () {
                 $.notify({message: 'The board is empty, please use Load Model!'}, {allow_dismiss: true, type: 'warning'});
                 return;
             }
-            
+
             var toBeAdded = ifml.fromJSON(JSON.parse(e.target.result)),
                 boardBB = boundingBox(ifmlModel.attributes.cells.models),
                 toBeAddedBB = boundingBox(toBeAdded);
+
+            console.log('toBeAdded',toBeAdded);
+            console.log('model',ifmlModel.attributes.cells.models);
+
+            partialModelValidator(ifmlModel.attributes.cells.models, toBeAdded);
 
             toBeAdded = _(toBeAdded).map(function(model) {
                 if (model.attributes.position) {
@@ -287,7 +292,7 @@ $('#ifml > .append > input[type=file]').change(function () {
 
             ifmlModel.addCells(toBeAdded);
             ifmlBoard.clearHistory();
-            
+
             $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
         } catch (exception) {
             ifmlBoard.clearHistory();
@@ -386,12 +391,13 @@ $('#ifml > .sidebar .modal-pattern').click(function () {
                 }
             };
 
-            if (ifmlModel.attributes.cells.models.length > 0) {
-                boardBB = boundingBox(ifmlModel.attributes.cells.models);
-            }
-            
             var toBeAdded = ifml.fromJSON(pattern),
                 toBeAddedBB = boundingBox(toBeAdded);
+
+            if (ifmlModel.attributes.cells.models.length > 0) {
+                boardBB = boundingBox(ifmlModel.attributes.cells.models);
+                partialModelValidator(ifmlModel.attributes.cells.models, toBeAdded);
+            }
 
             toBeAdded = _(toBeAdded).map(function(model) {
                 if (model.attributes.position) {
@@ -409,7 +415,7 @@ $('#ifml > .sidebar .modal-pattern').click(function () {
 
             ifmlModel.addCells(toBeAdded);
             ifmlBoard.clearHistory();
-            
+
             $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
         } catch (exception) {
             ifmlBoard.clearHistory();

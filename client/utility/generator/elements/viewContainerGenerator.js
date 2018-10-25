@@ -4,9 +4,9 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator;
 
-function generateViewContainer(options) {
+function generateViewContainer(template, options) {
   return {
       attributes: {
           name: options.name,
@@ -20,7 +20,7 @@ function generateViewContainer(options) {
             size: options.size || { height: 150, width: 190 }
          }
       },
-      id: toId(options.name,'-view-container'),
+      id: idValidator(template.elements, options.name,'-view-container'),
       type : 'ifml.ViewContainer'
   }
 }

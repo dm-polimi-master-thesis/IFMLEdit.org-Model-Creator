@@ -4,9 +4,10 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
+var idValidator = require('../../utility.js').idValidator,
+    toId = require('../../utility.js').toId;
 
-function configureViewComponent(element, options) {
+function configureViewComponent(element, template, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -27,13 +28,21 @@ function configureViewComponent(element, options) {
   graphics.position = options.position || graphics.position;
   graphics.size = options.size || graphics.size;
 
-  if(options.name !== undefined){
-    if (attributes.stereotype === 'form') {
-      element.id = toId(options.name,'-form');
+  if(options.name !== undefined || options.id !== undefined){
+    if(options.id !== undefined){
+      element.id = options.id;
+    } else if (attributes.stereotype === 'form') {
+      if(toId(options.name,'-form') != element.id){
+        element.id = idValidator(template.elements, options.name,'-form');
+      }
     } else if(attributes.stereotype === 'list') {
-      element.id = toId(options.name,'-list');
+      if(toId(options.name,'-list') != element.id){
+        element.id = idValidator(template.elements, options.name,'-list');
+      }
     } else {
-      element.id = toId(options.name,'-details');
+      if(toId(options.name,'-details') != element.id){
+        element.id = idValidator(template.elements, options.name,'-details');
+      }
     }
   }
 

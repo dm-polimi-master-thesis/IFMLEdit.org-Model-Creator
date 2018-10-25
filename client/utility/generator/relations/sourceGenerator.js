@@ -4,14 +4,14 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-function idValidator(pattern,model) {
-  var count = 0;
+var toId = require('../../utility.js').toId;
 
-  word.toLowerCase()
-      .replace(/\W/g,"-")
-      .concat(tail);
-
-  return "miao";
+function generateSource(options) {
+    return {
+        type: 'source',
+        flow: options.id,
+        source: options.source
+    }
 }
 
-exports.idValidator = idValidator;
+exports.generateSource = generateSource;
