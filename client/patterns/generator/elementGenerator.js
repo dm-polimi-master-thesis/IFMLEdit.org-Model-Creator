@@ -36,7 +36,9 @@ function generator(relations, options) {
   }
 
   options.id = element.id;
-  generateRelations(relations, options);
+  if (! (options.type === 'ifml.Action')){
+    generateRelations(relations, options);
+  }
   return element;
 }
 

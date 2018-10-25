@@ -196,10 +196,10 @@ function parser(wizard){
           name: 'To ' + step.formName,
           fields: step.fields,
           vertices: [{
-            x: modelElementsHash['to-step-2-navigation-flow'].metadata.graphics.vertices[0].x + 400 * index,
+            x: modelElementsHash['to-step-2-navigation-flow'].metadata.graphics.vertices[0].x + 400 * (index + 1),
             y: modelElementsHash['to-step-2-navigation-flow'].metadata.graphics.vertices[0].y
           }],
-          source: reference['previousAction'].id,
+          source: reference['toEvent'].id,
           target: reference['form'].id
         });
         reference['previousNavigationFlow'] = generator(relations, {
@@ -215,22 +215,22 @@ function parser(wizard){
         });
         reference['okNavigationFlow'] = generator(relations, {
           type: 'ifml.NavigationFlow',
-          name: 'Ok Validate' + step.formName,
-          source: reference['validateAction'].id,
+          name: 'Ok Validate ' + step.formName,
+          source: reference['oKValidateEvent'].id,
           target: (index + 1) < collection.length ? toId(collection[index + 1].formName, '-form') : modelElementsHash['review-details'].id
         });
         reference['koNavigationFlow'] = generator(relations, {
           type: 'ifml.NavigationFlow',
-          name: 'Ko Validate' + step.formName,
+          name: 'Ko Validate ' + step.formName,
           fields: _.flattenDeep(errorFields),
-          source: reference['validateAction'].id,
+          source: reference['koValidateEvent'].id,
           target: reference['form'].id
         });
         reference['nextNavigationFlow'] = generator(relations, {
           type: 'ifml.NavigationFlow',
           name: 'Next ' + step.formName,
           fields: step.fields,
-          source: reference['form'].id,
+          source: reference['nextEvent'].id,
           target: reference['validateAction'].id
         });
 
@@ -257,7 +257,7 @@ function parser(wizard){
         modelElementsHash['review-details'].metadata.graphics.position.x += 400;
         modelElementsHash['previous-review-event'].metadata.graphics.position.x += 400;
         modelElementsHash['end-wizard-event'].metadata.graphics.position.x += 400;
-        modelElementsHash['previous-review-navigation-flow'].metadata.graphics.vertices.x += 400;
+        modelElementsHash['previous-review-navigation-flow'].metadata.graphics.vertices[0].x += 400;
         modelElementsHash['save-action'].metadata.graphics.position.x += 400;
     });
   }

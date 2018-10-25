@@ -1012,7 +1012,7 @@
 
             }
          },
-         "id":"ok-validateinfo-form-navigation-flow",
+         "id":"ok-validate-info-form-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -1026,7 +1026,7 @@
 
             }
          },
-         "id":"ko-validateinfo-form-navigation-flow",
+         "id":"ko-validate-info-form-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -1267,16 +1267,6 @@
       },
       {
          "type":"hierarchy",
-         "parent":"xor-view-container",
-         "child":"validate-info-form-action"
-      },
-      {
-         "type":"hierarchy",
-         "parent":"xor-view-container",
-         "child":"previous-info-form-action"
-      },
-      {
-         "type":"hierarchy",
          "parent":"info-view-container",
          "child":"info-form-form"
       },
@@ -1309,56 +1299,6 @@
          "type":"hierarchy",
          "parent":"previous-info-form-action",
          "child":"to-info-form-event"
-      },
-      {
-         "type":"source",
-         "flow":"to-info-form-navigation-flow",
-         "source":"previous-info-form-action"
-      },
-      {
-         "type":"target",
-         "flow":"to-info-form-navigation-flow",
-         "target":"info-form-form"
-      },
-      {
-         "type":"source",
-         "flow":"previous-info-form-navigation-flow",
-         "source":"previous-info-form-event"
-      },
-      {
-         "type":"target",
-         "flow":"previous-info-form-navigation-flow",
-         "target":"previous-step-2-action"
-      },
-      {
-         "type":"source",
-         "flow":"ok-validateinfo-form-navigation-flow",
-         "source":"validate-info-form-action"
-      },
-      {
-         "type":"target",
-         "flow":"ok-validateinfo-form-navigation-flow",
-         "target":"review-details"
-      },
-      {
-         "type":"source",
-         "flow":"ko-validateinfo-form-navigation-flow",
-         "source":"validate-info-form-action"
-      },
-      {
-         "type":"target",
-         "flow":"ko-validateinfo-form-navigation-flow",
-         "target":"info-form-form"
-      },
-      {
-         "type":"source",
-         "flow":"next-info-form-navigation-flow",
-         "source":"info-form-form"
-      },
-      {
-         "type":"target",
-         "flow":"next-info-form-navigation-flow",
-         "target":"validate-info-form-action"
       }
    ],
    "statistics":{

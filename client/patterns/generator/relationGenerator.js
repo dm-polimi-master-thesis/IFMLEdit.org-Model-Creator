@@ -10,7 +10,7 @@ var _ = require('lodash'),
     generateTarget = require('./relations/targetGenerator.js').generateTarget;
 
 function generator(relations, options) {
-  if(!(options.type === 'ifml.NavigationFlow' || options.type === 'ifml.DataFlow')){
+  if (!(options.type === 'ifml.NavigationFlow' || options.type === 'ifml.DataFlow')) {
     relations.push(generateHierarchy(options));
   } else {
     relations.push(generateSource(options), generateTarget(options));
