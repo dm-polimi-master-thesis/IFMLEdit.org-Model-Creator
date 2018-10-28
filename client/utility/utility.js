@@ -7,9 +7,12 @@
 var _ = require('lodash'),
     configurator = require('./configurator/elementConfigurator.js').configurator;
 
+function prova(){
+  console.log("prova");
+}
+
 function toId(word, tail) {
-  var id = word.toLowerCase()
-               .replace(/\W/g,"-");
+  var id = word.toLowerCase().replace(/\W/g,"-");
   if(id.slice(word.length - tail.length) === tail){
     return id;
   }
@@ -22,11 +25,11 @@ function toHash(collection) {
   _.forEach(collection, function (element) {
     hash[element.id] = element;
   });
-
   return hash;
 }
 
 function idValidator(elements, name, tail) {
+  console.log("idValidator");
   var id = toId(name, tail),
       duplicates = _.filter(elements, function (element) { return  _.includes(element.id,id)});
 
@@ -38,31 +41,35 @@ function idValidator(elements, name, tail) {
 }
 
 function partialModelValidator(model1, model2) {
-  console.log('partialModelValidator');
-  console.log('model1',model1);
-  console.log('model2',model2);
-  hashModel1 = toHash(model1);
-  console.log('hash', model1);
-  _.forEach(model2, function(element){
-    console.log('forEach');
+  try{
+  var hashModel1 = toHash(model1.elements);
+  console.log("- model2 -", model2);
+  console.log("elements", model2.elements);
+  _.forEach(model2.elements, function(element){
     var id = element.id;
+    console.log("element", element);
+    console.log("id",id);
     if(hashModel1[id] !== undefined){
-      console.log('if');
+      console.log("hash ≠ undefined!");
       var index = 1,
           newId = id + '-' + index;
       while(hashModel1[newId] !== undefined){
         index++;
         newId = id + "-" + index;
       }
-
       configurator(element, model2, {
         type: element.type,
         id: newId
       });
     }
   });
+} catch (err){
+  console.log(err);
+}
+  return model2;
 }
 
+exports.prova = prova;
 exports.toId = toId;
 exports.toHash = toHash;
 exports.idValidator = idValidator;

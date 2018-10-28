@@ -221,12 +221,13 @@ $('#ifml > .sidebar .model-load').click(function () {
 
 $('#ifml > .append > input[type=file]').change(function () {
     var reader = new FileReader();
-
+    console.log('1');
     reader.onload = function (e) {
-
+        try{
         ifmlBoard.clearHistory();
 
         function boundingBox(cells) {
+          console.log("cells",cells);
             var box = {
                 x: {
                     min: Number.MAX_SAFE_INTEGER,
@@ -256,8 +257,6 @@ $('#ifml > .append > input[type=file]').change(function () {
             });
             return box;
         }
-
-        try {
             var start = new Date();
 
             loaded_at = new Date();
@@ -266,16 +265,10 @@ $('#ifml > .append > input[type=file]').change(function () {
                 $.notify({message: 'The board is empty, please use Load Model!'}, {allow_dismiss: true, type: 'warning'});
                 return;
             }
-
-            var toBeAdded = ifml.fromJSON(JSON.parse(e.target.result)),
+            console.log("2");
+            var toBeAdded = ifml.fromJSON(JSON.parse(partialModelValidator(ifml.toJSON(ifmlModel), JSON.parse(e.target.result)))),
                 boardBB = boundingBox(ifmlModel.attributes.cells.models),
                 toBeAddedBB = boundingBox(toBeAdded);
-
-            console.log('toBeAdded',toBeAdded);
-            console.log('model',ifmlModel.attributes.cells.models);
-
-            partialModelValidator(ifmlModel.attributes.cells.models, toBeAdded);
-
             toBeAdded = _(toBeAdded).map(function(model) {
                 if (model.attributes.position) {
                     model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
@@ -295,6 +288,7 @@ $('#ifml > .append > input[type=file]').change(function () {
 
             $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
         } catch (exception) {
+          console.log(exception);
             ifmlBoard.clearHistory();
             $.notify({message: 'Invalid input file!'}, {allow_dismiss: true, type: 'danger'});
             return;

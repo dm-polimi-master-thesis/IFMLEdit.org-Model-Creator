@@ -54,13 +54,15 @@ gulp.task('examples', function () {
 
 gulp.task('patterns', function () {
     return merge(
-        gulp.src('./client/patterns/**/*').pipe(gulp.dest('./public/patterns')),
+        gulp.src('./public/patterns/*', {read: false, dot: true}).pipe(rimraf({ force: true })),
+        gulp.src('./client/patterns/**/*').pipe(gulp.dest('./public/patterns'))
     );
 });
 
 gulp.task('utility', function () {
     return merge(
-        gulp.src('./client/utility/**/*').pipe(gulp.dest('./public/utility')),
+        gulp.src('./public/utility/*', {read: false, dot: true}).pipe(rimraf({ force: true })),
+        gulp.src('./client/utility/**/*').pipe(gulp.dest('./public/client/utility'))
     );
 });
 
