@@ -4,7 +4,7 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var idValidator = require('../../utility.js').idValidator;
+var idValidator = require('../../utilities.js').idValidator;
 
 function generateViewContainer(template, options) {
   return {

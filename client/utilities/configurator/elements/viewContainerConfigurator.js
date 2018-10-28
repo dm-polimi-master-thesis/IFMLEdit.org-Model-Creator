@@ -4,15 +4,10 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var idValidator = require('../../utility.js').idValidator,
-    prova = require('../../prova.js').provanuova,
-    toId = require('../../utility.js').toId;
+var idValidator = require('../../utilities.js').idValidator,
+    toId = require('../../utilities.js').toId;
 
 function configureViewContainer(element, template, options) {
-  console.log("prova",prova);
-  console.log("toId", toId);
-  idValidator("a","b","c");
-
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {

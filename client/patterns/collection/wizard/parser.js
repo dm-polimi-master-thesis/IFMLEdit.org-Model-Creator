@@ -5,11 +5,11 @@
 "use strict";
 
 var _ = require('lodash'),
-    idValidator = require('../../../utility/utility.js').idValidator,
-    toHash = require('../../../utility/utility.js').toHash,
+    idValidator = require('../../../utilities/utilities.js').idValidator,
+    toHash = require('../../../utilities/utilities.js').toHash,
     format = require('./default.json'),
-    configurator = require('../../../utility/configurator/elementConfigurator.js').configurator,
-    generator = require('../../../utility/generator/elementGenerator.js').generator;
+    configurator = require('../../../utilities/configurator/elementConfigurator.js').configurator,
+    generator = require('../../../utilities/generator/elementGenerator.js').generator;
 
 function parser(wizard){
   var template = _.cloneDeep(format);

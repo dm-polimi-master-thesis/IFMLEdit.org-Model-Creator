@@ -4,8 +4,8 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var idValidator = require('../../utility.js').idValidator,
-    toId = require('../../utility.js').toId;
+var idValidator = require('../../utilities.js').idValidator,
+    toId = require('../../utilities.js').toId;
 
 function configureViewComponent(element, template, options) {
   var attributes = element.attributes,
