@@ -42,6 +42,14 @@ function configurator(element, template, options) {
     } else {
       relationsUpdate(template.relations, dross);
     }
+
+    if (element.type === 'ifml.ViewContainer'){
+      _.forEach(template.elements, function(el){
+        if(el.type === 'ifml.Action' && el.metadata.graphics.parent === dross.oldId){
+          el.metadata.graphics.parent = dross.newId;
+        }
+      });
+    }
   }
 }
 
