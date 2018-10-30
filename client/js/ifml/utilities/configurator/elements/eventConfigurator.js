@@ -4,29 +4,27 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var idValidator = require('../../utilities.js').idValidator,
-    toId = require('../../utilities.js').toId;
+var idValidator = require('../../validator/idValidator.js').idValidator,
+    toId = require('../../validator/toId.js').toId;
 
-function configureViewContainer(element, template, options) {
+function configureEvent(element, template, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
         type: 'element',
         oldId: element.id
       };
-  attributes.name = options.name || attributes.name;
-  attributes.default = options.default || attributes.default;
-  attributes.landmark = options.landmark || attributes.landmark;
-  attributes.xor = options.xor || attributes.xor;
+
+  attributes.name = options.text || attributes.name;
 
   graphics.position = options.position || graphics.position;
-  graphics.size = options.size || graphics.size;
+  graphics.name = options.name || graphics.name;
 
   if(options.name !== undefined || options.id !== undefined){
     if(options.id !== undefined){
       element.id = options.id;
-    } else if (toId(options.name,'-view-container') != element.id) {
-      element.id = idValidator(template.elements, options.name,'-view-container');
+    } else if(toId(options.name,'-event') != element.id){
+      element.id = idValidator(template.elements, options.name,'-event');
     }
   }
 
@@ -34,4 +32,4 @@ function configureViewContainer(element, template, options) {
   return dross;
 }
 
-exports.configureViewContainer = configureViewContainer;
+exports.configureEvent = configureEvent;

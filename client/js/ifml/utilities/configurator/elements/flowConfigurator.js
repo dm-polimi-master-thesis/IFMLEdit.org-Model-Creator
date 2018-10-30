@@ -4,8 +4,8 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var idValidator = require('../../utilities.js').idValidator,
-    toId = require('../../utilities.js').toId;
+var idValidator = require('../../validator/idValidator.js').idValidator,
+    toId = require('../../validator/toId.js').toId;
 
 function configureFlow(element, template, options) {
   var attributes = element.attributes,

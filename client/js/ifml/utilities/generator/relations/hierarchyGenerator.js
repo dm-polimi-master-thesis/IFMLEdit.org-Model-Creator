@@ -4,8 +4,6 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
-
 function generateHierarchy(options) {
     return {
         type: 'hierarchy',

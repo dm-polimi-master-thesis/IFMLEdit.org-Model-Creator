@@ -4,14 +4,12 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var toId = require('../../utilities.js').toId;
-
-function generateSource(options) {
-    return {
-        type: 'source',
-        flow: options.id,
-        source: options.source
-    }
+function toId(word, tail) {
+  var id = word.toLowerCase().replace(/\W/g,"-");
+  if(id.slice(word.length - tail.length) === tail){
+    return id;
+  }
+  return id.concat(tail);
 }
 
-exports.generateSource = generateSource;
+exports.toId = toId;

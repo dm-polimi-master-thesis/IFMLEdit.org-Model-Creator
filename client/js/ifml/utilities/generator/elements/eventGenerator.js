@@ -4,7 +4,7 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var idValidator = require('../../utilities.js').idValidator;
+var idValidator = require('../../validator/idValidator.js').idValidator;
 
 function generateEvent(template, options) {
     return {

@@ -4,10 +4,10 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var idValidator = require('../../utilities.js').idValidator,
-    toId = require('../../utilities.js').toId;
+var idValidator = require('../../validator/idValidator.js').idValidator,
+    toId = require('../../validator/toId.js').toId;
 
-function configureEvent(element, template, options) {
+function configureAction(element, template, options) {
   var attributes = element.attributes,
       graphics = element.metadata.graphics,
       dross = {
@@ -15,16 +15,19 @@ function configureEvent(element, template, options) {
         oldId: element.id
       };
 
-  attributes.name = options.text || attributes.name;
+  attributes.name = options.name || attributes.name;
+  attributes.parameters = options.parameters || attributes.parameters;
+  attributes.results = options.results || attributes.results;
 
   graphics.position = options.position || graphics.position;
-  graphics.name = options.name || graphics.name;
+  graphics.size = options.size || graphics.size;
+  graphics.parent = options.parent || graphics.parent;
 
   if(options.name !== undefined || options.id !== undefined){
     if(options.id !== undefined){
       element.id = options.id;
-    } else if(toId(options.name,'-event') != element.id){
-      element.id = idValidator(template.elements, options.name,'-event');
+    } else if(toId(options.name,'-action') != element.id){
+      element.id = idValidator(template.elements, options.name,'-action');
     }
   }
 
@@ -32,4 +35,4 @@ function configureEvent(element, template, options) {
   return dross;
 }
 
-exports.configureEvent = configureEvent;
+exports.configureAction = configureAction;

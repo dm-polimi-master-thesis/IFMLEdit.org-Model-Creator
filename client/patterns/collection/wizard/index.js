@@ -92,6 +92,11 @@ function SettingsPatternViewModel(options) {
   }
 
   self.transform = function () {
+    if(self.steps().length < 2){
+      $.notify({message: 'Your request cannot be processed. The wizard pattern require a minimum of two steps.'},
+        {allow_dismiss: true, type: 'danger'});
+      return undefined;
+    }
     self.selected().fields = _.map(self.fields.removeAll(), 'name');
     var wizard = {
       name : self.name(),

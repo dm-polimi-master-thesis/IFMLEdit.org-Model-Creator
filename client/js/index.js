@@ -32,7 +32,7 @@ var _ = require('lodash'),
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
     AException = require('almost').Exception,
-    partialModelValidator = require('../utilities/utilities.js').partialModelValidator;
+    partialModelValidator = require('./ifml/utilities/validator/partialModelValidator.js').partialModelValidator;
 
 /**
   * Return a function to generate an element

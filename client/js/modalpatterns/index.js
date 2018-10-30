@@ -13,11 +13,9 @@ function ModalPatternsViewModel(options, close) {
     self.firstStep = ko.observable(true);
 
     self.load = function () {
-      if(self.pattern.steps().length < 2){
-        $.notify({message: 'Your request cannot be processed. The wizard pattern require a minimum of two steps.'},
-          {allow_dismiss: true, type: 'danger'});
-      } else {
-        var result = self.pattern.transform();
+      var result = self.pattern.transform();
+
+      if(result !== undefined){
         options.load(result);
         self.close();
       }
@@ -38,7 +36,7 @@ function ModalPatternsViewModel(options, close) {
                     .addClass('pattern-settings-in')
                     .animate({opacity:1,left:'0px'},800, function () {})
                     .show();
-
+                console.log(self.home.selected());
                     self.pattern = self.home.selected().createPattern({ id: self.home.selected().id });
               } else {
                 $('#pattern-settings').addClass('pattern-settings-in')
