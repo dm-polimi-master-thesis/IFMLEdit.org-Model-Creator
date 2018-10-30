@@ -36,7 +36,6 @@ function ModalPatternsViewModel(options, close) {
                     .addClass('pattern-settings-in')
                     .animate({opacity:1,left:'0px'},800, function () {})
                     .show();
-                console.log(self.home.selected());
                     self.pattern = self.home.selected().createPattern({ id: self.home.selected().id });
               } else {
                 $('#pattern-settings').addClass('pattern-settings-in')

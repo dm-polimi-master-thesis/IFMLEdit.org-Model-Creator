@@ -11,28 +11,28 @@
     </thead>
     <tbody>
       <tr>
-        <td class="name-step-field wizard-form-input trace-line-padding">
-          <span class="wizard-form-label">Search Field:</span>
+        <td class="form-td-left basic-search-form-input trace-line">
           <div class="form-group">
+            <span class="basic-search-form-label">Search Field:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Search Field Name" type="text" data-bind="value: searchField, valueUpdate: 'input'"/>
+              <input class="form-control form-smooth" placeholder="Field Name" type="text" data-bind="value: searchField, valueUpdate: 'input'"/>
             </div>
           </div>
         </td>
-        <td class="name-step-field wizard-form-input trace-line-padding">
-          <span class="wizard-form-label">Details Name:</span>
+        <td class=" basic-search-form-input trace-line-padding">
           <div class="form-group">
+            <span class="basic-search-form-label">Details Name:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="value: resultSelected().detailsName, valueUpdate: 'input'"/>
+              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="value: selectedDetailsName, valueUpdate: 'input'"/>
             </div>
           </div>
         </td>
       </tr>
       <tr>
         <th class="trace-line th-left">Results</th>
-        <td class="name-step-field wizard-form-input trace-line-padding">
-          <span class="wizard-form-label">Field:</span>
+        <td class=" basic-search-form-input trace-line-padding">
           <div class="form-group">
+            <span class="basic-search-form-label">Field:</span>
             <div class="input-group">
               <input class="form-control" placeholder="Add new field" type="text" data-bind="value: selectedFieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField.bind($data,'details')"/>
               <div class="input-group-addon">
@@ -43,17 +43,17 @@
         </td>
       </tr>
       <tr>
-        <td class="name-step-field wizard-form-input trace-line-padding">
-          <span class="wizard-form-label">Collection:</span>
+        <td class="collection-name form-td-left basic-search-form-input trace-line">
           <div class="form-group">
+            <span class="basic-search-form-label">Collection:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="value: collection, valueUpdate: 'input'"/>
+              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="value: collectionName, valueUpdate: 'input'"/>
             </div>
           </div>
         </td>
         <td rowspan="3" class="trace-line-padding">
-          <center class="list-fields-container">
-            <ul class="list-fields" data-bind="foreach: selectedFields">
+          <center class="details-fields-container">
+            <ul class="details-fields" data-bind="foreach: selectedFields">
               <li>
                 <div class="right-inner-addon">
                   <span data-bind="text: name"></span>
@@ -65,9 +65,9 @@
         </td>
       </tr>
       <tr>
-        <td class="name-step-field wizard-form-input trace-line-padding">
-          <span class="wizard-form-label">Field:</span>
+        <td class="form-td-left basic-search-form-input trace-line">
           <div class="form-group">
+            <span class="basic-search-form-label">Field:</span>
             <div class="input-group">
               <input class="form-control" placeholder="Add new field" type="text" data-bind="value: resultsFieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField.bind($data,'list')"/>
               <div class="input-group-addon">
@@ -78,7 +78,7 @@
         </td>
       </tr>
       <tr>
-        <td rowspan="2" class="trace-line-padding">
+        <td rowspan="2" class="trace-line">
           <center class="list-fields-container">
             <ul class="list-fields" data-bind="foreach: resultsFields">
               <li>
@@ -92,7 +92,7 @@
         </td>
       </tr>
       <tr>
-        <td class="td-pattern-name trace-line-padding">
+        <td class="trace-line-padding">
           <div class="form-group">
             <div class="input-group">
               <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="value: name, valueUpdate: 'afterkeydown'"/>

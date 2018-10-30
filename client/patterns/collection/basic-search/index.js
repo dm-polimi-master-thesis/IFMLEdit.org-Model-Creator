@@ -12,23 +12,37 @@ function SettingsPatternViewModel(options) {
 
   var self = this;
 
-  self.name = ko.observable("");
+  self.id = options.id;
+  self.name = ko.observable("Basic Pattern");
   self.searchField = ko.observable("");
+  self.selectedDetailsName = ko.observable("");
+  self.collectionName = ko.observable("");
   self.resultsFieldToAdd = ko.observable("");
   self.selectedFieldToAdd = ko.observable("");
   self.resultsFields = ko.observableArray([]);
   self.selectedFields = ko.observableArray([]);
 
   self.addField = function (type) {
-    if(!(self.ieldToAdd().length > 0)){
+    console.log("addField");
+    var fieldToAdd;
+    var fields;
+
+    if(type === 'list'){
+      fieldToAdd = self.resultsFieldToAdd;
+      fields = self.resultsFields;
+    } else {
+      fieldToAdd = self.selectedFieldToAdd;
+      fields = self.selectedFields;
+    }
+
+    if(!(fieldToAdd().length > 0)){
       $.notify({message: 'Void string is not accepted as field name.'},
         {allow_dismiss: true, type: 'danger'});
     } else {
-      var name = self.fieldToAdd();
       var duplicate = false;
 
-      ko.utils.arrayForEach(self.fields(), function(field) {
-         if(field.name.toLowerCase() === name.toLowerCase()){
+      ko.utils.arrayForEach(fields(), function(field) {
+         if(field.name.toLowerCase() === fieldToAdd().toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
@@ -36,18 +50,16 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        if (type === 'list') {
-          self.resultsFields.push({ name: name });
-          self.resultsFieldToAdd("");
-        } else {
-          self.selectedFields.push({ name: name });
-          self.detailsFieldToAdd("");
-        }
+        fields.push({ name: fieldToAdd });
+        fieldToAdd("");
       }
     }
+    console.log("results", self.resultsFields());
+    console.log("selected", self.selectedFields());
   }
 
-  self.deleteStep = function(type){
+  self.deleteField = function(type){
+    console.log("deleteField");
     if (type === 'list') {
       self.resultsFields.remove(this);
     } else {
