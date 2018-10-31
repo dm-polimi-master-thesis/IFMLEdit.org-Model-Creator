@@ -13,7 +13,7 @@ function SettingsPatternViewModel(options) {
   var self = this;
 
   self.id = options.id;
-  self.name = ko.observable("Wizard Pattern");
+  self.name = ko.observable("Wizard");
   self.stepToAdd = ko.observable("");
   self.fieldToAdd = ko.observable("");
   self.steps = ko.observableArray([{ name: "Step 1", formName: "Step 1 Form", fields: [] }, { name: "Step 2", formName: "Step 2 Form", fields: [] }]);
@@ -29,7 +29,7 @@ function SettingsPatternViewModel(options) {
       var formName = name + " Form";
       var duplicate = false;
 
-      ko.utils.arrayForEach(self.steps(), function(step) {
+      _.forEach(self.steps(), function(step) {
          if(step.name.toLowerCase() === name.toLowerCase()){
            $.notify({message: 'Duplicate step name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
@@ -54,7 +54,7 @@ function SettingsPatternViewModel(options) {
       var name = self.fieldToAdd();
       var duplicate = false;
 
-      ko.utils.arrayForEach(self.fields(), function(field) {
+      _.forEach(self.fields(), function(field) {
          if(field.name.toLowerCase() === name.toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
@@ -75,9 +75,6 @@ function SettingsPatternViewModel(options) {
       self.fields.removeAll();
       self.selected(self.steps()[0]);
       self.fields(_.map(self.steps()[0].fields, function(field) { return { name : field }; }));
-    } else if (self.steps().length === 0) {
-      self.fields.removeAll();
-      self.selected({name: "", formName: "", fields: []});
     }
   }
 
@@ -89,20 +86,53 @@ function SettingsPatternViewModel(options) {
     self.selected().fields = _.map(self.fields.removeAll(), 'name');
     self.selected(this);
     self.fields(_.map(this.fields, function(field) { return { name : field }; }));
+
+    if(!(self.selected().formName.length > 0)){
+      $('#form-name-form').addClass('has-error');
+    } else {
+      $('#form-name-form').removeClass('has-error');
+    }
   }
 
   self.transform = function () {
     if(self.steps().length < 2){
-      $.notify({message: 'Your request cannot be processed. The wizard pattern require a minimum of two steps.'},
+      $.notify({message: 'Your request cannot be processed: wizard pattern require a minimum of two steps.'},
         {allow_dismiss: true, type: 'danger'});
       return undefined;
+    } else {
+      if(!(self.name().length > 0)) {
+        $('#pattern-form').addClass('has-error');
+        $.notify({message: 'Your request cannot be processed: the pattern cannot have an empty name.'},
+          {allow_dismiss: true, type: 'danger'});
+      }
+
+      _.forEach(self.steps(), function(step) {
+        if(!(step.formName.length > 0)){
+          self.selected(step);
+          $('#form-name-form').addClass('has-error');
+          $.notify({message: 'Your request cannot be processed: ' + step.name + ' cannot have an empty form name.'},
+            {allow_dismiss: true, type: 'danger'});
+          return false;
+        }
+      });
+
+      return undefined;
     }
+
     self.selected().fields = _.map(self.fields.removeAll(), 'name');
     var wizard = {
       name : self.name(),
       steps : self.steps()
     }
     return parser(wizard);
+  }
+
+  self.validate = function (str,id) {
+    if(str.length > 0) {
+      $(id).removeClass('has-error');
+    } else {
+      $(id).addClass('has-error');
+    }
   }
 }
 

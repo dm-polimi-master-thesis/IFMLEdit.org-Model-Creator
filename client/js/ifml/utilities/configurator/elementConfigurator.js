@@ -13,7 +13,6 @@ var _ = require('lodash'),
     relationsUpdate = require('./relationConfigurator.js').allConfigurator;
 
 function configurator(element, template, options) {
-  console.log('entro!');
   var dross;
   switch (element.type) {
     case 'ifml.ViewContainer':

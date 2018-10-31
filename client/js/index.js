@@ -223,74 +223,73 @@ $('#ifml > .append > input[type=file]').change(function () {
     var reader = new FileReader();
     reader.onload = function (e) {
         try{
-        ifmlBoard.clearHistory();
+          ifmlBoard.clearHistory();
 
-        function boundingBox(cells) {
-            var box = {
-                x: {
-                    min: Number.MAX_SAFE_INTEGER,
-                    max: Number.MIN_SAFE_INTEGER
-                },
-                y: {
-                    min: Number.MAX_SAFE_INTEGER,
-                    max: Number.MIN_SAFE_INTEGER
-                }
-            };
-            cells.map(function(element) {
-                if(element.attributes.type == 'ifml.ViewContainer' ||
-                    element.attributes.type == 'ifml.Action'){
-                    if (element.attributes.position.x < box.x.min) {
-                        box.x.min = element.attributes.position.x;
-                    }
-                    if (element.attributes.position.y < box.y.min) {
-                        box.y.min = element.attributes.position.y;
-                    }
-                    if (element.attributes.position.x + element.attributes.size.width > box.x.max) {
-                        box.x.max = element.attributes.position.x + element.attributes.size.width;
-                    }
-                    if (element.attributes.position.y + element.attributes.size.height > box.y.max) {
-                        box.y.max = element.attributes.position.y + element.attributes.size.height;
-                    }
-                }
-            });
-            return box;
-        }
-            var start = new Date();
+          function boundingBox(cells) {
+              var box = {
+                  x: {
+                      min: Number.MAX_SAFE_INTEGER,
+                      max: Number.MIN_SAFE_INTEGER
+                  },
+                  y: {
+                      min: Number.MAX_SAFE_INTEGER,
+                      max: Number.MIN_SAFE_INTEGER
+                  }
+              };
+              cells.map(function(element) {
+                  if(element.attributes.type == 'ifml.ViewContainer' ||
+                      element.attributes.type == 'ifml.Action'){
+                      if (element.attributes.position.x < box.x.min) {
+                          box.x.min = element.attributes.position.x;
+                      }
+                      if (element.attributes.position.y < box.y.min) {
+                          box.y.min = element.attributes.position.y;
+                      }
+                      if (element.attributes.position.x + element.attributes.size.width > box.x.max) {
+                          box.x.max = element.attributes.position.x + element.attributes.size.width;
+                      }
+                      if (element.attributes.position.y + element.attributes.size.height > box.y.max) {
+                          box.y.max = element.attributes.position.y + element.attributes.size.height;
+                      }
+                  }
+              });
+              return box;
+          }
 
-            loaded_at = new Date();
+          var start = new Date();
 
-            if (ifmlModel.attributes.cells.models.length == 0) {
-                $.notify({message: 'The board is empty, please use Load Model!'}, {allow_dismiss: true, type: 'warning'});
-                return;
-            }
-            var toBeAdded = ifml.fromJSON(partialModelValidator(ifml.toJSON(ifmlModel), JSON.parse(e.target.result)));
-            console.log("toBeAdded",toBeAdded);
-            var boardBB = boundingBox(ifmlModel.attributes.cells.models),
-                toBeAddedBB = boundingBox(toBeAdded);
-            console.log("toBeAdded",JSON.parse(e.target.result));
-            toBeAdded = _(toBeAdded).map(function(model) {
-                if (model.attributes.position) {
-                    model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
-                    model.attributes.position.y += boardBB.y.min - toBeAddedBB.y.min;
-                }
-                if (model.attributes.vertices) {
-                    for (var i = 0; i<model.attributes.vertices.length; i++){
-                        model.attributes.vertices[i].x += boardBB.x.max - toBeAddedBB.x.min + 20;
-                        model.attributes.vertices[i].y += boardBB.y.min - toBeAddedBB.y.min;
-                    }
-                }
-                return model;
-            }).value();
+          loaded_at = new Date();
 
-            ifmlModel.addCells(toBeAdded);
-            ifmlBoard.clearHistory();
+          if (ifmlModel.attributes.cells.models.length == 0) {
+              $.notify({message: 'The board is empty, please use Load Model!'}, {allow_dismiss: true, type: 'warning'});
+              return;
+          }
+          var toBeAdded = ifml.fromJSON(partialModelValidator(ifml.toJSON(ifmlModel), JSON.parse(e.target.result)));
+          var boardBB = boundingBox(ifmlModel.attributes.cells.models),
+              toBeAddedBB = boundingBox(toBeAdded);
+          toBeAdded = _(toBeAdded).map(function(model) {
+              if (model.attributes.position) {
+                  model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                  model.attributes.position.y += boardBB.y.min - toBeAddedBB.y.min;
+              }
+              if (model.attributes.vertices) {
+                  for (var i = 0; i<model.attributes.vertices.length; i++){
+                      model.attributes.vertices[i].x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                      model.attributes.vertices[i].y += boardBB.y.min - toBeAddedBB.y.min;
+                  }
+              }
+              return model;
+          }).value();
 
-            $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
+          ifmlModel.addCells(toBeAdded);
+          ifmlBoard.clearHistory();
+
+          $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
         } catch (exception) {
-          console.log(exception);
-            ifmlBoard.clearHistory();
-            $.notify({message: 'Invalid input file!'}, {allow_dismiss: true, type: 'danger'});
-            return;
+            console.log(exception);
+              ifmlBoard.clearHistory();
+              $.notify({message: 'Invalid input file!'}, {allow_dismiss: true, type: 'danger'});
+              return;
         }
         ifmlBoard.zoomE();
     };
@@ -334,83 +333,82 @@ $('#ifml > .sidebar .modal-example').click(function () {
 
 $('#ifml > .sidebar .modal-pattern').click(function () {
     createModalPatterns({patterns: patterns, load: function (pattern) {
-
-        ifmlBoard.clearHistory();
-
-        function boundingBox(cells) {
-            var box = {
-                x: {
-                    min: Number.MAX_SAFE_INTEGER,
-                    max: Number.MIN_SAFE_INTEGER
-                },
-                y: {
-                    min: Number.MAX_SAFE_INTEGER,
-                    max: Number.MIN_SAFE_INTEGER
-                }
-            };
-            cells.map(function(element) {
-                if(element.attributes.type == 'ifml.ViewContainer' ||
-                    element.attributes.type == 'ifml.Action'){
-                    if (element.attributes.position.x < box.x.min) {
-                        box.x.min = element.attributes.position.x;
-                    }
-                    if (element.attributes.position.y < box.y.min) {
-                        box.y.min = element.attributes.position.y;
-                    }
-                    if (element.attributes.position.x + element.attributes.size.width > box.x.max) {
-                        box.x.max = element.attributes.position.x + element.attributes.size.width;
-                    }
-                    if (element.attributes.position.y + element.attributes.size.height > box.y.max) {
-                        box.y.max = element.attributes.position.y + element.attributes.size.height;
-                    }
-                }
-            });
-            return box;
-        }
-
         try {
-            var start = new Date();
+          ifmlBoard.clearHistory();
 
-            loaded_at = new Date();
+          function boundingBox(cells) {
+              var box = {
+                  x: {
+                      min: Number.MAX_SAFE_INTEGER,
+                      max: Number.MIN_SAFE_INTEGER
+                  },
+                  y: {
+                      min: Number.MAX_SAFE_INTEGER,
+                      max: Number.MIN_SAFE_INTEGER
+                  }
+              };
+              cells.map(function(element) {
+                  if(element.attributes.type == 'ifml.ViewContainer' ||
+                      element.attributes.type == 'ifml.Action'){
+                      if (element.attributes.position.x < box.x.min) {
+                          box.x.min = element.attributes.position.x;
+                      }
+                      if (element.attributes.position.y < box.y.min) {
+                          box.y.min = element.attributes.position.y;
+                      }
+                      if (element.attributes.position.x + element.attributes.size.width > box.x.max) {
+                          box.x.max = element.attributes.position.x + element.attributes.size.width;
+                      }
+                      if (element.attributes.position.y + element.attributes.size.height > box.y.max) {
+                          box.y.max = element.attributes.position.y + element.attributes.size.height;
+                      }
+                  }
+              });
+              return box;
+          }
+          var start = new Date();
 
-            var boardBB = {
-                x: {
-                    min: 0,
-                    max: 0
-                },
-                y: {
-                    min: 0,
-                    max: 0
-                }
-            };
+          loaded_at = new Date();
 
-            var toBeAdded = ifml.fromJSON(pattern),
-                toBeAddedBB = boundingBox(toBeAdded);
+          var boardBB = {
+              x: {
+                  min: 0,
+                  max: 0
+              },
+              y: {
+                  min: 0,
+                  max: 0
+              }
+          };
 
-            if (ifmlModel.attributes.cells.models.length > 0) {
-                boardBB = boundingBox(ifmlModel.attributes.cells.models);
-                partialModelValidator(ifmlModel.attributes.cells.models, toBeAdded);
-            }
+          var toBeAdded = ifml.fromJSON(pattern),
+              toBeAddedBB = boundingBox(toBeAdded);
 
-            toBeAdded = _(toBeAdded).map(function(model) {
-                if (model.attributes.position) {
-                    model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
-                    model.attributes.position.y += boardBB.y.min - toBeAddedBB.y.min;
-                }
-                if (model.attributes.vertices) {
-                    for (var i = 0; i<model.attributes.vertices.length; i++){
-                        model.attributes.vertices[i].x += boardBB.x.max - toBeAddedBB.x.min + 20;
-                        model.attributes.vertices[i].y += boardBB.y.min - toBeAddedBB.y.min;
-                    }
-                }
-                return model;
-            }).value();
+          if (ifmlModel.attributes.cells.models.length > 0) {
+              boardBB = boundingBox(ifmlModel.attributes.cells.models);
+              toBeAdded = ifml.fromJSON(partialModelValidator(ifml.toJSON(ifmlModel), pattern));
+          }
 
-            ifmlModel.addCells(toBeAdded);
-            ifmlBoard.clearHistory();
+          toBeAdded = _(toBeAdded).map(function(model) {
+              if (model.attributes.position) {
+                  model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                  model.attributes.position.y += boardBB.y.min - toBeAddedBB.y.min;
+              }
+              if (model.attributes.vertices) {
+                  for (var i = 0; i<model.attributes.vertices.length; i++){
+                      model.attributes.vertices[i].x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                      model.attributes.vertices[i].y += boardBB.y.min - toBeAddedBB.y.min;
+                  }
+              }
+              return model;
+          }).value();
 
-            $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
+          ifmlModel.addCells(toBeAdded);
+          ifmlBoard.clearHistory();
+
+          $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
         } catch (exception) {
+            console.log(exception);
             ifmlBoard.clearHistory();
             $.notify({message: 'Invalid input file!'}, {allow_dismiss: true, type: 'danger'});
             return;

@@ -25,7 +25,7 @@ function configureFlow(element, template, options) {
   attributes.bindings = bindings;
 
   if(options.vertices !== undefined){
-      graphics.vertices = options.vertices || graphics.vertices;
+      graphics.vertices = options.vertices;
   }
 
   if(options.name !== undefined || options.id !== undefined){

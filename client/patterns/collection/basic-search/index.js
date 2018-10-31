@@ -13,7 +13,7 @@ function SettingsPatternViewModel(options) {
   var self = this;
 
   self.id = options.id;
-  self.name = ko.observable("Basic Pattern");
+  self.name = ko.observable("Basic Search");
   self.searchField = ko.observable("");
   self.selectedDetailsName = ko.observable("");
   self.collectionName = ko.observable("");
@@ -23,7 +23,6 @@ function SettingsPatternViewModel(options) {
   self.selectedFields = ko.observableArray([]);
 
   self.addField = function (type) {
-    console.log("addField");
     var fieldToAdd;
     var fields;
 
@@ -41,7 +40,7 @@ function SettingsPatternViewModel(options) {
     } else {
       var duplicate = false;
 
-      ko.utils.arrayForEach(fields(), function(field) {
+      _.forEach(fields(), function(field) {
          if(field.name.toLowerCase() === fieldToAdd().toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
@@ -50,16 +49,13 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        fields.push({ name: fieldToAdd });
+        fields.push({ name: fieldToAdd() });
         fieldToAdd("");
       }
     }
-    console.log("results", self.resultsFields());
-    console.log("selected", self.selectedFields());
   }
 
   self.deleteField = function(type){
-    console.log("deleteField");
     if (type === 'list') {
       self.resultsFields.remove(this);
     } else {
@@ -68,17 +64,58 @@ function SettingsPatternViewModel(options) {
   }
 
   self.transform = function () {
-    if(self.steps().length < 2){
-      $.notify({message: 'Your request cannot be processed. The wizard pattern require a minimum of two steps.'},
+    var error = false;
+
+    if(!(self.name().length > 0)) {
+      error = true;
+      $('#pattern-form').addClass('has-error');
+      $.notify({message: 'Your request cannot be processed: the pattern cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
+    }
+    if (!(self.searchField().length > 0)) {
+      error = true;
+      $('#search-form').addClass('has-error');
+      $.notify({message: 'Your request cannot be processed: search form cannot have an empty name.'},
+        {allow_dismiss: true, type: 'danger'});
+    }
+    if (!(self.collectionName().length > 0)) {
+      error = true;
+      $('#collection-form').addClass('has-error');
+      $.notify({message: 'Your request cannot be processed: collection form cannot have an empty name.'},
+        {allow_dismiss: true, type: 'danger'});
+    }
+    if (!(self.selectedDetailsName().length > 0)) {
+      error = true;
+      $('#details-form').addClass('has-error');
+      $.notify({message: 'Your request cannot be processed: details form cannot have an empty name.'},
+        {allow_dismiss: true, type: 'danger'});
+    }
+
+    if(error){
       return undefined;
     }
-    self.selected().fields = _.map(self.fields.removeAll(), 'name');
-    var wizard = {
-      name : self.name(),
-      steps : self.steps()
+
+    var basicSearch = {
+      name: self.name(),
+      search: [self.searchField()],
+      list: {
+        collection: self.collectionName(),
+        fields: _.map(self.resultsFields.removeAll(), 'name')
+      },
+      details: {
+        name: self.selectedDetailsName(),
+        fields: _.map(self.selectedFields.removeAll(), 'name')
+      }
     }
-    return parser(wizard);
+    return parser(basicSearch);
+  }
+
+  self.validate = function (str,id) {
+    if(str.length > 0) {
+      $(id).removeClass('has-error');
+    } else {
+      $(id).addClass('has-error');
+    }
   }
 }
 
