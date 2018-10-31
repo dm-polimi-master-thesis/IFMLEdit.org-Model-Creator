@@ -1,0 +1,116 @@
+<div id="restricted-search-settings-content" class="table-responsive table-patterns-container">
+  <center>
+    <h3 class="pattern-settings-title">Restricted Search</h3>
+  </center>
+  <table class="restricted-search-settings-table" >
+    <thead>
+      <tr>
+        <th class="trace-line th-left">Search</th>
+        <th class="trace-line-padding th-right">Selected</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="form-td-left restricted-search-form-input trace-line">
+          <div id="search-form" class="form-group">
+            <span class="restricted-search-form-label control-label">Search Field:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Field Name" type="text" data-bind="textInput: searchField, event: { blur: validate.bind($data, searchField(), '#search-form') }"/>
+            </div>
+          </div>
+        </td>
+        <td class=" restricted-search-form-input trace-line-padding">
+          <div id="details-form" class="form-group">
+            <span class="restricted-search-form-label control-label">Details Name:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: selectedDetailsName, event: { blur: validate.bind($data, selectedDetailsName(), '#details-form') }"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th class="results-th trace-line th-left">Results</th>
+        <td class="selected-field-input restricted-search-form-input trace-line-padding">
+          <div class="form-group">
+            <span class="restricted-search-form-label control-label">Field:</span>
+            <div class="input-group">
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: selectedFieldToAdd, executeOnEnter: addField.bind($data,'details')"/>
+              <div class="input-group-addon">
+                <a href="#" data-bind="click: addField.bind($data,'details')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="collection-name form-td-left restricted-search-form-input trace-line">
+          <div id="collection-form" class="form-group">
+            <span class="restricted-search-form-label control-label">Collection:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionName, event: { blur: validate.bind($data, collectionName(), '#collection-form') }"/>
+            </div>
+          </div>
+        </td>
+        <td rowspan="2" class="details-fields-space trace-line-padding">
+          <center class="details-fields-container">
+            <ul class="details-fields" data-bind="foreach: selectedFields">
+              <li>
+                <div class="right-inner-addon">
+                  <span data-bind="text: name"></span>
+                  <a href="#" data-bind="click: $parent.deleteField.bind($data, 'details')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                </div>
+              </li>
+            </ul>
+          </center>
+        </td>
+      </tr>
+      <tr>
+        <td class="form-td-left restricted-search-form-input trace-line results-field-form">
+          <div class="form-group">
+            <span class="restricted-search-form-label control-label">Field:</span>
+            <div class="input-group">
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: resultsFieldToAdd, executeOnEnter: addField.bind($data,'list')"/>
+              <div class="input-group-addon">
+                <a href="#" data-bind="click: addField.bind($data,'list')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="3" class="trace-line results-fields-space">
+          <center class="list-fields-container">
+            <ul class="list-fields" data-bind="foreach: resultsFields">
+              <li>
+                <div class="right-inner-addon">
+                  <span data-bind="text: name"></span>
+                  <a href="#" data-bind="click: $parent.deleteField.bind($data, 'list')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                </div>
+              </li>
+            </ul>
+          </center>
+        </td>
+        <th class="category-th trace-line-padding th-right">Category</th>
+      </tr>
+      <tr>
+        <td class="filter-name form-td-left restricted-search-form-input trace-line-padding">
+          <div id="filter-form" class="form-group">
+            <span class="restricted-search-form-label control-label">Collection:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Filter Name" type="text" data-bind="textInput: filterName, event: { blur: validate.bind($data, filterName(), '#filter-form') }"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="trace-line-padding">
+          <div id="pattern-form" class="form-group">
+            <div class="input-group">
+              <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,6 +1,6 @@
-.wizard-settings-table {
+.restricted-search-settings-table {
 
-    .list-steps, .list-fields {
+    .list-steps, .list-fields, .details-fields {
         list-style-type: none;
         margin: 0px;
         padding: 0px;
@@ -32,24 +32,48 @@
     }
 
     .list-fields-container {
-        height: 100px;
+        margin-right: 10px;
+        height: 168px;
     }
 
-    .list-steps-container, .list-fields-container {
+    .details-fields-container {
+        height: 90px;
+    }
+
+    .list-steps-container, .list-fields-container, .details-fields-container {
         overflow: auto;
         border: 1px #8080804d solid;
     }
 
-    .wizard-form-input{
+    .restricted-search-form-input{
         position: relative;
-        display: inline-flex;
     }
 
-    .wizard-form-label {
+    .restricted-search-form-label {
         min-width: fit-content;
         padding-top: 7px;
         padding-right: 20px;
         padding-left: 30px;
+    }
+
+    .results-th {
+        vertical-align: top;
+        padding-top: 10px;
+    }
+
+    .results-field-form {
+      vertical-align: top;
+      padding-top: 0px;
+    }
+
+    .results-fields-space {
+      padding-top: 0px !important;
+      padding-bottom: 0px;
+      vertical-align: top;
+    }
+
+    .selected-field-input {
+      padding-top: 10px;
     }
 
     .step-cell {
@@ -59,8 +83,11 @@
         padding-left: 70px;
     }
 
+    .form-td-left {
+        padding-right: 60px;
+    }
+
     .form-control {
-        padding-right: 50px;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         border-radius: 20px;
@@ -78,6 +105,7 @@
 
     .form-group {
         margin-bottom: 0px !important;
+        display: flex;
     }
 
     .input-group-addon {
@@ -85,6 +113,20 @@
         background-color: #ffffff;
         border-radius: 0px 0px 20px 0px;
         padding-right: 15px;
+    }
+
+    .category-th {
+        padding-top: 12px;
+    }
+
+    .collection-name {
+        padding-top: 0px;
+        padding-bottom: 20px;
+        vertical-align: top;
+    }
+
+    .details-fields-space {
+        padding-top: 0px;
     }
 
     .name-pattern-label {
@@ -105,7 +147,7 @@
     }
 
     .th-right {
-      padding-left: 30px;
+      padding-left: 0px;
     }
 
     .td-add-step {

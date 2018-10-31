@@ -10,7 +10,6 @@ var _ = require('lodash'),
 
 function partialModelValidator(model1, model2) {
   var hashModel1 = toHash(model1.elements);
-  console.log(hashModel1);
   _.forEach(model2.elements, function(element){
     var id = element.id;
     if(hashModel1[id] !== undefined){

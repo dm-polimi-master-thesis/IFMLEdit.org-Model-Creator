@@ -15,14 +15,15 @@ function configureFlow(element, template, options) {
         oldId: element.id
       };
 
-  var bindings = _.map(options.fields, function(field){
-    return {
-      input: field,
-      output: field
-    }
-  });
-
-  attributes.bindings = bindings;
+  if(options.fields !== undefined){
+    var bindings = _.map(options.fields, function(field){
+      return {
+        input: field,
+        output: field
+      }
+    });
+    attributes.bindings = bindings;
+  }
 
   if(options.vertices !== undefined){
       graphics.vertices = options.vertices;
