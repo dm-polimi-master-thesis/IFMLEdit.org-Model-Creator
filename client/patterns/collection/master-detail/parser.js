@@ -11,7 +11,7 @@ var _ = require('lodash'),
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
     format = require('./default.json');
 
-function parser(restrictedSearch){
+function parser(masterDetail){
   var template = _.cloneDeep(format);
   var modelElementsHash = toHash(template.elements);
 

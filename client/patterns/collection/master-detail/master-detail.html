@@ -1,0 +1,101 @@
+<div id="master-detail-settings-content" class="table-responsive table-patterns-container">
+  <center>
+    <h3 class="pattern-settings-title">Master Detail</h3>
+  </center>
+  <table class="master-detail-settings-table" >
+    <thead>
+      <tr>
+        <th class="trace-line th-left">List</th>
+        <th class="trace-line-padding th-right">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="form-td-left master-detail-form-input trace-line">
+          <div id="collection-form" class="form-group">
+            <span class="master-detail-form-label control-label">Collection:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionName, event: { blur: validate.bind($data, collectionName(), '#collection-form') }"/>
+            </div>
+          </div>
+        </td>
+        <td class=" master-detail-form-input trace-line-padding">
+          <div id="details-form" class="form-group">
+            <span class="master-detail-form-label control-label">Details Name:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: detailsName, event: { blur: validate.bind($data, detailsName(), '#details-form') }"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="form-td-left selected-field-input master-detail-form-input trace-line">
+          <div class="form-group">
+            <span class="master-detail-form-label control-label">Field:</span>
+            <div class="input-group">
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: listFieldToAdd, executeOnEnter: addField.bind($data,'list')"/>
+              <div class="input-group-addon">
+                <a href="#" data-bind="click: addField.bind($data,'details')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="selected-field-input master-detail-form-input trace-line-padding">
+          <div class="form-group">
+            <span class="form-td-right master-detail-form-label control-label">Field:</span>
+            <div class="input-group">
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: detailsFieldToAdd, executeOnEnter: addField.bind($data,'details')"/>
+              <div class="input-group-addon">
+                <a href="#" data-bind="click: addField.bind($data,'details')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="details-fields-space trace-line">
+          <center class="details-fields-container">
+            <ul class="details-fields" data-bind="foreach: listFields">
+              <li>
+                <div class="right-inner-addon">
+                  <span data-bind="text: name"></span>
+                  <a href="#" data-bind="click: $parent.deleteField.bind($data, 'list')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                </div>
+              </li>
+            </ul>
+          </center>
+        </td>
+        <td class="details-fields-space trace-line-padding">
+          <center class="details-fields-container">
+            <ul class="details-fields" data-bind="foreach: detailsFields">
+              <li>
+                <div class="right-inner-addon">
+                  <span data-bind="text: name"></span>
+                  <a href="#" data-bind="click: $parent.deleteField.bind($data, 'details')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                </div>
+              </li>
+            </ul>
+          </center>
+        </td>
+      </tr>
+      <tr>
+        <td class="trace-line">
+          <div id="xor-form" class="xor-form form-group">
+            <div class="material-switch pull-right">
+              <input id="xorOption" name="xorOption" type="checkbox" data-bind="checked: xorOption"/>
+              <label for="xorOption" class="label-success"></label>
+              <span class="xor-label">xor</span>
+            </div>
+          </div>
+        </td>
+        <td class="trace-line-padding">
+          <div id="pattern-form" class="form-group">
+            <div class="input-group">
+              <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
