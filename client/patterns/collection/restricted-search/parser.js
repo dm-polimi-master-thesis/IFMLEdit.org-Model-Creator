@@ -35,7 +35,7 @@ function parser(restrictedSearch){
       name: restrictedSearch.details.name
   });
   configurator(modelElementsHash['product-details'], template, {
-      name: restrictedSearch.details.name,
+      name: restrictedSearch.details.name.charAt(0).toUpperCase() + restrictedSearch.details.name.slice(1),
       collection: restrictedSearch.list.collection,
       fields: restrictedSearch.details.fields
   });

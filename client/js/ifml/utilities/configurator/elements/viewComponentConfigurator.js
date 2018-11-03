@@ -19,7 +19,7 @@ function configureViewComponent(element, template, options) {
   attributes.fields = options.fields || attributes.fields;
 
   if (!(attributes.stereotype === 'form')) {
-    attributes.collection = options.collection || attributes.collection;
+    attributes.collection = options.collection || toId(attributes.collection,"");
   }
   if (attributes.stereotype === 'list') {
     attributes.filters = options.filters || attributes.filters;

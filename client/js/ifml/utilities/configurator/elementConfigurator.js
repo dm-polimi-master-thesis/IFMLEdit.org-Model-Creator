@@ -36,11 +36,7 @@ function configurator(element, template, options) {
   }
 
   if(dross.oldId !== dross.newId){
-    if (!(element.type === 'ifml.NavigationFlow' || element.type === 'ifml.DataFlow')) {
-      relationsUpdate(template.relations, dross);
-    } else {
-      relationsUpdate(template.relations, dross);
-    }
+    relationsUpdate(template.relations, dross);
 
     if (element.type === 'ifml.ViewContainer'){
       _.forEach(template.elements, function(el){

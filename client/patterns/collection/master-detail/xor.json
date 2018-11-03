@@ -2,7 +2,7 @@
    "elements":[
       {
          "attributes":{
-            "name":"Master Detail Pattern",
+            "name":"Master Detail",
             "default":false,
             "landmark":false,
             "xor":false
@@ -14,8 +14,8 @@
                   "y":0
                },
                "size":{
-                  "height":220,
-                  "width":480
+                  "height":280,
+                  "width":520
                }
             }
          },
@@ -24,16 +24,38 @@
       },
       {
          "attributes":{
-            "name":"Mail List",
+            "name":"Xor",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":true
          },
          "metadata":{
             "graphics":{
                "position":{
                   "x":20,
                   "y":40
+               },
+               "size":{
+                  "height":220,
+                  "width":480
+               }
+            }
+         },
+         "id":"xor-view-container",
+         "type":"ifml.ViewContainer"
+      },
+      {
+         "attributes":{
+            "name":"Mail List",
+            "default":true,
+            "landmark":true,
+            "xor":false
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":40,
+                  "y":80
                },
                "size":{
                   "height":160,
@@ -54,8 +76,8 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":260,
-                  "y":40
+                  "x":280,
+                  "y":80
                },
                "size":{
                   "height":160,
@@ -83,8 +105,8 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":40,
-                  "y":90
+                  "x":60,
+                  "y":130
                },
                "size":{
                   "height":60,
@@ -111,8 +133,8 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":290,
-                  "y":90
+                  "x":310,
+                  "y":130
                },
                "size":{
                   "height":70,
@@ -131,8 +153,8 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":180,
-                  "y":140
+                  "x":200,
+                  "y":180
                },
                "name":{
                   "horizontal":"right",
@@ -165,11 +187,16 @@
       {
          "type":"hierarchy",
          "parent":"master-detail-pattern-view-container",
+         "child":"xor-view-container"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"xor-view-container",
          "child":"mail-list-view-container"
       },
       {
          "type":"hierarchy",
-         "parent":"master-detail-pattern-view-container",
+         "parent":"xor-view-container",
          "child":"mail-details-view-container"
       },
       {
@@ -200,8 +227,8 @@
    ],
    "statistics":{
       "session":{
-         "started_at":"2018-11-03T06:25:23.223Z",
-         "ended_at":"2018-11-03T06:26:20.749Z"
+         "started_at":"2018-11-03T06:36:09.697Z",
+         "ended_at":"2018-11-03T06:36:18.338Z"
       }
    }
 }

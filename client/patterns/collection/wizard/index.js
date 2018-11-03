@@ -70,6 +70,8 @@ function SettingsPatternViewModel(options) {
   }
 
   self.deleteStep = function () {
+    self.selected().name = "";
+    self.selected().formName = "";
     self.steps.remove(this);
     if (self.steps().length > 0 && self.selected() === this) {
       self.fields.removeAll();

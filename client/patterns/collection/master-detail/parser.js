@@ -9,38 +9,42 @@ var _ = require('lodash'),
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
-    format = require('./default.json');
+    format = require('./default.json'),
+    xor = require('./xor.json');
 
 function parser(masterDetail){
-  var template = _.cloneDeep(format);
-  var modelElementsHash = toHash(template.elements);
+  var template,
+      modelElementsHash;
 
-  configurator(modelElementsHash['xor-view-container'], template, {
-      name: restrictedSearch.name,
+  if (masterDetail.xor) {
+    template= _.cloneDeep(xor);
+    modelElementsHash = toHash(template.elements);
+    configurator(modelElementsHash['xor-view-container'], template, {
+        name: masterDetail.name,
+    });
+  } else {
+    template= _.cloneDeep(format);
+    modelElementsHash = toHash(template.elements);
+    configurator(modelElementsHash['master-detail-pattern-view-container'], template, {
+        name: masterDetail.name,
+    });
+  }
+
+  configurator(modelElementsHash['mail-list-view-container'], template, {
+      name: masterDetail.list.collection.charAt(0).toUpperCase() + masterDetail.list.collection.slice(1)
   });
-  configurator(modelElementsHash['keyword-form'], template, {
-      fields: restrictedSearch.search,
+  configurator(modelElementsHash['mail-list'], template, {
+      name: masterDetail.list.collection.charAt(0).toUpperCase() + masterDetail.list.collection.slice(1),
+      collection: masterDetail.list.collection,
+      fields: masterDetail.list.fields
   });
-  configurator(modelElementsHash['results-list'], template, {
-      name: restrictedSearch.list.collection.charAt(0).toUpperCase() + restrictedSearch.list.collection.slice(1),
-      collection: restrictedSearch.list.collection,
-      filters: ['key', restrictedSearch.search[0]],
-      fields: restrictedSearch.list.fields
+  configurator(modelElementsHash['mail-details-view-container'], template, {
+      name: masterDetail.details.name.charAt(0).toUpperCase() + masterDetail.details.name.slice(1)
   });
-  configurator(modelElementsHash['category-list'], template, {
-      name: restrictedSearch.filter.charAt(0).toUpperCase() + restrictedSearch.filter.slice(1),
-      collection: restrictedSearch.filter
-  });
-  configurator(modelElementsHash['product-view-container'], template, {
-      name: restrictedSearch.details.name
-  });
-  configurator(modelElementsHash['product-details'], template, {
-      name: restrictedSearch.details.name,
-      collection: restrictedSearch.list.collection,
-      fields: restrictedSearch.details.fields
-  });
-  configurator(modelElementsHash['keyword-data-flow'], template, {
-      fields: restrictedSearch.search
+  configurator(modelElementsHash['mail-details'], template, {
+      name: masterDetail.details.name.charAt(0).toUpperCase() + masterDetail.details.name.slice(1),
+      collection: masterDetail.list.collection,
+      fields: masterDetail.details.fields
   });
 
   return template;

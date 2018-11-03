@@ -6,12 +6,12 @@
     <thead>
       <tr>
         <th class="trace-line th-left">Steps</th>
-        <th class="trace-line-padding th-right"><span data-bind="text: selected().name"></span></th>
+        <th id="step-name" class="trace-line-padding th-right"><span data-bind="text: selected().name"></span></th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td  rowspan="3" class="step-cell trace-line">
+        <td rowspan="3" class="step-cell trace-line">
           <center class="list-steps-container">
               <ul class="list-steps" data-bind="foreach: steps">
                 <li>
@@ -26,7 +26,7 @@
         </td>
         <td class="name-step-field wizard-form-input trace-line-padding">
           <div id="form-name-form" class="form-group">
-            <span class="wizard-form-label">Form Name:</span>
+            <span id="form-name" class="wizard-form-label">Form Name:</span>
             <div class="input-group">
               <input class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: selected().formName, event: { change: validate.bind($data, selected().formName, '#form-name-form') }"/>
             </div>
