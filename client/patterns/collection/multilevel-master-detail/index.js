@@ -26,12 +26,6 @@ function SettingsPatternViewModel(options) {
     self.selected().fields = self.listFields.removeAll();
     self.selected(this);
     self.listFields(self.selected().fields);
-
-    if(!(self.selected().collection.length > 0)){
-      $('#collection-form').addClass('has-error');
-    } else {
-      $('#collection-form').removeClass('has-error');
-    }
   }
 
   self.addStep = function () {
@@ -49,14 +43,12 @@ function SettingsPatternViewModel(options) {
          }
       });
       if(!duplicate){
-        self.steps.push({ name: name, collection: "", filters: [], fields: [] });
-        self.selected().fields = _.map(self.listFields(), 'name');
-        self.selected().filters = _.filter(self.listFields.removeAll(), ['filter', true])
-                                   .map(function (field) {
-                                      return field.name;
-                                   });
+        self.steps.push({ name: name, collection: "", fields: [] });
+        self.selected().fields = self.listFields.removeAll();
         self.selected(self.steps()[self.steps().length - 1]);
         self.stepToAdd("");
+        $('#list-input').prop('disabled',false);
+        $('#collection-input').prop('disabled',false);
       }
     }
   }
@@ -97,15 +89,23 @@ function SettingsPatternViewModel(options) {
   }
 
   self.deleteStep = function () {
-    self.selected().name = "";
-    self.selected().formName = "";
     self.steps.remove(this);
     if (self.steps().length > 0 && self.selected() === this) {
       self.listFields.removeAll();
       self.selected(self.steps()[0]);
-      self.listFields(_.map(self.steps()[0].fields));
+      self.listFields(self.steps()[0].fields);
+      if(self.steps.indexOf(this) === (self.steps().lenght - 1)){
+        $('#list-input').prop('disabled',true);
+        $('#collection-input').prop('disabled',true);
+      } else {
+        $('#list-input').prop('disabled',false);
+        $('#collection-input').prop('disabled',false);
+      };
     } else if (self.steps().length === 0) {
+      self.selected({ name: "", collection: "", fields: [] } );
       self.listFields.removeAll();
+      $('#list-input').prop('disabled',true);
+      $('#collection-input').prop('disabled',true);
     }
   }
 
@@ -120,6 +120,11 @@ function SettingsPatternViewModel(options) {
   self.transform = function () {
     var error = false;
 
+    if(self.steps().length < 2){
+      error = true;
+      $.notify({message: 'Your request cannot be processed: wizard pattern require a minimum of two steps.'},
+        {allow_dismiss: true, type: 'danger'});
+    }
     if(!(self.name().length > 0)) {
       error = true;
       $('#pattern-form').addClass('has-error');
@@ -148,10 +153,10 @@ function SettingsPatternViewModel(options) {
     }
 
     _.forEach(self.steps(), function (step) {
-      step.filters = _.filter(self.steps(), ['filter', true])
+      step.filters = _.filter(step.fields, function (field) { return field.filter === true;})
                       .map(function (filter) {
                         return filter.name;
-                      });
+                      })
       step.fields = _.map(step.fields, 'name');
     });
 
@@ -164,8 +169,6 @@ function SettingsPatternViewModel(options) {
         fields: _.map(self.detailsFields.removeAll(), 'name')
       }
     }
-
-    console.log(multilevelMasterDetail);
     return parser(multilevelMasterDetail);
   }
 

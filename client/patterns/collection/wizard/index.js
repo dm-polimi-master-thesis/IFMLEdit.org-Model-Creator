@@ -37,11 +37,15 @@ function SettingsPatternViewModel(options) {
          }
       });
 
-      if(!duplicate){
+      if(!duplicate) {
         self.steps.push({ name: name, formName: formName, fields: [] });
         self.selected().fields = _.map(self.fields.removeAll(), 'name');
         self.selected(self.steps()[self.steps().length - 1]);
         self.stepToAdd("");
+        if(self.steps().length === 1){
+          $('#input-field').prop('disabled',false);
+          $('#form-name-input').prop('disabled',false);
+        }
       }
     }
   }
@@ -70,13 +74,17 @@ function SettingsPatternViewModel(options) {
   }
 
   self.deleteStep = function () {
-    self.selected().name = "";
-    self.selected().formName = "";
     self.steps.remove(this);
     if (self.steps().length > 0 && self.selected() === this) {
       self.fields.removeAll();
       self.selected(self.steps()[0]);
       self.fields(_.map(self.steps()[0].fields, function(field) { return { name : field }; }));
+    } else if (self.steps().length === 0) {
+      console.log("entro");
+      self.selected({name: "", formName: "", fields: [] });
+      self.fields.removeAll();
+      $('#input-field').prop('disabled',true);
+      $('#form-name-input').prop('disabled',true);
     }
   }
 

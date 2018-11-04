@@ -28,7 +28,7 @@
           <div id="form-name-form" class="form-group">
             <span id="form-name" class="wizard-form-label">Form Name:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: selected().formName, event: { change: validate.bind($data, selected().formName, '#form-name-form') }"/>
+              <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: selected().formName, event: { change: validate.bind($data, selected().formName, '#form-name-form') }"/>
             </div>
           </div>
         </td>
@@ -38,7 +38,7 @@
           <div class="form-group">
             <span class="wizard-form-label">Field:</span>
             <div class="input-group">
-              <input class="form-control" placeholder="Add new field" type="text" data-bind="value: fieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField"/>
+              <input id="input-field" class="form-control" placeholder="Add new field" type="text" data-bind="value: fieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField"/>
               <div class="input-group-addon">
                 <a href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>

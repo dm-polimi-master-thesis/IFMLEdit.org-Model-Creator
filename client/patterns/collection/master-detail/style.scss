@@ -56,15 +56,16 @@
         min-width: 174px;
 
         li span {
-            min-width: fit-content;
-            border-top: 1px solid #ddd;
             margin-top: -1px;
             background-color: #f6f6f6;
             padding: 8px;
             text-decoration: none;
             font-size: 13px;
-            color: black;
+            color: #000;
             display: block;
+            width: 185px;
+            overflow-x: scroll;
+            overflow-y: hidden;
 
             &:hover:not(.header) {
                 background-color: #eee;
