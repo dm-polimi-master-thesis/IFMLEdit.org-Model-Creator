@@ -1,32 +1,43 @@
 .wizard-settings-table {
 
-    .list-steps, .list-fields {
-        list-style-type: none;
-        margin: 0px;
-        padding: 0px;
-        list-style-type: none;
-        display: block;
-        overflow: auto;
-        text-align: initial;
-        min-width: 174px;
+  .list-steps {
+    li span {
+        width: 250px;
 
-        li span {
-            margin-top: -1px;
-            background-color: #f6f6f6;
-            padding: 8px;
-            text-decoration: none;
-            font-size: 13px;
-            color: #000;
-            display: block;
-            width: 185px;
-            overflow-x: scroll;
-            overflow-y: hidden;
-
-            &:hover:not(.header) {
-                background-color: #eee;
-              }
+        &:hover:not(.header) {
+            background-color: #eee;
         }
     }
+  }
+
+  .list-steps, .list-fields {
+      list-style-type: none;
+      margin: 0px;
+      padding: 0px;
+      list-style-type: none;
+      display: block;
+      overflow: auto;
+      text-align: initial;
+      min-width: 174px;
+      background-color: #f6f6f6;
+
+      li span {
+          margin-top: 0px;
+          background-color: #f6f6f6;
+          padding: 8px;
+          text-decoration: none;
+          font-size: 13px;
+          color: #000;
+          width: 185px;
+          display: block;
+          overflow-x: scroll;
+          overflow-y: hidden;
+      }
+
+      li {
+        border-top: 2px solid white;
+      }
+  }
 
     .list-steps-container {
         height: 200px;

@@ -14,8 +14,8 @@
                   "y":0
                },
                "size":{
-                  "height":280,
-                  "width":790
+                  "height":250,
+                  "width":800
                }
             }
          },
@@ -36,34 +36,12 @@
                   "y":40
                },
                "size":{
-                  "height":220,
-                  "width":750
+                  "height":190,
+                  "width":760
                }
             }
          },
          "id":"xor-view-container",
-         "type":"ifml.ViewContainer"
-      },
-      {
-         "attributes":{
-            "name":"Step 1",
-            "default":true,
-            "landmark":true,
-            "xor":false
-         },
-         "metadata":{
-            "graphics":{
-               "position":{
-                  "x":40,
-                  "y":80
-               },
-               "size":{
-                  "height":160,
-                  "width":210
-               }
-            }
-         },
-         "id":"step-1-view-container",
          "type":"ifml.ViewContainer"
       },
       {
@@ -76,11 +54,11 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":540,
+                  "x":550,
                   "y":80
                },
                "size":{
-                  "height":160,
+                  "height":130,
                   "width":210
                }
             }
@@ -98,11 +76,11 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":290,
+                  "x":300,
                   "y":80
                },
                "size":{
-                  "height":160,
+                  "height":130,
                   "width":210
                }
             }
@@ -112,30 +90,25 @@
       },
       {
          "attributes":{
-            "name":"List 1",
-            "stereotype":"list",
-            "fields":[
-
-            ],
-            "collection":"",
-            "filters":[
-
-            ]
+            "name":"Step 1",
+            "default":true,
+            "landmark":true,
+            "xor":false
          },
          "metadata":{
             "graphics":{
                "position":{
-                  "x":50,
-                  "y":130
+                  "x":40,
+                  "y":80
                },
                "size":{
-                  "height":70,
-                  "width":180
+                  "height":130,
+                  "width":220
                }
             }
          },
-         "id":"step-1-list",
-         "type":"ifml.ViewComponent"
+         "id":"step-1-view-container",
+         "type":"ifml.ViewContainer"
       },
       {
          "attributes":{
@@ -149,8 +122,8 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":560,
-                  "y":130
+                  "x":570,
+                  "y":120
                },
                "size":{
                   "height":70,
@@ -176,8 +149,8 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":310,
-                  "y":130
+                  "x":320,
+                  "y":120
                },
                "size":{
                   "height":70,
@@ -190,14 +163,41 @@
       },
       {
          "attributes":{
+            "name":"List 1",
+            "stereotype":"list",
+            "fields":[
+
+            ],
+            "collection":"",
+            "filters":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":60,
+                  "y":120
+               },
+               "size":{
+                  "height":70,
+                  "width":180
+               }
+            }
+         },
+         "id":"step-1-list",
+         "type":"ifml.ViewComponent"
+      },
+      {
+         "attributes":{
             "name":"Selected",
             "stereotype":"selection"
          },
          "metadata":{
             "graphics":{
                "position":{
-                  "x":220,
-                  "y":180
+                  "x":480,
+                  "y":170
                },
                "name":{
                   "horizontal":"right",
@@ -205,7 +205,7 @@
                }
             }
          },
-         "id":"selected-step-1-event",
+         "id":"selected-step-2-event",
          "type":"ifml.Event"
       },
       {
@@ -216,8 +216,8 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":470,
-                  "y":180
+                  "x":230,
+                  "y":170
                },
                "name":{
                   "horizontal":"right",
@@ -225,7 +225,7 @@
                }
             }
          },
-         "id":"selected-step-2-event",
+         "id":"selected-step-1-event",
          "type":"ifml.Event"
       },
       {
@@ -273,11 +273,6 @@
       {
          "type":"hierarchy",
          "parent":"xor-view-container",
-         "child":"step-1-view-container"
-      },
-      {
-         "type":"hierarchy",
-         "parent":"xor-view-container",
          "child":"final-view-container"
       },
       {
@@ -287,8 +282,8 @@
       },
       {
          "type":"hierarchy",
-         "parent":"step-1-view-container",
-         "child":"step-1-list"
+         "parent":"xor-view-container",
+         "child":"step-1-view-container"
       },
       {
          "type":"hierarchy",
@@ -302,13 +297,18 @@
       },
       {
          "type":"hierarchy",
-         "parent":"step-1-list",
-         "child":"selected-step-1-event"
+         "parent":"step-1-view-container",
+         "child":"step-1-list"
       },
       {
          "type":"hierarchy",
          "parent":"step-2-list",
          "child":"selected-step-2-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"step-1-list",
+         "child":"selected-step-1-event"
       },
       {
          "type":"source",
@@ -333,8 +333,8 @@
    ],
    "statistics":{
       "session":{
-         "started_at":"2018-11-04T14:55:20.368Z",
-         "ended_at":"2018-11-04T15:23:38.911Z"
+         "started_at":"2018-11-05T13:29:25.955Z",
+         "ended_at":"2018-11-05T13:30:36.385Z"
       }
    }
 }

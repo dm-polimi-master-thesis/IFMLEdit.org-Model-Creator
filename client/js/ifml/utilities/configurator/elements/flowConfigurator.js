@@ -15,15 +15,26 @@ function configureFlow(element, template, options) {
         oldId: element.id
       };
 
+  var bindings = [];
   if(options.fields !== undefined){
-    var bindings = _.map(options.fields, function(field){
+    bindings = _.map(options.fields, function(field){
       return {
         input: field,
         output: field
       }
     });
-    attributes.bindings = bindings;
   }
+
+  if(options.filters !== undefined){
+    bindings.push(_.map(options.filters, function(filter){
+      return {
+        input: filter,
+        output: filter
+      }
+    }));
+  }
+
+  attributes.bindings = _.flattenDeep(bindings);
 
   if(options.vertices !== undefined){
       graphics.vertices = options.vertices;

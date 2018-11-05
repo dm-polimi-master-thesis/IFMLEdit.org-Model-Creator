@@ -45,33 +45,49 @@
 
 .master-detail-settings-table {
 
-    .list-steps, .list-fields, .details-fields {
-        list-style-type: none;
-        margin: 0px;
-        padding: 0px;
-        list-style-type: none;
-        display: block;
-        overflow: auto;
-        text-align: initial;
-        min-width: 174px;
+  .list-fields, .details-fields {
+    li span {
+        width: 185px;
+    }
+  }
 
-        li span {
-            margin-top: -1px;
-            background-color: #f6f6f6;
-            padding: 8px;
-            text-decoration: none;
-            font-size: 13px;
-            color: #000;
-            display: block;
-            width: 185px;
-            overflow-x: scroll;
-            overflow-y: hidden;
+  .list-steps {
+    li span {
+        width: 250px;
 
-            &:hover:not(.header) {
-                background-color: #eee;
-              }
+        &:hover:not(.header) {
+            background-color: #eee;
         }
     }
+  }
+
+  .list-steps, .list-fields, .details-fields {
+      list-style-type: none;
+      margin: 0px;
+      padding: 0px;
+      list-style-type: none;
+      display: block;
+      overflow: auto;
+      text-align: initial;
+      min-width: 174px;
+      background-color: #f6f6f6;
+
+      li span {
+          margin-top: 0px;
+          background-color: #f6f6f6;
+          padding: 8px;
+          text-decoration: none;
+          font-size: 13px;
+          color: #000;
+          display: block;
+          overflow-x: scroll;
+          overflow-y: hidden;
+      }
+
+      li {
+        border-top: 2px solid white;
+      }
+  }
 
     .list-steps-container {
         height: 200px;

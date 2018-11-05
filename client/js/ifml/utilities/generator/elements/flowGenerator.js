@@ -7,16 +7,28 @@
 var idValidator = require('../../validator/idValidator.js').idValidator;
 
 function generateFlow(template, options) {
-    var bindings = _.map(options.fields, function(field){
+    var bindings = [];
+    if(options.fields !== undefined){
+      bindings = _.map(options.fields, function(field){
         return {
-            input: field,
-            output: field
+          input: field,
+          output: field
         }
-    });
+      });
+    }
+
+    if(options.filters !== undefined){
+      bindings.push(_.map(options.filters, function(filter){
+        return {
+          input: filter,
+          output: filter
+        }
+      }));
+    }
 
     return {
         attributes: {
-            bindings: bindings
+            bindings: _.flattenDeep(bindings)
         },
         metadata: {
             graphics: {

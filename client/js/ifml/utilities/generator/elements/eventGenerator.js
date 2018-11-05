@@ -9,7 +9,8 @@ var idValidator = require('../../validator/idValidator.js').idValidator;
 function generateEvent(template, options) {
     return {
         attributes: {
-            name: options.text
+            name: options.text,
+            stereotype: options.stereotype || undefined
         },
         metadata: {
             graphics: {

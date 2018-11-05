@@ -216,7 +216,7 @@ function parser(wizard){
           type: 'ifml.NavigationFlow',
           name: 'Ok Validate ' + step.name,
           source: reference['oKValidateEvent'].id,
-          target: (index + 1) < collection.length ? idValidator(elements, collection[index + 1].formName, '-form') : modelElementsHash['review-details'].id
+          target: (index + 1) < collection.length ? idValidator(template.elements, collection[index + 1].formName, '-form') : modelElementsHash['review-details'].id
         });
         reference['koNavigationFlow'] = generator(template, {
           type: 'ifml.NavigationFlow',

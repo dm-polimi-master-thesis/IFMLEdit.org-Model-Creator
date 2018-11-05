@@ -45,6 +45,22 @@
 
 .multilevel-master-detail-settings-table {
 
+    .list-fields, .details-fields {
+      li span {
+          width: 185px;
+      }
+    }
+
+    .list-steps {
+      li span {
+          width: 250px;
+
+          &:hover:not(.header) {
+              background-color: #eee;
+          }
+      }
+    }
+
     .list-steps, .list-fields, .details-fields {
         list-style-type: none;
         margin: 0px;
@@ -54,22 +70,22 @@
         overflow: auto;
         text-align: initial;
         min-width: 174px;
+        background-color: #f6f6f6;
 
         li span {
-            margin-top: -1px;
+            margin-top: 0px;
             background-color: #f6f6f6;
             padding: 8px;
             text-decoration: none;
             font-size: 13px;
             color: #000;
             display: block;
-            width: 185px;
             overflow-x: scroll;
             overflow-y: hidden;
+        }
 
-            &:hover:not(.header) {
-                background-color: #eee;
-              }
+        li {
+          border-top: 2px solid white;
         }
     }
 
@@ -83,7 +99,6 @@
     .step-list-field {
       display: flex;
       height: 35px!important;
-      border-top: 1px solid #ddd;
       background-color: #f6f6f6;
       font-size: 13px;
       color: #000;

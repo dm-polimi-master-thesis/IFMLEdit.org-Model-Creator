@@ -25,8 +25,13 @@ function parser(multilevelMasterDetail){
       name: multilevelMasterDetail.name,
       size: {
         height: modelElementsHash['xor-view-container'].metadata.graphics.size.height,
-        width: modelElementsHash['xor-view-container'].metadata.graphics.size.width + 250 * (wizard.steps.length - 2)
+        width: modelElementsHash['xor-view-container'].metadata.graphics.size.width + 250 * (multilevelMasterDetail.steps.length - 2)
       }
+  });
+  configurator(modelElementsHash['final-details'], template, {
+      name: multilevelMasterDetail.details.name.charAt(0).toUpperCase() + multilevelMasterDetail.details.name.slice(1),
+      collection: multilevelMasterDetail.steps[multilevelMasterDetail.steps.length - 1].collection,
+      fields: multilevelMasterDetail.details.fields
   });
 
   _.slice(multilevelMasterDetail.steps, 0, 2)
@@ -38,53 +43,89 @@ function parser(multilevelMasterDetail){
          name: step.collection.charAt(0).toUpperCase() + step.collection.slice(1),
          collection: step.collection,
          fields: step.fields,
-         filters: step.filters
+         filters: index === 1 ? collection[0].filters : []
      });
-     configurator(modelElementsHash['selected-step-' + (index + 1) + '-navigation-flow'], template, {
-         name: 'Next ' + step.name,
-         fields: step.fields
-     });
-     configurator(modelElementsHash['ok-validate-step-' + (index + 1) + '-navigation-flow'], template, {
-         name: 'Ok Validate ' + step.name
-     });
-     configurator(modelElementsHash['ko-validate-step-' + (index + 1) + '-navigation-flow'], template, {
-         name: 'Ko Validate ' + step.name,
-         fields: _.flattenDeep(errorFields)
-     });
-     configurator(modelElementsHash['to-step-' + (index + 1) + '-navigation-flow'], template, {
-         name: 'To ' + step.name,
-         fields: step.fields
-     });
-     if(index === 1){
-       configurator(modelElementsHash['previous-step-' + (index + 1) + '-navigation-flow'], template, {
-           name: 'Previous ' + step.name,
-           fields: step.fields
-       });
+     if (index === 0) {
+       configurator(modelElementsHash['selected-step-' + (index + 1) + '-navigation-flow'], template, {
+           name: 'Selected ' + step.name,
+           filters: step.filters
+        });
+     } else {
+       configurator(modelElementsHash['selected-step-' + (index + 1) + '-navigation-flow'], template, {
+           name: 'Selected ' + step.name,
+           filters: multilevelMasterDetail.steps.length > 2 ? step.filters : ['id']
+        });
      }
   });
 
+  if (multilevelMasterDetail.steps.length > 2){
+    var reference = [];
+    _.slice(multilevelMasterDetail.steps, 2, multilevelMasterDetail.steps.length)
+     .forEach(function (step, index, collection) {
+        reference['viewContainer'] = generator(template, {
+          type: 'ifml.ViewContainer',
+          name: step.name,
+          position: {
+            x: modelElementsHash['final-view-container'].metadata.graphics.position.x,
+            y: modelElementsHash['final-view-container'].metadata.graphics.position.y
+          },
+          size: {
+            height: modelElementsHash['final-view-container'].metadata.graphics.size.height,
+            width: modelElementsHash['final-view-container'].metadata.graphics.size.width
+          },
+          parent: modelElementsHash['xor-view-container'].id
+        });
 
+        modelElementsHash['final-view-container'].metadata.graphics.position.x += 250;
+        modelElementsHash['final-details'].metadata.graphics.position.x += 250;
 
-  configurator(modelElementsHash['categories-list-view-container'], template, {
-      name: multilevelMasterDetail.steps[0].collection.charAt(0).toUpperCase() + multilevelMasterDetail.steps[0].collection.slice(1)
-  });
-  configurator(modelElementsHash['categories-list-view-container'], template, {
-      name: multilevelMasterDetail.steps[0].collection.charAt(0).toUpperCase() + multilevelMasterDetail.steps[0].collection.slice(1)
-  });
-  configurator(modelElementsHash['mail-list'], template, {
-      name: multilevelMasterDetail.list.collection.charAt(0).toUpperCase() + multilevelMasterDetail.list.collection.slice(1),
-      collection: multilevelMasterDetail.list.collection,
-      fields: multilevelMasterDetail.list.fields
-  });
-  configurator(modelElementsHash['mail-details-view-container'], template, {
-      name: multilevelMasterDetail.details.name.charAt(0).toUpperCase() + multilevelMasterDetail.details.name.slice(1)
-  });
-  configurator(modelElementsHash['mail-details'], template, {
-      name: multilevelMasterDetail.details.name.charAt(0).toUpperCase() + multilevelMasterDetail.details.name.slice(1),
-      collection: multilevelMasterDetail.list.collection,
-      fields: multilevelMasterDetail.details.fields
-  });
+        reference['list'] = generator(template, {
+          type: 'ifml.ViewComponent',
+          stereotype: 'list',
+          name: step.collection.charAt(0).toUpperCase() + step.collection.slice(1),
+          fields: step.fields,
+          filters: index === 0 ? multilevelMasterDetail.steps[1].filters : collection[index - 1].filters,
+          position: {
+            x: reference['viewContainer'].metadata.graphics.position.x + 20,
+            y: reference['viewContainer'].metadata.graphics.position.y + 40
+          },
+          size: {
+            height: modelElementsHash['final-details'].metadata.graphics.size.height,
+            width: modelElementsHash['final-details'].metadata.graphics.size.width
+          },
+          parent: reference['viewContainer'].id
+        });
+        reference['selected-event'] = generator(template, {
+          type: 'ifml.Event',
+          name: 'Selected ' + step.name,
+          text: 'Selected',
+          stereotype: 'selection',
+          position: {
+           x: modelElementsHash['selected-step-2-event'].metadata.graphics.position.x + 250 * (index + 1),
+           y: modelElementsHash['selected-step-2-event'].metadata.graphics.position.y
+         },
+         parent: reference['list'].id
+        });
+        reference['navigationFlow'] = generator(template, {
+          type: 'ifml.NavigationFlow',
+          name: 'Selected ' + step.name,
+          filters: index !== (collection.length - 1) ? reference['list'] : ['id'],
+          source: reference['selected-event'].id,
+          target: index !== (collection.length - 1) ? idValidator(template.elements, collection[index + 1].collection, '-list') : modelElementsHash['final-details'].id
+        });
 
+        if (index === 0) {
+          _.filter(template.relations, function (relation) { return (relation.type === 'target' && relation.flow === modelElementsHash['selected-step-2-navigation-flow'].id); })
+           .map(function(relation) {
+             relation.target = reference['list'].id
+           });
+        }
+
+        for (var key in reference) {
+          template.elements.push(reference[key]);
+        };
+    });
+  }
   return template;
 }
 

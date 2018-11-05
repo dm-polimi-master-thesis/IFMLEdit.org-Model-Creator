@@ -147,16 +147,20 @@ function SettingsPatternViewModel(options) {
         return false;
       }
     });
-
     if(error){
       return undefined;
     }
 
-    _.forEach(self.steps(), function (step) {
-      step.filters = _.filter(step.fields, function (field) { return field.filter === true;})
+    _.forEach(self.steps(), function (step, index, collection) {
+      if(index === (collection.length - 1)){
+        step.filters = [];
+      } else {
+        step.filters = _.filter(_.cloneDeep(step.fields), function (field) { return field.filter === true;})
                       .map(function (filter) {
                         return filter.name;
-                      })
+                      });
+      }
+
       step.fields = _.map(step.fields, 'name');
     });
 

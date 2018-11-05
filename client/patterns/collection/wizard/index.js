@@ -105,27 +105,31 @@ function SettingsPatternViewModel(options) {
   }
 
   self.transform = function () {
-    if(self.steps().length < 2){
+    var error = false;
+
+    if (self.steps().length < 2) {
+      error = true;
       $.notify({message: 'Your request cannot be processed: wizard pattern require a minimum of two steps.'},
         {allow_dismiss: true, type: 'danger'});
       return undefined;
-    } else {
-      if(!(self.name().length > 0)) {
-        $('#pattern-form').addClass('has-error');
-        $.notify({message: 'Your request cannot be processed: the pattern cannot have an empty name.'},
+    }
+    if (!(self.name().length > 0)) {
+      error = true;
+      $('#pattern-form').addClass('has-error');
+      $.notify({message: 'Your request cannot be processed: the pattern cannot have an empty name.'},
+        {allow_dismiss: true, type: 'danger'});
+    }
+    _.forEach(self.steps(), function(step) {
+      if (!(step.formName.length > 0)) {
+        error = true;
+        self.selected(step);
+        $('#form-name-form').addClass('has-error');
+        $.notify({message: 'Your request cannot be processed: ' + step.name + ' cannot have an empty form name.'},
           {allow_dismiss: true, type: 'danger'});
+        return false;
       }
-
-      _.forEach(self.steps(), function(step) {
-        if(!(step.formName.length > 0)){
-          self.selected(step);
-          $('#form-name-form').addClass('has-error');
-          $.notify({message: 'Your request cannot be processed: ' + step.name + ' cannot have an empty form name.'},
-            {allow_dismiss: true, type: 'danger'});
-          return false;
-        }
-      });
-
+    });
+    if (error) {
       return undefined;
     }
 
