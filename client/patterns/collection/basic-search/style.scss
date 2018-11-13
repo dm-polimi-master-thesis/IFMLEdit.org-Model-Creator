@@ -113,6 +113,16 @@
         padding-right: 15px;
     }
 
+    .right-inner-addon {
+        position: relative;
+
+        i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+        }
+    }
+
     .collection-name {
       padding-top: 0px;
     }

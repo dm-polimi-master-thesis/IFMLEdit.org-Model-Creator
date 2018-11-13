@@ -54,11 +54,23 @@ function mapStringSet(e, f) {
     var field = {
         name: f.name,
         type: f.type,
+        stereotype: e.attributes.stereotype,
         strings: ko.observableArray(_(e.get(f.property) || []).sort().uniq(true).value()),
         value: ko.observable(''),
+        inputTypes: e.attributes.stereotype === 'form' || e.attributes.stereotype === 'list' ? ['text','password','reset','radio','checkbox'] : undefined,
+        inputType: e.attributes.stereotype === 'form' || e.attributes.stereotype === 'list' ? ko.observableArray(['text']) : undefined,
         add: function () {
-            if (field.value().trim().length) {
-                field.strings(_(field.strings()).concat(field.value().trim()).sort().uniq(true).value());
+            if (field.value().trim().length && field.stereotype === 'form' || field.stereotype === 'list') {
+                field.strings(_(field.strings()).concat({
+                  value: field.value().trim(),
+                  type: field.inputType()
+                }).sortBy(field.strings, ['value']).uniq(true).value());
+                field.value('');
+                field.inputType(['text']);
+            } else {
+                field.strings(_(field.strings()).concat({
+                  value: field.value().trim()
+                }).sortBy(field.strings, ['value']).uniq(true).value());
                 field.value('');
             }
         },
@@ -69,6 +81,7 @@ function mapStringSet(e, f) {
     field.strings.subscribe(function (strings) {
         e.prop(f.property, strings);
     });
+    console.log(e);
     return field;
 }
 

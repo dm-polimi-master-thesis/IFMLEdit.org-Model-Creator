@@ -100,6 +100,16 @@
         padding-right: 15px;
     }
 
+    .right-inner-addon {
+        position: relative;
+
+        i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+        }
+    }
+
     .name-pattern-label {
         max-width: 250px;
     }

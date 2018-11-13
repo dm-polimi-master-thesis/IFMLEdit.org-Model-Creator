@@ -167,6 +167,16 @@
         padding-right: 15px;
     }
 
+    .right-inner-addon {
+        position: relative;
+
+        i {
+            position: absolute;
+            right: 0px;
+            padding: 10px 12px;
+        }
+    }
+
     .collection-label {
         padding-left: 20px;
     }

@@ -200,6 +200,63 @@ html, body {
     overflow: auto;
 }
 
+.modal-edit {
+    .form-control {
+        margin-top: 10px;
+        padding-right: 50px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
+    }
+
+    .input-field {
+        margin-top: 0px !important;
+    }
+
+    .form-smooth {
+        -webkit-border-radius: 20px !important;
+        -moz-border-radius: 20px !important;
+        border-radius: 20px !important;
+    }
+
+    .form-pattern-name {
+        min-width: fit-content;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+        display: flex;
+    }
+
+    .input-group-addon {
+        color:#555555;
+        background-color: #ffffff;
+        border-radius: 0px 0px 20px 0px;
+        padding-right: 15px;
+    }
+
+    .right-inner-addon {
+        position: relative;
+
+        i {
+          position: absolute;
+          left: 0;
+          padding-top: 3px;
+          padding-left: 170px;
+        }
+    }
+
+    .field-span {
+      width: 150px;
+      overflow-x: scroll;
+      display: block;
+    }
+
+    .inputType {
+      vertical-align: middle;
+    }
+}
+
 @import "./patterns/collection/basic-search/style.scss";
 @import "./patterns/collection/sign-up-log-in/style.scss";
 @import "./patterns/collection/master-detail/style.scss";

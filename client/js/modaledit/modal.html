@@ -1,4 +1,4 @@
-<div class="modal fade" role="dialog">
+<div class="modal fade modal-edit" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -54,25 +54,41 @@
                             <table class="table table-condensed table-stripped">
                                 <thead>
                                     <th>#</th>
+                                    <!-- ko if: (stereotype === 'form' || stereotype === 'list') && name === 'Fields' -->
+                                      <th>type</th>
+                                    <!-- /ko -->
                                     <th>value</th>
-                                    <th></th>
                                 </thead>
                                 <tbody data-bind="foreach: strings">
                                     <tr>
                                         <th scopre="row" data-bind="text: $index"></th>
-                                        <td data-bind="text: $data"></td>
+                                        <!-- ko if: ($parent.stereotype === 'form' || $parent.stereotype === 'list') && $parent.name === 'Fields' -->
+                                          <td data-bind="text: type"></td>
+                                        <!-- /ko -->
                                         <td>
-                                            <button class="btn" data-bind="click: $parent.remove">remove</button>
+                                            <div class="right-inner-addon">
+                                              <span class="field-span" data-bind="text: value"></span>
+                                              <a href="#" data-bind="click: $parent.remove"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <th></th>
-                                    <th class="form-group">
-                                        <input class="form-control" type="text" data-bind="textInput: value, executeOnEnter: add">
+                                    <!-- ko if: (stereotype === 'form' || stereotype === 'list') && name === 'Fields' -->
+                                    <th class="inputType" data-bind="if: (stereotype === 'form' || stereotype === 'list') && name === 'Fields'">
+                                          <select class="filter" data-bind="options: inputTypes, value: inputType"></select>
                                     </th>
+                                    <!-- /ko -->
                                     <th>
-                                        <button class="btn" data-bind="click: add">add</button>
+                                        <div class="form-group">
+                                          <div class="input-group">
+                                            <input class="form-control input-field" placeholder="Add new field" type="text" data-bind="textInput: value, executeOnEnter: add">
+                                            <div class="input-group-addon">
+                                              <a href="#" data-bind="click: add"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                            </div>
+                                          </div>
+                                        </div>
                                     </th>
                                 </tfoot>
                             </table>
