@@ -1,4 +1,10 @@
-.wizard-settings-table {
+.sign-up-log-in-settings-table {
+
+  .list-fields, .details-fields {
+    li span {
+        width: 185px;
+    }
+  }
 
   .list-steps {
     li span {
@@ -10,7 +16,7 @@
     }
   }
 
-  .list-steps, .list-fields {
+  .list-steps, .list-fields, .details-fields {
       list-style-type: none;
       margin: 0px;
       padding: 0px;
@@ -28,7 +34,6 @@
           text-decoration: none;
           font-size: 13px;
           color: #000;
-          width: 185px;
           display: block;
           overflow-x: scroll;
           overflow-y: hidden;
@@ -44,20 +49,24 @@
     }
 
     .list-fields-container {
+        margin-right: 10px;
+        height: 100px;
+    }
+
+    .details-fields-container {
         height: 170px;
     }
 
-    .list-steps-container, .list-fields-container {
+    .list-steps-container, .list-fields-container, .details-fields-container {
         overflow: auto;
         border: 1px #8080804d solid;
     }
 
-    .wizard-form-input{
+    .sign-up-log-in-form-input{
         position: relative;
-        display: inline-flex;
     }
 
-    .wizard-form-label {
+    .sign-up-log-in-form-label {
         min-width: fit-content;
         padding-top: 7px;
         padding-right: 20px;
@@ -71,8 +80,21 @@
         padding-left: 70px;
     }
 
+    .xor-form {
+      display: block !important;
+    }
+
+    .xor-label {
+      padding-left: 20px;
+      font-size: 18px;
+    }
+
+    .form-td-left {
+        padding-right: 60px;
+        padding-left: 0px;
+    }
+
     .form-control {
-        padding-right: 50px;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         border-radius: 20px;
@@ -100,6 +122,10 @@
         padding-right: 15px;
     }
 
+    .collection-label {
+        padding-left: 20px;
+    }
+
     .name-pattern-label {
         max-width: 250px;
     }
@@ -118,7 +144,7 @@
     }
 
     .th-right {
-      padding-left: 30px;
+      padding-left: 0px;
     }
 
     .td-add-step {
