@@ -109,11 +109,11 @@ exports.Action = joint.shapes.basic.Generic.extend({
     },
 
     inputs: function () {
-        return _(this.get('parameters') || []).sort().uniq(true).value();
+        return _(_.map(this.get('parameters'),'value') || []).sort().uniq(true).value();
     },
 
     outputs: function () {
-        return _(this.get('results') || []).sort().uniq(true).value();
+        return _(_.map(this.get('results'),'value') || []).sort().uniq(true).value();
     },
 
     _accentChanged: function () {

@@ -10,7 +10,7 @@
                     <div class="form-group" data-bind="css: {'has-error': id_duplicated}">
                         <label class="col-sm-2 control-label" for="input-id">Id</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id='input-id' data-bind="value: id_tentative, executeOnEnter: $root.close">
+                            <input class="form-control type-input" type="text" id='input-id' data-bind="value: id_tentative, executeOnEnter: $root.close">
                         </div>
                     </div>
                 </div>
@@ -18,11 +18,11 @@
                     <div class="form-group" data-bind="if: type === 'string', visible: type === 'string'">
                         <label class="col-sm-2 control-label" data-bind="text: name, attr: {for: 'input-field' + property}"></label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" data-bind="textInput: value, executeOnEnter: $root.close, attr: {id: 'input-field' + property}">
+                            <input class="form-control type-input" type="text" data-bind="textInput: value, executeOnEnter: $root.close, attr: {id: 'input-field' + property}">
                         </div>
                     </div>
                     <div class="form-group" data-bind="if: type === 'number', visible: type === 'number'">
-                        <label class="col-sm-2 control-label" data-bind="text: name, attr: {for: 'input-field' + property}"></label>
+                        <label class="col-sm-2 control-label type-input" data-bind="text: name, attr: {for: 'input-field' + property}"></label>
                         <div class="col-sm-10">
                             <input class="form-control" type="number" data-bind="textInput: text, executeOnEnter: $root.close, attr: {id: 'input-field' + property, min: min, max: max}">
                         </div>
@@ -34,9 +34,9 @@
                         </label>
                     </div>
                     <div class="form-group" data-bind="if: type === 'enum', visible: type === 'enum'">
-                        <label class="col-sm-2 control-label" data-bind="text: name, attr: {for: 'input-field' + property}"></label>
+                        <label class="col-sm-2 control-label type-input" data-bind="text: name, attr: {for: 'input-field' + property}"></label>
                         <div class="col-sm-10">
-                            <select class="form-control" data-bind="options: values, optionsText: 'name', optionsValue: 'value', value: value, attr: {id: 'input-field' + property}"></select>
+                            <select class="form-control type-options" data-bind="options: values, optionsText: 'name', optionsValue: 'value', value: value, attr: {id: 'input-field' + property}"></select>
                         </div>
                     </div>
                     <div class="form-group" data-bind="if: type === 'booleanset', visible: type === 'booleanset'">
@@ -54,7 +54,7 @@
                             <table class="table table-condensed table-stripped">
                                 <thead>
                                     <th>#</th>
-                                    <!-- ko if: (stereotype === 'form' || stereotype === 'list') && name === 'Fields' -->
+                                    <!-- ko if: stereotype === 'form' && name === 'Fields' -->
                                       <th>type</th>
                                     <!-- /ko -->
                                     <th>value</th>
@@ -62,7 +62,7 @@
                                 <tbody data-bind="foreach: strings">
                                     <tr>
                                         <th scopre="row" data-bind="text: $index"></th>
-                                        <!-- ko if: ($parent.stereotype === 'form' || $parent.stereotype === 'list') && $parent.name === 'Fields' -->
+                                        <!-- ko if: $parent.stereotype === 'form' && $parent.name === 'Fields' -->
                                           <td data-bind="text: type"></td>
                                         <!-- /ko -->
                                         <td>
@@ -75,15 +75,15 @@
                                 </tbody>
                                 <tfoot>
                                     <th></th>
-                                    <!-- ko if: (stereotype === 'form' || stereotype === 'list') && name === 'Fields' -->
-                                    <th class="inputType" data-bind="if: (stereotype === 'form' || stereotype === 'list') && name === 'Fields'">
-                                          <select class="filter" data-bind="options: inputTypes, value: inputType"></select>
+                                    <!-- ko if: stereotype === 'form' && name === 'Fields' -->
+                                    <th class="inputType" data-bind="if: stereotype === 'form' && name === 'Fields'">
+                                          <select class="filter type-options" data-bind="options: inputTypes, value: inputType"></select>
                                     </th>
                                     <!-- /ko -->
                                     <th>
                                         <div class="form-group">
                                           <div class="input-group">
-                                            <input class="form-control input-field" placeholder="Add new field" type="text" data-bind="textInput: value, executeOnEnter: add">
+                                            <input class="form-control input-field type-input-field" placeholder="Add new field" type="text" data-bind="textInput: value, executeOnEnter: add">
                                             <div class="input-group-addon">
                                               <a href="#" data-bind="click: add"><i class="glyphicon glyphicon-plus-sign"></i></a>
                                             </div>
@@ -99,33 +99,33 @@
                         <div class="cols-sm-10 col-sm-10">
                             <table class="table table-condensed table-stripped">
                                 <thead>
-                                    <th>#</th>
-                                    <th>output</th>
-                                    <th>input</th>
-                                    <th></th>
+                                    <th class="th-bindings">#</th>
+                                    <th class="th-bindings">output</th>
+                                    <th class="th-bindings">input</th>
+                                    <th class="th-bindings"></th>
                                 </thead>
                                 <tbody data-bind="foreach: bindings">
                                     <tr>
                                         <th scopre="row" data-bind="text: $index"></th>
                                         <td data-bind="text: output"></td>
                                         <td data-bind="text: input"></td>
-                                        <td>
-                                            <button class="btn" data-bind="click: $parent.removeBinding">remove</button>
+                                        <td class="glyphicon-minus-bindings">
+                                            <a href="#" data-bind="click: $parent.removeBinding"><i class="glyphicon glyphicon-minus-sign"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
-                                <tfoor>
+                                <tfoot>
                                     <th></th>
-                                    <th class="form-group">
-                                        <select class="form-control" data-bind="options: outputs, value: output"></select>
-                                    </th>
-                                    <th class="form-group">
-                                        <select class="form-control" data-bind="options: inputs, value: input"></select>
+                                    <th >
+                                        <select class="form-control type-options" data-bind="options: outputs, value: output"></select>
                                     </th>
                                     <th>
-                                        <button class="btn" data-bind="click: addBinding">add</button>
+                                        <select class="form-control type-options" data-bind="options: inputs, value: input"></select>
                                     </th>
-                                </tfoor>
+                                    <th class="glyphicon-plus-bindings">
+                                        <a href="#" data-bind="click: addBinding"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                    </th>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

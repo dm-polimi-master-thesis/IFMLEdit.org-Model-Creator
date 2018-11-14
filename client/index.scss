@@ -228,11 +228,33 @@ html, body {
         display: flex;
     }
 
+    .glyphicon-plus-bindings {
+      vertical-align: middle;
+      padding-top: 17px;
+      padding-left: 45px;
+    }
+
+    .glyphicon-minus-bindings {
+      padding-left: 45px;
+    }
+
     .input-group-addon {
         color:#555555;
         background-color: #ffffff;
         border-radius: 0px 0px 20px 0px;
         padding-right: 15px;
+    }
+
+    .th-bindings {
+        width: 1%;
+    }
+
+    .type-input {
+        max-width: 350px;
+    }
+
+    .type-options, .type-input-field {
+      max-width: 174px;
     }
 
     .right-inner-addon {
@@ -255,6 +277,27 @@ html, body {
     .inputType {
       vertical-align: middle;
     }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    background-color: #FFF;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #555;
+    background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, .2) 25%,
+                        transparent 25%,
+                        transparent 50%,
+                        rgba(255, 255, 255, .2) 20%,
+                        rgba(255, 255, 255, .2) 75%,
+                        transparent 75%,
+                        transparent);
 }
 
 @import "./patterns/collection/basic-search/style.scss";

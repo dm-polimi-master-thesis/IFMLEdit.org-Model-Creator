@@ -35,6 +35,7 @@ function mapBase(e, f) {
     field.value.subscribe(function (value) {
         e.prop(f.property, value);
     });
+    console.log('mapBase',field);
     return field;
 }
 
@@ -47,6 +48,7 @@ function mapBooleanSet(e, f) {
         type: f.type,
         items: f.items.map(function (v) { return mapBoolean(e, v); })
     };
+    console.log('mapBooleanSet',field);
     return field;
 }
 
@@ -55,24 +57,29 @@ function mapStringSet(e, f) {
         name: f.name,
         type: f.type,
         stereotype: e.attributes.stereotype,
-        strings: ko.observableArray(_(e.get(f.property) || []).sort().uniq(true).value()),
+        strings: ko.observableArray(e.get(f.property) || []),
         value: ko.observable(''),
-        inputTypes: e.attributes.stereotype === 'form' || e.attributes.stereotype === 'list' ? ['text','password','reset','radio','checkbox'] : undefined,
-        inputType: e.attributes.stereotype === 'form' || e.attributes.stereotype === 'list' ? ko.observableArray(['text']) : undefined,
+        inputTypes: e.attributes.stereotype === 'form' ? ['text','password','reset','radio','checkbox'] : undefined,
+        inputType: e.attributes.stereotype === 'form' ? ko.observableArray(['text']) : undefined,
         add: function () {
-            if (field.value().trim().length && field.stereotype === 'form' || field.stereotype === 'list') {
+            if (field.value().trim().length && field.stereotype === 'form' && _.findIndex(field.strings(), {'value' : field.value()}) === -1) {
                 field.strings(_(field.strings()).concat({
                   value: field.value().trim(),
                   type: field.inputType()
-                }).sortBy(field.strings, ['value']).uniq(true).value());
-                field.value('');
+                }).value());
                 field.inputType(['text']);
-            } else {
+            } else if (_.findIndex(field.strings(), {'value' : field.value()}) === -1) {
                 field.strings(_(field.strings()).concat({
                   value: field.value().trim()
-                }).sortBy(field.strings, ['value']).uniq(true).value());
-                field.value('');
+                }).value());
+            } else if (_.findIndex(field.strings(), {'value' : field.value()}) !== -1) {
+                $.notify({message: 'Your request cannot be processed: ' + field.value() + ' is a duplicate.'},
+                  {allow_dismiss: true, type: 'danger'});
             }
+            console.log(field.strings());
+            console.log(field.value());
+            console.log(_.findIndex(field.strings(), {'value' : 'body'}));
+            field.value('');
         },
         remove: function () {
             field.strings.remove(this);
@@ -81,13 +88,14 @@ function mapStringSet(e, f) {
     field.strings.subscribe(function (strings) {
         e.prop(f.property, strings);
     });
-    console.log(e);
+    console.log('mapStringSet',field);
     return field;
 }
 
 function mapEnum(e, f) {
     var field = mapBase(e, f);
     field.values = f.values;
+    console.log('mapEnum',field);
     return field;
 }
 
@@ -113,6 +121,7 @@ function mapNumber(e, f) {
             }
         }
     }).extend({notify: 'always'});
+    console.log('mapNumber',field);
     return field;
 }
 
@@ -132,6 +141,7 @@ function mapBindings(l, f) {
             field.bindings.remove(this);
         }
     };
+
     field.outputs = (l.getSourceElement().outputs && l.getSourceElement().outputs()) ||
         (l.getSourceElement().getAncestors()[0].outputs && l.getSourceElement().getAncestors()[0].outputs()) ||
         [];
@@ -188,7 +198,56 @@ function mapElementsList(l, f) {
     field.children.subscribe(function (sorted) {
         l.set(f.property, _.chain(sorted).map('id').concat(ignored).value());
     });
+    console.log('mapElementsList',field);
     return field;
+}
+
+function bindingsRetroCompatibility(strings) {
+  var stringsMap =_.map(strings, function (str) {
+                      return {
+                        value: str.value || str,
+                      }
+                    });
+
+  var hash = {};
+
+  return _.sortBy(stringsMap, 'value')
+          .filter(function (str) {
+              if(hash[str.value] === undefined){
+                  hash[str.value] = str;
+                  return true;
+              }
+            return false;
+          });
+}
+
+function fieldsRetroCompatibility(e,f) {
+  console.log('fieldsRetroCompatibility');
+  var strings = e.get(f.property);
+
+  var stringsMap =_.map(strings, function (str) {
+      if(e.attributes.stereotype === 'form'){
+        return {
+          value: str.value || str,
+          type: str.type || 'text'
+        }
+      } else {
+        return {
+          value: str.value || str
+        }
+      }
+  });
+
+  var hash = {};
+
+  return _.sortBy(stringsMap, 'value')
+          .filter(function (str) {
+              if(hash[str.value] === undefined){
+                  hash[str.value] = str;
+                  return true;
+              }
+            return false;
+          });
 }
 
 function ElementViewModel(options, close) {
@@ -212,6 +271,10 @@ function ElementViewModel(options, close) {
     });
 
     self.fields = _.map(options.fields, function (f) {
+        if(f.type === 'stringset'){
+          cell.set(f.property,fieldsRetroCompatibility(cell,f));
+        }
+
         switch (f.type) {
         case 'number':
             return mapNumber(cell, f);
