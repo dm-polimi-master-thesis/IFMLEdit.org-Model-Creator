@@ -36,24 +36,24 @@ ViewModel.prototype._compute = function () {
 <% } -%>
     this.output = {
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-        '<%= fields[i]%>': this.input['<%= fields[i]%>'],
+        '<%= fields[i].value%>': this.input['<%= fields[i].value%>'],
 <% } -%>
     }
     var self = this,
         fields = {
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-            '<%= fields[i]%>': ko.observable(this.input['<%= fields[i]%>']),
+            '<%= fields[i].value%>': ko.observable(this.input['<%= fields[i].value%>']),
 <% } -%>
         },
         errors = {
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-            '<%= fields[i]%>': ko.observable(this.input['<%= fields[i]%>-error']),
+            '<%= fields[i].value%>': ko.observable(this.input['<%= fields[i].value%>-error']),
 <% } -%>
         };
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-    fields['<%= fields[i]%>'].subscribe(function (value) {
-        self.output['<%= fields[i]%>'] = value;
-        self.errors()['<%= fields[i]%>'](undefined);
+    fields['<%= fields[i].value%>'].subscribe(function (value) {
+        self.output['<%= fields[i].value%>'] = value;
+        self.errors()['<%= fields[i].value%>'](undefined);
     });
 <% } -%>
     this.fields(fields);

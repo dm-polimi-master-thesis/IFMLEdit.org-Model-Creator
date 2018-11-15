@@ -15,8 +15,8 @@ exports.rules = [
             var id = model.toId(component),
                 name = component.attributes.name,
                 collection = component.attributes.collection,
-                filters = component.attributes.filters,
-                fields = component.attributes.fields,
+                filters = _.map(component.attributes.filters,'value'),
+                fields = _.map(component.attributes.fields,'value'),
                 incomings = _.chain(model.getInbounds(id))
                     .filter(function (id) { return model.isDataFlow(id); })
                     .map(function (id) { return model.toElement(id); })
@@ -60,7 +60,7 @@ exports.rules = [
             var id = model.toId(component),
                 name = component.attributes.name,
                 collection = component.attributes.collection,
-                fields = component.attributes.fields,
+                fields = _.map(component.attributes.fields,'value'),
                 incomings = _.chain(model.getInbounds(id))
                     .filter(function (id) { return model.isDataFlow(id); })
                     .map(function (id) { return model.toElement(id); })

@@ -82,7 +82,7 @@ exports.rules = [
                     .map(function (component) {
                         return {
                             name: component.attributes.collection,
-                            fields: _.chain(component.attributes.fields).concat(component.attributes.filters).compact().value()
+                            fields: _.chain(_.map(component.attributes.fields,'value')).concat(_.map(component.attributes.filters,'value')).compact().value()
                         };
                     })
                     .groupBy('name')

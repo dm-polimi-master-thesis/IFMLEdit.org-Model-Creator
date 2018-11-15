@@ -49,7 +49,7 @@ exports.rules = [
                         if (c.attributes.collection) {
                             return {
                                 name: component.attributes.collection,
-                                fields: _.chain(component.attributes.fields).concat(component.attributes.filters).compact().value()
+                                fields: _.chain(_.map(component.attributes.fields,'value')).concat(_.map(component.attributes.filters,'value')).compact().value()
                             };
                         }
                         throw new AException('Collection cannot be empty\n(ViewComponent id:' + c.id + ')');

@@ -26,7 +26,7 @@
             <td data-bind="text: id">
             </td>
 <%   for (var i = 0; i < fields.length; i += 1) { -%>
-            <td data-bind="text: $data['<%= fields[i] %>']" 
+            <td data-bind="text: $data['<%= fields[i] %>']"
                 style="white-space: pre-wrap;">
             </td>
 <%
@@ -37,7 +37,7 @@
            if (events[i].stereotype == 'system') { -%>
                 <c-<%= events[i].id %> params="trigger: $parent.trigger.bind($data, '<%= events[i].id %>')"></c-<%= events[i].id %>>
 <%         } else { -%>
-                <a class="col-xs-2 btn btn-primary" 
+                <a class="col-xs-2 btn btn-primary"
                     data-bind="click: $parent.trigger.bind($data, '<%= events[i].id %>'), clickBubble: false">
                     <%= events[i].name %>
                 </a>
@@ -46,6 +46,5 @@
             </td>
 <% } -%>
         </tr>
-    </li>
     </tbody>
 </table>

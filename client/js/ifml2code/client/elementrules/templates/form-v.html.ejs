@@ -3,22 +3,22 @@
 </h3>
 <form>
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-    <div class="form-group" 
-        data-bind="css: {'has-error': errors()['<%=fields[i]%>']}">
-        <label 
-            for="<%=id%>_field_<%=i%>" 
-            data-bind="css: {active: fields()['<%=fields[i]%>']}, attr: {'data-error': errors()['<%=fields[i]%>']}" 
+    <div class="form-group"
+        data-bind="css: {'has-error': errors()['<%=fields[i].value%>']}">
+        <label
+            for="<%=id%>_field_<%=i%>"
+            data-bind="css: {active: fields()['<%=fields[i].value%>']}, attr: {'data-error': errors()['<%=fields[i].value%>']}"
             class="control-label">
-            <%=fields[i]%>
+            <%=fields[i].value%>
         </label>
-        <input id="<%=id%>_field_<%=i%>" 
-            data-bind="value: fields()['<%=fields[i]%>']" 
-            type="text" 
-            class="form-control validate" 
+        <input id="<%=id%>_field_<%=i%>"
+            data-bind="value: fields()['<%=fields[i].value%>']"
+            type="<%=fields[i].type%>"
+            class="form-control validate"
             aria-describedby="<%=id%>_field_<%=i%>_error">
-        <span id="<%=id%>_field_<%=i%>_error" 
-            class="help-block" 
-            data-bind="text: errors()['<%=fields[i]%>']">
+        <span id="<%=id%>_field_<%=i%>_error"
+            class="help-block"
+            data-bind="text: errors()['<%=fields[i].value%>']">
         </span>
     </div>
 <% } -%>
@@ -29,7 +29,7 @@
            if (events[i].stereotype == 'system') { -%>
     <c-<%= events[i].id %> params="trigger: trigger.bind($data,'<%= events[i].id %>')"></c-<%= events[i].id %>>
 <%         } else { -%>
-    <a class="col-xs-2 btn btn-primary" 
+    <a class="col-xs-2 btn btn-primary"
         data-bind="click: trigger.bind($data, '<%= events[i].id %>')">
         <%= events[i].name %>
     </a>
