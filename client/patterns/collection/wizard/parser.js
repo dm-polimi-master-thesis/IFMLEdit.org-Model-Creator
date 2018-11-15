@@ -32,7 +32,7 @@ function parser(wizard){
   _.slice(wizard.steps, 0, 2)
    .forEach(function(step, index, collection){
      var errorFields = _.map(step.fields, function (field) {
-       return [field,'error-' + field];
+       return [field, field + '-error'];
      });
 
      configurator(modelElementsHash['step-' + (index + 1) + '-view-container'], template, {
@@ -83,7 +83,7 @@ function parser(wizard){
     _.slice(wizard.steps, 2, wizard.steps.length)
      .forEach(function (step, index, collection) {
         var errorFields = _.map(step.fields, function (field) {
-            return [field,'error-' + field];
+            return [field, field + '-error'];
         });
 
         reference['viewContainer'] = generator(template, {

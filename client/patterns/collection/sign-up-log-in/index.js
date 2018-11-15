@@ -60,18 +60,6 @@ function SettingsPatternViewModel(options) {
     }
   }
 
-  self.select = function () {
-    self.selected().fields = _.map(self.fields.removeAll(), 'name');
-    self.selected(this);
-    self.fields(_.map(this.fields, function(field) { return { name : field }; }));
-
-    if(!(self.selected().formName.length > 0)){
-      $('#form-name-form').addClass('has-error');
-    } else {
-      $('#form-name-form').removeClass('has-error');
-    }
-  }
-
   self.transform = function () {
     var error = false;
 

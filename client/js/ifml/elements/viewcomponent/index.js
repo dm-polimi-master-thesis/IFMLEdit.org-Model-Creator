@@ -160,26 +160,11 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
         case 'details':
             return ['id'];
         case 'list':
-            console.log('list');
-            if(this.get('filters')[0].value !== undefined) {
-              return _(_.map(this.get('filters'),'value')).sort().uniq(true).value();
-            } else {
-              console.log('inputs');
-              return _(this.get('filters') || []).sort().uniq(true).value();
-            }
+            return _(_.map(this.get('filters'),'value') || []).sort().uniq(true).value();
         case 'form':
-            console.log('form');
-            if (this.get('fields')[0].value !== undefined) {
-              return _(_.map(this.get('fields'),'value')).map(function (f) {
-                  return [f, f + '-error'];
-              }).flatten().sort().value()
-            } else {
-              console.log('inputs');
-              return _(this.get('fields') || []).map(function (f) {
-                  return [f, f + '-error'];
-              }).flatten().sort().value();
-            }
-
+            return _(_.map(this.get('fields'),'value') || []).map(function (f) {
+                return [f, f + '-error'];
+            }).flatten().sort().value()
         default:
             return [];
         }
@@ -188,29 +173,11 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
     outputs: function () {
         switch (this.get('stereotype')) {
         case 'details':
-            console.log('details');
-            if (this.get('fields')[0].value !== undefined) {
-              return _(['id']).concat(_.map(this.get('fields'),'value')).sort().uniq(true).value()
-            } else {
-              console.log('outputs');
-              return _(['id']).concat(this.get('fields') || []).sort().uniq(true).value();
-            }
+            return _(['id']).concat(_.map(this.get('fields'),'value') || []).sort().uniq(true).value()
         case 'list':
-            console.log('list');
-            if (this.get('fields')[0].value !== undefined) {
-              return _(['id']).concat(_.map(this.get('fields'),'value')).sort().uniq(true).value()
-            } else {
-              console.log('outputs');
-              return _(['id']).concat(this.get('fields') || []).sort().uniq(true).value();
-            }
+            return _(['id']).concat(_.map(this.get('fields'),'value') || []).sort().uniq(true).value()
         case 'form':
-            console.log('form');
-            if (this.get('fields')[0].value !== undefined) {
-              return _(_.map(this.get('fields'),'value')).sort().value()
-            } else {
-              console.log('outputs');
-              return _(this.get('fields') || []).sort().value();
-            }
+            return _(_.map(this.get('fields'),'value') || []).sort().uniq(true).value()
         default:
             return [];
         }

@@ -226,6 +226,7 @@ html, body {
     .form-group {
         margin-bottom: 0px !important;
         display: flex;
+        padding-top: 10px;
     }
 
     .glyphicon-plus-bindings {
@@ -301,6 +302,7 @@ html, body {
 }
 
 @import "./patterns/collection/basic-search/style.scss";
+@import "./patterns/collection/input-data-validation/style.scss";
 @import "./patterns/collection/sign-up-log-in/style.scss";
 @import "./patterns/collection/master-detail/style.scss";
 @import "./patterns/collection/multilevel-master-detail/style.scss";

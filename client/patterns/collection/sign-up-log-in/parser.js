@@ -15,10 +15,10 @@ function parser(signUpLogIn){
   var modelElementsHash = toHash(template.elements);
 
   var signUpResults = _.map(signUpLogIn.signUp.fields, function (field) {
-    return [field,'error-' + field];
+    return [field, field + '-error'];
   });
   var logInResults = _.map(signUpLogIn.logIn.fields, function (field) {
-    return [field,'error-' + field];
+    return [field, field + '-error'];
   });
 
   configurator(modelElementsHash['xor-view-container'], template, {
