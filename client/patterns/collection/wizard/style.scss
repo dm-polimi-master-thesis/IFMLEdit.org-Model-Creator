@@ -101,10 +101,9 @@
     }
 
     .right-inner-addon {
-        position: relative;
+        display: flex;
 
         i {
-            position: absolute;
             right: 0px;
             padding: 10px 12px;
         }

@@ -59,12 +59,27 @@ function mapStringSet(e, f) {
         value: ko.observable(''),
         inputTypes: e.attributes.stereotype === 'form' ? ['text','password','reset','radio','checkbox'] : undefined,
         inputType: e.attributes.stereotype === 'form' ? ko.observableArray(['text']) : undefined,
+        radio: ko.observable(0),
+        checkbox: ko.observable(0),
         add: function () {
             if (field.value().trim().length && field.stereotype === 'form' && _.findIndex(field.strings(), {'value' : field.value()}) === -1) {
                 field.strings(_(field.strings()).concat({
                   value: field.value().trim(),
-                  type: field.inputType()
+                  type: field.inputType(),
+                  name: field.inputType() === 'checkbox' || field.inputType() === 'radio' ? '' : undefined
                 }).value());
+                if (field.inputType() === 'checkbox' || field.inputType() === 'radio') {
+                  var count = 0;
+                  if (field.inputType() === 'checkbox') {
+                    count = field.checkbox() + 1;
+                    field.checkbox(count);
+                    console.log(field.checkbox());
+                  } else {
+                    count = field.radio() + 1;
+                    field.radio(count);
+                    console.log(field.radio());
+                  }
+                }
                 field.inputType(['text']);
             } else if (_.findIndex(field.strings(), {'value' : field.value()}) === -1) {
                 field.strings(_(field.strings()).concat({
@@ -79,10 +94,17 @@ function mapStringSet(e, f) {
         remove: function () {
             field.strings.remove(this);
         },
+        scrollHandle: function () {
+          console.log(this);
+          var scrollTop = $('#table-cont-' + field.name.toLowerCase()).scrollTop();
+          console.log(scrollTop);
+          $('#thead-'+ field.name.toLowerCase()).css({'transform' : 'translateY(' + scrollTop + 'px)'});
+        }
     };
     field.strings.subscribe(function (strings) {
         e.prop(f.property, strings);
     });
+
     return field;
 }
 

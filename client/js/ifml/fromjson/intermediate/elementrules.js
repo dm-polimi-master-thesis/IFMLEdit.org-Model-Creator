@@ -129,7 +129,8 @@ module.exports = [
                       if(element.attributes.stereotype === 'form'){
                         return {
                           value: el.value || el,
-                          type: el.type || el
+                          type: el.type || 'text',
+                          name: (el.type === 'radio' || el.type === 'checkbox') ? (el.name || '') : undefined
                         };
                       } else {
                         return {

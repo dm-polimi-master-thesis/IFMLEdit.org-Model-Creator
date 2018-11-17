@@ -14,6 +14,9 @@
         <input id="<%=id%>_field_<%=i%>"
             data-bind="value: fields()['<%=fields[i].value%>']"
             type="<%=fields[i].type%>"
+            <% if (events.length) { -%>
+              name="<%=fields[i].name%>"
+            <% } -%>
             class="form-control validate"
             aria-describedby="<%=id%>_field_<%=i%>_error">
         <span id="<%=id%>_field_<%=i%>_error"

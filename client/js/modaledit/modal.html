@@ -48,50 +48,72 @@
                             </label>
                         </div>
                     </div>
-                    <div class="form-group" data-bind="if: type === 'stringset', visible: type === 'stringset'">
+                    <div class="form-group form-group-fields" data-bind="if: type === 'stringset', visible: type === 'stringset'">
                         <label class="col-sm-2 control-label" data-bind="text: name"></label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" data-bind="css: (stereotype === 'form' || stereotype === 'details') ? 'table-cont' : 'table-cont-not-form', attr: { id: 'table-cont-' + name.toLowerCase() }, event: { scroll: scrollHandle }">
                             <table class="table table-condensed table-stripped">
-                                <thead>
-                                    <th>#</th>
+                                <thead data-bind="attr: { id: 'thead-' + name.toLowerCase() }">
+                                    <th class="white-bkg col-sm-1">#</th>
                                     <!-- ko if: stereotype === 'form' && name === 'Fields' -->
-                                      <th>type</th>
+                                      <th class="white-bkg col-sm-2">type</th>
+                                      <!-- /ko -->
+                                    <th class="white-bkg col-sm-4">value</th>
+                                    <!-- ko if: stereotype === 'form' && name === 'Fields' -->
+                                      <th class="white-bkg col-sm-3" data-bind="if: radio > 0 || checkbox > 0">name</th>
                                     <!-- /ko -->
-                                    <th>value</th>
+                                    <!-- ko ifnot: stereotype === 'form' && name === 'Fields' -->
+                                      <th class="white-bkg col-sm-3"></th>
+                                    <!-- /ko -->
                                 </thead>
                                 <tbody data-bind="foreach: strings">
                                     <tr>
-                                        <th scopre="row" data-bind="text: $index"></th>
+                                        <th class="col-sm-1" scope="row" data-bind="text: $index"></th>
                                         <!-- ko if: $parent.stereotype === 'form' && $parent.name === 'Fields' -->
-                                          <td data-bind="text: type"></td>
+                                          <td class="col-sm-2 td-type" data-bind="text: type"></td>
                                         <!-- /ko -->
-                                        <td>
+                                        <td class="col-sm-4 td-value">
                                             <div class="right-inner-addon">
                                               <span class="field-span" data-bind="text: value"></span>
                                               <a href="#" data-bind="click: $parent.remove"><i class="glyphicon glyphicon-minus-sign"></i></a>
                                             </div>
                                         </td>
+                                        <!-- ko if: $parent.stereotype === 'form' && $parent.name === 'Fields' -->
+                                          <td class="col-sm-3 td-name" data-bind="if: type === 'checkbox' || type === 'radio'">
+                                            <div class="right-inner-addon">
+                                              <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name"></input>
+                                            </div>
+                                          </td>
+                                        <!-- /ko -->
+                                        <!-- ko ifnot: $parent.stereotype === 'form' && $parent.name === 'Fields' -->
+                                          <td class="col-sm-3 td-name"></td>
+                                        <!-- /ko -->
                                     </tr>
                                 </tbody>
-                                <tfoot>
-                                    <th></th>
-                                    <!-- ko if: stereotype === 'form' && name === 'Fields' -->
-                                    <th class="inputType" data-bind="if: stereotype === 'form' && name === 'Fields'">
-                                          <select class="filter type-options" data-bind="options: inputTypes, value: inputType"></select>
-                                    </th>
-                                    <!-- /ko -->
-                                    <th>
-                                        <div class="form-group">
-                                          <div class="input-group">
-                                            <input class="form-control input-field type-input-field" placeholder="Add new field" type="text" data-bind="textInput: value, executeOnEnter: add">
-                                            <div class="input-group-addon">
-                                              <a href="#" data-bind="click: add"><i class="glyphicon glyphicon-plus-sign"></i></a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </th>
-                                </tfoot>
                             </table>
+                        </div>
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-12 foot-cont">
+                          <table class="col-sm-10">
+                            <tfoot>
+                                <th class="col-sm-1" scope="row"></th>
+                                <!-- ko if: stereotype === 'form' && name === 'Fields' -->
+                                  <th class="col-sm-2 input-type td-type th-type" data-bind="if: stereotype === 'form' && name === 'Fields'">
+                                        <select class="filter type-options" data-bind="options: inputTypes, value: inputType"></select>
+                                  </th>
+                                <!-- /ko -->
+                                <th class="col-sm-4 td-value">
+                                    <div class="form-group input-add-field">
+                                      <div class="input-group">
+                                        <input class="form-control input-field" placeholder="Add new field" type="text" data-bind="textInput: value, executeOnEnter: add, css: (stereotype === 'form' && name === 'Fields') ? 'type-input-field' : 'type-input-not-field' ">
+                                        <div class="input-group-addon">
+                                          <a href="#" data-bind="click: add"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </th>
+                                <th class="td-name col-sm-3"></th>
+                            </tfoot>
+                          </table>
                         </div>
                     </div>
                     <div class="form-group" data-bind="if: type === 'bindings', visible: type === 'bindings'">
