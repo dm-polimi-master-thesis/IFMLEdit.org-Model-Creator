@@ -19,6 +19,7 @@ function SettingsPatternViewModel(options) {
   self.steps = ko.observableArray([{ name: "Step 1", formName: "Step 1 Form", fields: [] }, { name: "Step 2", formName: "Step 2 Form", fields: [] }]);
   self.fields = ko.observableArray([]);
   self.selected = ko.observable(self.steps()[0]);
+  self.types = ['text','password','checkbox','radio','reset'];
 
   self.addStep = function () {
     if(!(self.stepToAdd().length > 0)){
@@ -39,7 +40,7 @@ function SettingsPatternViewModel(options) {
 
       if(!duplicate) {
         self.steps.push({ name: name, formName: formName, fields: [] });
-        self.selected().fields = _.map(self.fields.removeAll(), 'name');
+        self.selected().fields = self.fields.removeAll();
         self.selected(self.steps()[self.steps().length - 1]);
         self.stepToAdd("");
         if(self.steps().length === 1){
@@ -55,19 +56,19 @@ function SettingsPatternViewModel(options) {
       $.notify({message: 'Void string is not accepted as field name.'},
         {allow_dismiss: true, type: 'danger'});
     } else {
-      var name = self.fieldToAdd();
+      var value = self.fieldToAdd();
       var duplicate = false;
 
       _.forEach(self.fields(), function(field) {
-         if(field.name.toLowerCase() === name.toLowerCase()){
+         if(field.value.toLowerCase() === value.toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
          }
       });
 
-      if(!duplicate){
-        self.fields.push({ name: name });
+      if(!duplicate) {
+        self.fields.push({ value: value , type: ko.observable('text'), name: ko.observable('') });
         self.fieldToAdd("");
       }
     }
@@ -78,9 +79,8 @@ function SettingsPatternViewModel(options) {
     if (self.steps().length > 0 && self.selected() === this) {
       self.fields.removeAll();
       self.selected(self.steps()[0]);
-      self.fields(_.map(self.steps()[0].fields, function(field) { return { name : field }; }));
+      self.fields(self.steps()[0].fields);
     } else if (self.steps().length === 0) {
-      console.log("entro");
       self.selected({name: "", formName: "", fields: [] });
       self.fields.removeAll();
       $('#input-field').prop('disabled',true);
@@ -93,9 +93,9 @@ function SettingsPatternViewModel(options) {
   }
 
   self.select = function () {
-    self.selected().fields = _.map(self.fields.removeAll(), 'name');
+    self.selected().fields = self.fields.removeAll();
     self.selected(this);
-    self.fields(_.map(this.fields, function(field) { return { name : field }; }));
+    self.fields(this.fields);
 
     if(!(self.selected().formName.length > 0)){
       $('#form-name-form').addClass('has-error');
@@ -104,7 +104,17 @@ function SettingsPatternViewModel(options) {
     }
   }
 
+  self.changeName = function(id) {
+    if(this.type() == 'checkbox' || this.type() == 'radio') {
+      console.log('check');
+      $('#' + id).show();
+    } else {
+      $('#' + id).hide();
+    }
+  }
+
   self.transform = function () {
+    self.selected().fields = self.fields.removeAll();
     var error = false;
 
     if (self.steps().length < 2) {
@@ -133,12 +143,23 @@ function SettingsPatternViewModel(options) {
       return undefined;
     }
 
-    self.selected().fields = _.map(self.fields.removeAll(), 'name');
+    _.forEach(self.steps(), function (step) {
+      step.fields = _.map(step.fields, function (field) {
+        return {
+          value: field.value,
+          type: field.type(),
+          name: field.name()
+        }
+      });
+    });
+
     var wizard = {
       name : self.name(),
       steps : self.steps()
     }
-    return parser(wizard);
+
+    console.log(wizard);
+    //return parser(wizard);
   }
 
   self.validate = function (str,id) {

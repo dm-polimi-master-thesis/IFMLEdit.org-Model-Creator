@@ -170,4 +170,26 @@
     th {
       font-size: 20px;
     }
+
+    .field-span {
+        width: 80px !important;
+    }
+
+    .field-select {
+        height: 20px;
+        margin: auto;
+        margin-right: 10px;
+    }
+
+    .input-name {
+        display: none;
+        margin: auto;
+        height: 25px;
+        margin-right: 10px;
+        max-width: 65px !important;
+    }
+
+    .td-form-fields {
+        width: 362px !important;
+    }
 }

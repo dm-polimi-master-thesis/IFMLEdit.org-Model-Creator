@@ -47,13 +47,17 @@
         </td>
       </tr>
       <tr>
-        <td class="trace-line-padding">
+        <td class="trace-line-padding td-form-fields">
           <center class="list-fields-container">
             <ul class="list-fields" data-bind="foreach: fields">
               <li>
                 <div class="right-inner-addon">
-                  <span data-bind="text: name"></span>
-                  <a href="#" data-bind="click: $parent.deleteField"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                  <span class="field-span" data-bind="text: value"></span>
+                  <div class="field-operations-div">
+                    <select class="field-select" data-bind="options: $parent.types, value: type, event: { change: $parent.changeName.bind($data, 'name-' + $index()) }"></select>
+                    <a href="#" data-bind="click: $parent.deleteField"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'name-' + $index()}"></input>
+                  </div>
                 </div>
               </li>
             </ul>

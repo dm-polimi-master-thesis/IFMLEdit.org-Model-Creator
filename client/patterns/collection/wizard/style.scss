@@ -72,7 +72,6 @@
     }
 
     .form-control {
-        padding-right: 50px;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         border-radius: 20px;
@@ -98,6 +97,19 @@
         background-color: #ffffff;
         border-radius: 0px 0px 20px 0px;
         padding-right: 15px;
+    }
+
+    .field-operations-div {
+        margin-top: auto;
+        margin-bottom: 11px;
+        padding-left: 20px;
+        display: flex;
+    }
+
+    .glyphicon {
+      position: inherit !important;
+      display: inherit !important;
+      vertical-align: middle !important;
     }
 
     .right-inner-addon {
@@ -141,6 +153,28 @@
     }
 
     th {
-      font-size: 20px;
+        font-size: 20px;
+    }
+
+    .field-span {
+        width: 80px !important;
+    }
+
+    .field-select {
+        height: 20px;
+        margin: auto;
+        margin-right: 10px;
+    }
+
+    .input-name {
+        display: none;
+        margin: auto;
+        height: 25px;
+        margin-right: 10px;
+        max-width: 65px !important;
+    }
+
+    .td-form-fields {
+        width: 362px !important;
     }
 }

@@ -20,6 +20,7 @@ function SettingsPatternViewModel(options) {
   self.logInFieldToAdd = ko.observable("");
   self.signUpFields = ko.observableArray(["name","surname","username","password"]);
   self.logInFields = ko.observableArray(["username","password"]);
+  self.types = ['text','password','checkbox','radio','reset'];
 
   self.addField = function (type) {
     var fieldToAdd;
@@ -46,7 +47,7 @@ function SettingsPatternViewModel(options) {
          }
       });
       if(!duplicate){
-        fields.push(fieldToAdd());
+        fields.push({ value: fieldToAdd(), type: ko.observableArray(['text']), name: ko.observable('') });
         fieldToAdd("");
       }
     }
@@ -58,6 +59,19 @@ function SettingsPatternViewModel(options) {
     } else {
       self.logInFields.remove(this);
     }
+  }
+
+  self.changeType = function (idx) {
+    this.type = $('#select-' + idx).val();
+    if(this.type === 'checkbox' || this.type === 'radio') {
+      $('#name-' + idx).show();
+    } else {
+      $('#name-' + idx).hide();
+    }
+  }
+
+  self.changeName = function (idx) {
+    this.name = $('#name-' + idx).val();
   }
 
   self.transform = function () {
