@@ -41,7 +41,7 @@ function SettingsPatternViewModel(options) {
       var duplicate = false;
 
       _.forEach(fields(), function(field) {
-         if(field.name.toLowerCase() === fieldToAdd().toLowerCase()){
+         if(field.value.toLowerCase() === fieldToAdd().toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
@@ -49,7 +49,7 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        fields.push({ name: fieldToAdd() });
+        fields.push({ value: fieldToAdd(), type: 'text', name: '' });
         fieldToAdd("");
       }
     }
@@ -100,11 +100,11 @@ function SettingsPatternViewModel(options) {
       search: [self.searchField()],
       list: {
         collection: self.collectionName(),
-        fields: _.map(self.resultsFields.removeAll(), 'name')
+        fields: self.resultsFields.removeAll()
       },
       details: {
         name: self.selectedDetailsName(),
-        fields: _.map(self.selectedFields.removeAll(), 'name')
+        fields: self.selectedFields.removeAll()
       }
     }
     return parser(basicSearch);

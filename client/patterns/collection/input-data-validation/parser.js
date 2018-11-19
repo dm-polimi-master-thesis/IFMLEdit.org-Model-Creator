@@ -15,7 +15,7 @@ function parser(inputDataValidation){
   var modelElementsHash = toHash(template.elements);
 
   var dataResults = _.map(inputDataValidation.data.fields, function (field) {
-    return [field.value, field.value + '-error'];
+    return [field, { value: field.value + '-error', type: field.type, name: field.name }];
   });
 
   configurator(modelElementsHash['xor-view-container'], template, {

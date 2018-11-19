@@ -2,7 +2,7 @@
   <center>
     <h3 class="pattern-settings-title">Input Data Validation</h3>
   </center>
-  <table class="input-data-validation-settings-table" >
+  <table class="input-data-validation-settings-table default-settings-table" >
     <thead>
       <tr>
         <th>Input Data</th>
@@ -10,9 +10,9 @@
     </thead>
     <tbody>
       <tr>
-        <td class="name-step-field input-data-validation-form-input">
+        <td class="name-step-field pattern-form-input">
           <div id="data-form-name" class="form-group">
-            <span id="form-name" class="input-data-validation-form-label">Form Name:</span>
+            <span id="form-name" class="pattern-form-label">Form Name:</span>
             <div class="input-group">
               <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: dataFormName, event: { change: validate.bind($data, dataFormName(), '#data-form-name') }"/>
             </div>
@@ -20,34 +20,30 @@
         </td>
       </tr>
       <tr>
-        <td class="name-step-field input-data-validation-form-input">
+        <td class="name-step-field pattern-form-input">
           <div class="form-group">
-            <span class="input-data-validation-form-label">Field:</span>
+            <span class="pattern-form-label">Field:</span>
             <div class="input-group">
               <input id="input-field" class="form-control" placeholder="Add new field" type="text" data-bind="textInput: fieldToAdd, executeOnEnter: addField"/>
               <div class="input-group-addon">
-                <a href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                <a class="plus" href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
             </div>
           </div>
         </td>
       </tr>
       <tr>
-        <td>
+        <td class="td-form-fields">
           <center class="list-fields-container">
             <ul class="list-fields" data-bind="foreach: fields">
               <li>
                 <div class="right-inner-addon">
-                  <span data-bind="text: value"></span>
+                  <span class="field-span" data-bind="text: value"></span>
                   <div class="field-operations-div">
-                  <select data-bind="attr: { id: 'select-' + $index() }, event: { change: $parent.changeType.bind($data, 'select-'+ $index()) }">
-                    <option value="text">text</option>
-                    <option value="password">password</option>
-                    <option value="checkbox">checkbox</option>
-                    <option value="radio">radio</option>
-                    <option value="reset">reset</option>
-                  </select>
-                  <a href="#" data-bind="click: $parent.deleteField"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <select class="field-select" data-bind="options: $parent.types, value: type, event: { change: $parent.changeName.bind($data, 'name-' + $index()) }"></select>
+                    <a class="minus" href="#" data-bind="click: $parent.deleteField"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'name-' + $index()}"></input>
+                  </div>
                 </div>
               </li>
             </ul>

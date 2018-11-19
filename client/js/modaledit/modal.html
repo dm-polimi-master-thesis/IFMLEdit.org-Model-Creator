@@ -74,7 +74,7 @@
                                         <td class="col-sm-4 td-value">
                                             <div class="right-inner-addon">
                                               <span class="field-span" data-bind="text: value"></span>
-                                              <a href="#" data-bind="click: $parent.remove"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                                              <a class="minus" href="#" data-bind="click: $parent.remove"><i class="glyphicon glyphicon-minus-sign"></i></a>
                                             </div>
                                         </td>
                                         <!-- ko if: $parent.stereotype === 'form' && $parent.name === 'Fields' -->
@@ -106,7 +106,7 @@
                                       <div class="input-group">
                                         <input class="form-control input-field" placeholder="Add new field" type="text" data-bind="textInput: value, executeOnEnter: add, css: (stereotype === 'form' && name === 'Fields') ? 'type-input-field' : 'type-input-not-field' ">
                                         <div class="input-group-addon">
-                                          <a href="#" data-bind="click: add"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                          <a class="plus" href="#" data-bind="click: add"><i class="glyphicon glyphicon-plus-sign"></i></a>
                                         </div>
                                       </div>
                                     </div>
@@ -132,7 +132,7 @@
                                         <td data-bind="text: output"></td>
                                         <td data-bind="text: input"></td>
                                         <td class="glyphicon-minus-bindings">
-                                            <a href="#" data-bind="click: $parent.removeBinding"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                                            <a class="minus" href="#" data-bind="click: $parent.removeBinding"><i class="glyphicon glyphicon-minus-sign"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>

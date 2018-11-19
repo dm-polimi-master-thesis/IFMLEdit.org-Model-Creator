@@ -1,0 +1,270 @@
+.default-settings-table {
+
+    .list-fields, .details-fields {
+      li span {
+          width: 185px;
+      }
+    }
+
+    .list-steps {
+      li span {
+          width: 250px;
+
+          &:hover:not(.header) {
+              background-color: #eee;
+          }
+      }
+    }
+
+    .list-steps, .list-fields, .details-fields {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        list-style-type: none;
+        display: block;
+        overflow: auto;
+        text-align: initial;
+        min-width: 174px;
+        background-color: #f6f6f6;
+
+        li span {
+            margin-top: 0px;
+            background-color: #f6f6f6;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            color: #000;
+            display: block;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+
+        li {
+          border-top: 2px solid white;
+        }
+    }
+
+    .list-steps-container {
+        height: 200px;
+    }
+
+    .list-fields-container {
+        margin-right: 10px;
+        height: 100px;
+    }
+
+    .details-fields-container {
+        height: 170px;
+    }
+
+    .list-steps-container, .list-fields-container, .details-fields-container {
+        overflow: auto;
+        border: 1px #8080804d solid;
+    }
+
+    .list-steps-container {
+        height: 200px;
+    }
+
+    .list-fields-container {
+        margin-right: 10px;
+        height: 100px;
+    }
+
+    .details-fields-container {
+        height: 170px;
+    }
+
+    .list-steps-container, .list-fields-container, .details-fields-container {
+        overflow: auto;
+        border: 1px #8080804d solid;
+    }
+
+    .pattern-form-input{
+        position: relative;
+    }
+
+    .pattern-form-label {
+        min-width: fit-content;
+        padding-top: 7px;
+        padding-right: 20px;
+        padding-left: 30px;
+    }
+
+    .step-cell {
+        padding-right: 50px;
+        padding-top: 20px;
+        padding-bottom: 35px;
+        padding-left: 70px;
+    }
+
+    .form-td-left {
+        padding-right: 60px;
+        padding-left: 0px;
+    }
+
+    .form-td-right {
+        padding-left: 30px;
+    }
+
+    .form-pattern-name {
+        min-width: fit-content;
+    }
+
+    .input-group-addon {
+        color:#555555;
+        background-color: #ffffff;
+        border-radius: 0px 0px 20px 0px;
+        padding-right: 15px;
+    }
+
+    .right-inner-addon {
+        display: flex;
+
+        i {
+            right: 0px;
+            padding: 10px 12px;
+        }
+    }
+
+    .field-span {
+        width: 80px !important;
+    }
+
+    .field-select {
+        height: 20px;
+        margin: auto;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .input-name {
+        display: none;
+        margin: auto;
+        height: 25px;
+        margin-right: 10px;
+        max-width: 65px !important;
+        font-size: 12px;
+    }
+
+    .td-form-fields {
+        width: 362px !important;
+    }
+
+    .field-operations-div {
+        margin-top: auto;
+        margin-bottom: 11px;
+        padding-left: 20px;
+        display: flex;
+    }
+
+    .name-pattern-label {
+        max-width: 250px;
+    }
+
+    .trace-line {
+        border-right: 2px black solid;
+    }
+
+    .trace-line-padding {
+        padding-left: 30px !important;
+    }
+
+    .th-left {
+        text-align: right;
+        padding-right: 30px;
+    }
+
+    .td-add-step {
+        padding-right: 50px !important;
+        padding-left: 70px;
+    }
+
+    td {
+        width: 350px;
+        padding: 20px;
+    }
+
+    th {
+        font-size: 20px;
+    }
+}
+
+.material-switch > input[type="checkbox"] {
+    display: none !important;
+}
+
+.material-switch > label {
+    cursor: pointer !important;
+    height: 0px !important;
+    position: relative !important;
+    width: 40px !important;
+}
+
+.material-switch > label::before {
+    background: rgb(0, 0, 0) !important;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 8px !important;
+    content: '' !important;
+    height: 16px !important;
+    margin-top: -8px !important;
+    position:absolute !important;
+    opacity: 0.3 !important;
+    transition: all 0.4s ease-in-out !important;
+    width: 40px !important;
+}
+.material-switch > label::after {
+    background: rgb(255, 255, 255) !important;
+    border-radius: 16px !important;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
+    content: '' !important;
+    height: 24px !important;
+    left: -4px !important;
+    margin-top: -8px !important;
+    position: absolute !important;
+    top: -4px !important;
+    transition: all 0.3s ease-in-out !important;
+    width: 24px !important;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: inherit !important;
+    opacity: 0.5 !important;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: inherit !important;
+    left: 20px !important;
+}
+/*
+input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox {
+  position: relative;
+  width: 60px;
+  height: 2px;
+  background-color: black;
+  border-radius: 10%;
+}
+.checkbox label {
+  /*insert next line
+  left: 0px;
+  top: -10px;
+  cursor: pointer;
+  position: absolute;
+  /*otherwise ,,left: x px;" isn't working
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: blue;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  transition: all .5s ease;
+}
+.checkbox input[type="checkbox"]:checked + label {
+  left: 80%;
+}
+*/

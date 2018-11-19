@@ -40,7 +40,7 @@ function SettingsPatternViewModel(options) {
       var duplicate = false;
 
       _.forEach(fields(), function(field) {
-         if(field.name.toLowerCase() === fieldToAdd().toLowerCase()){
+         if(field.value.toLowerCase() === fieldToAdd().toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
@@ -48,7 +48,7 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        fields.push({ name: fieldToAdd() });
+        fields.push({ value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
         fieldToAdd("");
       }
     }
@@ -92,16 +92,15 @@ function SettingsPatternViewModel(options) {
       name: self.name(),
       list: {
         collection: self.collectionName(),
-        fields: _.map(self.listFields.removeAll(), 'name')
+        fields: self.listFields.removeAll()
       },
       details: {
         name: self.detailsName(),
-        fields: _.map(self.detailsFields.removeAll(), 'name')
+        fields: self.detailsFields.removeAll()
       },
       xor: self.xorOption()
     }
 
-    console.log(masterDetail);
     return parser(masterDetail);
   }
 

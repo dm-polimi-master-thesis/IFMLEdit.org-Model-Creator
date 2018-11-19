@@ -73,11 +73,9 @@ function mapStringSet(e, f) {
                   if (field.inputType() === 'checkbox') {
                     count = field.checkbox() + 1;
                     field.checkbox(count);
-                    console.log(field.checkbox());
                   } else {
                     count = field.radio() + 1;
                     field.radio(count);
-                    console.log(field.radio());
                   }
                 }
                 field.inputType(['text']);
@@ -95,9 +93,7 @@ function mapStringSet(e, f) {
             field.strings.remove(this);
         },
         scrollHandle: function () {
-          console.log(this);
           var scrollTop = $('#table-cont-' + field.name.toLowerCase()).scrollTop();
-          console.log(scrollTop);
           $('#thead-'+ field.name.toLowerCase()).css({'transform' : 'translateY(' + scrollTop + 'px)'});
         }
     };

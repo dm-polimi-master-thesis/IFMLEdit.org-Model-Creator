@@ -2,11 +2,11 @@
   <center>
     <h3 class="pattern-settings-title">Wizard</h3>
   </center>
-  <table class="wizard-settings-table" >
+  <table class="wizard-settings-table default-settings-table">
     <thead>
       <tr>
         <th class="trace-line th-left">Steps</th>
-        <th id="step-name" class="trace-line-padding th-right"><span data-bind="text: selected().name"></span></th>
+        <th id="step-name" class="trace-line-padding"><span data-bind="text: selected().name"></span></th>
       </tr>
     </thead>
     <tbody>
@@ -17,16 +17,16 @@
                 <li>
                   <div class="right-inner-addon">
                     <span data-bind="text: name, click: $root.select"></span>
-                    <a href="#" data-bind="click: $parent.deleteStep"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <a class="minus" href="#" data-bind="click: $parent.deleteStep"><i class="glyphicon glyphicon-minus-sign"></i></a>
                   </div>
                 </li>
               </ul>
             </div>
           </center>
         </td>
-        <td class="name-step-field wizard-form-input trace-line-padding">
+        <td class="name-step-field pattern-form-input trace-line-padding">
           <div id="form-name-form" class="form-group">
-            <span id="form-name" class="wizard-form-label">Form Name:</span>
+            <span id="form-name" class="pattern-form-label">Form Name:</span>
             <div class="input-group">
               <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: selected().formName, event: { change: validate.bind($data, selected().formName, '#form-name-form') }"/>
             </div>
@@ -34,13 +34,13 @@
         </td>
       </tr>
       <tr>
-        <td class="name-step-field wizard-form-input trace-line-padding">
+        <td class="name-step-field pattern-form-input trace-line-padding">
           <div class="form-group">
-            <span class="wizard-form-label">Field:</span>
+            <span class="pattern-form-label">Field:</span>
             <div class="input-group">
               <input id="input-field" class="form-control" placeholder="Add new field" type="text" data-bind="value: fieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField"/>
               <div class="input-group-addon">
-                <a href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                <a class="plus" href="#" data-bind="click: addField"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@
                   <span class="field-span" data-bind="text: value"></span>
                   <div class="field-operations-div">
                     <select class="field-select" data-bind="options: $parent.types, value: type, event: { change: $parent.changeName.bind($data, 'name-' + $index()) }"></select>
-                    <a href="#" data-bind="click: $parent.deleteField"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <a class="minus" href="#" data-bind="click: $parent.deleteField"><i class="glyphicon glyphicon-minus-sign"></i></a>
                     <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'name-' + $index()}"></input>
                   </div>
                 </div>
@@ -70,7 +70,7 @@
               <div class="input-group">
                 <input class="form-control" placeholder="Add new step" type="text" data-bind="value: stepToAdd, valueUpdate: 'afterkeydown', executeOnEnter: addStep"/>
                 <div class="input-group-addon">
-                  <a href="#" data-bind="click: addStep"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                  <a class="plus" href="#" data-bind="click: addStep"><i class="glyphicon glyphicon-plus-sign"></i></a>
                 </div>
               </div>
             </div>

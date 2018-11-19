@@ -200,171 +200,44 @@ html, body {
     overflow: auto;
 }
 
-.modal-edit {
-    .form-control {
-        margin-top: 10px;
-        min-width: 145px;
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        border-radius: 20px;
-    }
+.form-group {
+    margin-bottom: 0px !important;
+    display: flex;
+}
 
-    .input-field {
-        margin-top: 0px !important;
-    }
+.form-smooth {
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;
+    border-radius: 20px !important;
+}
 
-    .input-add-field {
-        padding-top: 0px !important;
-        margin: auto;
-        padding-right: 45px;
-    }
+.form-control {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
 
-    .input-name {
-        margin-top: 0px !important;
-        height: 25px;
-    }
+.glyphicon {
+  position: inherit !important;
+  display: inherit !important;
+  vertical-align: middle !important;
+}
 
-    .form-smooth {
-        -webkit-border-radius: 20px !important;
-        -moz-border-radius: 20px !important;
-        border-radius: 20px !important;
-    }
+.plus:hover, .plus:visited {
+    text-decoration: none;
+    color: #1c6d1c;
+}
 
-    .form-pattern-name {
-        min-width: fit-content;
-    }
+.minus:hover, .minus:visited {
+    text-decoration: none;
+    color: #6d1c1c;
+}
 
-    .form-group {
-        margin-bottom: 0px !important;
-        display: flex;
-        padding-top: 10px;
-    }
-
-    .glyphicon-plus-bindings {
-      vertical-align: middle;
-      padding-top: 17px;
-      padding-left: 45px;
-    }
-
-    .glyphicon-minus-bindings {
-      padding-left: 45px;
-    }
-
-    .glyphicon {
-      position: inherit !important;
-    }
-
-    .input-group-addon {
-        color:#555555;
-        background-color: #ffffff;
-        border-radius: 0px 0px 20px 0px;
-        padding-right: 15px;
-    }
-
-    .th-bindings {
-        width: 1%;
-    }
-
-    .type-input {
-        max-width: 350px;
-    }
-
-    .type-options, .type-input-field {
-      max-width: 174px;
-    }
-
-    .type-input-not-field {
-      max-width: 150px;
-    }
-
-    .right-inner-addon {
-        display: flex;
-
-        i {
-          left: 0;
-          padding-top: 3px;
-        }
-    }
-
-    .field-span, .field-input-text {
-        width: 150px;
-        overflow-x: auto;
-        display: block;
-    }
-
-    .foot-cont {
-        margin-left: 15px!important;
-        margin-top: 10px!important;
-        max-width: 660px;
-    }
-
-    .input-type {
-        vertical-align: middle;
-    }
-
-    .td-value {
-        height: 52px;
-        vertical-align: middle;
-    }
-
-    .td-type {
-        /*width: 150px;*/
-        height: 52px;
-        vertical-align: middle;
-    }
-
-    .td-num {
-        width: 70px;
-    }
-
-    .td-name {
-        vertical-align: middle;
-    }
-
-    .th-type {
-        padding-left: 25px;
-    }
-
-    .table-cont {
-        height: 300px;
-        overflow-y: scroll;
-        border: 1px solid #8080804d;
-        margin: auto !important;
-        margin-left: 15px !important;
-        margin-top: 10px !important;
-        max-width: 660px;
-    }
-
-    .table-cont-not-form {
-        height: 150px;
-        overflow-y: scroll;
-        border: 1px solid #8080804d;
-        margin: auto !important;
-        margin-left: 15px !important;
-        margin-top: 10px !important;
-        max-width: 660px;
-    }
-
-
-    .form-group-fields{
-        display: block !important;
-    }
-
-    .table-foot {
-        transform: translateY(215px);
-    }
-
-    .td-head {
-      padding-left: 20px;
-    }
-
-    .td-index {
-      vertical-align: middle;
-    }
-
-    .white-bkg {
-      background: white;
-    }
+.input-group-inner-addon {
+    color:#555555;
+    background-color: #ffffff;
+    border-radius: 0px 0px 20px 0px;
+    padding-right: 15px;
 }
 
 ::-webkit-scrollbar {
@@ -388,11 +261,14 @@ html, body {
                         transparent);
 }
 
-@import "./patterns/collection/basic-search/style.scss";
-@import "./patterns/collection/input-data-validation/style.scss";
-@import "./patterns/collection/sign-up-log-in/style.scss";
-@import "./patterns/collection/master-detail/style.scss";
-@import "./patterns/collection/multilevel-master-detail/style.scss";
-@import "./patterns/collection/restricted-search/style.scss";
-@import "./patterns/collection/wizard/style.scss";
-@import "./patterns/home/style.scss";
+@import "./js/modaledit/index.scss";
+@import "./js/modalpatterns/index.scss";
+@import "./patterns/index.scss";
+@import "./patterns/collection/basic-search/index.scss";
+@import "./patterns/collection/input-data-validation/index.scss";
+@import "./patterns/collection/sign-up-log-in/index.scss";
+@import "./patterns/collection/master-detail/index.scss";
+@import "./patterns/collection/multilevel-master-detail/index.scss";
+@import "./patterns/collection/restricted-search/index.scss";
+@import "./patterns/collection/wizard/index.scss";
+@import "./patterns/home/index.scss";

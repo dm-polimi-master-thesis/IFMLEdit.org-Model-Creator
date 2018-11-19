@@ -1,22 +1,4 @@
-.modal-body {
-    min-height: 580px;
-}
-
 .pattern-home-table {
-    td {
-        padding: 2px;
-    }
-
-    th {
-        background-color: black;
-        color: white;
-        padding: 8px;
-        font-size: 15px;
-    }
-
-    th,td {
-        max-width: 375px;
-    }
 
     .list-cell {
         max-width: 170px;
@@ -54,6 +36,7 @@
             font-size: 13px;
             color: black;
             display: block;
+            cursor: pointer;
 
             &:hover:not(.header) {
                 background-color: #eee;
@@ -74,19 +57,11 @@
 
     .filter {
         margin-left: 20px;
+        cursor: pointer;
     }
 
     .form-control {
         padding-right: 50px;
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        border-radius: 20px;
-    }
-
-    .form-smooth {
-        -webkit-border-radius: 20px !important;
-        -moz-border-radius: 20px !important;
-        border-radius: 20px !important;
     }
 
     .td-pattern-name {
@@ -96,17 +71,6 @@
 
     .form-pattern-name {
         min-width: fit-content;
-    }
-
-    .form-group {
-        margin-bottom: 0px !important;
-    }
-
-    .input-group-addon {
-        color:#555555;
-        background-color: #ffffff;
-        border-radius: 0px 0px 20px 0px;
-        padding-right: 15px;
     }
 
     .trace-line {
@@ -125,6 +89,21 @@
             right: 0px;
             padding: 10px 12px;
         }
+    }
+
+    td {
+        padding: 2px;
+    }
+
+    th {
+        background-color: black;
+        color: white;
+        padding: 8px;
+        font-size: 15px;
+    }
+
+    th,td {
+        max-width: 375px;
     }
 }
 

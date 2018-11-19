@@ -1,0 +1,139 @@
+.modal-edit {
+    .form-control {
+        margin-top: 10px;
+        min-width: 145px;
+    }
+
+    .input-field {
+        margin-top: 0px !important;
+    }
+
+    .input-add-field {
+        padding-top: 0px !important;
+        margin: auto;
+        padding-right: 45px;
+    }
+
+    .input-name {
+        margin-top: 0px !important;
+        height: 25px;
+    }
+
+    .form-group {
+        padding-top: 10px;
+    }
+
+    .glyphicon-plus-bindings {
+        vertical-align: middle;
+        padding-top: 17px;
+        padding-left: 45px;
+    }
+
+    .glyphicon-minus-bindings {
+        padding-left: 45px;
+    }
+
+    .th-bindings {
+        width: 1%;
+    }
+
+    .type-input {
+        max-width: 350px;
+    }
+
+    .type-options, .type-input-field {
+        max-width: 174px;
+    }
+
+    .type-input-not-field {
+        max-width: 150px;
+    }
+
+    .right-inner-addon {
+        display: flex;
+
+        i {
+          left: 0;
+          padding-top: 3px;
+        }
+    }
+
+    .field-span, .field-input-text {
+        width: 150px;
+        overflow-x: auto;
+        display: block;
+    }
+
+    .foot-cont {
+        margin-left: 15px!important;
+        margin-top: 10px!important;
+        max-width: 660px;
+    }
+
+    .input-type {
+        vertical-align: middle;
+    }
+
+    .td-value {
+        height: 52px;
+        vertical-align: middle;
+    }
+
+    .td-type {
+        height: 52px;
+        vertical-align: middle;
+    }
+
+    .td-num {
+        width: 70px;
+    }
+
+    .td-name {
+        vertical-align: middle;
+    }
+
+    .th-type {
+        padding-left: 25px;
+    }
+
+    .table-cont {
+        height: 300px;
+        overflow-y: scroll;
+        border: 1px solid #8080804d;
+        margin: auto !important;
+        margin-left: 15px !important;
+        margin-top: 10px !important;
+        max-width: 660px;
+    }
+
+    .table-cont-not-form {
+        height: 150px;
+        overflow-y: scroll;
+        border: 1px solid #8080804d;
+        margin: auto !important;
+        margin-left: 15px !important;
+        margin-top: 10px !important;
+        max-width: 660px;
+    }
+
+
+    .form-group-fields{
+        display: block !important;
+    }
+
+    .table-foot {
+        transform: translateY(215px);
+    }
+
+    .td-head {
+        padding-left: 20px;
+    }
+
+    .td-index {
+        vertical-align: middle;
+    }
+
+    .white-bkg {
+        background: white;
+    }
+}

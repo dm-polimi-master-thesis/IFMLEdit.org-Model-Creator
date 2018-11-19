@@ -17,9 +17,9 @@ function SettingsPatternViewModel(options) {
   self.dataFormName = ko.observable("Data Form");
   self.fieldToAdd = ko.observable("");
   self.fields = ko.observableArray();
+  self.types = ['text','password','checkbox','radio','reset'];
 
   self.addField = function () {
-    console.log('addField');
     if(!(self.fieldToAdd().length > 0)){
       $.notify({message: 'Void string is not accepted as field name.'},
         {allow_dismiss: true, type: 'danger'});
@@ -33,19 +33,21 @@ function SettingsPatternViewModel(options) {
          }
       });
       if(!duplicate){
-        self.fields.push({ value: self.fieldToAdd(), type: 'text' });
+        self.fields.push({ value: self.fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
         self.fieldToAdd("");
       }
     }
   }
 
-  self.changeType = function (id) {
-    console.log('#'+ id);
-    this.type = $('#' + id).val();
+  self.changeName = function(id) {
+    if(this.type() == 'checkbox' || this.type() == 'radio') {
+      $('#' + id).show();
+    } else {
+      $('#' + id).hide();
+    }
   }
 
   self.deleteField = function () {
-    console.log('deleteField');
     self.fields.remove(this);
   }
 
@@ -68,9 +70,17 @@ function SettingsPatternViewModel(options) {
       return undefined;
     }
 
+    var fields = _.map(self.fields(), function (field) {
+        return {
+          value: field.value,
+          type: field.type(),
+          name: field.name()
+        }
+    });
+
     var inputDataValidation = {
       name : self.name(),
-      data : { formName: self.dataFormName(), fields: self.fields() }
+      data : { formName: self.dataFormName(), fields: fields }
     }
 
     return parser(inputDataValidation);

@@ -1,0 +1,77 @@
+.multilevel-master-detail-settings-table {
+
+    .list-steps-container {
+        height: 90px !important;
+    }
+
+    .list-fields-container {
+        height: 190px !important;
+    }
+
+    .details-fields-container {
+        height: 70px !important;
+    }
+
+    .step-list-field {
+      display: flex;
+      height: 35px!important;
+      background-color: #f6f6f6;
+      font-size: 13px;
+      color: #000;
+    }
+
+    .step-input {
+        width: 260px;
+    }
+
+    .field-input {
+        padding-top: 0px;
+    }
+
+    .steps-container {
+      padding-top: 0px;
+    }
+
+    .step-cell {
+        padding-right: 60px !important;
+        padding-top: 0px !important;
+        padding-bottom: 25px !important;
+        padding-left: 30px !important;
+    }
+
+    .list-fields-space {
+        vertical-align: top;
+    }
+
+    .details-fields-space {
+        vertical-align: top;
+        padding-top: 0px;
+    }
+}
+
+.material-switch > input[type="checkbox"] {
+    display: none !important;
+}
+
+.material-switch > label {
+    cursor: pointer !important;
+    height: 0px;
+    position: relative !important;
+    width: 40px;
+}
+
+.material-switch > label::before {
+    height: 10px !important;
+    margin-top: -6px !important;
+    position: absolute !important;
+    opacity: .3 !important;
+    transition: all .4s ease-in-out !important;
+    width: 38px !important;
+}
+.material-switch > label::after {
+    border-radius: 18px !important;
+    height: 18px !important;
+    left: -3px !important;
+    margin-top: -6px !important;
+    width: 18px !important;
+}

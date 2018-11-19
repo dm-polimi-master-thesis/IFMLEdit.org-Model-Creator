@@ -18,8 +18,12 @@ function SettingsPatternViewModel(options) {
   self.logInFormName = ko.observable("Log In Form");
   self.signUpFieldToAdd = ko.observable("");
   self.logInFieldToAdd = ko.observable("");
-  self.signUpFields = ko.observableArray(["name","surname","username","password"]);
-  self.logInFields = ko.observableArray(["username","password"]);
+  self.signUpFields = ko.observableArray([{ value: "name", type: ko.observable('text'), name: ko.observable('') },
+                                          { value: "surname", type: ko.observable('text'), name: ko.observable('') },
+                                          { value: "username", type: ko.observable('text'), name: ko.observable('') },
+                                          { value: "password", type: ko.observable('password'), name: ko.observable('') }]);
+  self.logInFields = ko.observableArray([{ value: "username", type: ko.observable('text'), name: ko.observable('') },
+                                         { value: "password", type: ko.observable('password'), name: ko.observable('') }]);
   self.types = ['text','password','checkbox','radio','reset'];
 
   self.addField = function (type) {
@@ -40,14 +44,14 @@ function SettingsPatternViewModel(options) {
       var duplicate = false;
 
       _.forEach(fields(), function(field) {
-         if(field.toLowerCase() === fieldToAdd().toLowerCase()){
+         if(field.value.toLowerCase() === fieldToAdd().toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
          }
       });
       if(!duplicate){
-        fields.push({ value: fieldToAdd(), type: ko.observableArray(['text']), name: ko.observable('') });
+        fields.push({ value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
         fieldToAdd("");
       }
     }
@@ -61,17 +65,12 @@ function SettingsPatternViewModel(options) {
     }
   }
 
-  self.changeType = function (idx) {
-    this.type = $('#select-' + idx).val();
-    if(this.type === 'checkbox' || this.type === 'radio') {
-      $('#name-' + idx).show();
+  self.changeName = function(id) {
+    if(this.type() == 'checkbox' || this.type() == 'radio') {
+      $('#' + id).show();
     } else {
-      $('#name-' + idx).hide();
+      $('#' + id).hide();
     }
-  }
-
-  self.changeName = function (idx) {
-    this.name = $('#name-' + idx).val();
   }
 
   self.transform = function () {
@@ -99,10 +98,26 @@ function SettingsPatternViewModel(options) {
       return undefined;
     }
 
+    var signUpFields = _.map(self.signUpFields(), function (field) {
+        return {
+          value: field.value,
+          type: field.type(),
+          name: field.name()
+        }
+    });
+
+    var logInFields = _.map(self.logInFields(), function (field) {
+        return {
+          value: field.value,
+          type: field.type(),
+          name: field.name()
+        }
+    });
+
     var signUpLogIn = {
       name : self.name(),
-      signUp : { formName: self.signUpFormName(), fields: self.signUpFields() },
-      logIn : { formName: self.logInFormName(), fields: self.logInFields() }
+      signUp : { formName: self.signUpFormName(), fields: signUpFields },
+      logIn : { formName: self.logInFormName(), fields: logInFields }
     }
 
     return parser(signUpLogIn);

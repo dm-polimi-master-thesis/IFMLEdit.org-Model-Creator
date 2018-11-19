@@ -71,7 +71,7 @@ function SettingsPatternViewModel(options) {
       var duplicate = false;
 
       _.forEach(fields(), function(field) {
-         if(field.name.toLowerCase() === fieldToAdd().toLowerCase()){
+         if(field.value.toLowerCase() === fieldToAdd().toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
@@ -79,9 +79,9 @@ function SettingsPatternViewModel(options) {
       });
       if(!duplicate){
         if(type === 'list'){
-          fields.push({ name: fieldToAdd(), filter: true });
+          fields.push({ value: fieldToAdd(), type: ko.observable('text'), name: ko.observable(''), filter: true });
         } else {
-          fields.push({ name: fieldToAdd() });
+          fields.push({ value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
         }
         fieldToAdd("");
       }
@@ -157,11 +157,13 @@ function SettingsPatternViewModel(options) {
       } else {
         step.filters = _.filter(_.cloneDeep(step.fields), function (field) { return field.filter === true;})
                       .map(function (filter) {
-                        return filter.name;
+                        return {
+                          value: filter.value,
+                          type: filter.type,
+                          name: filter.name
+                        }
                       });
       }
-
-      step.fields = _.map(step.fields, 'name');
     });
 
     var multilevelMasterDetail = {
@@ -170,7 +172,7 @@ function SettingsPatternViewModel(options) {
       details: {
         name: self.detailsName(),
         collection: self.steps()[self.steps().length - 1].collection,
-        fields: _.map(self.detailsFields.removeAll(), 'name')
+        fields: self.detailsFields.removeAll()
       }
     }
     return parser(multilevelMasterDetail);

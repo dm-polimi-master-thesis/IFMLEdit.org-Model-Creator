@@ -102,11 +102,18 @@ function SettingsPatternViewModel(options) {
     } else {
       $('#form-name-form').removeClass('has-error');
     }
+
+    _forEach(self.fields(), function (field) {
+      if(field.type() == 'checkbox' || field.type() == 'radio') {
+        $('#' + id).show();
+      } else {
+        $('#' + id).hide();
+      }
+    });
   }
 
   self.changeName = function(id) {
     if(this.type() == 'checkbox' || this.type() == 'radio') {
-      console.log('check');
       $('#' + id).show();
     } else {
       $('#' + id).hide();
@@ -158,8 +165,7 @@ function SettingsPatternViewModel(options) {
       steps : self.steps()
     }
 
-    console.log(wizard);
-    //return parser(wizard);
+    return parser(wizard);
   }
 
   self.validate = function (str,id) {

@@ -2,26 +2,26 @@
   <center>
     <h3 class="pattern-settings-title">Sign Up & Log In</h3>
   </center>
-  <table class="sign-up-log-in-settings-table" >
+  <table class="sign-up-log-in-settings-table default-settings-table" >
     <thead>
       <tr>
         <th class="trace-line th-left">Sign Up</th>
-        <th class="trace-line-padding th-right">Log In</th>
+        <th class="trace-line-padding">Log In</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="name-step-field sign-up-log-in-form-input trace-line">
+        <td class="name-step-field pattern-form-input trace-line">
           <div id="sign-up-name-form" class="form-group">
-            <span id="form-name" class="sign-up-log-in-form-label">Form Name:</span>
+            <span id="form-name" class="pattern-form-label">Form Name:</span>
             <div class="input-group">
               <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: signUpFormName, event: { change: validate.bind($data, signUpFormName(), '#sign-up-name-form') }"/>
             </div>
           </div>
         </td>
-        <td class="name-step-field sign-up-log-in-form-input trace-line-padding">
+        <td class="name-step-field pattern-form-input trace-line-padding">
           <div id="log-in-name-form" class="form-group">
-            <span id="form-name" class="sign-up-log-in-form-label">Form Name:</span>
+            <span id="form-name" class="pattern-form-label">Form Name:</span>
             <div class="input-group">
               <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: logInFormName, event: { change: validate.bind($data, logInFormName(), '#log-in-name-form') }"/>
             </div>
@@ -29,49 +29,57 @@
         </td>
       </tr>
       <tr>
-        <td class="name-step-field sign-up-log-in-form-input trace-line">
+        <td class="name-step-field pattern-form-input trace-line">
           <div class="form-group">
-            <span class="sign-up-log-in-form-label">Field:</span>
+            <span class="pattern-form-label">Field:</span>
             <div class="input-group">
               <input id="input-field" class="form-control" placeholder="Add new field" type="text" data-bind="value: signUpFieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField.bind($data,'sign-up')"/>
               <div class="input-group-addon">
-                <a href="#" data-bind="click: addField.bind($data,'sign-up')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'sign-up')"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
             </div>
           </div>
         </td>
-        <td class="name-step-field sign-up-log-in-form-input trace-line-padding">
+        <td class="name-step-field pattern-form-input trace-line-padding">
           <div class="form-group">
-            <span class="sign-up-log-in-form-label">Field:</span>
+            <span class="pattern-form-label">Field:</span>
             <div class="input-group">
               <input id="input-field" class="form-control" placeholder="Add new field" type="text" data-bind="value: logInFieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField.bind($data,'log-in')"/>
               <div class="input-group-addon">
-                <a href="#" data-bind="click: addField.bind($data,'log-in')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'log-in')"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
             </div>
           </div>
         </td>
       </tr>
       <tr>
-        <td class="trace-line">
+        <td class="trace-line td-form-fields">
           <center class="list-fields-container">
             <ul class="list-fields" data-bind="foreach: signUpFields">
               <li>
                 <div class="right-inner-addon">
-                  <span data-bind="text: $data"></span>
-                  <a href="#" data-bind="click: $parent.deleteField.bind($data, 'sign-up')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                  <span class="field-span" data-bind="text: value"></span>
+                  <div class="field-operations-div">
+                    <select class="field-select" data-bind="options: $parent.types, value: type, event: { change: $parent.changeName.bind($data, 'sign-up-name-' + $index()) }"></select>
+                    <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'sign-up')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'sign-up-name-' + $index()}"></input>
+                  </div>
                 </div>
               </li>
             </ul>
           </center>
         </td>
-        <td class="trace-line-padding">
+        <td class="trace-line-padding td-form-fields">
           <center class="list-fields-container">
             <ul class="list-fields" data-bind="foreach: logInFields">
               <li>
                 <div class="right-inner-addon">
-                  <span data-bind="text: $data"></span>
-                  <a href="#" data-bind="click: $parent.deleteField.bind($data, 'log-in')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                  <span class="field-span" data-bind="text: value"></span>
+                  <div class="field-operations-div">
+                    <select class="field-select" data-bind="options: $parent.types, value: type, event: { change: $parent.changeName.bind($data, 'log-in-name-' + $index()) }"></select>
+                    <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'log-in')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'log-in-name-' + $index()}"></input>
+                  </div>
                 </div>
               </li>
             </ul>
