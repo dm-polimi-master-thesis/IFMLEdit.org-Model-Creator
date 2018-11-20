@@ -12,10 +12,12 @@
 
     .details-fields-space {
         padding-top: 0px;
+        padding-left: 60px !important;
     }
 
     .list-fields-container {
         height: 168px !important;
+        float: right;
     }
 
     .details-fields-container {
@@ -32,17 +34,22 @@
     }
 
     .results-field-form {
-      vertical-align: top;
-      padding-top: 0px;
+        vertical-align: top;
+        padding-top: 0px;
     }
 
     .results-fields-space {
-      padding-top: 0px !important;
-      padding-bottom: 0px;
-      vertical-align: top;
+        padding-top: 0px !important;
+        padding-bottom: 0px;
+        padding-right: 50px;
+        vertical-align: top;
     }
 
     .selected-field-input {
-      padding-top: 10px;
+        padding-top: 10px;
+    }
+
+    .form-td-right {
+        padding-right: 20px;
     }
 }

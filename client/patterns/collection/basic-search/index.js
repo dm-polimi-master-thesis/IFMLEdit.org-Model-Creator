@@ -97,7 +97,7 @@ function SettingsPatternViewModel(options) {
 
     var basicSearch = {
       name: self.name(),
-      search: [self.searchField()],
+      search: [{ value: self.searchField(), type: 'text', name: '' }],
       list: {
         collection: self.collectionName(),
         fields: self.resultsFields.removeAll()

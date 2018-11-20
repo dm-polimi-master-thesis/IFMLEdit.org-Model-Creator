@@ -103,11 +103,11 @@ function SettingsPatternViewModel(options) {
       $('#form-name-form').removeClass('has-error');
     }
 
-    _forEach(self.fields(), function (field) {
+    _.forEach(self.fields(), function (field, index) {
       if(field.type() == 'checkbox' || field.type() == 'radio') {
-        $('#' + id).show();
+        $('#name-' + index).show();
       } else {
-        $('#' + id).hide();
+        $('#name-' + index).hide();
       }
     });
   }

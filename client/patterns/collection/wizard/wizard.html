@@ -48,8 +48,8 @@
       </tr>
       <tr>
         <td class="trace-line-padding td-form-fields">
-          <center class="list-fields-container">
-            <ul class="list-fields" data-bind="foreach: fields">
+          <center class="form-fields-container">
+            <ul class="form-fields" data-bind="foreach: fields">
               <li>
                 <div class="right-inner-addon">
                   <span class="field-span" data-bind="text: value"></span>
@@ -66,7 +66,7 @@
       </tr>
       <tr>
         <td class="trace-line td-add-step">
-            <div class="form-group">
+            <div class="step-input form-group">
               <div class="input-group">
                 <input class="form-control" placeholder="Add new step" type="text" data-bind="value: stepToAdd, valueUpdate: 'afterkeydown', executeOnEnter: addStep"/>
                 <div class="input-group-addon">

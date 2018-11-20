@@ -64,8 +64,8 @@
                 <div class="right-inner-addon step-list-field">
                   <span data-bind="text: value"></span>
                   <div class="field-operations-div material-switch pull-right" data-bind="visible: $parent.steps.indexOf($parent.selected()) !== ($parent.steps().length - 1)">
-                    <input  name="filter" type="checkbox" data-bind="checked: filter, attr: { id: name, name: name }"/>
-                    <label for="filter" class="label-success" data-bind="attr: { for: name }"></label>
+                    <input type="checkbox" data-bind="checked: filter, attr: { id: value, name: value }"/>
+                    <label class="label-success" data-bind="attr: { for: value }"></label>
                   </div>
                   <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'list')"><i class="glyphicon glyphicon-minus-sign"></i></a>
                 </div>
@@ -79,7 +79,7 @@
       </tr>
       <tr>
         <td class="form-td-left multilevel-pattern-form-input trace-line">
-          <div id="details-form" class="form-group">
+          <div id="details-form" class="details-form form-group">
             <span class="pattern-form-label control-label">Details Name:</span>
             <div class="input-group">
               <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: detailsName, event: { blur: validate.bind($data, detailsName(), '#details-form') }"/>
@@ -88,7 +88,7 @@
         </td>
       </tr>
       <tr>
-        <td class="field-input form-td-left selected-field-input multilevel-pattern-form-input trace-line">
+        <td class="field-input form-td-left selected-field-input multilevel-pattern-form-input">
           <div class="form-group">
             <span class="pattern-form-label control-label">Field:</span>
             <div class="input-group">

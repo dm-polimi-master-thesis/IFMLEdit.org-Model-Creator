@@ -1,22 +1,22 @@
 .default-settings-table {
 
-    .list-fields, .details-fields {
-      li span {
-          width: 185px;
-      }
+    .list-fields, .details-fields, .form-fields {
+        li span {
+            width: 185px;
+        }
     }
 
     .list-steps {
-      li span {
-          width: 250px;
+        li span {
+            width: 190px;
 
-          &:hover:not(.header) {
-              background-color: #eee;
-          }
-      }
+            &:hover:not(.header) {
+                background-color: #eee;
+            }
+        }
     }
 
-    .list-steps, .list-fields, .details-fields {
+    .list-steps, .form-fields, .details-fields, .list-fields {
         list-style-type: none;
         margin: 0px;
         padding: 0px;
@@ -46,36 +46,21 @@
 
     .list-steps-container {
         height: 200px;
+        width: 230px;
     }
 
-    .list-fields-container {
+    .form-fields-container {
         margin-right: 10px;
         height: 100px;
     }
 
-    .details-fields-container {
+    .details-fields-container, .list-fields-container {
         height: 170px;
-    }
-
-    .list-steps-container, .list-fields-container, .details-fields-container {
-        overflow: auto;
-        border: 1px #8080804d solid;
-    }
-
-    .list-steps-container {
-        height: 200px;
-    }
-
-    .list-fields-container {
+        width: 230px;
         margin-right: 10px;
-        height: 100px;
     }
 
-    .details-fields-container {
-        height: 170px;
-    }
-
-    .list-steps-container, .list-fields-container, .details-fields-container {
+    .list-steps-container, .form-fields-container, .list-fields-container, .details-fields-container {
         overflow: auto;
         border: 1px #8080804d solid;
     }
@@ -148,7 +133,7 @@
     }
 
     .td-form-fields {
-        width: 362px !important;
+        width: 375px !important;
     }
 
     .field-operations-div {
@@ -195,76 +180,49 @@
 }
 
 .material-switch > label {
-    cursor: pointer !important;
-    height: 0px !important;
-    position: relative !important;
-    width: 40px !important;
+    cursor: pointer;
+    height: 0px;
+    position: relative;
+    width: 40px;
 }
 
 .material-switch > label::before {
-    background: rgb(0, 0, 0) !important;
-    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5) !important;
-    border-radius: 8px !important;
-    content: '' !important;
-    height: 16px !important;
-    margin-top: -8px !important;
-    position:absolute !important;
-    opacity: 0.3 !important;
-    transition: all 0.4s ease-in-out !important;
-    width: 40px !important;
+    background: rgb(0, 0, 0);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    border: 1px solid #b3b3b3;
+    content: '';
+    height: 16px;
+    margin-top: -8px ;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
 }
 .material-switch > label::after {
-    background: rgb(255, 255, 255) !important;
-    border-radius: 16px !important;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
-    content: '' !important;
-    height: 24px !important;
-    left: -4px !important;
-    margin-top: -8px !important;
-    position: absolute !important;
-    top: -4px !important;
-    transition: all 0.3s ease-in-out !important;
-    width: 24px !important;
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    border: 1px solid #b3b3b3;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 24px;
+    left: -4px;
+    margin-top: -8px;
+    position: absolute;
+    top: -4px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+
 }
 .material-switch > input[type="checkbox"]:checked + label::before {
-    background: inherit !important;
-    opacity: 0.5 !important;
+    background: inherit;
+    opacity: 0.5 ;
 }
 .material-switch > input[type="checkbox"]:checked + label::after {
-    background: inherit !important;
-    left: 20px !important;
-}
-/*
-input[type="checkbox"] {
-  display: none;
+    background: inherit;
+    left: 20px;
 }
 
-.checkbox {
-  position: relative;
-  width: 60px;
-  height: 2px;
-  background-color: black;
-  border-radius: 10%;
+.label-success {
+    background-color: #1c6d1c !important;
 }
-.checkbox label {
-  /*insert next line
-  left: 0px;
-  top: -10px;
-  cursor: pointer;
-  position: absolute;
-  /*otherwise ,,left: x px;" isn't working
-  display: block;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  background-color: blue;
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  -ms-transition: all .5s ease;
-  transition: all .5s ease;
-}
-.checkbox input[type="checkbox"]:checked + label {
-  left: 80%;
-}
-*/

@@ -50,13 +50,14 @@
 
     .text-description {
         overflow: auto;
-        max-height: 140px;
+        height: 120px;
         display: block;
         padding: 15px;
     }
 
     .filter {
         margin-left: 20px;
+        margin-top: 20px;
         cursor: pointer;
     }
 
@@ -71,6 +72,10 @@
 
     .form-pattern-name {
         min-width: fit-content;
+    }
+
+    .form-group {
+        margin-top: 20px;
     }
 
     .trace-line {

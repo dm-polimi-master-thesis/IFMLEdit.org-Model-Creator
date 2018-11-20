@@ -31,7 +31,7 @@ function parser(inputDataValidation){
       parent: modelElementsHash['input-data-validation-pattern-view-container'].id
   });
   configurator(modelElementsHash['send-navigation-flow'], template, {
-      fields: _.map(inputDataValidation.data.fields,'value')
+      fields: inputDataValidation.data.fields
   });
   configurator(modelElementsHash['failed-navigation-flow'], template, {
       fields: _.flattenDeep(dataResults)
