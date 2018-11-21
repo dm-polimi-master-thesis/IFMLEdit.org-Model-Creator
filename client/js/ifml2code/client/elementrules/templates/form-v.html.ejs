@@ -14,7 +14,7 @@
         <input id="<%=id%>_field_<%=i%>"
             data-bind="value: fields()['<%=fields[i].value%>']"
             type="<%=fields[i].type%>"
-            <% if (events.length) { -%>
+            <% if (fields[i].type === 'radio' || fields[i].type === 'checkbox') { -%>
               name="<%=fields[i].name%>"
             <% } -%>
             class="form-control validate"

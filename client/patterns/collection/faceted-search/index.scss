@@ -1,0 +1,32 @@
+.faceted-search-settings-table {
+    .list-fields-container{
+        height: 107px;
+        float: right;
+    }
+
+    .details-fields-container {
+        height: 52px;
+    }
+
+    .form-fields-container {
+        height: 53px;
+    }
+
+    .shrink {
+        vertical-align: top;
+        padding-top: 0px !important;
+    }
+
+    .details-name {
+        padding-right: 20px;
+    }
+
+    .pattern-name {
+        float: right;
+        padding-right: 10px;
+    }
+
+    .input-name {
+        display: inherit !important;
+    }
+}

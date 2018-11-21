@@ -13,7 +13,7 @@ function SettingsPatternViewModel(options) {
   var self = this;
 
   self.id = options.id;
-  self.name = ko.observable("Basic Search");
+  self.name = ko.observable("Faceted Search");
   self.searchField = ko.observable("");
   self.selectedDetailsName = ko.observable("");
   self.filtersFormName = ko.observable("");
@@ -113,7 +113,7 @@ function SettingsPatternViewModel(options) {
     }
     if (!(self.filtersFormName().length > 0)) {
       error = true;
-      $('#details-form').addClass('has-error');
+      $('#filters-form').addClass('has-error');
       $.notify({message: 'Your request cannot be processed: filters form cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
@@ -146,7 +146,7 @@ function SettingsPatternViewModel(options) {
         fields: filters
       }
     }
-    return parser(basicSearch);
+    return parser(facetedSearch);
   }
 
   self.validate = function (str,id) {
@@ -165,7 +165,7 @@ function SettingsPattern(options) {
     options = options || {};
 
     var pattern = new SettingsPatternViewModel(options);
-    ko.applyBindings(pattern, $('#basic-search-settings-content')[0]);
+    ko.applyBindings(pattern, $('#faceted-search-settings-content')[0]);
 
     return pattern;
 }

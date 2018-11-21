@@ -10,15 +10,15 @@ var _ = require('lodash'),
     configureTarget = require('./relations/targetConfigurator.js');
 
 function configurator(relations, options) {
-  switch (element.type) {
+  switch (options.type) {
     case 'hierarchy':
-      configureHierarchy(element, options);
+      configureHierarchy(relations, options);
       break;
     case 'source':
-      configureSource(element, options);
+      configureSource(relations, options);
       break;
     case 'target':
-      configureTarget(element, options);
+      configureTarget(relations, options);
       break;
     default:
       return new Exception('Unexpected relation type');
