@@ -33,7 +33,7 @@ function SettingsPatternViewModel(options) {
          }
       });
       if(!duplicate){
-        self.fields.push({ value: self.fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
+        self.fields.push({ label: self.fieldToAdd(), value: self.fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
         self.fieldToAdd("");
       }
     }
@@ -72,6 +72,7 @@ function SettingsPatternViewModel(options) {
 
     var fields = _.map(self.fields(), function (field) {
         return {
+          label: field.label,
           value: field.value,
           type: field.type(),
           name: field.name()

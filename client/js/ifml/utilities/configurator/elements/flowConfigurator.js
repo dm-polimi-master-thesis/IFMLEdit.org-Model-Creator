@@ -19,8 +19,8 @@ function configureFlow(element, template, options) {
   if(options.fields !== undefined){
     bindings = _.map(options.fields, function(field){
       return {
-        input: field.value,
-        output: field.value
+        input: field.label,
+        output: field.label
       }
     });
   }
@@ -28,8 +28,8 @@ function configureFlow(element, template, options) {
   if(options.filters !== undefined){
     bindings.push(_.map(options.filters, function(filter){
       return {
-        input: filter.value,
-        output: filter.value
+        input: filter.label,
+        output: filter.label
       }
     }));
   }

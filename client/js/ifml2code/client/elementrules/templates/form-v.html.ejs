@@ -4,12 +4,12 @@
 <form>
 <% for (var i = 0; i < fields.length; i += 1) { -%>
     <div class="form-group"
-        data-bind="css: {'has-error': errors()['<%=fields[i].value%>']}">
+        data-bind="css: {'has-error': errors()['<%=fields[i].label%>']}">
         <label
             for="<%=id%>_field_<%=i%>"
-            data-bind="css: {active: fields()['<%=fields[i].value%>']}, attr: {'data-error': errors()['<%=fields[i].value%>']}"
+            data-bind="css: {active: fields()['<%=fields[i].label%>']}, attr: {'data-error': errors()['<%=fields[i].label%>']}"
             class="control-label">
-            <%=fields[i].value%>
+            <%=fields[i].label%>
         </label>
         <input id="<%=id%>_field_<%=i%>"
             data-bind="value: fields()['<%=fields[i].value%>']"
@@ -21,7 +21,7 @@
             aria-describedby="<%=id%>_field_<%=i%>_error">
         <span id="<%=id%>_field_<%=i%>_error"
             class="help-block"
-            data-bind="text: errors()['<%=fields[i].value%>']">
+            data-bind="text: errors()['<%=fields[i].label%>']">
         </span>
     </div>
 <% } -%>

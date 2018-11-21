@@ -68,7 +68,7 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate) {
-        self.fields.push({ value: value , type: ko.observable('text'), name: ko.observable('') });
+        self.fields.push({ label: value, value: value , type: ko.observable('text'), name: ko.observable('') });
         self.fieldToAdd("");
       }
     }
@@ -153,6 +153,7 @@ function SettingsPatternViewModel(options) {
     _.forEach(self.steps(), function (step) {
       step.fields = _.map(step.fields, function (field) {
         return {
+          label: field.label,
           value: field.value,
           type: field.type(),
           name: field.name()

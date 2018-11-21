@@ -160,9 +160,9 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
         case 'details':
             return ['id'];
         case 'list':
-            return _(_.map(this.get('filters'),'value') || []).sort().uniq(true).value();
+            return _(_.map(this.get('filters'),'label') || []).sort().uniq(true).value();
         case 'form':
-            return _(_.map(this.get('fields'),'value') || []).map(function (f) {
+            return _(_.map(this.get('fields'),'label') || []).map(function (f) {
                 return [f, f + '-error'];
             }).flatten().sort().value()
         default:
@@ -173,11 +173,11 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
     outputs: function () {
         switch (this.get('stereotype')) {
         case 'details':
-            return _(['id']).concat(_.map(this.get('fields'),'value') || []).sort().uniq(true).value()
+            return _(['id']).concat(_.map(this.get('fields'),'label') || []).sort().uniq(true).value()
         case 'list':
-            return _(['id']).concat(_.map(this.get('fields'),'value') || []).sort().uniq(true).value()
+            return _(['id']).concat(_.map(this.get('fields'),'label') || []).sort().uniq(true).value()
         case 'form':
-            return _(_.map(this.get('fields'),'value') || []).sort().uniq(true).value()
+            return _(_.map(this.get('fields'),'label') || []).sort().uniq(true).value()
         default:
             return [];
         }

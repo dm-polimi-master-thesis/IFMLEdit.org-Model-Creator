@@ -128,13 +128,14 @@ module.exports = [
                     fields: (element.attributes.fields && _.map(element.attributes.fields, function (el) {
                       if(element.attributes.stereotype === 'form'){
                         return {
+                          label: el.label || el,
                           value: el.value || el,
                           type: el.type || 'text',
                           name: (el.type === 'radio' || el.type === 'checkbox') ? (el.name || '') : undefined
                         };
                       } else {
                         return {
-                          value: el.value || el
+                          label: el.label || el
                         };
                       }
                     }).slice()) || []
@@ -164,7 +165,7 @@ module.exports = [
             return {
                 elements: {
                     id: element.id,
-                    filters: (element.attributes.filters && _.map(element.attributes.filters, function (el) { return { value: el.value || el };}).slice()) || []
+                    filters: (element.attributes.filters && _.map(element.attributes.filters, function (el) { return { label: el.label || el };}).slice()) || []
                 }
             };
         }
@@ -192,8 +193,8 @@ module.exports = [
                     id: element.id,
                     type: element.type,
                     name: element.attributes.name,
-                    results: (element.attributes.results && _.map(element.attributes.results, function (el) { return { value: el.value || el };}).slice()) || [],
-                    parameters: (element.attributes.parameters && _.map(element.attributes.parameters, function (el) { return { value: el.value || el };}).slice()) || []
+                    results: (element.attributes.results && _.map(element.attributes.results, function (el) { return { label: el.label || el };}).slice()) || [],
+                    parameters: (element.attributes.parameters && _.map(element.attributes.parameters, function (el) { return { label: el.label || el };}).slice()) || []
                 }
             };
         }

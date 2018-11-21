@@ -223,13 +223,13 @@ html, body {
   vertical-align: middle !important;
 }
 
-.plus:hover, .plus:visited {
-    text-decoration: none;
+.plus, .plus:hover, .plus:visited {
+    text-decoration: none !important;
     color: #1c6d1c;
 }
 
-.minus:hover, .minus:visited {
-    text-decoration: none;
+.minus, .minus:hover, .minus:visited {
+    text-decoration: none !important;
     color: #6d1c1c;
 }
 

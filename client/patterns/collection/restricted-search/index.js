@@ -49,7 +49,7 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        fields.push({ value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
+        fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
         fieldToAdd("");
       }
     }
@@ -103,7 +103,7 @@ function SettingsPatternViewModel(options) {
 
     var restrictedSearch = {
       name: self.name(),
-      search: [{ value: self.searchField(), type:'text', name:'' }],
+      search: [{ label: self.searchField(), value: self.searchField(), type:'text', name:'' }],
       filter: self.filterName(),
       list: {
         collection: self.collectionName(),

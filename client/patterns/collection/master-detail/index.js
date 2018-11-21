@@ -48,7 +48,7 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        fields.push({ value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
+        fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
         fieldToAdd("");
       }
     }

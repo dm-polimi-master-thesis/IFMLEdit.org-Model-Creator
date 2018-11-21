@@ -79,9 +79,9 @@ function SettingsPatternViewModel(options) {
       });
       if(!duplicate){
         if(type === 'list'){
-          fields.push({ value: fieldToAdd(), type: ko.observable('text'), name: ko.observable(''), filter: true });
+          fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: ko.observable('text'), name: ko.observable(''), filter: true });
         } else {
-          fields.push({ value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
+          fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
         }
         fieldToAdd("");
       }
@@ -158,6 +158,7 @@ function SettingsPatternViewModel(options) {
         step.filters = _.filter(_.cloneDeep(step.fields), function (field) { return field.filter === true;})
                       .map(function (filter) {
                         return {
+                          label: filter.label,
                           value: filter.value,
                           type: filter.type,
                           name: filter.name

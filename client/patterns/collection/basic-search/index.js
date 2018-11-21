@@ -49,7 +49,7 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        fields.push({ value: fieldToAdd(), type: 'text', name: '' });
+        fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: 'text', name: '' });
         fieldToAdd("");
       }
     }
@@ -97,7 +97,7 @@ function SettingsPatternViewModel(options) {
 
     var basicSearch = {
       name: self.name(),
-      search: [{ value: self.searchField(), type: 'text', name: '' }],
+      search: [{ label: self.searchField(), value: self.searchField(), type: 'text', name: '' }],
       list: {
         collection: self.collectionName(),
         fields: self.resultsFields.removeAll()

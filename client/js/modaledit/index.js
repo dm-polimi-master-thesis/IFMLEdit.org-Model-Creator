@@ -57,13 +57,14 @@ function mapStringSet(e, f) {
         stereotype: e.attributes.stereotype,
         strings: ko.observableArray(e.get(f.property) || []),
         value: ko.observable(''),
-        inputTypes: e.attributes.stereotype === 'form' ? ['text','password','reset','radio','checkbox'] : undefined,
+        inputTypes: e.attributes.stereotype === 'form' ? ['text','password','reset','radio','checkbox','hidden'] : undefined,
         inputType: e.attributes.stereotype === 'form' ? ko.observableArray(['text']) : undefined,
         radio: ko.observable(0),
         checkbox: ko.observable(0),
         add: function () {
-            if (field.value().trim().length && field.stereotype === 'form' && _.findIndex(field.strings(), {'value' : field.value()}) === -1) {
+            if (field.value().trim().length !== 0 && field.stereotype === 'form' && _.findIndex(field.strings(), {'value' : field.value()}) === -1) {
                 field.strings(_(field.strings()).concat({
+                  label: field.value().trim(),
                   value: field.value().trim(),
                   type: field.inputType(),
                   name: field.inputType() === 'checkbox' || field.inputType() === 'radio' ? '' : undefined
@@ -79,12 +80,15 @@ function mapStringSet(e, f) {
                   }
                 }
                 field.inputType(['text']);
-            } else if (_.findIndex(field.strings(), {'value' : field.value()}) === -1) {
+            } else if (field.value().trim().length !== 0 && _.findIndex(field.strings(), {'value' : field.value()}) === -1) {
                 field.strings(_(field.strings()).concat({
                   value: field.value().trim()
                 }).value());
-            } else if (_.findIndex(field.strings(), {'value' : field.value()}) !== -1) {
+            } else if (field.value().trim().length && _.findIndex(field.strings(), {'value' : field.value()}) !== -1) {
                 $.notify({message: 'Your request cannot be processed: ' + field.value() + ' is a duplicate.'},
+                  {allow_dismiss: true, type: 'danger'});
+            } else if (field.value().trim().length === 0) {
+                $.notify({message: 'Your request cannot be processed: input field is empty.'},
                   {allow_dismiss: true, type: 'danger'});
             }
             field.value('');

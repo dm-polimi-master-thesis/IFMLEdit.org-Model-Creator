@@ -53,7 +53,7 @@ function parser(multilevelMasterDetail){
      } else {
        configurator(modelElementsHash['selected-step-' + (index + 1) + '-navigation-flow'], template, {
            name: 'Selected ' + step.name,
-           filters: multilevelMasterDetail.steps.length > 2 ? step.filters : ['id']
+           filters: multilevelMasterDetail.steps.length > 2 ? step.filters : [{ label:'id' }]
         });
      }
   });
@@ -109,7 +109,7 @@ function parser(multilevelMasterDetail){
         reference['navigationFlow'] = generator(template, {
           type: 'ifml.NavigationFlow',
           name: 'Selected ' + step.name,
-          filters: index !== (collection.length - 1) ? reference['list'] : ['id'],
+          filters: index !== (collection.length - 1) ? reference['list'] : [{ label: 'id' }],
           source: reference['selected-event'].id,
           target: index !== (collection.length - 1) ? idValidator(template.elements, collection[index + 1].collection, '-list') : modelElementsHash['final-details'].id
         });

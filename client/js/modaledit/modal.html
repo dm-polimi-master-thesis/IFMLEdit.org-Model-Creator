@@ -73,7 +73,7 @@
                                         <!-- /ko -->
                                         <td class="col-sm-4 td-value">
                                             <div class="right-inner-addon">
-                                              <span class="field-span" data-bind="text: value"></span>
+                                              <span class="field-span" data-bind="text: label"></span>
                                               <a class="minus" href="#" data-bind="click: $parent.remove"><i class="glyphicon glyphicon-minus-sign"></i></a>
                                             </div>
                                         </td>
@@ -145,7 +145,7 @@
                                         <select class="form-control type-options" data-bind="options: inputs, value: input"></select>
                                     </th>
                                     <th class="glyphicon-plus-bindings">
-                                        <a href="#" data-bind="click: addBinding"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                        <a href="#" class="plus" data-bind="click: addBinding"><i class="glyphicon glyphicon-plus-sign"></i></a>
                                     </th>
                                 </tfoot>
                             </table>

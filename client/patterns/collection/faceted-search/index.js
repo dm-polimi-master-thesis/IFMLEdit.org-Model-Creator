@@ -57,9 +57,9 @@ function SettingsPatternViewModel(options) {
 
       if(!duplicate){
         if(type !== 'filters'){
-          fields.push({ value: fieldToAdd(), type: 'text', name: '' });
+          fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: 'text', name: '' });
         } else {
-          fields.push({ value: fieldToAdd(), type: ko.observable('checkbox'), name: ko.observable('') });
+          fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: ko.observable('checkbox'), name: ko.observable('') });
         }
         fieldToAdd("");
       }
@@ -124,6 +124,7 @@ function SettingsPatternViewModel(options) {
 
     var filters = _.map(self.filtersFields(), function (field) {
         return {
+          label: field.value,
           value: field.value,
           type: field.type(),
           name: field.name()
@@ -132,7 +133,7 @@ function SettingsPatternViewModel(options) {
 
     var facetedSearch = {
       name: self.name(),
-      search: [{ value: self.searchField(), type: 'text', name: '' }],
+      search: [{ label: self.searchField(), value: self.searchField(), type: 'text', name: '' }],
       list: {
         collection: self.collectionName(),
         fields: self.resultsFields.removeAll()

@@ -116,7 +116,7 @@
             "name":"Category",
             "stereotype":"list",
             "fields":[
-               "key"
+
             ],
             "collection":"categories",
             "filters":[
@@ -147,7 +147,7 @@
             ],
             "collection":"products",
             "filters":[
-              "key"
+
             ]
          },
          "metadata":{
@@ -170,7 +170,7 @@
             "name":"Product",
             "stereotype":"details",
             "fields":[
-              
+
             ],
             "collection":"products"
          },
@@ -232,10 +232,7 @@
       {
          "attributes":{
             "bindings":[
-               {
-                  "input":"keyword",
-                  "output":"keyword"
-               }
+
             ]
          },
          "metadata":{
@@ -249,10 +246,7 @@
       {
          "attributes":{
             "bindings":[
-               {
-                  "input":"key",
-                  "output":"key"
-               }
+
             ]
          },
          "metadata":{
@@ -365,8 +359,8 @@
    ],
    "statistics":{
       "session":{
-         "started_at":"2018-10-26T09:41:06.778Z",
-         "ended_at":"2018-10-26T09:44:55.321Z"
+         "started_at":"2018-11-21T18:38:19.438Z",
+         "ended_at":"2018-11-21T18:38:57.439Z"
       }
    }
 }

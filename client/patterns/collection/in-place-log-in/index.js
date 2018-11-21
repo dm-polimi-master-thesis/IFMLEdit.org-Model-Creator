@@ -13,15 +13,12 @@ function SettingsPatternViewModel(options) {
   var self = this;
 
   self.id = options.id;
-  self.name = ko.observable("Sign Up and Log In");
-  self.signUpFormName = ko.observable("Sign Up Form");
+  self.name = ko.observable("In-Place Log In");
+  self.editorFormName = ko.observable("Editor Form");
   self.logInFormName = ko.observable("Log In Form");
-  self.signUpFieldToAdd = ko.observable("");
+  self.editorFieldToAdd = ko.observable("");
   self.logInFieldToAdd = ko.observable("");
-  self.signUpFields = ko.observableArray([{ label: "name", value: "name", type: ko.observable('text'), name: ko.observable('') },
-                                          { label: "surname", value: "surname", type: ko.observable('text'), name: ko.observable('') },
-                                          { label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },
-                                          { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
+  self.editorFields = ko.observableArray([]);
   self.logInFields = ko.observableArray([{ label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },
                                          { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
   self.types = ['text','password','checkbox','radio','reset'];
@@ -30,9 +27,9 @@ function SettingsPatternViewModel(options) {
     var fieldToAdd;
     var fields;
 
-    if(type === 'sign-up'){
-      fieldToAdd = self.signUpFieldToAdd;
-      fields = self.signUpFields;
+    if(type === 'editor'){
+      fieldToAdd = self.editorFieldToAdd;
+      fields = self.editorFields;
     } else {
       fieldToAdd = self.logInFieldToAdd;
       fields = self.logInFields;
@@ -58,8 +55,8 @@ function SettingsPatternViewModel(options) {
   }
 
   self.deleteField = function(type){
-    if (type === 'sign-up') {
-      self.signUpFields.remove(this);
+    if (type === 'editor') {
+      self.editorFields.remove(this);
     } else {
       self.logInFields.remove(this);
     }
@@ -82,9 +79,9 @@ function SettingsPatternViewModel(options) {
       $.notify({message: 'Your request cannot be processed: the pattern cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
-    if (!(self.signUpFormName().length > 0)) {
+    if (!(self.editorFormName().length > 0)) {
       error = true;
-      $('#sign-up-name-form').addClass('has-error');
+      $('#editor-name-form').addClass('has-error');
       $.notify({message: 'Your request cannot be processed: sign up form cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
@@ -98,7 +95,7 @@ function SettingsPatternViewModel(options) {
       return undefined;
     }
 
-    var signUpFields = _.map(self.signUpFields(), function (field) {
+    var editorFields = _.map(self.editorFields(), function (field) {
         return {
           label: field.label,
           value: field.value,
@@ -116,13 +113,13 @@ function SettingsPatternViewModel(options) {
         }
     });
 
-    var signUpLogIn = {
+    var inPlaceLogIn = {
       name : self.name(),
-      signUp : { formName: self.signUpFormName(), fields: signUpFields },
+      editor : { formName: self.editorFormName(), fields: editorFields },
       logIn : { formName: self.logInFormName(), fields: logInFields }
     }
 
-    return parser(signUpLogIn);
+    return parser(inPlaceLogIn);
   }
 
   self.validate = function (str,id) {
@@ -141,7 +138,7 @@ function SettingsPattern(options) {
     options = options || {};
 
     var pattern = new SettingsPatternViewModel(options);
-    ko.applyBindings(pattern, $('#sign-up-log-in-settings-content')[0]);
+    ko.applyBindings(pattern, $('#in-place-log-in-settings-content')[0]);
 
     return pattern;
 }

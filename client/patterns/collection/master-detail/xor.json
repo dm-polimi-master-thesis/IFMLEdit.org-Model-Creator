@@ -179,7 +179,7 @@
 
             }
          },
-         "id":"a8f3360d-1c55-470b-ae0a-dfa590b6a83b",
+         "id":"list-to-result",
          "type":"ifml.NavigationFlow"
       }
    ],
@@ -216,12 +216,12 @@
       },
       {
          "type":"source",
-         "flow":"a8f3360d-1c55-470b-ae0a-dfa590b6a83b",
+         "flow":"list-to-result",
          "source":"selected-mail-event"
       },
       {
          "type":"target",
-         "flow":"a8f3360d-1c55-470b-ae0a-dfa590b6a83b",
+         "flow":"list-to-result",
          "target":"mail-details"
       }
    ],

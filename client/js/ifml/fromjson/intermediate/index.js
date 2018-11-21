@@ -34,5 +34,7 @@ var transformer = createTransformer(
 );
 
 exports.transform = function (model) {
+    console.log(model);
+    console.log(transformer(extender.extend(model)));
     return transformer(extender.extend(model));
 };

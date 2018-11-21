@@ -265,6 +265,7 @@ $('#ifml > .append > input[type=file]').change(function () {
               return;
           }
           var toBeAdded = ifml.fromJSON(partialModelValidator(ifml.toJSON(ifmlModel), JSON.parse(e.target.result)));
+          console.log('tobe',toBeAdded);
           var boardBB = boundingBox(ifmlModel.attributes.cells.models),
               toBeAddedBB = boundingBox(toBeAdded);
           toBeAdded = _(toBeAdded).map(function(model) {
@@ -280,7 +281,7 @@ $('#ifml > .append > input[type=file]').change(function () {
               }
               return model;
           }).value();
-
+          console.log('after',toBeAdded);
           ifmlModel.addCells(toBeAdded);
           ifmlBoard.clearHistory();
 

@@ -39,7 +39,6 @@ function parser(facetedSearch){
       collection: facetedSearch.list.collection,
       fields: facetedSearch.details.fields
   });
-  console.log(facetedSearch.search);
   configurator(modelElementsHash['keyword-data-flow'], template, {
       fields: facetedSearch.search
   });

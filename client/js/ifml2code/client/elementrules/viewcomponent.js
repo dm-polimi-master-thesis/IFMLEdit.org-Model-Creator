@@ -50,8 +50,6 @@ exports.rules = [
                 obj = {
                     controls: {children: 'C-' + id}
                 };
-                console.log('list-filters', filters);
-                  console.log('list-fields', fields);
             obj['C-' + id] = {isFolder: true, name: 'c-' + id, children: ['C-' + id + '-VM', 'C-' + id + '-V']};
             obj['C-' + id + '-VM'] = {name: 'index.js', content: require('./templates/list-vm.js.ejs')({id: id, selection: selection, collection: collection, filters: filters, fields: fields, incomings: incomings})};
             obj['C-' + id + '-V'] = {name: 'index.html', content: require('./templates/list-v.html.ejs')({name: name, events: events, fields: fields, showSelection: showSelection})};
@@ -82,7 +80,6 @@ exports.rules = [
                 obj = {
                     controls: {children: 'C-' + id}
                 };
-            console.log('details-fields', fields);
             obj['C-' + id] = {isFolder: true, name: 'c-' + id, children: ['C-' + id + '-VM', 'C-' + id + '-V']};
             obj['C-' + id + '-VM'] = {name: 'index.js', content: require('./templates/details-vm.js.ejs')({id: id, collection: collection, fields: fields, incomings: incomings})};
             obj['C-' + id + '-V'] = {name: 'index.html', content: require('./templates/details-v.html.ejs')({name: name, events: events, fields: fields})};
