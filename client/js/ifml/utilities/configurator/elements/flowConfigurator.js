@@ -14,13 +14,12 @@ function configureFlow(element, template, options) {
         type: 'flow',
         oldId: element.id
       };
-
-  var bindings = [];
+  var bindings = _.cloneDeep(attributes.bindings);
   if(options.fields !== undefined){
-    bindings = _.map(options.fields, function(field){
+    bindings = _.map(options.fields || options.bindings, function(field){
       return {
-        input: field.label,
-        output: field.label
+        input: field.label || field.input,
+        output: field.label || field.output
       }
     });
   }
@@ -33,7 +32,7 @@ function configureFlow(element, template, options) {
       }
     }));
   }
-
+  
   attributes.bindings = _.flattenDeep(bindings);
 
   if(options.vertices !== undefined){

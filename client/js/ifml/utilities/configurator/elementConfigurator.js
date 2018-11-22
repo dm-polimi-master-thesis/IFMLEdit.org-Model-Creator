@@ -46,7 +46,6 @@ function configurator(element, template, options) {
       });
     }
   }
-  console.log('template',template);
 }
 
 exports.configurator = configurator;

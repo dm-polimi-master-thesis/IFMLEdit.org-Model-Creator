@@ -25,7 +25,6 @@ function partialModelValidator(model1, model2) {
       });
     }
   });
-  console.log('model2',model2);
   return model2;
 }
 

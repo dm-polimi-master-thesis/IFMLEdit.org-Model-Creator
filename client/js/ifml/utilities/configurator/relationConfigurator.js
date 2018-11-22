@@ -26,17 +26,13 @@ function configurator(relations, options) {
 }
 
 function allConfigurator (relations, options) {
-  console.log('options',options);
   if(options.type === 'flow'){
     _.filter(relations, function (relation) { return relation.type !== 'hierarchy' && relation.flow === options.oldId; })
      .map(function(relation){
-       console.log('flow',options);
-       console.log('flow',relation);
        return relation.flow = options.newId;
      });
   } else {
     _.forEach(relations, function(relation){
-      console.log('relation.source',relation.source);
       if(relation.parent === options.oldId){
         relation.parent = options.newId;
       } else if(relation.child === options.oldId){

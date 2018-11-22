@@ -265,7 +265,6 @@ $('#ifml > .append > input[type=file]').change(function () {
               return;
           }
           var toBeAdded = ifml.fromJSON(partialModelValidator(ifml.toJSON(ifmlModel), JSON.parse(e.target.result)));
-          console.log('tobe',toBeAdded);
           var boardBB = boundingBox(ifmlModel.attributes.cells.models),
               toBeAddedBB = boundingBox(toBeAdded);
           toBeAdded = _(toBeAdded).map(function(model) {
@@ -281,13 +280,12 @@ $('#ifml > .append > input[type=file]').change(function () {
               }
               return model;
           }).value();
-          console.log('after',toBeAdded);
           ifmlModel.addCells(toBeAdded);
           ifmlBoard.clearHistory();
 
           $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
         } catch (exception) {
-            console.log(exception);
+              console.log(exception);
               ifmlBoard.clearHistory();
               $.notify({message: 'Invalid input file!'}, {allow_dismiss: true, type: 'danger'});
               return;

@@ -4,6 +4,12 @@ html, body {
     padding: 0;
     margin: 0;
     font-size: 14px;
+    background: #243141;
+    color: white;
+}
+
+.modal-content {
+  color: black !important;
 }
 
 .selectable {
@@ -35,6 +41,16 @@ html, body {
     }
 }
 
+.navbar-inverse {
+    background: #001f2e;
+    border-color: #001f2e;
+    border-radius: 0px;
+}
+
+.navbar-nav > .active > a {
+    background-color: #003c5a !important;
+}
+
 .ifml-image {
     background: url(../img/linen_bg_tile.jpg);
 }
@@ -49,7 +65,8 @@ html, body {
 }
 
 .editor {
-    @extend .ifml-image;
+    /*@extend .ifml-image;*/
+    background-color: #515d68;
     position: absolute;
     display: block;
     visibility: visible;
@@ -71,7 +88,7 @@ html, body {
         width: 200px;
         overflow-y: auto;
         overflow-x: hidden;
-        background: white;
+        background: #243141;
     }
 
     .joint-paper {
@@ -100,6 +117,28 @@ html, body {
 
     .board.not-interactive .joint-element {
         cursor: auto;
+    }
+
+    .list-group-item {
+        color: white;
+        background: #243141;
+        border: none;
+        border-radius: 0px;
+    }
+
+    .list-group-item:hover {
+        color: white;
+        text-decoration: none;
+        background-color: #49606d;
+        border: none !important;
+    }
+
+    .model-load {
+        margin-top: 20px;
+    }
+
+    .png-download {
+        margin-bottom: 30px;
     }
 }
 
@@ -264,7 +303,9 @@ html, body {
 @import "./js/modaledit/index.scss";
 @import "./js/modalpatterns/index.scss";
 @import "./patterns/index.scss";
+@import "./patterns/collection/alphabetical-filter/index.scss";
 @import "./patterns/collection/basic-search/index.scss";
+@import "./patterns/collection/in-place-log-in/index.scss";
 @import "./patterns/collection/input-data-validation/index.scss";
 @import "./patterns/collection/faceted-search/index.scss";
 @import "./patterns/collection/master-detail/index.scss";

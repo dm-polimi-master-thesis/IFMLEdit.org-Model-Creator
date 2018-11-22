@@ -1,0 +1,34 @@
+.alphabetical-filter-settings-table {
+    .details-fields-container {
+        float: right !important;
+    }
+
+    .pattern-name {
+        float: left !important;
+    }
+
+    .name-td {
+        vertical-align: bottom;
+    }
+
+    .details-form {
+        margin-right: 40px;
+    }
+
+    .list-fields-td {
+        padding-top: 10px;
+        padding-bottom: 0px;
+    }
+
+    .details-fields-td {
+        padding-top: 10px;
+    }
+
+    .details-fields-container {
+        height: 98px !important;
+    }
+
+    .filter-field-form, .list-field-form, .details-field-form {
+        padding-top: 0px;
+    }
+}
