@@ -5,12 +5,14 @@
 <% for (var i = 0; i < fields.length; i += 1) { -%>
     <div class="form-group"
         data-bind="css: {'has-error': errors()['<%=fields[i].label%>']}">
+        <% if (fields[i].type !== 'hidden') { -%>
         <label
             for="<%=id%>_field_<%=i%>"
             data-bind="css: {active: fields()['<%=fields[i].label%>']}, attr: {'data-error': errors()['<%=fields[i].label%>']}"
             class="control-label">
             <%=fields[i].label%>
         </label>
+        <% } -%>
         <input id="<%=id%>_field_<%=i%>"
             data-bind="value: fields()['<%=fields[i].value%>']"
             type="<%=fields[i].type%>"

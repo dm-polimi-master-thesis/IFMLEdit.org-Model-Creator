@@ -4,8 +4,10 @@
         - var fields = vm['<%= id %>'].fields
 <% for (var i = 0; i < fields.length; ++i) { -%>
             .form-group
-                label <%= fields[i].value %>
-                input(type=<%= fields[i].type %>, name='<%= id %>$f$<%= fields[i].value %>', data-name='<%= id %>$f$<%= fields[i].value %>', value=fields['<%= fields[i].value%>'])
+                <% if (fields[i].type !== 'hidden') { -%>
+                label <%= fields[i].label %>
+                <% } -%>
+                input(type='<%= fields[i].type %>', name='<%= id %>$f$<%= fields[i].name %>', data-name='<%= id %>$f$<%= fields[i].label %>', value=fields['<%= fields[i].value%>'])
 <% } -%>
         .row
 <% for (var i = 0; i < events.length; ++i) { -%>

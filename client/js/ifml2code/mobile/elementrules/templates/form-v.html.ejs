@@ -14,11 +14,13 @@
 <% for (var i = 0; i < fields.length; i += 1) { -%>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="<%=id%>_field_<%=i%>" data-bind="value: fields()['<%=fields[i].value%>'], css: {invalid: errors()['<%=fields[i].value%>']}"
+                        <input id="<%=id%>_field_<%=i%>" data-bind="value: fields()['<%=fields[i].value%>'], css: {invalid: errors()['<%=fields[i].label%>']}"
                             type="<%=fields[i].type%>" class="validate">
-                        <label for="<%=id%>_field_<%=i%>" data-bind="css: {active: fields()['<%=fields[i].value%>']}, attr: {'data-error': errors()['<%=fields[i].value%>']}">
-                            <%=fields[i].value%>
+                        <% if (fields[i].type !== 'hidden') { -%>
+                        <label for="<%=id%>_field_<%=i%>" data-bind="css: {active: fields()['<%=fields[i].label%>']}, attr: {'data-error': errors()['<%=fields[i].label%>']}">
+                            <%=fields[i].label%>
                         </label>
+                        <% } -%>
                     </div>
                 </div>
 <% } -%>

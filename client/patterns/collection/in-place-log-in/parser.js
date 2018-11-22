@@ -20,6 +20,14 @@ function parser(inPlaceLogIn){
   var logInResults = _.map(inPlaceLogIn.logIn.fields, function (field) {
     return [field, { label: field.label  + '-error', value: field.value + '-error', type: field.type, name: field.name }];
   });
+  var inPlaceLogInFormFields = _.map(inPlaceLogIn.editor.fields, function (field) {
+    return {
+      label: field.label,
+      value: field.value,
+      type: 'hidden',
+      name: field.name
+    }
+  })
 
   configurator(modelElementsHash['xor-view-container'], template, {
       name: inPlaceLogIn.name
@@ -30,15 +38,15 @@ function parser(inPlaceLogIn){
   });
   configurator(modelElementsHash['log-in-form'], template, {
       name: inPlaceLogIn.logIn.formName,
-      fields: inPlaceLogIn.logIn.fields
+      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, inPlaceLogInFormFields])
   });
   configurator(modelElementsHash['send-action'], template, {
       parameters: inPlaceLogIn.editor.fields,
       results: _.flattenDeep(editorResults),
       parent: modelElementsHash['in-place-log-in-pattern-view-container'].id
   });
-  configurator(modelElementsHash['log-in-action'], template, {
-      parameters: inPlaceLogIn.logIn.fields,
+  configurator(modelElementsHash['log-in-and-send-action'], template, {
+      parameters: _.flattenDeep([inPlaceLogIn.logIn.fields, inPlaceLogInFormFields]),
       results: _.flattenDeep([logInResults]),
       parent: modelElementsHash['in-place-log-in-pattern-view-container'].id
   });
@@ -52,7 +60,7 @@ function parser(inPlaceLogIn){
       fields: inPlaceLogIn.editor.fields
   });
   configurator(modelElementsHash['log-in-navigation-flow'], template, {
-      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, inPlaceLogIn.editor])
+      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, inPlaceLogInFormFields])
   });
   configurator(modelElementsHash['failed-log-in-navigation-flow'], template, {
       fields: _.flattenDeep(logInResults)

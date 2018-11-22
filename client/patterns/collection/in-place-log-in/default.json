@@ -195,18 +195,7 @@
          "attributes":{
             "name":"Log In & Send",
             "parameters":[
-               {
-                  "value":"content"
-               },
-               {
-                  "value":"password"
-               },
-               {
-                  "value":"title"
-               },
-               {
-                  "value":"username"
-               }
+              
             ],
             "results":[
 
