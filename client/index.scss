@@ -91,6 +91,12 @@ html, body {
         background: #243141;
     }
 
+    .almost-place-holder {
+        padding-top: 8px !important;
+        padding-bottom: 0px !important;
+        background: #5e7488 !important;
+    }
+
     .joint-paper {
         background-color: transparent;
     }
@@ -310,6 +316,7 @@ html, body {
 @import "./patterns/collection/faceted-search/index.scss";
 @import "./patterns/collection/master-detail/index.scss";
 @import "./patterns/collection/multilevel-master-detail/index.scss";
+@import "./patterns/collection/page-based-content-management/index.scss";
 @import "./patterns/collection/restricted-search/index.scss";
 @import "./patterns/collection/sign-up-log-in/index.scss";
 @import "./patterns/collection/wizard/index.scss";

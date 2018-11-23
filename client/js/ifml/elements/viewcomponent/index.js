@@ -173,9 +173,9 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
     outputs: function () {
         switch (this.get('stereotype')) {
         case 'details':
-            return _(['id']).concat(_.map(this.get('fields'),'label') || []).sort().uniq(true).value()
+            return _(['id']).concat(_.map(this.get('fields'),'label') || []).sort().uniq(true).value();
         case 'list':
-            return _(['id']).concat(_.map(this.get('fields'),'label') || []).sort().uniq(true).value()
+            return _(['id']).concat(_.map(this.get('fields'),'label') || []).sort().uniq(true).value();
         case 'form':
             return _(_.map(this.get('fields'),'label') || []).sort().uniq(true).value()
         default:

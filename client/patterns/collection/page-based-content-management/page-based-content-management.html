@@ -1,0 +1,133 @@
+<div id="page-based-content-management-settings-content" class="table-responsive table-patterns-container">
+  <center>
+    <h3 class="pattern-settings-title">Page Based Content Management</h3>
+  </center>
+  <table class="page-based-content-management-settings-table default-settings-table" >
+    <thead>
+      <tr>
+        <th class="trace-line th-left">Pages List</th>
+        <th class="trace-line-padding">Data Entry</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="collection-name form-td-left pattern-form-input trace-line">
+          <div id="collection-form" class="form-group">
+            <span class="pattern-form-label control-label">Collection:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionName, event: { blur: validate.bind($data, collectionName(), '#collection-form') }"/>
+            </div>
+          </div>
+        </td>
+        <td class=" pattern-form-input trace-line-padding">
+          <div id="data-entry-form" class="form-group">
+            <span class="pattern-form-label control-label">Form Name:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: dataEntryFormName, event: { blur: validate.bind($data, dataEntryFormName(), '#data-entry-form') }"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="form-td-left pattern-form-input trace-line shrink">
+          <div class="form-group">
+            <span class="pattern-form-label control-label">Field:</span>
+            <div class="input-group">
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: resultsFieldToAdd, executeOnEnter: addField.bind($data,'list')"/>
+              <div class="input-group-addon">
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'list')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class=" pattern-form-input trace-line-padding shrink">
+          <div class="form-group">
+            <span class="pattern-form-label control-label">Field:</span>
+            <div class="input-group">
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: dataEntryFieldToAdd, executeOnEnter: addField.bind($data,'data-entry')"/>
+              <div class="input-group-addon">
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'data-entry')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="trace-line shrink">
+          <center class="list-fields-container">
+            <ul class="list-fields" data-bind="foreach: resultsFields">
+              <li>
+                <div class="right-inner-addon">
+                  <span data-bind="text: value"></span>
+                  <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'list')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                </div>
+              </li>
+            </ul>
+          </center>
+        </td>
+        <td rowspan="4" class="trace-line-padding shrink">
+          <center class="form-fields-container">
+            <ul class="form-fields" data-bind="foreach: dataEntryFields">
+              <li>
+                <div class="right-inner-addon">
+                  <span class="field-span" data-bind="text: value"></span>
+                  <div class="field-operations-div">
+                    <select class="field-select" data-bind="options: $parent.types, value: type, event: { change: $parent.changeName.bind($data, 'name-' + $index()) }"></select>
+                    <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'data-entry')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'name-' + $index()}"></input>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </center>
+        </td>
+      </tr>
+      <tr>
+        <th class="trace-line th-left">Page</th>
+      </tr>
+      <tr>
+        <td class="form-td-left pattern-form-input trace-line">
+          <div id="details-form" class="form-group">
+            <span class="pattern-form-label control-label">Details Name:</span>
+            <div class="input-group details-name">
+              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: selectedDetailsName, event: { blur: validate.bind($data, selectedDetailsName(), '#details-form') }"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class=" pattern-form-input trace-line details-field-form shrink">
+          <div class="form-group">
+            <span class="pattern-form-label control-label details-span-field">Field:</span>
+            <div class="input-group details-form">
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: selectedFieldToAdd, executeOnEnter: addField.bind($data,'details')"/>
+              <div class="input-group-addon">
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'details')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+              </div>
+            </div>
+          </div>
+        </td>
+      <tr>
+        <td class="trace-line details-fields-td shrink">
+          <center class="details-fields-container">
+            <ul class="details-fields" data-bind="foreach: selectedFields">
+              <li>
+                <div class="right-inner-addon">
+                  <span data-bind="text: value"></span>
+                  <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'details')"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                </div>
+              </li>
+            </ul>
+          </center>
+        </td>
+        <td class="trace-line-padding shrink td-name">
+          <div id="pattern-form" class="form-group pattern-name">
+            <div class="input-group">
+              <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

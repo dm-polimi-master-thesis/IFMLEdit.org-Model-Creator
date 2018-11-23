@@ -1,0 +1,27 @@
+.page-based-content-management-settings-table {
+    .shrink {
+        vertical-align: top;
+        padding-top: 0px !important;
+    }
+
+    .details-field-form {
+        padding-right: 60px;
+    }
+
+    .details-span-field {
+        padding-left: 10px;
+    }
+
+    .list-fields-container, .details-fields-container {
+        float: right;
+        height: 56px;
+    }
+
+    .form-fields-container {
+        height: 212px;
+    }
+
+    .td-name {
+        vertical-align: bottom;
+    }
+}
