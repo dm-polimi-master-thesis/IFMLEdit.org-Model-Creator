@@ -22,13 +22,17 @@
       color: #000;
     }
 
-    .step-input {
-        width: 260px;
-    }
-
     .field-input {
         padding-top: 0px;
         float: right;
+    }
+
+    .field-step-form {
+        padding-left: 10px !important;
+    }
+
+    .field-step-input {
+        width: 172px !important;
     }
 
     .details-form {
@@ -61,15 +65,22 @@
     .details-fields-space {
         vertical-align: top;
         padding-top: 0px;
-        padding-right: 50px;
     }
 
     .form-control {
         width: 182px !important;
     }
 
+    .field-details-input {
+        width: 192px !important;
+    }
+
     .pattern-form-label {
         padding-left: 10px !important;
+    }
+
+    .div-add-step {
+        float: right;
     }
 }
 

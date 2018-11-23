@@ -11,9 +11,9 @@
     </thead>
     <tbody>
       <tr>
-        <td class="trace-line td-add-step">
-            <div class="form-group">
-              <div class="input-group step-input">
+        <td class="trace-line">
+            <div class="form-group div-add-step">
+              <div class="input-group">
                 <input class="form-control" placeholder="Add new step" type="text" data-bind="textInput: stepToAdd, executeOnEnter: addStep"/>
                 <div class="input-group-addon">
                   <a class="plus" href="#" data-bind="click: addStep"><i class="glyphicon glyphicon-plus-sign"></i></a>
@@ -44,11 +44,11 @@
             </div>
           </center>
         </td>
-        <td class="field-input form-td-left selected-field-input multilevel-pattern-form-input trace-line-padding">
+        <td class="field-input form-td-left selected-field-input multilevel-pattern-form-input trace-line-padding field-step-form">
           <div class="form-group">
             <span class=" pattern-form-label control-label">Field:</span>
             <div class="input-group">
-              <input id="list-input" class="form-control" placeholder="Add new field" type="text" data-bind="textInput: listFieldToAdd, executeOnEnter: addField.bind($data,'list')"/>
+              <input id="list-input" class="form-control field-step-input" placeholder="Add new field" type="text" data-bind="textInput: listFieldToAdd, executeOnEnter: addField.bind($data,'list')"/>
               <div class="input-group-addon">
                 <a class="plus" href="#" data-bind="click: addField.bind($data,'list')"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
@@ -92,7 +92,7 @@
           <div class="form-group">
             <span class="pattern-form-label control-label">Field:</span>
             <div class="input-group">
-              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: detailsFieldToAdd, executeOnEnter: addField.bind($data,'details')"/>
+              <input class="form-control field-details-input" placeholder="Add new field" type="text" data-bind="textInput: detailsFieldToAdd, executeOnEnter: addField.bind($data,'details')"/>
               <div class="input-group-addon">
                 <a class="plus" href="#" data-bind="click: addField.bind($data,'details')"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>

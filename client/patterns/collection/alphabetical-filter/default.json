@@ -68,7 +68,7 @@
       },
       {
          "attributes":{
-            "name":"Alphabetical Filter",
+            "name":"Filter",
             "default":true,
             "landmark":false,
             "xor":false
@@ -165,7 +165,7 @@
                }
             }
          },
-         "id":"results-navigation-flow",
+         "id":"results-list",
          "type":"ifml.ViewComponent"
       },
       {
@@ -278,7 +278,7 @@
       {
          "type":"hierarchy",
          "parent":"alphabetical-filter-view-container",
-         "child":"results-navigation-flow"
+         "child":"results-list"
       },
       {
          "type":"hierarchy",
@@ -287,7 +287,7 @@
       },
       {
          "type":"hierarchy",
-         "parent":"results-navigation-flow",
+         "parent":"results-list",
          "child":"selected-result-event"
       },
       {
@@ -303,7 +303,7 @@
       {
          "type":"target",
          "flow":"filter-to-results-navigation-flow",
-         "target":"results-navigation-flow"
+         "target":"results-list"
       },
       {
          "type":"target",
@@ -313,8 +313,8 @@
    ],
    "statistics":{
       "session":{
-         "started_at":"2018-11-22T14:12:06.679Z",
-         "ended_at":"2018-11-22T14:23:49.031Z"
+         "started_at":"2018-11-23T07:40:57.110Z",
+         "ended_at":"2018-11-23T07:43:44.451Z"
       }
    }
 }

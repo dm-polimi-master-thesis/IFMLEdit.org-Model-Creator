@@ -84,13 +84,13 @@ function SettingsPatternViewModel(options) {
     }
     if (!(self.filterField().length > 0)) {
       error = true;
-      $('#search-form').addClass('has-error');
+      $('#filter-form').addClass('has-error');
       $.notify({message: 'Your request cannot be processed: filter field cannot be empty.'},
         {allow_dismiss: true, type: 'danger'});
     }
     if (!(self.filterCollection().length > 0)) {
       error = true;
-      $('#filters-form').addClass('has-error');
+      $('#filter-collection-form').addClass('has-error');
       $.notify({message: 'Your request cannot be processed: filter collection cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
@@ -102,7 +102,7 @@ function SettingsPatternViewModel(options) {
     }
     if (!(self.resultsCollection().length > 0)) {
       error = true;
-      $('#filters-form').addClass('has-error');
+      $('#results-collection-form').addClass('has-error');
       $.notify({message: 'Your request cannot be processed: results collection cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
@@ -118,7 +118,7 @@ function SettingsPatternViewModel(options) {
         fields: [{ label: self.filterField(), value: self.filterField(), type: 'text', name: '' }],
       },
       list: {
-        collection: self.Collection(),
+        collection: self.resultsCollection(),
         fields: self.resultsFields.removeAll()
       },
       details: {
@@ -126,8 +126,8 @@ function SettingsPatternViewModel(options) {
         fields: self.selectedFields.removeAll()
       }
     }
-    console.log(alphabeticalFilter);
-    //return parser(facetedSearch);
+
+    return parser(alphabeticalFilter);
   }
 
   self.validate = function (str,id) {
