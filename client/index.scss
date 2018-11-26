@@ -334,6 +334,121 @@ html, body {
                         transparent);
 }
 
+.wrapper {
+    position: absolute;
+    display: block;
+    min-width: 175px;
+    top: 5%;
+    right: 5%;
+}
+
+.wrapper-load-modal {
+  top: 5%;
+  right: 5%;
+  &:hover {
+    #load-span {
+        opacity: 1;
+    }
+  }
+}
+
+.wrapper-append-modal {
+    top: 15%;
+    right: 5%;
+    &:hover {
+      #append-span {
+          opacity: 1;
+      }
+    }
+}
+
+.wrapper-example-modal {
+    top: 25%;
+    right: 5%;
+    &:hover {
+      #example-span {
+          opacity: 1;
+      }
+    }
+}
+
+.wrapper-pattern-modal {
+    top: 35%;
+    right: 5%;
+    &:hover {
+      #pattern-span {
+          opacity: 1;
+      }
+    }
+}
+
+.wrapper-download-model-modal {
+    top: 45%;
+    right: 5%;
+    &:hover {
+      #down-span {
+          opacity: 1;
+      }
+    }
+}
+
+.wrapper-download-png-modal {
+    top: 55%;
+    right: 5%;
+    &:hover {
+      #png-span {
+          opacity: 1;
+      }
+    }
+}
+
+.circle {
+    float: right;
+    display: block;
+    position: relative;
+    padding: 0;
+    z-index: 98;
+    margin: 0 auto;
+    -webkit-box-shadow: 0 6px 10px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.3);
+    border-radius: 50% !important;
+    height: 60px;
+    width: 60px;
+    transition: 0.2s;
+    text-align: center;
+    background: #001722 !important;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #243141 !important;
+        .icon {
+            transform: rotate(90deg);
+            box-shadow: 0 8px 15px 0 rgba(0,0,0,0.3);
+        }
+        #pippo {
+            opacity: 1;
+        }
+    }
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    width: 30px;
+    height: 30px;
+    transition: 0.5s;
+}
+
+.span-sidebar {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transition: 0.5s;
+}
+
 @import "./js/modaledit/index.scss";
 @import "./js/modalpatterns/index.scss";
 @import "./patterns/index.scss";

@@ -61,6 +61,30 @@ html
                                 a(role='tab', data-toggle='tab', aria-controls='about', href='#about') About
             .tab-content
                 #ifml.tab-pane.editor.active(role='tabpanel')
+                    .wrapper.wrapper-load-modal
+                        span.span-sidebar(id="load-span") Load Model
+                        a.circle.list-group-item.model-load(href='#!')
+                            img.icon(src="./img/load.png")
+                    .wrapper.wrapper-append-modal
+                        span.span-sidebar(id="append-span") Append Model
+                        a.circle.list-group-item.model-load(href='#!')
+                            img.icon(src="./img/plus.png")
+                    .wrapper.wrapper-example-modal
+                        span.span-sidebar(id="example-span") Load Example
+                        a.circle.list-group-item.model-load(href='#!')
+                            img.icon(src="./img/carousel.png")
+                    .wrapper.wrapper-pattern-modal
+                        span.span-sidebar(id="pattern-span") Pattern
+                        a.circle.list-group-item.model-load(href='#!')
+                            img.icon(src="./img/timbro.png")
+                    .wrapper.wrapper-download-model-modal
+                        span.span-sidebar(id="down-span") Download Model
+                        a.circle.list-group-item.model-load(href='#!')
+                            img.icon(src="./img/download.png")
+                    .wrapper.wrapper-download-png-modal
+                        span.span-sidebar(id="png-span") Download PNG
+                        a.circle.list-group-item.model-load(href='#!')
+                            img.icon(src="./img/camera.png")
                     .sidebar
                         ul.list-group
                             a.list-group-item.model-load(href='#!') Load Model
