@@ -16,6 +16,8 @@
 
     .input-group-addon {
         border-radius: 0 0 20px 0;
+        background: #001722;
+        border: none;
     }
 
     .input-name {
@@ -47,6 +49,11 @@
 
     .type-options, .type-input-field {
         max-width: 174px;
+    }
+
+    .type-options {
+        background: #243141;
+        border: none;
     }
 
     .type-input-not-field {
@@ -138,6 +145,7 @@
     }
 
     .white-bkg {
-        background: white;
+        background: #18222d;
+        border: none;
     }
 }

@@ -8,5 +8,6 @@ exports.elements = {
     ViewContainer: require('./viewcontainer').ViewContainer,
     ViewComponent: require('./viewcomponent').ViewComponent,
     Event: require('./event').Event,
-    Action: require('./action').Action
+    Action: require('./action').Action,
+    /*Extension: require('./extensions/breadcrumbs').Breadcrumbs*/
 };

@@ -35,12 +35,14 @@
             font-size: 13px;
             color: #000;
             display: block;
-            overflow-x: scroll;
+            overflow-x: auto;
             overflow-y: hidden;
+            background: #243141;
+            color: #e5e5e5;
         }
 
         li {
-          border-top: 2px solid white;
+          border-top: 2px #001722 solid;
         }
     }
 
@@ -99,13 +101,15 @@
 
     .input-group-addon {
         color:#555555;
-        background-color: #ffffff;
+        background-color: #001722;
         border-radius: 0px 0px 20px 0px;
         padding-right: 15px;
+        border: none !important;
     }
 
     .right-inner-addon {
         display: flex;
+        background: #243141;
 
         i {
             right: 0px;
@@ -122,6 +126,8 @@
         margin: auto;
         margin-right: 10px;
         cursor: pointer;
+        background: #ffffff21;
+        border: none;
     }
 
     .input-name {
@@ -131,6 +137,8 @@
         margin-right: 10px;
         max-width: 65px !important;
         font-size: 12px;
+        background: #ffffff21;
+        border: none;
     }
 
     .td-form-fields {
@@ -139,7 +147,7 @@
 
     .field-operations-div {
         margin-top: auto;
-        margin-bottom: 11px;
+        //margin-bottom: 11px;
         padding-left: 20px;
         display: flex;
     }

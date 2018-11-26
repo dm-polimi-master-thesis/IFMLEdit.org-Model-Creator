@@ -9,7 +9,8 @@ html, body {
 }
 
 .modal-content {
-  color: black !important;
+    color: white !important;
+    background: #18222d;
 }
 
 .selectable {
@@ -53,6 +54,11 @@ html, body {
 
 .ifml-image {
     background: url(../img/linen_bg_tile.jpg);
+}
+
+.ifbrowser-address {
+    background: white !important;
+    color: black !important;
 }
 
 .joint-type-ifml .labels .label:nth-child(1) path,
@@ -135,7 +141,7 @@ html, body {
     .list-group-item:hover {
         color: white;
         text-decoration: none;
-        background-color: #49606d;
+        background-color: #001b28;
         border: none !important;
     }
 
@@ -260,6 +266,9 @@ html, body {
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
+    background: #243141;
+    border: none;
+    color: #e5e5e5 !important;
 }
 
 .glyphicon {
@@ -270,19 +279,38 @@ html, body {
 
 .plus, .plus:hover, .plus:visited {
     text-decoration: none !important;
-    color: #1c6d1c;
+    color: white;
+    //color: #1c6d1c;
 }
 
 .minus, .minus:hover, .minus:visited {
     text-decoration: none !important;
-    color: #6d1c1c;
+    color: white;
+    //color: #6d1c1c;
 }
 
 .input-group-inner-addon {
     color:#555555;
-    background-color: #ffffff;
     border-radius: 0px 0px 20px 0px;
     padding-right: 15px;
+    background: #081723 !important;
+    border: none !important;
+}
+
+.btn-default, .btn-primary {
+    color: white;
+    background-color: #001722;
+    border-color: #001722;
+}
+
+.btn-default:hover, .btn-primary:hover {
+    color: white;
+    background-color: #243141;
+    border-color: #243141;
+}
+
+.btn {
+    background: #001722;
 }
 
 ::-webkit-scrollbar {

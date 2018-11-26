@@ -2,13 +2,13 @@
   <table class="pattern-home-table" data-bind="if: patterns">
     <thead>
       <tr>
-        <th>List</th>
-        <th><span data-bind="text: selected().title"></span><span class="type" data-bind="text: selected().type.replace(/-/g, ' ').toUpperCase()"></span></th>
+        <th class="">List</th>
+        <th class=""><span data-bind="text: selected().title"></span><span class="type" data-bind="text: selected().type.replace(/-/g, ' ').toUpperCase()"></span></th>
       </tr>
     </thead>
     <tboby>
       <tr>
-        <td rowspan="5" class="list-cell">
+        <td rowspan="3" class="list-cell">
           <center>
             <div class="list-pattern" data-bind="foreach: patterns">
               <!-- ko if: category === $root.category() || $root.category() === "All"-->
@@ -29,17 +29,15 @@
         <th>Description</th>
       </tr>
       <tr>
-        <td><text class="text-description" data-bind="text: selected().description"></text></td>
+        <td class="td-description"><text class="text-description" data-bind="text: selected().description"></text></td>
       </tr>
-      <tr><td></td></tr>
-      <tr><td></td></tr>
       <tr>
         <td>
           <center>
-            <div class="form-group ">
+            <div class="form-group">
               <div class="input-group">
                 <input class="form-control search" placeholder="Search" type="text" data-bind="event: { keyup: search }"/>
-                <div class="input-group-addon">
+                <div class="input-group-addon search-addon">
                   <i class="glyphicon glyphicon-search"></i>
                 </div>
               </div>
