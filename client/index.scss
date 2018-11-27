@@ -89,12 +89,13 @@ html, body {
     .sidebar {
         position: absolute;
         left: 0;
-        top: 0;
-        bottom: 0;
+        top: calc(50% - 272px);
         width: 200px;
+        min-height: 570px;
+        max-height: 600px;
         overflow-y: auto;
         overflow-x: hidden;
-        background: #243141;
+        z-index: 1;
     }
 
     .almost-place-holder {
@@ -108,12 +109,13 @@ html, body {
     }
 
     .board {
-        position: absolute;
-        left: 200px;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        overflow: hidden;
+      position: absolute;
+      left: 0px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      width: auto !important;
 
         .menu {
             position: absolute;
@@ -136,6 +138,7 @@ html, body {
         background: #243141;
         border: none;
         border-radius: 0px;
+        overflow-x: auto;
     }
 
     .list-group-item:hover {
@@ -423,10 +426,6 @@ html, body {
         background-color: #243141 !important;
         .icon {
             transform: rotate(90deg);
-            box-shadow: 0 8px 15px 0 rgba(0,0,0,0.3);
-        }
-        #pippo {
-            opacity: 1;
         }
     }
 }
@@ -447,6 +446,39 @@ html, body {
     position: absolute;
     top: 50%;
     transition: 0.5s;
+}
+
+.slider-arrow {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    top: calc(50% - 15px - 20px);
+    left: 185px;
+    padding: 10px;
+    background: #5e7488;
+    text-decoration: none;
+    position: absolute;
+    float: left;
+    color: white;
+    z-index: 1;
+
+    &:hover {
+        background: #6f869b;
+        text-decoration: none;
+        color: white;
+    }
+
+    .glyphicon-menu-left {
+        display: inline-block;
+        font-family: Glyphicons Halflings;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        top: calc(50% - 7px);
+        right: calc(50% - 7px);
+    }
 }
 
 @import "./js/modaledit/index.scss";

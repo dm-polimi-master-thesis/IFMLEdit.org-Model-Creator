@@ -168,12 +168,35 @@ pcnBoard.on('cell:edit cell:pointerdblclick', editPcnElement);
 
 var loaded_at = new Date();
 
-$('#ifml > .sidebar .png-download').click(function () {
+$('.slider-arrow').click(function () {
+  console.log('entro',this);
+    if($(this).hasClass('open')){
+      $('.sidebar').animate({ left: '-=180' }, { duration: 700, queue: false });
+      $('.slider-arrow').animate({ left: '-=180' }, { duration: 700, queue: false });
+      $('.slider-arrow').animate({ deg: 180 },
+        { duration: 700,
+          queue: false,
+          step: function(now) {
+            $(this).css({ transform: 'rotate('+ now +'deg)'});
+          }
+        }
+      );
+    } else {
+      $('.sidebar').animate({ left: '+=180' }, { duration: 700, queue: false });
+      $('.slider-arrow').animate({ left: '+=180' }, { duration: 700, queue: false });
+      $('.slider-arrow').animate({ deg: 0 }, { duration: 700, queue: false, step: function(now) {
+            $(this).css({ transform: 'rotate('+ now +'deg)'});
+      }});
+    }
+    $('.slider-arrow').toggleClass('open');
+});
+
+$('#ifml > .wrapper-download-png-modal').click(function () {
     ifmlBoard.download();
     return false;
 });
 
-$('#ifml > .sidebar .model-download').click(function () {
+$('#ifml > .wrapper-download-model-modal').click(function () {
     var model = ifml.toJSON(ifmlModel);
     model.statistics = {
         session: {
@@ -214,7 +237,7 @@ $('#ifml > .load > input[type=file]').change(function () {
     this.value = '';
 });
 
-$('#ifml > .sidebar .model-load').click(function () {
+$('#ifml > .wrapper-load-modal').click(function () {
     $('#ifml > .load > input[type=file]').click();
     return false;
 });
@@ -302,12 +325,12 @@ $('#ifml > .append > input[type=file]').change(function () {
     this.value = '';
 });
 
-$('#ifml > .sidebar .model-append').click(function () {
+$('#ifml > .wrapper-append-modal').click(function () {
     $('#ifml > .append > input[type=file]').click();
     return false;
 });
 
-$('#ifml > .sidebar .modal-example').click(function () {
+$('#ifml > .wrapper-example-modal').click(function () {
     createModalExamples({examples: examples, load: function (example) {
         $.getJSON(example.url, function (result) {
             ifmlModel.clear();
@@ -330,7 +353,7 @@ $('#ifml > .sidebar .modal-example').click(function () {
     return false;
 }).click();
 
-$('#ifml > .sidebar .modal-pattern').click(function () {
+$('#ifml > .wrapper-pattern-modal').click(function () {
     createModalPatterns({patterns: patterns, load: function (pattern) {
         try {
           ifmlBoard.clearHistory();
