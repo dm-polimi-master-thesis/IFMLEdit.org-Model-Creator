@@ -4,12 +4,14 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var elementRules = require('./elementrules'),
+var _ = require('lodash'),
+    elementRules = require('./elementrules'),
+    extensionRules = require('./extensionrules'),
     extender = require('./extender'),
     createTransformer = require('almost').createTransformer;
 
 var transformer = createTransformer({
-        element: elementRules
+        element: _.flattenDeep(elementRules,extensionRules)
     }, 'm2a');
 
 exports.toJSON = function (graph) {

@@ -65,6 +65,7 @@ function toBuilder(Element) { return function () { return [new Element()]; }; }
   */
 
 var ifmlModel = new joint.dia.Graph(),
+    /*ifmlBuilders = _.values(ifml.elements).map(toBuilder).concat(_.values(ifml.extensions).map(toBuilder)).concat(_.values(ifml.nets)),*/
     ifmlBuilders = _.values(ifml.elements).map(toBuilder).concat(_.values(ifml.nets)),
     ifmlBoard = createBoard({
         el: '#ifml > .board',
@@ -169,7 +170,6 @@ pcnBoard.on('cell:edit cell:pointerdblclick', editPcnElement);
 var loaded_at = new Date();
 
 $('.slider-arrow').click(function () {
-  console.log('entro',this);
     if($(this).hasClass('open')){
       $('.sidebar').animate({ left: '-=180' }, { duration: 700, queue: false });
       $('.slider-arrow').animate({ left: '-=180' }, { duration: 700, queue: false });

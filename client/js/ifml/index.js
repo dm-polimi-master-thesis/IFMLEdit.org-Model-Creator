@@ -9,6 +9,7 @@ var ifml = { };
 exports.ifml = ifml;
 
 ifml.elements = require('./elements').elements;
+ifml.extensions = require('./extensions').extensions;
 ifml.links = require('./links').links;
 ifml.nets = require('./nets').nets;
 ifml.toJSON = require('./tojson').toJSON;

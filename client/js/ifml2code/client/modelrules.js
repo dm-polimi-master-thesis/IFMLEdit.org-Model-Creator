@@ -71,6 +71,67 @@ exports.rules = [
         }
     ),
     createRule(
+        function (element) {
+          return element.isExtension() && element.isBreadcrumbs();
+        },
+        function (model) {
+            var controls = _.chain(model.elements)
+                    .filter(function (e) { return model.isViewElement(e); })
+                    .value(),
+                events = _.chain(model.elements)
+                    .filter(function (e) { return model.isEvent(e); })
+                    .filter(function (e) { return model.getOutbounds(e).length; })
+                    .value(),
+                actions = _.chain(model.elements)
+                    .filter(function (e) { return model.isAction(e); })
+                    .filter(function (a) { return model.getInbounds(a).length; })
+                    .value(),
+                children = model.getTopLevels(),
+                defaultChild = _.chain(children)
+                    .filter(function (id) { return model.isDefault(id); })
+                    .first()
+                    .value(),
+                landmarks = _.chain(children)
+                    .filter(function (e) { return model.isLandmark(e); })
+                    .map(function (id) { return model.toElement(id); })
+                    .map(function (e) { return {id: e.id, name: e.attributes.name}; })
+                    .value(),
+                collections = _.chain(model.elements)
+                    .filter(function (e) { return model.isViewComponent(e); })
+                    .reject({attributes: {stereotype: 'form'}})
+                    .map(function (c) {
+                        if (c.attributes.collection) {
+                            return c.attributes.collection;
+                        }
+                        throw new AException('Collection cannot be empty\n(ViewComponent id:' + c.id + ')');
+                    })
+                    .uniq()
+                    .value();
+            return {
+                '': {isFolder: true, children: 'clientexample'},
+                'clientexample' : { isFolder: true, name: 'clientexample', children: ['src', 'package', 'gulp', 'gitignore']},
+                'package': {name: 'package.json', content: require('./templates/package.json.ejs')()},
+                'gitignore': {name: '.gitignore', content: require('./templates/gitignore.ejs')()},
+                'gulp': {name: 'gulpfile.js', content: require('./templates/gulpfile.js.ejs')()},
+                'src': {isFolder: true, name: 'src', children: ['js', 'index']},
+                'index': {name: 'index.html', content: require('./templates/index.html.ejs')()},
+                'js': {isFolder: true, name: 'js', children: ['js-index', 'controls', 'navigations', 'actions', 'repositories']},
+                'js-index': {name: 'index.js', content: require('./templates/index.js.ejs')()},
+                'controls': {isFolder: true, name: 'controls', children: ['controls-index', 'main-application']},
+                'controls-index': {name: 'index.js', content: require('./templates/controls-index.js.ejs')({controls: controls, events: events})},
+                'main-application': {isFolder: true, name: 'main-application', children: ['main-application-VM', 'main-application-V']},
+                'main-application-VM': {name: 'index.js', content: require('./templates/main-application-vm.js.ejs')({defaultChild: defaultChild})},
+                'main-application-V': {name: 'index.html', content: require('./templates/main-application-v.html.ejs')({children: children, landmarks: landmarks})},
+                'navigations': {isFolder: true, name: 'navigations', children: ['navigations-index']},
+                'navigations-index': {name: 'index.js', content: require('./templates/navigations-index.js.ejs')({events: events})},
+                'actions': {isFolder: true, name: 'actions', children: ['actions-index']},
+                'actions-index': {name: 'index.js', content: require('./templates/actions-index.js.ejs')({actions: actions})},
+                'repositories': {isFolder: true, name: 'repositories', children: 'repositories-index'},
+                'repositories-index': {name: 'index.js', content: require('./templates/repositories.index.js.ejs')({collections: collections})}
+            };
+        }
+    ),
+    createRule(
         Rule.always,
         function (model) {
             var collections = _.chain(model.elements)

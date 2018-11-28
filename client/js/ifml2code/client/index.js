@@ -7,9 +7,10 @@
 var _ = require('lodash'),
     modelRules = require('./modelrules').rules,
     elementRules = require('./elementrules').rules,
+    extensionRules = require('./extensionRules').rules,
     createTransformer = require('almost').createTransformer;
 
 exports.transform = createTransformer({
     model: modelRules,
-    element: elementRules
+    element: _.flattenDeep(elementRules,extensionRules)
 }, 'm2t');

@@ -56,6 +56,12 @@ exports.extend = createExtender({
         isChildElement: function (element) {
             return this.isEvent(element) || this.isViewComponent(element) || (this.isViewContainer(element)
                 && element.get('parent'));
+        },
+        isViewComponentExtension: function (element) {
+            return element.get('type') === 'ifml.ViewComponentExtension';
+        },
+        isBreadcrumbs: function (element) {
+            return this.isExtension && element.get('stereotype') === 'breadcrumbs';
         }
     }
 });

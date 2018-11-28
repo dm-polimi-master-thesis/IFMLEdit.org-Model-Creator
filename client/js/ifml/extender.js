@@ -16,7 +16,9 @@ var config = {
         'Event': 'ifml.Event',
         'DataFlow': 'ifml.DataFlow',
         'NavigationFlow': 'ifml.NavigationFlow',
-        'Flow': ['ifml.DataFlow', 'ifml.NavigationFlow']
+        'Flow': ['ifml.DataFlow', 'ifml.NavigationFlow'],
+        'ViewComponentExtension': 'ifml.ViewComponentExtension',
+        'ViewExtension': ['ifml.ViewComponentExtension'],
     },
     relation: {
         Parent: {relation: 'hierarchy', from: 'child', to: 'parent', single: true},

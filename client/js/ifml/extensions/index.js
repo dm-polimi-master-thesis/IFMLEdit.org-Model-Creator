@@ -4,9 +4,6 @@
 /*jslint node: true */
 "use strict";
 
-exports.elements = {
-    ViewContainer: require('./viewcontainer').ViewContainer,
-    ViewComponent: require('./viewcomponent').ViewComponent,
-    Event: require('./event').Event,
-    Action: require('./action').Action
+exports.extensions = {
+    Breadcrumbs: require('./breadcrumbs').Breadcrumbs
 };
