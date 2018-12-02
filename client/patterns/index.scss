@@ -101,7 +101,7 @@
 
     .input-group-addon {
         color:#555555;
-        background-color: #001722;
+        background-color: #001722 !important;
         border-radius: 0px 0px 20px 0px;
         padding-right: 15px;
         border: none !important;
@@ -157,7 +157,7 @@
     }
 
     .trace-line {
-        border-right: 2px black solid;
+        border-right: 2px white solid;
     }
 
     .trace-line-padding {

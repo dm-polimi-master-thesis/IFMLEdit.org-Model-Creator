@@ -1,12 +1,16 @@
 .master-detail-settings-table {
 
+    .td-xor {
+        padding-right: 30px !important;
+    }
+
     .xor-form {
-      display: block;
+        display: block;
     }
 
     .xor-label {
-      padding-left: 20px;
-      font-size: 18px;
+        padding-left: 20px;
+        font-size: 18px;
     }
 
     .list-fields-container {

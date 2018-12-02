@@ -28,7 +28,7 @@ exports.createInitializer = function (options) {
     ViewModel.prototype.fields = {
         id: 1
 <% for (var i = 0; i < fields.length; ++i) { -%>
-        ,'<%= fields[i]%>': 1
+        ,'<%= fields[i].label%>': 1
 <% } -%>
     };
 

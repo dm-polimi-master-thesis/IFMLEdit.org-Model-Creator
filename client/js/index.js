@@ -65,7 +65,7 @@ function toBuilder(Element) { return function () { return [new Element()]; }; }
   */
 
 var ifmlModel = new joint.dia.Graph(),
-    /*ifmlBuilders = _.values(ifml.elements).map(toBuilder).concat(_.values(ifml.extensions).map(toBuilder)).concat(_.values(ifml.nets)),*/
+    //ifmlBuilders = _.values(ifml.elements).map(toBuilder).concat(_.values(ifml.extensions).map(toBuilder)).concat(_.values(ifml.nets)),
     ifmlBuilders = _.values(ifml.elements).map(toBuilder).concat(_.values(ifml.nets)),
     ifmlBoard = createBoard({
         el: '#ifml > .board',

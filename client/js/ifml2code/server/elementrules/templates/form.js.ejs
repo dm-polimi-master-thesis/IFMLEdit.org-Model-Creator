@@ -18,7 +18,7 @@ exports.createInitializer = function (options) {
         this.status = 'ready';
 <% } -%>
 <% for (var i = 0; i < fields.length; ++i) { -%>
-        this.fields['<%= fields[i].value %>'] = req.query[this.id + '$f$<%= fields[i].value %>'] || '';
+        this.fields['<%= fields[i].label %>'] = req.query[this.id + '$f$<%= fields[i].label %>'] || '';
 <% } -%>
     };
 

@@ -14,6 +14,7 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.name = ko.observable("Sign Up and Log In");
+  self.logOutOption = ko.observable(true);
   self.signUpFormName = ko.observable("Sign Up Form");
   self.logInFormName = ko.observable("Log In Form");
   self.signUpFieldToAdd = ko.observable("");
@@ -117,9 +118,10 @@ function SettingsPatternViewModel(options) {
     });
 
     var signUpLogIn = {
-      name : self.name(),
-      signUp : { formName: self.signUpFormName(), fields: signUpFields },
-      logIn : { formName: self.logInFormName(), fields: logInFields }
+      name: self.name(),
+      signUp: { formName: self.signUpFormName(), fields: signUpFields },
+      logIn: { formName: self.logInFormName(), fields: logInFields },
+      logOut: self.logOutOption()
     }
 
     return parser(signUpLogIn);

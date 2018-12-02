@@ -1,3 +1,18 @@
 .sign-up-log-in-settings-table {
-  
+    .form-fields-container {
+        height: 170px !important;
+    }
+
+    .td-log-out {
+        padding-right: 30px !important;
+    }
+
+    .log-out-form {
+        display: block;
+    }
+
+    .log-out-label {
+        padding-left: 20px;
+        font-size: 18px;
+    }
 }

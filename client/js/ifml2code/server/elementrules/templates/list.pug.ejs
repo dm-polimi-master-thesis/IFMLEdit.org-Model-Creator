@@ -5,7 +5,7 @@
             tr
                 th #
 <% for (var i = 0; i < fields.length; ++i) { -%>
-                th <%= fields[i] %>
+                th <%= fields[i].label %>
 <% } -%>
 <% if (events.length) { -%>
                 th actions
@@ -40,9 +40,9 @@
                         form(action=action, method="POST")
                             each value, name in hiddens
                                 input(type='hidden', name=name, value=value)
-                            button.btn-link= item['<%= fields[i] %>']
+                            button.btn-link= item['<%= fields[i].label %>']
 <%     } else { -%>
-                        a(href=href)= item['<%= fields[i] %>']
+                        a(href=href)= item['<%= fields[i].label %>']
 <%     }
    }
    if (events.length) { -%>

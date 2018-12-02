@@ -7,7 +7,7 @@
             </th>
 <% for (var i = 0; i < fields.length; i += 1) { -%>
             <th>
-                <%= fields[i]%>
+                <%= fields[i].label%>
             </th>
 <% }
    if (events.length) { -%>
@@ -26,7 +26,7 @@
             <td data-bind="text: id">
             </td>
 <%   for (var i = 0; i < fields.length; i += 1) { -%>
-            <td data-bind="text: $data['<%= fields[i] %>']"
+            <td data-bind="text: $data['<%= fields[i].label %>']"
                 style="white-space: pre-wrap;">
             </td>
 <%

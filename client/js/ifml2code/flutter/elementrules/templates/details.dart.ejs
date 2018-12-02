@@ -126,9 +126,9 @@ class _ViewElementState extends State<ViewElement> {
               ),
 <% } else {
         for (var i = 0; i < fields.length; i++) { -%>
-              const Text('<%=fields[i] %>',
+              const Text('<%=fields[i].label %>',
                 style: const TextStyle(fontWeight: FontWeight.bold)),
-              new Text(_item['<%=fields[i] %>']),
+              new Text(_item['<%=fields[i].label %>']),
 <%     }
    } -%>
               new ButtonBar(

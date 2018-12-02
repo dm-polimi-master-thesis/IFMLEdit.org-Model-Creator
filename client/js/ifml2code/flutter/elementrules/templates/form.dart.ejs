@@ -57,12 +57,12 @@ class _ViewElementState extends State<ViewElement> {
   Future _compute() async {
     final Map<String, TextEditingController> fields = <String, TextEditingController>{
 <% for (var i = 0; i < fields.length; i++) { -%>
-      '<%=fields[i].value %>': new TextEditingController(text: _input['<%=fields[i].value %>'] ?? ''),
+      '<%=fields[i].label %>': new TextEditingController(text: _input['<%=fields[i].label %>'] ?? ''),
 <% } -%>
     };
     final Map<String, InputDecoration> errors = <String, InputDecoration>{
 <% for (var i = 0; i < fields.length; i++) { -%>
-      '<%=fields[i].value %>': new InputDecoration(errorText: _input['<%=fields[i].value %>-error']),
+      '<%=fields[i].label %>': new InputDecoration(errorText: _input['<%=fields[i].label %>-error']),
 <% } -%>
     };
     setState(() {
@@ -133,10 +133,10 @@ class _ViewElementState extends State<ViewElement> {
     if (_fields != null) {
       children.addAll(<Widget>[
 <% for (var i = 0; i < fields.length; i++) { -%>
-        const Text('<%=fields[i].value %>'),
+        const Text('<%=fields[i].label %>'),
         new TextField(
-          controller: _fields['<%=fields[i].value %>'],
-          decoration: _errors['<%=fields[i].value %>'],
+          controller: _fields['<%=fields[i].label %>'],
+          decoration: _errors['<%=fields[i].label %>'],
         ),
 <% }
    for (var i = 0; i < events.length; i++) { -%>

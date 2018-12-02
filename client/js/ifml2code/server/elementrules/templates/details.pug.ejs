@@ -4,8 +4,8 @@
         - var item = vm['<%= id %>'].item
         if item
 <% for (var i = 0; i < fields.length; ++i) { -%>
-            dt <%= fields[i] %>
-            dd= item['<%= fields[i]%>']
+            dt <%= fields[i].label %>
+            dd= item['<%= fields[i].label%>']
 <% } -%>
     .row
 <% for (var i = 0; i < events.length; ++i) {

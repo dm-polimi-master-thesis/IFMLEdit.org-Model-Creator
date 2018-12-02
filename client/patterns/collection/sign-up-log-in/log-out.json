@@ -3,24 +3,50 @@
       {
          "attributes":{
             "name":"Sign up and Log In Pattern",
-            "default":true,
+            "default":false,
             "landmark":false,
             "xor":false
          },
          "metadata":{
             "graphics":{
                "position":{
-                  "x":430,
+                  "x":40,
                   "y":-100
                },
                "size":{
                   "height":370,
-                  "width":490
+                  "width":880
                }
             }
          },
          "id":"sign-up-and-log-in-pattern-view-container",
          "type":"ifml.ViewContainer"
+      },
+      {
+         "attributes":{
+            "name":"Log Out",
+            "parameters":[
+
+            ],
+            "results":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":270,
+                  "y":170
+               },
+               "size":{
+                  "height":80,
+                  "width":112.5
+               },
+               "parent":"sign-up-and-log-in-pattern-view-container"
+            }
+         },
+         "id":"log-out-action",
+         "type":"ifml.Action"
       },
       {
          "attributes":{
@@ -58,17 +84,55 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":450,
+                  "x":60,
                   "y":-60
                },
                "size":{
                   "height":200,
-                  "width":450
+                  "width":840
                }
             }
          },
          "id":"xor-view-container",
          "type":"ifml.ViewContainer"
+      },
+      {
+         "attributes":{
+            "name":"Done"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":372.5,
+                  "y":170
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"done-log-out-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"Failed"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":260,
+                  "y":170
+               },
+               "name":{
+                  "horizontal":"left-outer",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"failed-log-out-event",
+         "type":"ifml.Event"
       },
       {
          "attributes":{
@@ -110,6 +174,28 @@
       },
       {
          "attributes":{
+            "name":"Logged",
+            "default":false,
+            "landmark":false,
+            "xor":false
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":80,
+                  "y":-20
+               },
+               "size":{
+                  "height":140,
+                  "width":200
+               }
+            }
+         },
+         "id":"logged-view-container",
+         "type":"ifml.ViewContainer"
+      },
+      {
+         "attributes":{
             "name":"Log In",
             "default":true,
             "landmark":false,
@@ -129,6 +215,25 @@
          },
          "id":"log-in-view-container",
          "type":"ifml.ViewContainer"
+      },
+      {
+         "attributes":{
+            "name":"Log Out"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":270,
+                  "y":70
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"log-out-event",
+         "type":"ifml.Event"
       },
       {
          "attributes":{
@@ -382,6 +487,48 @@
             "graphics":{
                "vertices":[
                   {
+                     "x":450,
+                     "y":210
+                  },
+                  {
+                     "x":450,
+                     "y":40
+                  }
+               ]
+            }
+         },
+         "id":"done-log-in-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
+                     "x":420,
+                     "y":180
+                  }
+               ]
+            }
+         },
+         "id":"done-log-out-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
                      "x":650,
                      "y":190
                   }
@@ -416,6 +563,25 @@
          "metadata":{
             "graphics":{
                "vertices":[
+                  {
+                     "x":200,
+                     "y":180
+                  }
+               ]
+            }
+         },
+         "id":"failed-log-out-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
 
                ]
             }
@@ -435,6 +601,25 @@
             }
          },
          "id":"log-in-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
+                     "x":330,
+                     "y":80
+                  }
+               ]
+            }
+         },
+         "id":"log-out-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -492,6 +677,16 @@
       },
       {
          "type":"hierarchy",
+         "parent":"log-out-action",
+         "child":"done-log-out-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"log-out-action",
+         "child":"failed-log-out-event"
+      },
+      {
+         "type":"hierarchy",
          "parent":"log-in-action",
          "child":"done-log-in-event"
       },
@@ -503,7 +698,17 @@
       {
          "type":"hierarchy",
          "parent":"xor-view-container",
+         "child":"logged-view-container"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"xor-view-container",
          "child":"log-in-view-container"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"logged-view-container",
+         "child":"log-out-event"
       },
       {
          "type":"hierarchy",
@@ -552,6 +757,16 @@
       },
       {
          "type":"source",
+         "flow":"done-log-in-navigation-flow",
+         "source":"done-log-in-event"
+      },
+      {
+         "type":"source",
+         "flow":"done-log-out-navigation-flow",
+         "source":"done-log-out-event"
+      },
+      {
+         "type":"source",
          "flow":"done-registration-navigation-flow",
          "source":"done-registration-event"
       },
@@ -562,6 +777,11 @@
       },
       {
          "type":"source",
+         "flow":"failed-log-out-navigation-flow",
+         "source":"failed-log-out-event"
+      },
+      {
+         "type":"source",
          "flow":"failed-registration-navigation-flow",
          "source":"failed-registration-event"
       },
@@ -569,6 +789,11 @@
          "type":"source",
          "flow":"log-in-navigation-flow",
          "source":"log-in-event"
+      },
+      {
+         "type":"source",
+         "flow":"log-out-navigation-flow",
+         "source":"log-out-event"
       },
       {
          "type":"source",
@@ -587,6 +812,16 @@
       },
       {
          "type":"target",
+         "flow":"done-log-in-navigation-flow",
+         "target":"logged-view-container"
+      },
+      {
+         "type":"target",
+         "flow":"done-log-out-navigation-flow",
+         "target":"xor-view-container"
+      },
+      {
+         "type":"target",
          "flow":"done-registration-navigation-flow",
          "target":"log-in-view-container"
       },
@@ -597,6 +832,11 @@
       },
       {
          "type":"target",
+         "flow":"failed-log-out-navigation-flow",
+         "target":"logged-view-container"
+      },
+      {
+         "type":"target",
          "flow":"failed-registration-navigation-flow",
          "target":"sign-up-form"
       },
@@ -604,6 +844,11 @@
          "type":"target",
          "flow":"log-in-navigation-flow",
          "target":"log-in-action"
+      },
+      {
+         "type":"target",
+         "flow":"log-out-navigation-flow",
+         "target":"log-out-action"
       },
       {
          "type":"target",
@@ -624,7 +869,7 @@
    "statistics":{
       "session":{
          "started_at":"2018-11-30T16:16:08.758Z",
-         "ended_at":"2018-11-30T16:23:23.607Z"
+         "ended_at":"2018-11-30T16:21:05.762Z"
       }
    }
 }

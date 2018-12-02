@@ -26,9 +26,9 @@
        default:
        for (var i = 0; i < fields.length; i += 1) { -%>
         <strong>
-            <%= fields[i]%>
+            <%= fields[i].label%>
         </strong>
-        <span data-bind="text: $data['<%= fields[i] %>']"
+        <span data-bind="text: $data['<%= fields[i].label %>']"
             style="white-space: pre-wrap;">
         </span><br>
 <%     }

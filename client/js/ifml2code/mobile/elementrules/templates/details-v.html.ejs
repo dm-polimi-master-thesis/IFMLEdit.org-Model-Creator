@@ -23,8 +23,8 @@
 <%       break;
        default:
        for (var i = 0; i < fields.length; i += 1) { -%>
-            <strong><%= fields[i]%></strong>
-            <span data-bind="text: item()['<%= fields[i] %>']"
+            <strong><%= fields[i].label%></strong>
+            <span data-bind="text: item()['<%= fields[i].label %>']"
                 style="white-space: pre-wrap;">
             </span><br>
 <%     }

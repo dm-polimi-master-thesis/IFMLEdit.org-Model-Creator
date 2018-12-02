@@ -61,7 +61,7 @@ exports.extend = createExtender({
             return element.get('type') === 'ifml.ViewComponentExtension';
         },
         isBreadcrumbs: function (element) {
-            return this.isExtension && element.get('stereotype') === 'breadcrumbs';
+            return this.isViewComponentExtension && element.get('stereotype') === 'breadcrumbs';
         }
     }
 });

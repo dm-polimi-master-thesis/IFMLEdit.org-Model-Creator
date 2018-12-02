@@ -5,9 +5,9 @@
     data-bind="if: item">
 <% for (var i = 0; i < fields.length; i += 1) { -%>
         <dt>
-            <%= fields[i]%>
+            <%= fields[i].label%>
         </dt>
-        <dd data-bind="text: item()['<%= fields[i] %>']">
+        <dd data-bind="text: item()['<%= fields[i].label %>']">
         </dd>
 <% } -%>
 </dl>

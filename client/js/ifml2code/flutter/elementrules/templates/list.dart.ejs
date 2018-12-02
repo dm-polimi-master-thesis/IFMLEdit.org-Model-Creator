@@ -132,7 +132,7 @@ class _ViewElementState extends State<ViewElement> {
         children: <Widget> [
 <% if (fields.length === 1) { -%>
           new ListTile(
-            title: new Text(item['<%= fields[0] %>']),
+            title: new Text(item['<%= fields[0].label %>']),
             onTap: () {
               setState((){
                 _selected = item;
@@ -163,9 +163,9 @@ class _ViewElementState extends State<ViewElement> {
             },
           ),
 <%      for (var i = 0; i < fields.length; i++) { -%>
-          const Text('<%=fields[i] %>',
+          const Text('<%=fields[i].label %>',
             style: const TextStyle(fontWeight: FontWeight.bold)),
-          new Text(item['<%=fields[i] %>']),
+          new Text(item['<%=fields[i].label %>']),
 <%     }
    }
    if (events.length) { -%>

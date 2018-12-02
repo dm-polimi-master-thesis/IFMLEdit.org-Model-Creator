@@ -15,7 +15,7 @@ exports.rules = [
             var id = model.toId(element),
                 name = element.attributes.name,
                 collection = element.attributes.collection,
-                filters = _.map(element.attributes.filters,'value'),
+                filters = element.attributes.filters,
                 top = model.getTopLevelAncestor(element),
                 tid = top.id,
                 path = model.isDefault(top) ? '' : tid,
@@ -44,7 +44,7 @@ exports.rules = [
                     .filter({stereotype: 'selection'})
                     .first()
                     .value(),
-                fields = _.map(element.attributes.fields,'value'),
+                fields = element.attributes.fields,
                 obj = {};
             obj[tid + '-view'] = {children: id + '-pug'};
             obj[id + '-pug'] = {name: id + '.pug', content: require('./templates/list.pug.ejs')({id: id, name: name, fields: fields, events: events, selection: selection})};
@@ -120,7 +120,7 @@ exports.rules = [
                         return { id: model.toId(event), name: event.attributes.name, targetsAction: model.isAction(target)};
                     })
                     .value(),
-                fields = _.map(element.attributes.fields,'value'),
+                fields = element.attributes.fields,
                 obj = {};
             obj[tid + '-view'] = {children: id + '-pug'};
             obj[id + '-pug'] = {name: id + '.pug', content: require('./templates/details.pug.ejs')({id: id, name: name, fields: fields, events: events})};

@@ -72,7 +72,7 @@ exports.rules = [
     ),
     createRule(
         function (element) {
-          return element.isExtension() && element.isBreadcrumbs();
+          return element.isViewComponentExtension() && element.isBreadcrumbs();
         },
         function (model) {
             var controls = _.chain(model.elements)
@@ -140,7 +140,7 @@ exports.rules = [
                     .map(function (component) {
                         return {
                             name: component.attributes.collection,
-                            fields: _.chain(_.map(component.attributes.fields,'value')).concat(_.map(component.attributes.filters,'value')).compact().value()
+                            fields: _.chain(_.map(component.attributes.fields,'label')).concat(_.map(component.attributes.filters,'label')).compact().value()
                         };
                     })
                     .groupBy('name')

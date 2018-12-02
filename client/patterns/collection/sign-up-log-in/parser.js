@@ -8,10 +8,12 @@ var _ = require('lodash'),
     idValidator = require('../../../js/ifml/utilities/validator/idValidator.js').idValidator,
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
-    format = require('./default.json');
+    format = require('./default.json'),
+    logOut = require('./log-out.json');
 
 function parser(signUpLogIn){
-  var template = _.cloneDeep(format);
+  console.log(signUpLogIn);
+  var template = signUpLogIn.logOut ? _.cloneDeep(logOut) : _.cloneDeep(format);
   var modelElementsHash = toHash(template.elements);
 
   var signUpResults = _.map(signUpLogIn.signUp.fields, function (field) {
