@@ -62,7 +62,7 @@ exports.rules = [
             var id = model.toId(component),
                 name = component.attributes.name,
                 collection = component.attributes.collection,
-                fields =_.map(component.attributes.fields,'value'),
+                fields = component.attributes.fields,
                 incomings = _.chain(model.getInbounds(id))
                     .filter(function (id) { return model.isDataFlow(id); })
                     .map(function (id) { return model.toElement(id); })

@@ -24,7 +24,7 @@ function parser(restrictedSearch){
   configurator(modelElementsHash['results-list'], template, {
       name: restrictedSearch.list.collection.charAt(0).toUpperCase() + restrictedSearch.list.collection.slice(1),
       collection: restrictedSearch.list.collection,
-      filters: ['key', restrictedSearch.search[0]],
+      filters: ['category', restrictedSearch.search[0]],
       fields: restrictedSearch.list.fields
   });
   configurator(modelElementsHash['category-list'], template, {
