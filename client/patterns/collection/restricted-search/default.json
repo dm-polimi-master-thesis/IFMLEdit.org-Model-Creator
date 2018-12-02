@@ -3,7 +3,7 @@
       {
          "attributes":{
             "name":"Restricted Search",
-            "default":true,
+            "default":false,
             "landmark":false,
             "xor":false
          },

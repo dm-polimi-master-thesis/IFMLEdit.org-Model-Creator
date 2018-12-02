@@ -212,6 +212,44 @@
          },
          "id":"selected-product-navigation-flow",
          "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "name":"Search"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":230,
+                  "y":220
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"search-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
+                     "x":240,
+                     "y":180
+                  }
+               ]
+            }
+         },
+         "id":"search-navigation-flow",
+         "type":"ifml.NavigationFlow"
       }
    ],
    "relations":[
@@ -251,6 +289,11 @@
          "child":"selected-product-event"
       },
       {
+         "type":"hierarchy",
+         "parent":"search-view-container",
+         "child":"search-event"
+      },
+      {
          "type":"source",
          "flow":"keyword-data-flow",
          "source":"keyword-form"
@@ -261,6 +304,11 @@
          "source":"selected-product-event"
       },
       {
+         "type":"source",
+         "flow":"search-navigation-flow",
+         "source":"search-event"
+      },
+      {
          "type":"target",
          "flow":"keyword-data-flow",
          "target":"results-list"
@@ -269,12 +317,17 @@
          "type":"target",
          "flow":"selected-product-navigation-flow",
          "target":"product-details"
+      },
+      {
+         "type":"target",
+         "flow":"search-navigation-flow",
+         "target":"results-list"
       }
    ],
    "statistics":{
       "session":{
-         "started_at":"2018-10-29T08:50:53.792Z",
-         "ended_at":"2018-10-29T08:54:39.334Z"
+         "started_at":"2018-12-02T15:29:42.709Z",
+         "ended_at":"2018-12-02T15:30:38.987Z"
       }
    }
 }

@@ -140,6 +140,29 @@
       },
       {
          "attributes":{
+            "name":"Filters",
+            "stereotype":"form",
+            "fields":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":70,
+                  "y":220
+               },
+               "size":{
+                  "height":90,
+                  "width":150
+               }
+            }
+         },
+         "id":"filters-form",
+         "type":"ifml.ViewComponent"
+      },
+      {
+         "attributes":{
             "name":"",
             "stereotype":"details",
             "fields":[
@@ -184,26 +207,22 @@
       },
       {
          "attributes":{
-            "name":"Filters",
-            "stereotype":"form",
-            "fields":[
+            "bindings":[
 
             ]
          },
          "metadata":{
             "graphics":{
-               "position":{
-                  "x":70,
-                  "y":220
-               },
-               "size":{
-                  "height":90,
-                  "width":150
-               }
+               "vertices":[
+                  {
+                     "x":370,
+                     "y":260
+                  }
+               ]
             }
          },
-         "id":"filters-form",
-         "type":"ifml.ViewComponent"
+         "id":"filters-data-flow",
+         "type":"ifml.DataFlow"
       },
       {
          "attributes":{
@@ -241,22 +260,36 @@
       },
       {
          "attributes":{
+            "name":"Search"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":330,
+                  "y":320
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"search-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
             "bindings":[
 
             ]
          },
          "metadata":{
             "graphics":{
-               "vertices":[
-                  {
-                     "x":370,
-                     "y":260
-                  }
-               ]
+
             }
          },
-         "id":"filters-data-flow",
-         "type":"ifml.DataFlow"
+         "id":"search-navigation-flow",
+         "type":"ifml.NavigationFlow"
       }
    ],
    "relations":[
@@ -287,6 +320,11 @@
       },
       {
          "type":"hierarchy",
+         "parent":"search-view-container",
+         "child":"filters-form"
+      },
+      {
+         "type":"hierarchy",
          "parent":"details-view-container",
          "child":"selected-details"
       },
@@ -298,7 +336,12 @@
       {
          "type":"hierarchy",
          "parent":"search-view-container",
-         "child":"filters-form"
+         "child":"search-event"
+      },
+      {
+         "type":"source",
+         "flow":"filters-data-flow",
+         "source":"filters-form"
       },
       {
          "type":"source",
@@ -312,8 +355,13 @@
       },
       {
          "type":"source",
+         "flow":"search-navigation-flow",
+         "source":"search-event"
+      },
+      {
+         "type":"target",
          "flow":"filters-data-flow",
-         "source":"filters-form"
+         "target":"results-list"
       },
       {
          "type":"target",
@@ -327,14 +375,14 @@
       },
       {
          "type":"target",
-         "flow":"filters-data-flow",
+         "flow":"search-navigation-flow",
          "target":"results-list"
       }
    ],
    "statistics":{
       "session":{
-         "started_at":"2018-11-20T16:43:35.764Z",
-         "ended_at":"2018-11-20T17:26:11.234Z"
+         "started_at":"2018-12-02T15:32:33.394Z",
+         "ended_at":"2018-12-02T15:33:35.137Z"
       }
    }
 }
