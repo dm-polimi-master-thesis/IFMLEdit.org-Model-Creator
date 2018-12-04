@@ -14,7 +14,7 @@
                   "y":-40
                },
                "size":{
-                  "height":510,
+                  "height":540,
                   "width":900
                }
             }
@@ -36,41 +36,13 @@
                   "y":0
                },
                "size":{
-                  "height":450,
+                  "height":480,
                   "width":860
                }
             }
          },
          "id":"xor-view-container",
          "type":"ifml.ViewContainer"
-      },
-      {
-         "attributes":{
-            "name":"Delete",
-            "parameters":[
-               {
-                  "label":"id"
-               }
-            ],
-            "results":[
-
-            ]
-         },
-         "metadata":{
-            "graphics":{
-               "position":{
-                  "x":350,
-                  "y":350
-               },
-               "size":{
-                  "height":50,
-                  "width":75
-               },
-               "parent":"xor-view-container"
-            }
-         },
-         "id":"delete-action",
-         "type":"ifml.Action"
       },
       {
          "attributes":{
@@ -87,7 +59,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":430,
+                  "x":490,
                   "y":290
                },
                "size":{
@@ -98,6 +70,62 @@
             }
          },
          "id":"create-modify-action",
+         "type":"ifml.Action"
+      },
+      {
+         "attributes":{
+            "name":"Delete",
+            "parameters":[
+               {
+                  "label":"id"
+               }
+            ],
+            "results":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":310,
+                  "y":350
+               },
+               "size":{
+                  "height":50,
+                  "width":75
+               },
+               "parent":"xor-view-container"
+            }
+         },
+         "id":"delete-action",
+         "type":"ifml.Action"
+      },
+      {
+         "attributes":{
+            "name":"Load Content",
+            "parameters":[
+               {
+                  "label":"id"
+               }
+            ],
+            "results":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":490,
+                  "y":390
+               },
+               "size":{
+                  "height":60,
+                  "width":120
+               },
+               "parent":"xor-view-container"
+            }
+         },
+         "id":"load-content-action",
          "type":"ifml.Action"
       },
       {
@@ -195,26 +223,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":380,
-                  "y":340
-               },
-               "name":{
-                  "horizontal":"left-outer",
-                  "vertical":"top"
-               }
-            }
-         },
-         "id":"done-delete-event",
-         "type":"ifml.Event"
-      },
-      {
-         "attributes":{
-            "name":"Done"
-         },
-         "metadata":{
-            "graphics":{
-               "position":{
-                  "x":540,
+                  "x":600,
                   "y":290
                },
                "name":{
@@ -233,7 +242,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":440,
+                  "x":500,
                   "y":280
                },
                "name":{
@@ -243,6 +252,63 @@
             }
          },
          "id":"failed-create-modify-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"Done"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":340,
+                  "y":340
+               },
+               "name":{
+                  "horizontal":"left-outer",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"done-delete-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"Done"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":480,
+                  "y":390
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"top"
+               }
+            }
+         },
+         "id":"done-load-content-event",
+         "type":"ifml.Event"
+      },
+      {
+         "attributes":{
+            "name":"Failed"
+         },
+         "metadata":{
+            "graphics":{
+               "position":{
+                  "x":480,
+                  "y":430
+               },
+               "name":{
+                  "horizontal":"middle",
+                  "vertical":"bottom"
+               }
+            }
+         },
+         "id":"failed-load-content-event",
          "type":"ifml.Event"
       },
       {
@@ -369,7 +435,7 @@
          "metadata":{
             "graphics":{
                "position":{
-                  "x":470,
+                  "x":520,
                   "y":180
                },
                "name":{
@@ -481,28 +547,6 @@
       {
          "attributes":{
             "bindings":[
-               {
-                  "input":"id",
-                  "output":"id"
-               }
-            ]
-         },
-         "metadata":{
-            "graphics":{
-               "vertices":[
-                  {
-                     "x":750,
-                     "y":300
-                  }
-               ]
-            }
-         },
-         "id":"done-create-modify-navigation-flow",
-         "type":"ifml.NavigationFlow"
-      },
-      {
-         "attributes":{
-            "bindings":[
 
             ]
          },
@@ -608,6 +652,28 @@
       {
          "attributes":{
             "bindings":[
+               {
+                  "input":"id",
+                  "output":"id"
+               }
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
+                     "x":810,
+                     "y":300
+                  }
+               ]
+            }
+         },
+         "id":"done-create-modify-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
 
             ]
          },
@@ -615,17 +681,59 @@
             "graphics":{
                "vertices":[
                   {
-                     "x":390,
+                     "x":350,
                      "y":230
                   },
                   {
-                     "x":250,
+                     "x":210,
                      "y":230
                   }
                ]
             }
          },
          "id":"done-delete-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
+                     "x":450,
+                     "y":400
+                  }
+               ]
+            }
+         },
+         "id":"done-load-content-navigation-flow",
+         "type":"ifml.NavigationFlow"
+      },
+      {
+         "attributes":{
+            "bindings":[
+
+            ]
+         },
+         "metadata":{
+            "graphics":{
+               "vertices":[
+                  {
+                     "x":40,
+                     "y":440
+                  },
+                  {
+                     "x":40,
+                     "y":170
+                  }
+               ]
+            }
+         },
+         "id":"failed-load-content-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -655,7 +763,24 @@
          },
          "metadata":{
             "graphics":{
-
+               "vertices":[
+                  {
+                     "x":340,
+                     "y":140
+                  },
+                  {
+                     "x":340,
+                     "y":220
+                  },
+                  {
+                     "x":420,
+                     "y":220
+                  },
+                  {
+                     "x":420,
+                     "y":420
+                  }
+               ]
             }
          },
          "id":"modify-navigation-flow",
@@ -704,11 +829,6 @@
       },
       {
          "type":"hierarchy",
-         "parent":"delete-action",
-         "child":"done-delete-event"
-      },
-      {
-         "type":"hierarchy",
          "parent":"create-modify-action",
          "child":"done-create-modify-event"
       },
@@ -716,6 +836,21 @@
          "type":"hierarchy",
          "parent":"create-modify-action",
          "child":"failed-create-modify-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"delete-action",
+         "child":"done-delete-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"load-content-action",
+         "child":"done-load-content-event"
+      },
+      {
+         "type":"hierarchy",
+         "parent":"load-content-action",
+         "child":"failed-load-content-event"
       },
       {
          "type":"hierarchy",
@@ -774,11 +909,6 @@
       },
       {
          "type":"source",
-         "flow":"done-create-modify-navigation-flow",
-         "source":"done-create-modify-event"
-      },
-      {
-         "type":"source",
          "flow":"cancel-delete-event",
          "source":"cancel-confirmation-event"
       },
@@ -804,8 +934,23 @@
       },
       {
          "type":"source",
+         "flow":"done-create-modify-navigation-flow",
+         "source":"done-create-modify-event"
+      },
+      {
+         "type":"source",
          "flow":"done-delete-navigation-flow",
          "source":"done-delete-event"
+      },
+      {
+         "type":"source",
+         "flow":"done-load-content-navigation-flow",
+         "source":"done-load-content-event"
+      },
+      {
+         "type":"source",
+         "flow":"failed-load-content-navigation-flow",
+         "source":"failed-load-content-event"
       },
       {
          "type":"source",
@@ -821,11 +966,6 @@
          "type":"source",
          "flow":"submit-navigation-flow",
          "source":"submit-event"
-      },
-      {
-         "type":"target",
-         "flow":"done-create-modify-navigation-flow",
-         "target":"page-details"
       },
       {
          "type":"target",
@@ -854,7 +994,22 @@
       },
       {
          "type":"target",
+         "flow":"done-create-modify-navigation-flow",
+         "target":"page-details"
+      },
+      {
+         "type":"target",
          "flow":"done-delete-navigation-flow",
+         "target":"pages-view-container"
+      },
+      {
+         "type":"target",
+         "flow":"done-load-content-navigation-flow",
+         "target":"data-entry-form"
+      },
+      {
+         "type":"target",
+         "flow":"failed-load-content-navigation-flow",
          "target":"pages-view-container"
       },
       {
@@ -865,7 +1020,7 @@
       {
          "type":"target",
          "flow":"modify-navigation-flow",
-         "target":"data-entry-form"
+         "target":"load-content-action"
       },
       {
          "type":"target",
@@ -875,8 +1030,8 @@
    ],
    "statistics":{
       "session":{
-         "started_at":"2018-11-23T16:01:46.762Z",
-         "ended_at":"2018-11-23T16:03:53.477Z"
+         "started_at":"2018-12-04T07:44:38.087Z",
+         "ended_at":"2018-12-04T07:44:56.040Z"
       }
    }
 }

@@ -49,16 +49,23 @@ function parser(pageManagement){
       collection: pageManagement.list.collection,
       fields: pageManagement.details.fields
   });
+  configurator(modelElementsHash['load-content-action'], template, {
+      results: _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, pageManagement.dataEntry.fields]),
+      parent: modelElementsHash['xor-view-container'].id
+  });
   configurator(modelElementsHash['create-modify-action'], template, {
-      parameters: _.map(pageManagement.dataEntry.fields,'value'),
+      parameters: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields]),
       results: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, dataResults]),
       parent: modelElementsHash['xor-view-container'].id
   });
+  configurator(modelElementsHash['done-load-content-navigation-flow'], template, {
+      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
+  });
   configurator(modelElementsHash['submit-navigation-flow'], template, {
-      fields: pageManagement.dataEntry.fields
+      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
   });
   configurator(modelElementsHash['failed-submit-navigation-flow'], template, {
-      fields: _.flattenDeep(dataResults)
+      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, dataResults])
   });
 
   return template;
