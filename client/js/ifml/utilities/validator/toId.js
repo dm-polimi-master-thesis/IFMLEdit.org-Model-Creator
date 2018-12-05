@@ -5,11 +5,14 @@
 "use strict";
 
 function toId(word, tail) {
-  var id = word.toLowerCase().replace(/\W/g,"-");
-  if(id.slice(word.length - tail.length) === tail){
-    return id;
+  if(word !== undefined){
+    var id = word.toLowerCase().replace(/\W/g,"-");
+    if(id.slice(word.length - tail.length) === tail){
+      return id;
+    }
+    return id.concat(tail);
   }
-  return id.concat(tail);
+  return '';
 }
 
 exports.toId = toId;

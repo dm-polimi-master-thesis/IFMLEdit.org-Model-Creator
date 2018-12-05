@@ -14,6 +14,7 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.name = ko.observable("In-Place Log In");
+  self.editorOption = ko.observable(true);
   self.editorFormName = ko.observable("Editor Form");
   self.logInFormName = ko.observable("Log In Form");
   self.editorFieldToAdd = ko.observable("");
@@ -79,7 +80,7 @@ function SettingsPatternViewModel(options) {
       $.notify({message: 'Your request cannot be processed: the pattern cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
-    if (!(self.editorFormName().length > 0)) {
+    if (!(self.editorFormName().length > 0) && self.editorOption()) {
       error = true;
       $('#editor-name-form').addClass('has-error');
       $.notify({message: 'Your request cannot be processed: sign up form cannot have an empty name.'},
@@ -114,9 +115,10 @@ function SettingsPatternViewModel(options) {
     });
 
     var inPlaceLogIn = {
-      name : self.name(),
-      editor : { formName: self.editorFormName(), fields: editorFields },
-      logIn : { formName: self.logInFormName(), fields: logInFields }
+      name: self.name(),
+      editor: { formName: self.editorFormName(), fields: editorFields },
+      logIn: { formName: self.logInFormName(), fields: logInFields },
+      editorOption: self.editorOption()
     }
 
     return parser(inPlaceLogIn);

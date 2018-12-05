@@ -12,7 +12,7 @@ function generateViewComponent(template, options) {
           name: options.name,
           stereotype: options.stereotype,
           fields: options.fields || undefined,
-          collection: options.collection || undefined,
+          collection: options.stereotype !== 'form' ? toId(options.collection,"") || 'defaults' : undefined,
           filters: options.filters || undefined
       },
       metadata: {

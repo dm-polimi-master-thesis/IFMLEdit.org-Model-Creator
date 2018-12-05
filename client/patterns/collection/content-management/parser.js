@@ -34,21 +34,21 @@ function parser(pageManagement){
       name: pageManagement.list.collection.charAt(0).toUpperCase() + pageManagement.list.collection.slice(1)
   });
   configurator(modelElementsHash['pages-list'], template, {
-      name: pageManagement.list.collection.charAt(0).toUpperCase() + pageManagement.list.collection.slice(1),
-      collection: pageManagement.list.collection,
-      fields: pageManagement.list.fields
+      name: pageManagement.pageListOption ? pageManagement.list.collection.charAt(0).toUpperCase() + pageManagement.list.collection.slice(1) : undefined,
+      collection: pageManagement.list.collection || undefined,
+      fields: pageManagement.list.fields || undefined
   });
   configurator(modelElementsHash['page-display-view-container'], template, {
       name: pageManagement.details.name
   });
   configurator(modelElementsHash['page-details'], template, {
-      name: pageManagement.details.name,
-      collection: pageManagement.list.collection,
-      fields: pageManagement.details.fields
+      name: pageManagement.details.name || undefined,
+      collection: pageManagement.details.collection || undefined,
+      fields: pageManagement.details.fields || undefined
   });
   configurator(modelElementsHash['delete-page-details'], template, {
-      collection: pageManagement.list.collection,
-      fields: pageManagement.details.fields
+      collection: pageManagement.details.collection || undefined,
+      fields: pageManagement.details.fields || undefined
   });
   configurator(modelElementsHash['load-content-action'], template, {
       results: _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, pageManagement.dataEntry.fields]),
@@ -59,6 +59,9 @@ function parser(pageManagement){
       results: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, dataResults]),
       parent: modelElementsHash['xor-view-container'].id
   });
+  configurator(modelElementsHash['details-to-modify-navigation-flow'], template, {
+      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
+  });
   configurator(modelElementsHash['done-load-content-navigation-flow'], template, {
       fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
   });
@@ -68,6 +71,35 @@ function parser(pageManagement){
   configurator(modelElementsHash['failed-submit-navigation-flow'], template, {
       fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, dataResults])
   });
+
+  if (!pageManagement.pageListOption) {
+      var ids = [
+        modelElementsHash['pages-view-container'].id,
+        modelElementsHash['pages-list'].id,
+        modelElementsHash['delete-event'].id,
+        modelElementsHash['modify-event'].id,
+        modelElementsHash['display-event'].id,
+        modelElementsHash['display-navigation-flow'].id,
+        modelElementsHash['modify-navigation-flow'].id,
+        modelElementsHash['delete-navigation-flow'].id,
+        modelElementsHash['done-delete-navigation-flow'].id,
+        modelElementsHash['done-delete-event'].id,
+        modelElementsHash['delete-confirmation-navigation-flow'].id,
+        modelElementsHash['delete-page-details'].id,
+        modelElementsHash['delete-confirmation-event'].id,
+        modelElementsHash['cancel-confirmation-event'].id,
+        modelElementsHash['cancel-confirmation-navigation-flow'].id,
+        modelElementsHash['failed-load-content-navigation-flow'].id,
+        modelElementsHash['failed-load-content-event'].id,
+        modelElementsHash['load-content-action'].id,
+        modelElementsHash['done-load-content-event'].id,
+        modelElementsHash['done-load-content-navigation-flow'].id,
+        modelElementsHash['modal-confirmation-view-container'].id,
+        modelElementsHash['delete-action'].id
+      ];
+
+      delator(ids,template);
+  }
 
   if (!pageManagement.dataOption) {
       var ids = [

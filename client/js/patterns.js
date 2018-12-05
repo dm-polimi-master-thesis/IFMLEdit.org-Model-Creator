@@ -9,7 +9,7 @@ exports.patterns = [
   {
     category: "Content Management",
     list: [
-      {id: "page-based-content-management", title: "Page Based Content Management", type: "content-modification", image: "patterns/preview/page-based-content-management.png", description: "In blogs and page-based content management systems there is a fixed schema consisting of a hierarchical collection of pages. In these systems an intuitive interface is made available to the user, in order to adding new pages, editing their content, organizing pages in hierarchies, defining the pages' order in menus, and setting the graphical properties and visibility of pages. This pattern meets all the specific needs of a page-based content-management system.", html: require("../patterns/collection/page-based-content-management/page-based-content-management.html"), createPattern: require("../patterns/collection/page-based-content-management/index.js").SettingsPattern}
+      {id: "content-management", title: "Content Management", type: "content-modification", image: "patterns/preview/content-management.png", description: "In blogs and page-based content management systems there is a fixed schema consisting of a hierarchical collection of pages. In these systems an intuitive interface is made available to the user, in order to adding new pages, editing their content, organizing pages in hierarchies, defining the pages' order in menus, and setting the graphical properties and visibility of pages. This pattern meets all the specific needs of a page-based content-management system.", html: require("../patterns/collection/content-management/content-management.html"), createPattern: require("../patterns/collection/content-management/index.js").SettingsPattern}
     ]
   },
   {

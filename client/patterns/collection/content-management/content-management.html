@@ -1,11 +1,19 @@
-<div id="page-based-content-management-settings-content" class="table-responsive table-patterns-container">
+<div id="content-management-settings-content" class="table-responsive table-patterns-container">
   <center>
-    <h3 class="pattern-settings-title">Page Based Content Management</h3>
+    <h3 class="pattern-settings-title">Content Management</h3>
   </center>
-  <table class="page-based-content-management-settings-table default-settings-table" >
+  <table class="content-management-settings-table default-settings-table" >
     <thead>
       <tr>
-        <th class="trace-line th-left">Pages List</th>
+        <th class="trace-line th-left">
+          <div id="xor-form" class="page-list-switch-form form-group">
+            <div class=" material-switch pull-right">
+              <input id="pageListOption" name="pageListOption" type="checkbox" data-bind="checked: pageListOption"/>
+              <label for="pageListOption" class="label-success"></label>
+            </div>
+          </div>
+          Pages List
+        </th>
         <th class="trace-line-padding">
           <div id="data-switch-form" class="data-switch-form form-group">
             <div class=" material-switch pull-right">
@@ -20,10 +28,10 @@
     <tbody>
       <tr>
         <td class="collection-name form-td-left pattern-form-input trace-line">
-          <div id="collection-form" class="form-group">
+          <div id="collection-list-form" class="form-group">
             <span class="pattern-form-label control-label">Collection:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionName, event: { blur: validate.bind($data, collectionName(), '#collection-form') }"/>
+              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionListName, event: { blur: validate.bind($data, collectionListName(), '#collection-list-form') }, enable: pageListOption"/>
             </div>
           </div>
         </td>
@@ -37,24 +45,24 @@
         </td>
       </tr>
       <tr>
-        <td class="form-td-left pattern-form-input trace-line shrink">
+        <td class="form-td-left pattern-form-input trace-line">
           <div class="form-group">
             <span class="pattern-form-label control-label">Field:</span>
             <div class="input-group">
-              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: resultsFieldToAdd, executeOnEnter: addField.bind($data,'list')"/>
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: resultsFieldToAdd, executeOnEnter: addField.bind($data,'list'), enable: pageListOption"/>
               <div class="input-group-addon">
-                <a class="plus" href="#" data-bind="click: addField.bind($data,'list')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'list'), enable: pageListOption"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
             </div>
           </div>
         </td>
-        <td class=" pattern-form-input trace-line-padding shrink">
+        <td class=" pattern-form-input trace-line-padding">
           <div class="form-group">
             <span class="pattern-form-label control-label">Field:</span>
             <div class="input-group">
               <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: dataEntryFieldToAdd, executeOnEnter: addField.bind($data,'data-entry'), enable: dataOption"/>
               <div class="input-group-addon">
-                <a class="plus" href="#" data-bind="click: addField.bind($data,'data-entry')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'data-entry'), enable: dataOption"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
             </div>
           </div>
@@ -73,7 +81,7 @@
             </ul>
           </center>
         </td>
-        <td rowspan="4" class="trace-line-padding shrink">
+        <td rowspan="3" class="trace-line-padding shrink">
           <center class="form-fields-container">
             <ul class="form-fields" data-bind="foreach: dataEntryFields">
               <li>
@@ -112,29 +120,13 @@
         </td>
       </tr>
       <tr>
-        <td class=" pattern-form-input trace-line details-field-form shrink">
-          <div class="form-group">
-            <span class="pattern-form-label control-label details-span-field">Field:</span>
-            <div class="input-group details-form">
-              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: selectedFieldToAdd, executeOnEnter: addField.bind($data,'details'), enable: detailsOption"/>
-              <div class="input-group-addon">
-                <a class="plus" href="#" data-bind="click: addField.bind($data,'details')"><i class="glyphicon glyphicon-plus-sign"></i></a>
-              </div>
+        <td class="collection-name form-td-left pattern-form-input trace-line">
+          <div id="collection-details-form" class="form-group">
+            <span class="pattern-form-label control-label">Collection:</span>
+            <div class="input-group">
+              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionDetailsName, event: { blur: validate.bind($data, collectionDetailsName(), '#collection-details-form') }, enable: detailsOption"/>
             </div>
           </div>
-        </td>
-      <tr>
-        <td class="trace-line details-fields-td shrink">
-          <center class="details-fields-container">
-            <ul class="details-fields" data-bind="foreach: selectedFields">
-              <li>
-                <div class="right-inner-addon">
-                  <span data-bind="text: value"></span>
-                  <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'details')"><i class="glyphicon glyphicon-minus-sign"></i></a>
-                </div>
-              </li>
-            </ul>
-          </center>
         </td>
         <td class="trace-line-padding shrink td-name">
           <div id="pattern-form" class="form-group pattern-name">

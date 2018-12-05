@@ -13,17 +13,17 @@ function SettingsPatternViewModel(options) {
   var self = this;
 
   self.id = options.id;
-  self.name = ko.observable("Page Management");
+  self.name = ko.observable("Content Management");
   self.dataOption = ko.observable(true);
   self.detailsOption = ko.observable(true);
+  self.pageListOption = ko.observable(true);
   self.selectedDetailsName = ko.observable("");
   self.dataEntryFormName = ko.observable("");
-  self.collectionName = ko.observable("");
+  self.collectionListName = ko.observable("");
+  self.collectionDetailsName = ko.observable("");
   self.resultsFieldToAdd = ko.observable("");
-  self.selectedFieldToAdd = ko.observable("");
   self.dataEntryFieldToAdd = ko.observable("");
   self.resultsFields = ko.observableArray([]);
-  self.selectedFields = ko.observableArray([]);
   self.dataEntryFields = ko.observableArray([]);
   self.types = ['text','password','checkbox','radio','reset','hidden'];
 
@@ -34,9 +34,6 @@ function SettingsPatternViewModel(options) {
     if (type === 'list') {
       fieldToAdd = self.resultsFieldToAdd;
       fields = self.resultsFields;
-    } else if (type === 'details') {
-      fieldToAdd = self.selectedFieldToAdd;
-      fields = self.selectedFields;
     } else {
       fieldToAdd = self.dataEntryFieldToAdd;
       fields = self.dataEntryFields;
@@ -70,8 +67,6 @@ function SettingsPatternViewModel(options) {
   self.deleteField = function(type){
     if (type === 'list') {
       self.resultsFields.remove(this);
-    } else if (type === 'details') {
-      self.selectedFields.remove(this);
     } else {
       self.dataEntryFields.remove(this);
     }
@@ -94,10 +89,16 @@ function SettingsPatternViewModel(options) {
       $.notify({message: 'Your request cannot be processed: the pattern cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
-    if (!(self.collectionName().length > 0)) {
+    if (!(self.collectionListName().length > 0) && self.pageListOption()) {
       error = true;
-      $('#collection-form').addClass('has-error');
-      $.notify({message: 'Your request cannot be processed: collection form cannot have an empty name.'},
+      $('#collection-list-form').addClass('has-error');
+      $.notify({message: 'Your request cannot be processed: list collection form cannot have an empty name.'},
+        {allow_dismiss: true, type: 'danger'});
+    }
+    if (!(self.collectionDetailsName().length > 0) && self.detailsOption()) {
+      error = true;
+      $('#collection-details-form').addClass('has-error');
+      $.notify({message: 'Your request cannot be processed: details collection form cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
     if (!(self.selectedDetailsName().length > 0) && self.detailsOption()) {
@@ -129,17 +130,19 @@ function SettingsPatternViewModel(options) {
     var pageManagement = {
       name: self.name(),
       list: {
-        collection: self.collectionName(),
+        collection: self.collectionListName(),
         fields: self.resultsFields.removeAll()
       },
       details: {
         name: self.selectedDetailsName(),
-        fields: self.selectedFields.removeAll()
+        collection: self.collectionDetailsName(),
+        fields: dataEntry
       },
       dataEntry: {
         name: self.dataEntryFormName(),
         fields: dataEntry
       },
+      pageListOption: self.pageListOption(),
       detailsOption: self.detailsOption(),
       dataOption: self.dataOption()
     }
@@ -163,7 +166,7 @@ function SettingsPattern(options) {
     options = options || {};
 
     var pattern = new SettingsPatternViewModel(options);
-    ko.applyBindings(pattern, $('#page-based-content-management-settings-content')[0]);
+    ko.applyBindings(pattern, $('#content-management-settings-content')[0]);
 
     return pattern;
 }

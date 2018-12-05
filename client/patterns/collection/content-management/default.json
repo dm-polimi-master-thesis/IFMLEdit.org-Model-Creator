@@ -2,7 +2,7 @@
    "elements":[
       {
          "attributes":{
-            "name":"Page Based Content Management Pattern",
+            "name":"Content Management Pattern",
             "default":false,
             "landmark":false,
             "xor":false
@@ -19,7 +19,7 @@
                }
             }
          },
-         "id":"page-based-content-management-pattern-view-container",
+         "id":"content-management-pattern-view-container",
          "type":"ifml.ViewContainer"
       },
       {
@@ -487,8 +487,7 @@
       },
       {
          "attributes":{
-            "name":"Modify",
-            "stereotype":"selection"
+            "name":"Modify"
          },
          "metadata":{
             "graphics":{
@@ -507,8 +506,7 @@
       },
       {
          "attributes":{
-            "name":"Delete",
-            "stereotype":"selection"
+            "name":"Delete"
          },
          "metadata":{
             "graphics":{
@@ -568,7 +566,7 @@
                ]
             }
          },
-         "id":"cancel-delete-event",
+         "id":"cancel-confirmation-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -804,7 +802,7 @@
    "relations":[
       {
          "type":"hierarchy",
-         "parent":"page-based-content-management-pattern-view-container",
+         "parent":"content-management-pattern-view-container",
          "child":"xor-view-container"
       },
       {
@@ -909,7 +907,7 @@
       },
       {
          "type":"source",
-         "flow":"cancel-delete-event",
+         "flow":"cancel-confirmation-navigation-flow",
          "source":"cancel-confirmation-event"
       },
       {
@@ -969,7 +967,7 @@
       },
       {
          "type":"target",
-         "flow":"cancel-delete-event",
+         "flow":"cancel-confirmation-navigation-flow",
          "target":"pages-view-container"
       },
       {

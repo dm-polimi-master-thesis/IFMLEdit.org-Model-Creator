@@ -1,3 +1,20 @@
-.in-place-log-in {
+.in-place-log-in-settings-table {
+
+  .label {
+      display: inline-flex !important;
+  }
   
+  .material-switch > label {
+      width: 0px !important;
+  }
+
+  .editor-switch-form {
+      display: inline-block !important;
+      float: left !important;
+      margin-left: 30px !important;
+  }
+
+  .form-control[disabled] {
+      background-color: #243141;
+  }
 }

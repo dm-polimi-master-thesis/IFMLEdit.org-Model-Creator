@@ -5,7 +5,15 @@
   <table class="in-place-log-in-settings-table default-settings-table" >
     <thead>
       <tr>
-        <th class="trace-line th-left">Editor</th>
+        <th class="trace-line th-left">
+          <div id="editor-form" class="editor-switch-form form-group">
+            <div class=" material-switch pull-right">
+              <input id="editorOption" name="editorOption" type="checkbox" data-bind="checked: editorOption"/>
+              <label for="editorOption" class="label-success"></label>
+            </div>
+          </div>
+          Editor
+        </th>
         <th class="trace-line-padding">Log In</th>
       </tr>
     </thead>
@@ -15,7 +23,7 @@
           <div id="editor-name-form" class="form-group">
             <span id="form-name" class="pattern-form-label">Form Name:</span>
             <div class="input-group">
-              <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: editorFormName, event: { change: validate.bind($data, editorFormName(), '#editor-name-form') }"/>
+              <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: editorFormName, event: { change: validate.bind($data, editorFormName(), '#editor-name-form') }, enable: editorOption"/>
             </div>
           </div>
         </td>
@@ -33,9 +41,9 @@
           <div class="form-group">
             <span class="pattern-form-label">Field:</span>
             <div class="input-group">
-              <input id="input-field" class="form-control" placeholder="Add new field" type="text" data-bind="value: editorFieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField.bind($data,'editor')"/>
+              <input id="input-field" class="form-control" placeholder="Add new field" type="text" data-bind="value: editorFieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField.bind($data,'editor'), enable: editorOption"/>
               <div class="input-group-addon">
-                <a class="plus" href="#" data-bind="click: addField.bind($data,'editor')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'editor'), enable: editorOption"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
             </div>
           </div>
@@ -46,7 +54,7 @@
             <div class="input-group">
               <input id="input-field" class="form-control" placeholder="Add new field" type="text" data-bind="value: logInFieldToAdd, valueUpdate:'afterkeydown', executeOnEnter: addField.bind($data,'log-in')"/>
               <div class="input-group-addon">
-                <a class="plus" href="#" data-bind="click: addField.bind($data,'log-in')"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                <a class="plus" href="#" data-bind="click: addField.bind($data,'log-in'), enable: editorOption"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
             </div>
           </div>
