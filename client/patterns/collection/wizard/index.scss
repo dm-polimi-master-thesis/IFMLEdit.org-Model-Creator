@@ -14,4 +14,8 @@
     .list-steps-container {
         height: 300px;
     }
+
+    .form-control[disabled] {
+        background-color: #243141;
+    }
 }

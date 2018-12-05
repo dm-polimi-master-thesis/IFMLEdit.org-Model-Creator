@@ -6,7 +6,15 @@
     <thead>
       <tr>
         <th class="trace-line th-left">Pages List</th>
-        <th class="trace-line-padding">Data Entry</th>
+        <th class="trace-line-padding">
+          <div id="data-switch-form" class="data-switch-form form-group">
+            <div class=" material-switch pull-right">
+              <input id="dataOption" name="dataOption" type="checkbox" data-bind="checked: dataOption"/>
+              <label for="dataOption" class="label-success"></label>
+            </div>
+          </div>
+          Data Entry
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -23,7 +31,7 @@
           <div id="data-entry-form" class="form-group">
             <span class="pattern-form-label control-label">Form Name:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: dataEntryFormName, event: { blur: validate.bind($data, dataEntryFormName(), '#data-entry-form') }"/>
+              <input class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: dataEntryFormName, event: { blur: validate.bind($data, dataEntryFormName(), '#data-entry-form') }, enable: dataOption"/>
             </div>
           </div>
         </td>
@@ -44,7 +52,7 @@
           <div class="form-group">
             <span class="pattern-form-label control-label">Field:</span>
             <div class="input-group">
-              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: dataEntryFieldToAdd, executeOnEnter: addField.bind($data,'data-entry')"/>
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: dataEntryFieldToAdd, executeOnEnter: addField.bind($data,'data-entry'), enable: dataOption"/>
               <div class="input-group-addon">
                 <a class="plus" href="#" data-bind="click: addField.bind($data,'data-entry')"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
@@ -83,14 +91,22 @@
         </td>
       </tr>
       <tr>
-        <th class="trace-line th-left">Page</th>
+        <th class="trace-line th-left">
+          <div id="xor-form" class="page-switch-form form-group">
+            <div class=" material-switch pull-right">
+              <input id="detailsOption" name="detailsOption" type="checkbox" data-bind="checked: detailsOption"/>
+              <label for="detailsOption" class="label-success"></label>
+            </div>
+          </div>
+          Page
+        </th>
       </tr>
       <tr>
         <td class="form-td-left pattern-form-input trace-line">
           <div id="details-form" class="form-group">
             <span class="pattern-form-label control-label">Details Name:</span>
             <div class="input-group details-name">
-              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: selectedDetailsName, event: { blur: validate.bind($data, selectedDetailsName(), '#details-form') }"/>
+              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: selectedDetailsName, event: { blur: validate.bind($data, selectedDetailsName(), '#details-form') }, enable: detailsOption"/>
             </div>
           </div>
         </td>
@@ -100,7 +116,7 @@
           <div class="form-group">
             <span class="pattern-form-label control-label details-span-field">Field:</span>
             <div class="input-group details-form">
-              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: selectedFieldToAdd, executeOnEnter: addField.bind($data,'details')"/>
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: selectedFieldToAdd, executeOnEnter: addField.bind($data,'details'), enable: detailsOption"/>
               <div class="input-group-addon">
                 <a class="plus" href="#" data-bind="click: addField.bind($data,'details')"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>

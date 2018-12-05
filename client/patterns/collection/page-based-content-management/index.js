@@ -14,6 +14,8 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.name = ko.observable("Page Management");
+  self.dataOption = ko.observable(true);
+  self.detailsOption = ko.observable(true);
   self.selectedDetailsName = ko.observable("");
   self.dataEntryFormName = ko.observable("");
   self.collectionName = ko.observable("");
@@ -23,7 +25,7 @@ function SettingsPatternViewModel(options) {
   self.resultsFields = ko.observableArray([]);
   self.selectedFields = ko.observableArray([]);
   self.dataEntryFields = ko.observableArray([]);
-  self.types = ['text','password','checkbox','radio','reset'];
+  self.types = ['text','password','checkbox','radio','reset','hidden'];
 
   self.addField = function (type) {
     var fieldToAdd;
@@ -98,13 +100,13 @@ function SettingsPatternViewModel(options) {
       $.notify({message: 'Your request cannot be processed: collection form cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
-    if (!(self.selectedDetailsName().length > 0)) {
+    if (!(self.selectedDetailsName().length > 0) && self.detailsOption()) {
       error = true;
       $('#details-form').addClass('has-error');
       $.notify({message: 'Your request cannot be processed: details form cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
-    if (!(self.dataEntryFormName().length > 0)) {
+    if (!(self.dataEntryFormName().length > 0) && self.dataOption()) {
       error = true;
       $('#data-entry-form').addClass('has-error');
       $.notify({message: 'Your request cannot be processed: dataEntry form cannot have an empty name.'},
@@ -137,7 +139,9 @@ function SettingsPatternViewModel(options) {
       dataEntry: {
         name: self.dataEntryFormName(),
         fields: dataEntry
-      }
+      },
+      detailsOption: self.detailsOption(),
+      dataOption: self.dataOption()
     }
 
     return parser(pageManagement);

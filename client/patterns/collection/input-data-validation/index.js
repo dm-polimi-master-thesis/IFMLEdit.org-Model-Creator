@@ -17,7 +17,7 @@ function SettingsPatternViewModel(options) {
   self.dataFormName = ko.observable("Data Form");
   self.fieldToAdd = ko.observable("");
   self.fields = ko.observableArray();
-  self.types = ['text','password','checkbox','radio','reset'];
+  self.types = ['text','password','checkbox','radio','reset','hidden'];
 
   self.addField = function () {
     if(!(self.fieldToAdd().length > 0)){

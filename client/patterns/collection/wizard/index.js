@@ -19,7 +19,7 @@ function SettingsPatternViewModel(options) {
   self.steps = ko.observableArray([{ name: "Step 1", formName: "Step 1 Form", fields: [] }, { name: "Step 2", formName: "Step 2 Form", fields: [] }]);
   self.fields = ko.observableArray([]);
   self.selected = ko.observable(self.steps()[0]);
-  self.types = ['text','password','checkbox','radio','reset'];
+  self.types = ['text','password','checkbox','radio','reset','hidden'];
 
   self.addStep = function () {
     if(!(self.stepToAdd().length > 0)){

@@ -9,6 +9,7 @@ var _ = require('lodash'),
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
+    delator = require('../../../js/ifml/utilities/delator/elementDelator.js').delator,
     format = require('./default.json');
 
 function parser(pageManagement){
@@ -27,7 +28,7 @@ function parser(pageManagement){
   });
   configurator(modelElementsHash['data-entry-form'], template, {
       name: pageManagement.dataEntry.name,
-      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields]})
+      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
   });
   configurator(modelElementsHash['pages-view-container'], template, {
       name: pageManagement.list.collection.charAt(0).toUpperCase() + pageManagement.list.collection.slice(1)
@@ -67,6 +68,45 @@ function parser(pageManagement){
   configurator(modelElementsHash['failed-submit-navigation-flow'], template, {
       fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, dataResults])
   });
+
+  if (!pageManagement.dataOption) {
+      var ids = [
+        modelElementsHash['data-entry-view-container'].id,
+        modelElementsHash['data-entry-form'].id,
+        modelElementsHash['submit-event'].id,
+        modelElementsHash['submit-navigation-flow'].id,
+        modelElementsHash['create-modify-action'].id,
+        modelElementsHash['failed-create-modify-event'].id,
+        modelElementsHash['failed-submit-navigation-flow'].id,
+        modelElementsHash['done-create-modify-event'].id,
+        modelElementsHash['done-create-modify-navigation-flow'].id,
+        modelElementsHash['modify-page-event'].id,
+        modelElementsHash['details-to-modify-navigation-flow'].id,
+        modelElementsHash['load-content-action'].id,
+        modelElementsHash['done-load-content-event'].id,
+        modelElementsHash['done-load-content-navigation-flow'].id,
+        modelElementsHash['failed-load-content-event'].id,
+        modelElementsHash['failed-load-content-navigation-flow'].id,
+        modelElementsHash['modify-event'].id,
+        modelElementsHash['modify-navigation-flow'].id
+      ];
+
+      delator(ids,template);
+  }
+
+  if (!pageManagement.detailsOption) {
+      var ids = [
+        modelElementsHash['page-display-view-container'].id,
+        modelElementsHash['page-details'].id,
+        modelElementsHash['modify-page-event'].id,
+        modelElementsHash['details-to-modify-navigation-flow'].id,
+        modelElementsHash['done-create-modify-navigation-flow'].id,
+        modelElementsHash['display-event'].id,
+        modelElementsHash['display-navigation-flow'].id
+      ];
+
+      delator(ids,template);
+  }
 
   return template;
 }
