@@ -47,8 +47,8 @@ function parser(pageManagement){
       fields: pageManagement.details.fields || undefined
   });
   configurator(modelElementsHash['delete-page-details'], template, {
-      collection: pageManagement.details.collection || undefined,
-      fields: pageManagement.details.fields || undefined
+      collection: pageManagement.list.collection || undefined,
+      fields: pageManagement.list.fields || undefined
   });
   configurator(modelElementsHash['load-content-action'], template, {
       results: _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, pageManagement.dataEntry.fields]),

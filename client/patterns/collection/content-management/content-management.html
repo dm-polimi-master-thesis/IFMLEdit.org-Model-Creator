@@ -60,7 +60,7 @@
           <div class="form-group">
             <span class="pattern-form-label control-label">Field:</span>
             <div class="input-group">
-              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: dataEntryFieldToAdd, executeOnEnter: addField.bind($data,'data-entry'), enable: dataOption"/>
+              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: dataEntryFieldToAdd, executeOnEnter: addField.bind($data,'data-entry'), enable: dataOption() || detailsOption()"/>
               <div class="input-group-addon">
                 <a class="plus" href="#" data-bind="click: addField.bind($data,'data-entry'), enable: dataOption"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>

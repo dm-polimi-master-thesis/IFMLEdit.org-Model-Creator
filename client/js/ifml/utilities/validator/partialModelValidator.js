@@ -9,15 +9,16 @@ var _ = require('lodash'),
     configurator = require('../configurator/elementConfigurator').configurator;
 
 function partialModelValidator(model1, model2) {
-  var hashModel1 = toHash(model1.elements);
+  var hashModel1 = toHash(model1.elements),
+      hashModel2 = toHash(model2.elements);
   _.forEach(model2.elements, function(element){
     var id = element.id;
     if(hashModel1[id] !== undefined){
       var index = 1,
           newId = id + '-' + index;
-      while(hashModel1[newId] !== undefined){
+      while(hashModel1[newId] !== undefined || hashModel2[newId] !== undefined){
         index++;
-        newId = id + "-" + index;
+        newId = id + '-' + index;
       }
       configurator(element, model2, {
         type: element.type,
