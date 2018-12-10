@@ -25,7 +25,7 @@ function SettingsPatternViewModel(options) {
   self.dataEntryFieldToAdd = ko.observable("");
   self.resultsFields = ko.observableArray([]);
   self.dataEntryFields = ko.observableArray([]);
-  self.types = ['text','password','checkbox','radio','reset','hidden'];
+  self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {
     var fieldToAdd;

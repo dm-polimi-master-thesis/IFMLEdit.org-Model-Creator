@@ -35,26 +35,62 @@ ViewModel.prototype._compute = function () {
     }
 <% } -%>
     this.output = {
-<% for (var i = 0; i < fields.length; i += 1) { -%>
-        '<%= fields[i].value%>': this.input['<%= fields[i].value%>'],
+<% var radioList = [],
+       checkList = [];
+   for (var i = 0; i < fields.length; i += 1) { -%>
+      <% if (fields[i].type === 'radio' && radioList[fields[i].name] === undefined) { -%>
+          '<%= fields[i].name%>': ko.observable(''),
+          <% radioList[fields[i].name] = true -%>
+      <% } else if (fields[i].type === 'checkbox' && checkList[fields[i].name] === undefined){-%>
+          '<%= fields[i].name%>': ko.observableArray([]),
+          <% checkList[fields[i].name] = true -%>
+      <% } else if (fields[i].type !== 'radio' && fields[i].type !== 'checkbox') {-%>
+          '<%= fields[i].value%>': ko.observable(this.input['<%= fields[i].value-%>']),
+      <% } -%>
 <% } -%>
     }
     var self = this,
         fields = {
-<% for (var i = 0; i < fields.length; i += 1) { -%>
-            '<%= fields[i].value%>': ko.observable(this.input['<%= fields[i].value%>']),
+<% radioList = [];
+   checkList = [];
+
+   for (var i = 0; i < fields.length; i += 1) { %>
+    <% if (fields[i].type === 'radio' && radioList[fields[i].name] === undefined) { -%>
+        '<%= fields[i].name -%>': ko.observable(''),
+        <% radioList[fields[i].name] = true -%>
+    <% } else if (fields[i].type === 'checkbox' && checkList[fields[i].name] === undefined) { -%>
+        '<%= fields[i].name%>': ko.observableArray([]),
+        <% checkList[fields[i].name] = true -%>
+    <% } else if (fields[i].type !== 'radio' && fields[i].type !== 'checkbox') { -%>
+        '<%= fields[i].value%>': ko.observable(this.input['<%= fields[i].value -%>']),
+    <% } -%>
 <% } -%>
         },
         errors = {
-<% for (var i = 0; i < fields.length; i += 1) { -%>
-            '<%= fields[i].value%>': ko.observable(this.input['<%= fields[i].value%>-error']),
+<% radioList = [];
+   checkList = [];
+
+   for (var i = 0; i < fields.length; i += 1) { -%>
+    <% if (fields[i].type === 'radio' && radioList[fields[i].name] === undefined) { -%>
+        '<%= fields[i].name%>': ko.observable(this.input['<%= fields[i].name%>-error']),
+        <% radioList[fields[i].name] = true -%>
+    <% } else if (fields[i].type === 'checkbox' && checkList[fields[i].name] === undefined) { -%>
+        '<%= fields[i].name%>': ko.observable(this.input['<%= fields[i].name-%>-error']),
+        <% checkList[fields[i].name] = true -%>
+    <% } else if (fields[i].type !== 'radio' && fields[i].type !== 'checkbox') {-%>
+        '<%= fields[i].value%>': ko.observable(this.input['<%= fields[i].value-%>-error']),
+    <% } -%>
 <% } -%>
         };
-<% for (var i = 0; i < fields.length; i += 1) { -%>
-    fields['<%= fields[i].value%>'].subscribe(function (value) {
-        self.output['<%= fields[i].value%>'] = value;
-        self.errors()['<%= fields[i].value%>'](undefined);
-    });
+<% radioList = [];
+   checkList = [];
+   for (var i = 0; i < fields.length; i += 1) {
+    if (fields[i].type !== 'radio' && fields[i].type !== 'checkbox') {-%>
+        fields['<%= fields[i].value%>'].subscribe(function (value) {
+            self.output['<%= fields[i].value-%>'] = value;
+            self.errors()['<%= fields[i].value-%>'](undefined);
+        });
+    <% } %>
 <% } -%>
     this.fields(fields);
     this.errors(errors);

@@ -1,28 +1,20 @@
 <div class="container">
     <div class="row">
     <% for (var i = 0; i < landmarks.length; i += 1) { -%>
-        <a class="col-xs-2 btn btn-default" 
-            data-bind="click: landmark.bind($data, '<%= landmarks[i].id %>'), css: {active: active() === '<%= landmarks[i].id %>'}">
-            <%= landmarks[i].name %>
-        </a>
+        <a class="col-xs-2 btn btn-default" data-bind="click: landmark.bind($data, '<%= landmarks[i].id %>'), css: {active: active() === '<%= landmarks[i].id %>'}"><%= landmarks[i].name %></a>
     <% } -%>
     </div>
 </div>
 <% for (var i = 0; i < children.length; i+=1) { -%>
 <!-- ko if: active() === '<%= children[i].id %>' -->
     <!-- <%= children[i].name %> -->
-    <c-<%= children[i].id %> params="context: context">
-    </c-<%= children[i].id %>>
+    <c-<%= children[i].id %> params="context: context"></c-<%= children[i].id %>>
 <!-- /ko -->
 <% } -%>
 <% for (var i = 0; i < events.length; i += 1) {
      if (events[i].stereotype == 'system') { -%>
-    <c-<%= events[i].id %> params="trigger: trigger.bind($data,'<%= events[i].id %>')">
-    </c-<%= events[i].id %>>
+    <c-<%= events[i].id %> params="trigger: trigger.bind($data,'<%= events[i].id %>')"></c-<%= events[i].id %>>
   <% } else { -%>
-    <a class="col-xs-2 btn btn-primary" 
-        data-bind="click: trigger.bind($data, '<%= events[i].id %>')">
-        <%= events[i].name %>
-    </a>
+    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, '<%= events[i].id %>')"><%= events[i].name %></a>
   <% }
    } -%>

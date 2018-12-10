@@ -2,18 +2,12 @@
 <table class="table table-hover table-condensed">
     <thead>
         <tr>
-            <th>
-                #
-            </th>
+            <th>#</th>
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-            <th>
-                <%= fields[i].label%>
-            </th>
+            <th><%= fields[i].label%></th>
 <% }
    if (events.length) { -%>
-            <th>
-                actions
-            </th>
+            <th>actions</th>
 <% } -%>
         </tr>
     </thead>
@@ -26,9 +20,7 @@
             <td data-bind="text: id">
             </td>
 <%   for (var i = 0; i < fields.length; i += 1) { -%>
-            <td data-bind="text: $data['<%= fields[i].label %>']"
-                style="white-space: pre-wrap;">
-            </td>
+            <td data-bind="text: $data['<%= fields[i].label %>']" style="white-space: pre-wrap;"></td>
 <%
    }
    if (events.length) { -%>
@@ -37,10 +29,7 @@
            if (events[i].stereotype == 'system') { -%>
                 <c-<%= events[i].id %> params="trigger: $parent.trigger.bind($data, '<%= events[i].id %>')"></c-<%= events[i].id %>>
 <%         } else { -%>
-                <a class="col-xs-2 btn btn-primary"
-                    data-bind="click: $parent.trigger.bind($data, '<%= events[i].id %>'), clickBubble: false">
-                    <%= events[i].name %>
-                </a>
+                <a class="col-xs-2 btn btn-primary" data-bind="click: $parent.trigger.bind($data, '<%= events[i].id %>'), clickBubble: false"><%= events[i].name %></a>
 <%         }
        } -%>
             </td>

@@ -25,7 +25,7 @@ function SettingsPatternViewModel(options) {
                                           { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
   self.logInFields = ko.observableArray([{ label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },
                                          { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
-  self.types = ['text','password','checkbox','radio','reset','hidden'];
+  self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {
     var fieldToAdd;

@@ -57,7 +57,7 @@ function mapStringSet(e, f) {
         stereotype: e.attributes.stereotype,
         strings: ko.observableArray(e.get(f.property) || []),
         value: ko.observable(''),
-        inputTypes: e.attributes.stereotype === 'form' ? ['text','password','reset','radio','checkbox','hidden'] : undefined,
+        inputTypes: e.attributes.stereotype === 'form' ? ['text','textarea','password','reset','radio','checkbox','hidden','hidden-object'] : undefined,
         inputType: e.attributes.stereotype === 'form' ? ko.observableArray(['text']) : undefined,
         radio: ko.observable(0),
         checkbox: ko.observable(0),
@@ -99,6 +99,16 @@ function mapStringSet(e, f) {
         scrollHandle: function () {
           var scrollTop = $('#table-cont-' + field.name.toLowerCase()).scrollTop();
           $('#thead-'+ field.name.toLowerCase()).css({'transform' : 'translateY(' + scrollTop + 'px)'});
+        },
+        validate: function () {
+          if (this.name.trim().length && _.findIndex(field.strings(), {'label' : this.name}) !== -1) {
+              $.notify({message: 'Your request cannot be processed: ' + this.name + ' has the same name of a field.'},
+                {allow_dismiss: true, type: 'danger'});
+              $('#' + this.label + '-radio-check-name').val('');
+              this.name = '';
+          } else {
+              this.name = this.name.trim();
+          }
         }
     };
     field.strings.subscribe(function (strings) {

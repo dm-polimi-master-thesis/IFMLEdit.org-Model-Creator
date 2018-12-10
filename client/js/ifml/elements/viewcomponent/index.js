@@ -160,9 +160,21 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
         case 'details':
             return ['id'];
         case 'list':
-            return _(_.map(this.get('filters'),'label') || []).sort().uniq(true).value();
+            var radio = _.filter(this.get('filters'), function (f) {
+                  return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
+                }),
+                others = _.filter(this.get('filters'), function (f) {
+                  return (f.type !== 'radio' && f.type !== 'checkbox');
+                });
+            return _(_.flattenDeep([_.map(this.get('filters'),'label'), _.uniq(_.map(radio,'name'))]) || []).sort().uniq(true).value();
         case 'form':
-            return _(_.map(this.get('fields'),'label') || []).map(function (f) {
+            var radio = _.filter(this.get('fields'), function (f) {
+                  return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
+                }),
+                others = _.filter(this.get('fields'), function (f) {
+                  return (f.type !== 'radio' && f.type !== 'checkbox');
+                });
+            return _(_.flattenDeep([_.map(others,'label'), _.uniq(_.map(radio,'name'))]) || []).map(function (f) {
                 return [f, f + '-error'];
             }).flatten().sort().value()
         default:
@@ -173,11 +185,29 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
     outputs: function () {
         switch (this.get('stereotype')) {
         case 'details':
-            return _(['id']).concat(_.map(this.get('fields'),'label') || []).sort().uniq(true).value();
+            var radio = _.filter(this.get('fields'), function (f) {
+                  return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
+                }),
+                others = _.filter(this.get('fields'), function (f) {
+                  return (f.type !== 'radio' && f.type !== 'checkbox');
+                });
+            return _(['id']).concat(_.flattenDeep([_.map(others,'label'), _.uniq(_.map(radio,'name'))]) || []).sort().uniq(true).value();
         case 'list':
-            return _(['id']).concat(_.map(this.get('fields'),'label') || []).sort().uniq(true).value();
+            var radio = _.filter(this.get('fields'), function (f) {
+                  return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
+                }),
+                others = _.filter(this.get('fields'), function (f) {
+                  return (f.type !== 'radio' && f.type !== 'checkbox');
+                });
+            return _(['id']).concat(_.flattenDeep([_.map(others,'label'), _.uniq(_.map(radio,'name'))]) || []).sort().uniq(true).value();
         case 'form':
-            return _(_.map(this.get('fields'),'label') || []).sort().uniq(true).value()
+            var radio = _.filter(this.get('fields'), function (f) {
+                  return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
+                }),
+                others = _.filter(this.get('fields'), function (f) {
+                  return (f.type !== 'radio' && f.type !== 'checkbox');
+                });
+            return _(_.flattenDeep([_.map(others,'label'), _.uniq(_.map(radio,'name'))]) || []).sort().uniq(true).value()
         default:
             return [];
         }

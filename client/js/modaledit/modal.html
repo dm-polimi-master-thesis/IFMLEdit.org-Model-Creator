@@ -80,7 +80,7 @@
                                         <!-- ko if: $parent.stereotype === 'form' && $parent.name === 'Fields' -->
                                           <td class="col-sm-3 td-name" data-bind="if: type === 'checkbox' || type === 'radio'">
                                             <div class="right-inner-addon">
-                                              <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name"></input>
+                                              <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="value: name, event: { change: $parent.validate }, attr: { id: label + '-radio-check-name' }"></input>
                                             </div>
                                           </td>
                                         <!-- /ko -->

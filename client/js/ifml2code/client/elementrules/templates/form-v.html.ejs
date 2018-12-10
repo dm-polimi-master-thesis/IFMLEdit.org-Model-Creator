@@ -1,30 +1,14 @@
-<h3>
-    <%=name %>
-</h3>
+<h3><%=name %></h3>
 <form>
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-    <div class="form-group"
-        data-bind="css: {'has-error': errors()['<%=fields[i].label%>']}">
+    <div class="form-group" data-bind="css: {'has-error': errors()['<%=fields[i].label%>']}">
         <% if (fields[i].type !== 'hidden') { -%>
-        <label
-            for="<%=id%>_field_<%=i%>"
-            data-bind="css: {active: fields()['<%=fields[i].label%>']}, attr: {'data-error': errors()['<%=fields[i].label%>']}"
-            class="control-label">
-            <%=fields[i].label%>
-        </label>
+        <label for="<%=id%>_field_<%=i%>" data-bind="css: {active: fields()['<%=fields[i].label%>']}, attr: {'data-error': errors()['<%=fields[i].label%>']}" class="control-label"><%=fields[i].label%></label>
         <% } -%>
-        <input id="<%=id%>_field_<%=i%>"
-            data-bind="value: fields()['<%=fields[i].value%>']"
-            type="<%=fields[i].type%>"
-            <% if (fields[i].type === 'radio' || fields[i].type === 'checkbox') { -%>
-              name="<%=fields[i].name%>"
-            <% } -%>
-            class="form-control validate"
-            aria-describedby="<%=id%>_field_<%=i%>_error">
-        <span id="<%=id%>_field_<%=i%>_error"
-            class="help-block"
-            data-bind="text: errors()['<%=fields[i].label%>']">
-        </span>
+        <input id="<%=id%>_field_<%=i%>" <% if (fields[i].type === 'radio' || fields[i].type === 'checkbox') { %> value="<%=fields[i].value%>" data-bind="checked: fields()['<%=fields[i].name%>']" name="<%=fields[i].name%>" <% } else { %> data-bind="value: fields()['<%=fields[i].value%>']" <% } %> type="<%=fields[i].type%>" class="form-control validate" aria-describedby="<%=id%>_field_<%=i%>_error">
+        <% if (fields[i].type !== 'radio' && fields[i].type !== 'checkbox') { -%>
+        <span id="<%=id%>_field_<%=i%>_error" class="help-block" data-bind="text: errors()['<%=fields[i].label%>']"></span>
+        <% } -%>
     </div>
 <% } -%>
 </form>
@@ -34,10 +18,7 @@
            if (events[i].stereotype == 'system') { -%>
     <c-<%= events[i].id %> params="trigger: trigger.bind($data,'<%= events[i].id %>')"></c-<%= events[i].id %>>
 <%         } else { -%>
-    <a class="col-xs-2 btn btn-primary"
-        data-bind="click: trigger.bind($data, '<%= events[i].id %>')">
-        <%= events[i].name %>
-    </a>
+    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, '<%= events[i].id %>')"><%= events[i].name %></a>
 <%         }
        } -%>
 </div>

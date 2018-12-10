@@ -2,9 +2,7 @@
     <div class="card-image">
         <ul class="card-image collection with-header">
             <li class="collection-header cyan">
-                <h5 class="white-text light">
-                    <%=name %>
-                </h5>
+                <h5 class="white-text light"><%=name %></h5>
             </li>
         </ul>
     </div>
@@ -14,12 +12,9 @@
 <% for (var i = 0; i < fields.length; i += 1) { -%>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="<%=id%>_field_<%=i%>" data-bind="value: fields()['<%=fields[i].value%>'], css: {invalid: errors()['<%=fields[i].label%>']}"
-                            type="<%=fields[i].type%>" class="validate">
+                        <input id="<%=id%>_field_<%=i%>" <% if (fields[i].type === 'radio' || fields[i].type === 'checkbox') { %> value="<%=fields[i].value%>" data-bind="checked: fields()['<%=fields[i].name%>'], css: {invalid: errors()['<%=fields[i].label%>']}" name="<%=fields[i].name%>" <% } else { %> data-bind="value: fields()['<%=fields[i].value%>'], css: {invalid: errors()['<%=fields[i].label%>']}" <% } %> type="<%=fields[i].type%>" class="validate">
                         <% if (fields[i].type !== 'hidden') { -%>
-                        <label for="<%=id%>_field_<%=i%>" data-bind="css: {active: fields()['<%=fields[i].label%>']}, attr: {'data-error': errors()['<%=fields[i].label%>']}">
-                            <%=fields[i].label%>
-                        </label>
+                        <label for="<%=id%>_field_<%=i%>" data-bind="css: {active: fields()['<%=fields[i].label%>']}, attr: {'data-error': errors()['<%=fields[i].label%>']}"><%=fields[i].label%></label>
                         <% } -%>
                     </div>
                 </div>
@@ -33,10 +28,7 @@
            if (events[i].stereotype == 'system') { -%>
         <c-<%= events[i].id %> params="trigger: trigger.bind($data,'<%= events[i].id %>')"></c-<%= events[i].id %>>
 <%         } else { -%>
-        <a class="waves-effect waves-light btn cyan"
-            data-bind="click: trigger.bind($data, '<%= events[i].id %>')">
-            <%= events[i].name %>
-        </a>
+        <a class="waves-effect waves-light btn cyan" data-bind="click: trigger.bind($data, '<%= events[i].id %>')"><%= events[i].name %></a>
 <%         }
        } -%>
     </div>

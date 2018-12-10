@@ -13,12 +13,25 @@ var _ = require('lodash'),
     format = require('./default.json');
 
 function parser(pageManagement){
-  var template = _.cloneDeep(format);
-  var modelElementsHash = toHash(template.elements);
-
-  var dataResults = _.map(pageManagement.dataEntry.fields, function (field) {
-    return [field, { label: field.label + '-error', value: field.value + '-error', type: field.type, name: field.name }];
-  });
+  var template = _.cloneDeep(format),
+      modelElementsHash = toHash(template.elements),
+      dataResults = _.chain(pageManagement.dataEntry.fields)
+                     .filter(function (f) {
+                       return f.type !== 'radio' && f.type !== 'checkbox'
+                      })
+                     .map(function (field) {
+                       return [field, { label: field.label + '-error' }];
+                      })
+                     .value(),
+      specialValues = _.chain(pageManagement.dataEntry.fields)
+                       .filter(function (f) {
+                         return f.type === 'radio' && f.type === 'checkbox'
+                        })
+                       .map(function (field) {
+                         return [field, { label: field.name }];
+                        })
+                       .uniq()
+                       .value()
 
   configurator(modelElementsHash['xor-view-container'], template, {
       name: pageManagement.name

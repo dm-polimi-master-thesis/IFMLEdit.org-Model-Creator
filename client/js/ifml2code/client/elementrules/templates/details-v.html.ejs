@@ -1,14 +1,8 @@
-<h3>
-    <%=name %>
-</h3>
-<dl class="dl-horizontal"
-    data-bind="if: item">
+<h3><%=name %></h3>
+<dl class="dl-horizontal" data-bind="if: item">
 <% for (var i = 0; i < fields.length; i += 1) { -%>
-        <dt>
-            <%= fields[i].label%>
-        </dt>
-        <dd data-bind="text: item()['<%= fields[i].label %>']">
-        </dd>
+        <dt><%= fields[i].label%></dt>
+        <dd data-bind="text: item()['<%= fields[i].label %>']"></dd>
 <% } -%>
 </dl>
 <% if (events.length) { -%>
@@ -17,10 +11,7 @@
            if (events[i].stereotype == 'system') { -%>
     <c-<%= events[i].id %> params="trigger: trigger.bind($data,'<%= events[i].id %>')"></c-<%= events[i].id %>>
 <%         } else { -%>
-    <a class="col-xs-2 btn btn-primary"
-        data-bind="click: trigger.bind($data, '<%= events[i].id %>')">
-        <%= events[i].name %>
-    </a>
+    <a class="col-xs-2 btn btn-primary" data-bind="click: trigger.bind($data, '<%= events[i].id %>')"><%= events[i].name %></a>
 <%         }
        } -%>
 </div>
