@@ -28,7 +28,7 @@ function parser(pageManagement){
   });
   configurator(modelElementsHash['data-entry-form'], template, {
       name: pageManagement.dataEntry.name,
-      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
+      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, pageManagement.dataEntry.fields])
   });
   configurator(modelElementsHash['pages-view-container'], template, {
       name: pageManagement.list.collection.charAt(0).toUpperCase() + pageManagement.list.collection.slice(1)

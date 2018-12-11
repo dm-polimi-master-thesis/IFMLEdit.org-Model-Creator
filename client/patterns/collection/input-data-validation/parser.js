@@ -18,7 +18,7 @@ function parser(inputDataValidation){
       specialValues = fieldsManipulator.toSpecialValues(inputDataValidation.data.fields),
       errorValues = fieldsManipulator.toErrorValues(regularValues);
 
-  configurator(modelElementsHash['xor-view-container'], template, {
+  configurator(modelElementsHash['input-data-validation-pattern-view-container'], template, {
       name: inputDataValidation.name
   });
   configurator(modelElementsHash['data-form'], template, {
