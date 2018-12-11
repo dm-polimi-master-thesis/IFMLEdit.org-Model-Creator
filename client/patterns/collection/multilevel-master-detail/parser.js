@@ -53,7 +53,7 @@ function parser(multilevelMasterDetail){
      } else {
        configurator(modelElementsHash['selected-step-' + (index + 1) + '-navigation-flow'], template, {
            name: 'Selected ' + step.name,
-           filters: multilevelMasterDetail.steps.length > 2 ? step.filters : [{ label:'id' }]
+           filters: (multilevelMasterDetail.steps.length > 2) ? step.filters : [{ label:'id' }]
         });
      }
   });
@@ -104,6 +104,7 @@ function parser(multilevelMasterDetail){
            x: modelElementsHash['selected-step-2-event'].metadata.graphics.position.x + 250 * (index + 1),
            y: modelElementsHash['selected-step-2-event'].metadata.graphics.position.y
          },
+         vertical: 'bottom',
          parent: reference['list'].id
         });
         reference['navigationFlow'] = generator(template, {

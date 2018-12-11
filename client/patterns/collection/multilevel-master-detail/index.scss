@@ -17,7 +17,6 @@
     .step-list-field {
       display: flex;
       height: 35px!important;
-      background-color: #f6f6f6;
       font-size: 13px;
       color: #000;
     }
@@ -81,6 +80,19 @@
 
     .div-add-step {
         float: right;
+    }
+
+    .form-control[disabled] {
+        background-color: #243141;
+    }
+
+    label {
+        margin-bottom: 0px !important;
+    }
+
+    .field-operations-div {
+        margin: auto !important;
+        padding-right: 10px;
     }
 }
 

@@ -16,8 +16,8 @@ function generateEvent(template, options) {
             graphics: {
                 position: options.position || { x: 0, y: 0 },
                 name: {
-                    horizontal: 'middle',
-                    vertical: 'top'
+                    horizontal: options.horizontal || 'middle',
+                    vertical: options.vertical || 'top'
                 }
             }
         },

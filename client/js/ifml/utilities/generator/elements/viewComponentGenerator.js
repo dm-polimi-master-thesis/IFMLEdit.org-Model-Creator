@@ -4,7 +4,8 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var idValidator = require('../../validator/idValidator.js').idValidator;
+var idValidator = require('../../validator/idValidator.js').idValidator,
+    toId = require('../../validator/toId.js').toId;
 
 function generateViewComponent(template, options) {
   return {
