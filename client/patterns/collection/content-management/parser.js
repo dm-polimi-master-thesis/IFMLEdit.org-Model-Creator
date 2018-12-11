@@ -10,28 +10,15 @@ var _ = require('lodash'),
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
     delator = require('../../../js/ifml/utilities/delator/elementDelator.js').delator,
+    fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json');
 
 function parser(pageManagement){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements),
-      dataResults = _.chain(pageManagement.dataEntry.fields)
-                     .filter(function (f) {
-                       return f.type !== 'radio' && f.type !== 'checkbox'
-                      })
-                     .map(function (field) {
-                       return [field, { label: field.label + '-error' }];
-                      })
-                     .value(),
-      specialValues = _.chain(pageManagement.dataEntry.fields)
-                       .filter(function (f) {
-                         return f.type === 'radio' && f.type === 'checkbox'
-                        })
-                       .map(function (field) {
-                         return [field, { label: field.name }];
-                        })
-                       .uniq()
-                       .value()
+      regularValues = fieldsManipulator.toRegularValues(pageManagement.dataEntry.fields),
+      specialValues = fieldsManipulator.toSpecialValues(pageManagement.dataEntry.fields),
+      errorValues = fieldsManipulator.toErrorValues(regularValues);
 
   configurator(modelElementsHash['xor-view-container'], template, {
       name: pageManagement.name
@@ -64,25 +51,25 @@ function parser(pageManagement){
       fields: pageManagement.list.fields || undefined
   });
   configurator(modelElementsHash['load-content-action'], template, {
-      results: _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, pageManagement.dataEntry.fields]),
+      results: _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, regularValues, specialValues]),
       parent: modelElementsHash['xor-view-container'].id
   });
   configurator(modelElementsHash['create-modify-action'], template, {
-      parameters: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields]),
-      results: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, dataResults]),
+      parameters: _.flattenDeep([{ label: 'id' }, regularValues, specialValues]),
+      results: _.flattenDeep([{ label: 'id' }, errorValues, regularValues, specialValues]),
       parent: modelElementsHash['xor-view-container'].id
   });
   configurator(modelElementsHash['details-to-modify-navigation-flow'], template, {
-      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
+      fields: _.flattenDeep([{ label: 'id' }, regularValues])
   });
   configurator(modelElementsHash['done-load-content-navigation-flow'], template, {
-      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
+      fields: _.flattenDeep([{ label: 'id' }, regularValues])
   });
   configurator(modelElementsHash['submit-navigation-flow'], template, {
-      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, pageManagement.dataEntry.fields])
+      fields: _.flattenDeep([{ label: 'id' }, regularValues, specialValues])
   });
   configurator(modelElementsHash['failed-submit-navigation-flow'], template, {
-      fields: _.flattenDeep([{ label: 'id', value: 'id', type: 'text', name: '' }, dataResults])
+      fields: _.flattenDeep([{ label: 'id' }, errorValues, regularValues, specialValues])
   });
 
   if (!pageManagement.pageListOption) {

@@ -9,11 +9,13 @@ var _ = require('lodash'),
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
+    fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json');
 
 function parser(facetedSearch){
-  var template = _.cloneDeep(format);
-  var modelElementsHash = toHash(template.elements);
+  var template = _.cloneDeep(format),
+      modelElementsHash = toHash(template.elements),
+      specialValues = fieldsManipulator.toSpecialValues(facetedSearch.filters.fields);
 
   configurator(modelElementsHash['xor-view-container'], template, {
       name: facetedSearch.name,
@@ -28,7 +30,7 @@ function parser(facetedSearch){
   configurator(modelElementsHash['results-list'], template, {
       name: facetedSearch.list.collection.charAt(0).toUpperCase() + facetedSearch.list.collection.slice(1),
       collection: facetedSearch.list.collection,
-      filters: _.flattenDeep([facetedSearch.search, facetedSearch.filters.fields]),
+      filters: _.flattenDeep([facetedSearch.search, specialValues]),
       fields: facetedSearch.list.fields
   });
   configurator(modelElementsHash['details-view-container'], template, {
@@ -43,7 +45,7 @@ function parser(facetedSearch){
       fields: facetedSearch.search
   });
   configurator(modelElementsHash['filters-data-flow'], template, {
-      fields: facetedSearch.filters.fields
+      fields: specialValues
   });
 
   return template;

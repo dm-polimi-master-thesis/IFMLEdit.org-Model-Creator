@@ -12,8 +12,8 @@ var _ = require('lodash'),
     format = require('./default.json');
 
 function parser(alphabeticalFilter){
-  var template = _.cloneDeep(format);
-  var modelElementsHash = toHash(template.elements);
+  var template = _.cloneDeep(format),
+      modelElementsHash = toHash(template.elements);
 
   configurator(modelElementsHash['xor-view-container'], template, {
       name: alphabeticalFilter.name,

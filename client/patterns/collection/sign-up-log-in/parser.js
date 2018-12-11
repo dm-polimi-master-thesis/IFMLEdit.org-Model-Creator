@@ -8,20 +8,19 @@ var _ = require('lodash'),
     idValidator = require('../../../js/ifml/utilities/validator/idValidator.js').idValidator,
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
+    fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json'),
     logOut = require('./log-out.json');
 
 function parser(signUpLogIn){
-  console.log(signUpLogIn);
-  var template = signUpLogIn.logOut ? _.cloneDeep(logOut) : _.cloneDeep(format);
-  var modelElementsHash = toHash(template.elements);
-
-  var signUpResults = _.map(signUpLogIn.signUp.fields, function (field) {
-    return [field, { label: field.label + '-error', value: field.value + '-error', type: field.type, name: field.name }];
-  });
-  var logInResults = _.map(signUpLogIn.logIn.fields, function (field) {
-    return [field, { label: field.label + '-error', value: field.value + '-error', type: field.type, name: field.name }];
-  });
+  var template = signUpLogIn.logOut ? _.cloneDeep(logOut) : _.cloneDeep(format),
+      modelElementsHash = toHash(template.elements),
+      signUpRegularValues = fieldsManipulator.toRegularValues(signUpLogIn.signUp.fields),
+      signUpSpecialValues = fieldsManipulator.toSpecialValues(signUpLogIn.signUp.fields),
+      signUpErrorValues = fieldsManipulator.toErrorValues(signUpRegularValues),
+      logInRegularValues = fieldsManipulator.toRegularValues(signUpLogIn.logIn.fields),
+      logInSpecialValues = fieldsManipulator.toSpecialValues(signUpLogIn.logIn.fields),
+      logInErrorValues = fieldsManipulator.toErrorValues(logInRegularValues);
 
   configurator(modelElementsHash['xor-view-container'], template, {
       name: signUpLogIn.name
@@ -35,26 +34,26 @@ function parser(signUpLogIn){
       fields: signUpLogIn.logIn.fields
   });
   configurator(modelElementsHash['registration-action'], template, {
-      parameters: signUpLogIn.signUp.fields,
-      results: _.flattenDeep(signUpResults),
+      parameters: _.flattenDeep([signUpRegularValues, signUpSpecialValues]),
+      results: _.flattenDeep([signUpErrorValues, signUpRegularValues, signUpSpecialValues]),
       parent: modelElementsHash['sign-up-and-log-in-pattern-view-container'].id
   });
   configurator(modelElementsHash['log-in-action'], template, {
-      parameters: signUpLogIn.logIn.fields,
-      results: _.flattenDeep(logInResults),
+      parameters: _.flattenDeep([logInRegularValues, logInSpecialValues]),
+      results: _.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues]),
       parent: modelElementsHash['sign-up-and-log-in-pattern-view-container'].id
   });
   configurator(modelElementsHash['registration-navigation-flow'], template, {
-      fields: _.flattenDeep(signUpLogIn.signUp.fields)
+      fields: _.flattenDeep([signUpRegularValues, signUpSpecialValues])
   });
   configurator(modelElementsHash['failed-registration-navigation-flow'], template, {
-      fields: _.flattenDeep(signUpResults)
+      fields: _.flattenDeep([signUpErrorValues, signUpRegularValues, signUpSpecialValues])
   });
   configurator(modelElementsHash['log-in-navigation-flow'], template, {
-      fields: _.flattenDeep(signUpLogIn.logIn.fields)
+      fields: _.flattenDeep([logInRegularValues, logInSpecialValues])
   });
   configurator(modelElementsHash['failed-log-in-navigation-flow'], template, {
-      fields: _.flattenDeep(logInResults)
+      fields: _.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues])
   });
 
   return template;

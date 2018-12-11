@@ -8,42 +8,40 @@ var _ = require('lodash'),
     idValidator = require('../../../js/ifml/utilities/validator/idValidator.js').idValidator,
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
+    fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json'),
     editor = require('./editor.json');
 
 function parser(inPlaceLogIn){
-  var template = inPlaceLogIn.editorOption ? _.cloneDeep(editor) : _.cloneDeep(format);
-  var modelElementsHash = toHash(template.elements);
-
-  var editorResults = _.map(inPlaceLogIn.editor.fields, function (field) {
-    return [field, { label: field.label + '-error', value: field.value + '-error', type: field.type, name: field.name }];
-  });
-  var logInResults = _.map(inPlaceLogIn.logIn.fields, function (field) {
-    return [field, { label: field.label  + '-error', value: field.value + '-error', type: field.type, name: field.name }];
-  });
-  var inPlaceLogInFormFields = _.map(inPlaceLogIn.editor.fields, function (field) {
-    return {
-      label: field.label,
-      value: field.value,
-      type: 'hidden',
-      name: field.name
-    }
-  })
+  var template = inPlaceLogIn.editorOption ? _.cloneDeep(editor) : _.cloneDeep(format),
+      modelElementsHash = toHash(template.elements),
+      editorRegularValues = fieldsManipulator.toRegularValues(inPlaceLogIn.editor.fields),
+      editorSpecialValues = fieldsManipulator.toSpecialValues(inPlaceLogIn.editor.fields),
+      editorErrorValues = fieldsManipulator.toErrorValues(editorRegularValues),
+      logInRegularValues = fieldsManipulator.toRegularValues(inPlaceLogIn.logIn.fields),
+      logInSpecialValues = fieldsManipulator.toSpecialValues(inPlaceLogIn.logIn.fields),
+      logInErrorValues = fieldsManipulator.toErrorValues(logInRegularValues),
+      contentToSend = {
+        label: 'content-to-send',
+        value: '',
+        type: 'hidden-object',
+        name: ''
+      };
 
   configurator(modelElementsHash['log-in-form'], template, {
       name: inPlaceLogIn.logIn.formName,
-      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, inPlaceLogInFormFields])
+      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, contentToSend])
   });
   configurator(modelElementsHash['log-in-and-send-action'], template, {
-      parameters: _.flattenDeep([inPlaceLogIn.logIn.fields, inPlaceLogInFormFields]),
-      results: _.flattenDeep([logInResults]),
+      parameters: _.flattenDeep([logInRegularValues, logInSpecialValues, { label: contentToSend.label }]),
+      results: _.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues, { label: contentToSend.label }]),
       parent: modelElementsHash['in-place-log-in-pattern-view-container'].id
   });
   configurator(modelElementsHash['log-in-navigation-flow'], template, {
-      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, inPlaceLogInFormFields])
+      fields: _.flattenDeep([logInRegularValues, logInSpecialValues, contentToSend])
   });
   configurator(modelElementsHash['failed-log-in-navigation-flow'], template, {
-      fields: _.flattenDeep(logInResults)
+      fields: _.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues, { label: contentToSend.label }])
   });
 
   if (inPlaceLogIn.editorOption) {
@@ -52,18 +50,18 @@ function parser(inPlaceLogIn){
         fields: inPlaceLogIn.editor.fields
     });
     configurator(modelElementsHash['send-action'], template, {
-        parameters: inPlaceLogIn.editor.fields,
-        results: _.flattenDeep(editorResults),
+        parameters: _.flattenDeep([editorRegularValues, editorSpecialValues]),
+        results: _.flattenDeep([editorErrorValues, editorRegularValues, editorSpecialValues, { label: contentToSend.label }]),
         parent: modelElementsHash['in-place-log-in-pattern-view-container'].id
     });
     configurator(modelElementsHash['send-navigation-flow'], template, {
-        fields: inPlaceLogIn.editor.fields
+        fields: _.flattenDeep([editorRegularValues, editorSpecialValues])
     });
     configurator(modelElementsHash['failed-send-navigation-flow'], template, {
-        fields: inPlaceLogIn.editor.fields
+        fields: _.flattenDeep([editorErrorValues, editorRegularValues, editorSpecialValues])
     });
     configurator(modelElementsHash['in-place-log-in-navigation-flow'], template, {
-        fields: inPlaceLogIn.editor.fields
+        fields: [contentToSend]
     });
     configurator(modelElementsHash['xor-view-container'], template, {
         name: inPlaceLogIn.name

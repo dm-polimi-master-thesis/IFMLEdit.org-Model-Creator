@@ -9,11 +9,12 @@ var _ = require('lodash'),
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
+    fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json');
 
 function parser(wizard){
-  var template = _.cloneDeep(format);
-  var modelElementsHash = toHash(template.elements);
+  var template = _.cloneDeep(format),
+      modelElementsHash = toHash(template.elements);
 
   configurator(modelElementsHash['wizard-pattern-view-container'], template, {
       size: {
@@ -31,9 +32,9 @@ function parser(wizard){
 
   _.slice(wizard.steps, 0, 2)
    .forEach(function(step, index, collection){
-     var errorFields = _.map(step.fields, function (field) {
-       return [field, { label: field.label + '-error', value: field.value + '-error', type: field.type, name: field.name }];
-     });
+     var regularValues = fieldsManipulator.toRegularValues(step.fields),
+         specialValues = fieldsManipulator.toSpecialValues(step.fields),
+         errorValues = fieldsManipulator.toErrorValues(regularValues);
 
      configurator(modelElementsHash['step-' + (index + 1) + '-view-container'], template, {
          name: step.name
@@ -44,47 +45,69 @@ function parser(wizard){
      });
      configurator(modelElementsHash['validate-step-' + (index + 1) + '-action'], template, {
          name: 'Validate ' + step.name,
-         parameters: step.fields,
-         results: _.flattenDeep(errorFields),
+         parameters: _.flattenDeep([regularValues, specialValues]),
+         results: _.flattenDeep([errorValues, regularValues, specialValues]),
          parent: modelElementsHash['xor-view-container'].id
      });
      configurator(modelElementsHash['previous-step-' + (index + 1) + '-action'], template, {
          name: 'Previous ' + step.name,
-         parameters: index === 0 ? collection[index + 1].fields : [],
-         results: step.fields,
+         parameters: index === 0 ? _.flattenDeep([fieldsManipulator.toRegularValues(collection[index + 1].fields), fieldsManipulator.toSpecialValues(collection[index + 1].fields)]) : [],
+         results: _.flattenDeep([regularValues, specialValues]),
          parent: modelElementsHash['xor-view-container'].id
      });
      configurator(modelElementsHash['next-step-' + (index + 1) + '-navigation-flow'], template, {
          name: 'Next ' + step.name,
-         fields: step.fields
+         fields: _.flattenDeep([regularValues, specialValues])
      });
      configurator(modelElementsHash['ok-validate-step-' + (index + 1) + '-navigation-flow'], template, {
          name: 'Ok Validate ' + step.name
      });
      configurator(modelElementsHash['ko-validate-step-' + (index + 1) + '-navigation-flow'], template, {
          name: 'Ko Validate ' + step.name,
-         fields: _.flattenDeep(errorFields)
+         fields: _.flattenDeep([errorValues, regularValues, specialValues])
      });
      configurator(modelElementsHash['to-step-' + (index + 1) + '-navigation-flow'], template, {
          name: 'To ' + step.name,
-         fields: step.fields
+         fields: _.flattenDeep([regularValues, specialValues])
      });
      if(index === 1){
        configurator(modelElementsHash['previous-step-' + (index + 1) + '-navigation-flow'], template, {
            name: 'Previous ' + step.name,
-           fields: step.fields
+           fields: _.flattenDeep([regularValues, specialValues])
        });
      }
   });
 
   if (wizard.steps.length > 2){
-    var reference = [];
-    var previous = [];
+
+    var reference = [],
+        previous = [],
+        regularValues,
+        specialValues,
+        errorValues,
+        previousRegularValues,
+        previousSpecialValues,
+        previousErrorValues,
+        nextRegularValues,
+        nextSpecialValues,
+        nextErrorValues;
+
+    configurator(modelElementsHash['previous-step-2-action'], template, {
+      parameters: _.flattenDeep([fieldsManipulator.toRegularValues(wizard.steps[2].fields), fieldsManipulator.toSpecialValues(wizard.steps[2].fields)])
+    });
+
     _.slice(wizard.steps, 2, wizard.steps.length)
      .forEach(function (step, index, collection) {
-        var errorFields = _.map(step.fields, function (field) {
-            return [field, { label: field.label + '-error', value: field.value + '-error', type: field.type, name: field.name }];
-        });
+       previousRegularValues = index !== 0 ? regularValues : fieldsManipulator.toRegularValues(modelElementsHash['step-2-form'].fields),
+       previousSpecialValues = index !== 0 ? specialValues : fieldsManipulator.toSpecialValues(modelElementsHash['step-2-form'].fields),
+       previousErrorValues = index !== 0 ? errorValues : fieldsManipulator.toErrorValues(previousRegularValues),
+       regularValues = index !== 0 ? nextRegularValues : fieldsManipulator.toRegularValues(step.fields),
+       specialValues = index !== 0 ? nextSpecialValues : fieldsManipulator.toSpecialValues(step.fields),
+       errorValues = index !== 0 ? nextErrorValues : fieldsManipulator.toErrorValues(regularValues),
+       nextRegularValues = index !== (collection.length - 1) ? fieldsManipulator.toRegularValues(collection[index + 1]) : [],
+       nextSpecialValues = index !== (collection.length - 1) ? fieldsManipulator.toSpecialValues(collection[index + 1]) : [],
+       nextErrorValues = index !== (collection.length - 1) ? fieldsManipulator.toErrorValues(nextRegularValues) : [];
+
 
         reference['viewContainer'] = generator(template, {
           type: 'ifml.ViewContainer',
@@ -109,8 +132,8 @@ function parser(wizard){
         reference['validateAction'] = generator(template, {
           type: 'ifml.Action',
           name: 'Validate ' + step.name,
-          parameters: step.fields,
-          results: _.flattenDeep(errorFields),
+          parameters: _.flattenDeep([regularValues, specialValues]),
+          results: _.flattenDeep([errorValues, regularValues, specialValues]),
           parent: modelElementsHash['xor-view-container'].id,
           position: {
            x: modelElementsHash['validate-step-2-action'].metadata.graphics.position.x + 400 * (1 + index),
@@ -121,8 +144,8 @@ function parser(wizard){
         reference['previousAction'] = generator(template, {
           type: 'ifml.Action',
           name: 'Previous ' + step.name,
-          parameters: (index + 1) < collection.length ? collection[index + 1].fields : [],
-          results: index === 0 ? modelElementsHash['step-2-form'].fields : previous['form'].fields,
+          parameters: _.flattenDeep([nextRegularValues, nextSpecialValues]),
+          results: _.flattenDeep([previousRegularValues, previousSpecialValues]),
           parent: modelElementsHash['xor-view-container'].id,
           position: {
            x: modelElementsHash['previous-step-2-action'].metadata.graphics.position.x + 400 * (1 + index),
@@ -193,7 +216,7 @@ function parser(wizard){
         reference['toNavigationFlow'] = generator(template, {
           type: 'ifml.NavigationFlow',
           name: 'To ' + step.name,
-          fields: step.fields,
+          fields: _.flattenDeep([regularValues, specialValues]),
           vertices: [{
             x: modelElementsHash['to-step-2-navigation-flow'].metadata.graphics.vertices[0].x + 400 * (index + 1),
             y: modelElementsHash['to-step-2-navigation-flow'].metadata.graphics.vertices[0].y
@@ -204,7 +227,7 @@ function parser(wizard){
         reference['previousNavigationFlow'] = generator(template, {
           type: 'ifml.NavigationFlow',
           name: 'Previous ' + step.name,
-          fields: step.fields,
+          fields: _.flattenDeep([regularValues, specialValues]),
           vertices: [{
             x: modelElementsHash['previous-step-2-navigation-flow'].metadata.graphics.vertices[0].x + 400 * (index + 1),
             y: modelElementsHash['previous-review-navigation-flow'].metadata.graphics.vertices[0].y
@@ -221,14 +244,14 @@ function parser(wizard){
         reference['koNavigationFlow'] = generator(template, {
           type: 'ifml.NavigationFlow',
           name: 'Ko Validate ' + step.name,
-          fields: _.flattenDeep(errorFields),
+          fields: _.flattenDeep([errorValues, regularValues, specialValues]),
           source: reference['koValidateEvent'].id,
           target: reference['form'].id
         });
         reference['nextNavigationFlow'] = generator(template, {
           type: 'ifml.NavigationFlow',
           name: 'Next ' + step.name,
-          fields: step.fields,
+          fields: _.flattenDeep([regularValues, specialValues]),
           source: reference['nextEvent'].id,
           target: reference['validateAction'].id
         });

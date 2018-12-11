@@ -8,15 +8,15 @@ var _ = require('lodash'),
     idValidator = require('../../../js/ifml/utilities/validator/idValidator.js').idValidator,
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
+    fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json');
 
 function parser(inputDataValidation){
-  var template = _.cloneDeep(format);
-  var modelElementsHash = toHash(template.elements);
-
-  var dataResults = _.map(inputDataValidation.data.fields, function (field) {
-    return [field, { label: field.label + '-error', value: field.value + '-error', type: field.type, name: field.name }];
-  });
+  var template = _.cloneDeep(format),
+      modelElementsHash = toHash(template.elements),
+      regularValues = fieldsManipulator.toRegularValues(inputDataValidation.data.fields),
+      specialValues = fieldsManipulator.toSpecialValues(inputDataValidation.data.fields),
+      errorValues = fieldsManipulator.toErrorValues(regularValues);
 
   configurator(modelElementsHash['xor-view-container'], template, {
       name: inputDataValidation.name
@@ -26,15 +26,15 @@ function parser(inputDataValidation){
       fields: inputDataValidation.data.fields
   });
   configurator(modelElementsHash['validate-action'], template, {
-      parameters: _.map(inputDataValidation.data.fields,'value'),
-      results: _.flattenDeep(dataResults),
+      parameters: _.flattenDeep([regularValues, specialValues]),
+      results: _.flattenDeep([errorValues, regularValues, specialValues]),
       parent: modelElementsHash['input-data-validation-pattern-view-container'].id
   });
   configurator(modelElementsHash['send-navigation-flow'], template, {
-      fields: inputDataValidation.data.fields
+      fields: _.flattenDeep([regularValues, specialValues])
   });
   configurator(modelElementsHash['failed-navigation-flow'], template, {
-      fields: _.flattenDeep(dataResults)
+      fields: _.flattenDeep([errorValues, regularValues, specialValues])
   });
 
   return template;

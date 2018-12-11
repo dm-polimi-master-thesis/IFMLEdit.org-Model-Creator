@@ -160,21 +160,21 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
         case 'details':
             return ['id'];
         case 'list':
-            var radio = _.filter(this.get('filters'), function (f) {
+            var specialValues = _.filter(this.get('filters'), function (f) {
                   return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
                 }),
-                others = _.filter(this.get('filters'), function (f) {
+                regularValues = _.filter(this.get('filters'), function (f) {
                   return (f.type !== 'radio' && f.type !== 'checkbox');
                 });
-            return _(_.flattenDeep([_.map(this.get('filters'),'label'), _.uniq(_.map(radio,'name'))]) || []).sort().uniq(true).value();
+            return _(_.flattenDeep([_.map(regularValues,'label'), _.uniq(_.map(specialValues,'name'))]) || []).sort().uniq(true).value();
         case 'form':
-            var radio = _.filter(this.get('fields'), function (f) {
+            var specialValues = _.filter(this.get('fields'), function (f) {
                   return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
                 }),
-                others = _.filter(this.get('fields'), function (f) {
+                regularValues = _.filter(this.get('fields'), function (f) {
                   return (f.type !== 'radio' && f.type !== 'checkbox');
                 });
-            return _(_.flattenDeep([_.map(others,'label'), _.uniq(_.map(radio,'name'))]) || []).map(function (f) {
+            return _(_.flattenDeep([_.map(regularValues,'label'), _.uniq(_.map(specialValues,'name'))]) || []).map(function (f) {
                 return [f, f + '-error'];
             }).flatten().sort().value()
         default:
@@ -185,29 +185,29 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
     outputs: function () {
         switch (this.get('stereotype')) {
         case 'details':
-            var radio = _.filter(this.get('fields'), function (f) {
+            var specialValues = _.filter(this.get('fields'), function (f) {
                   return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
                 }),
-                others = _.filter(this.get('fields'), function (f) {
+                regularValues = _.filter(this.get('fields'), function (f) {
                   return (f.type !== 'radio' && f.type !== 'checkbox');
                 });
-            return _(['id']).concat(_.flattenDeep([_.map(others,'label'), _.uniq(_.map(radio,'name'))]) || []).sort().uniq(true).value();
+            return _(['id']).concat(_.flattenDeep([_.map(regularValues,'label'), _.uniq(_.map(specialValues,'name'))]) || []).sort().uniq(true).value();
         case 'list':
-            var radio = _.filter(this.get('fields'), function (f) {
+            var specialValues = _.filter(this.get('fields'), function (f) {
                   return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
                 }),
-                others = _.filter(this.get('fields'), function (f) {
+                regularValues = _.filter(this.get('fields'), function (f) {
                   return (f.type !== 'radio' && f.type !== 'checkbox');
                 });
-            return _(['id']).concat(_.flattenDeep([_.map(others,'label'), _.uniq(_.map(radio,'name'))]) || []).sort().uniq(true).value();
+            return _(['id']).concat(_.flattenDeep([_.map(regularValues,'label'), _.uniq(_.map(specialValues,'name'))]) || []).sort().uniq(true).value();
         case 'form':
-            var radio = _.filter(this.get('fields'), function (f) {
+            var specialValues = _.filter(this.get('fields'), function (f) {
                   return (f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0);
                 }),
-                others = _.filter(this.get('fields'), function (f) {
+                regularValues = _.filter(this.get('fields'), function (f) {
                   return (f.type !== 'radio' && f.type !== 'checkbox');
                 });
-            return _(_.flattenDeep([_.map(others,'label'), _.uniq(_.map(radio,'name'))]) || []).sort().uniq(true).value()
+            return _(_.flattenDeep([_.map(regularValues,'label'), _.uniq(_.map(specialValues,'name'))]) || []).sort().uniq(true).value()
         default:
             return [];
         }
