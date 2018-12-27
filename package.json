@@ -27,6 +27,7 @@
     "pm2": "^2.7.2"
   },
   "dependencies": {
+    "ask-sdk": "^2.3.0",
     "aliasify": "^2.1.0",
     "almost": "^1.0.1",
     "almost-joint": "^1.0.0-beta",
