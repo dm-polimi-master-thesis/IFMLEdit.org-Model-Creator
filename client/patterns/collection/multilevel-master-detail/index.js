@@ -48,7 +48,7 @@ function SettingsPatternViewModel(options) {
         self.selected(self.steps()[self.steps().length - 1]);
         self.stepToAdd("");
         $('#list-input').prop('disabled',false);
-        $('#collection-input').prop('disabled',false);
+        $('#collection-form').prop('disabled',false);
       }
     }
   }
@@ -96,16 +96,16 @@ function SettingsPatternViewModel(options) {
       self.listFields(self.steps()[0].fields);
       if(self.steps.indexOf(this) === (self.steps().lenght - 1)){
         $('#list-input').prop('disabled',true);
-        $('#collection-input').prop('disabled',true);
+        $('#collection-form').prop('disabled',true);
       } else {
         $('#list-input').prop('disabled',false);
-        $('#collection-input').prop('disabled',false);
+        $('#collection-form').prop('disabled',false);
       };
     } else if (self.steps().length === 0) {
       self.selected({ name: "", collection: "", fields: [] } );
       self.listFields.removeAll();
       $('#list-input').prop('disabled',true);
-      $('#collection-input').prop('disabled',true);
+      $('#collection-form').prop('disabled',true);
     }
   }
 

@@ -28,18 +28,18 @@
     <tbody>
       <tr>
         <td class="collection-name form-td-left pattern-form-input trace-line">
-          <div id="collection-list-form" class="form-group">
+          <div class="form-group">
             <span class="pattern-form-label control-label">Collection:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionListName, event: { blur: validate.bind($data, collectionListName(), '#collection-list-form') }, enable: pageListOption"/>
+              <input id="collection-list-form" class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionListName, event: { blur: validate.bind($data, collectionListName(), '#collection-list-form') }, enable: pageListOption"/>
             </div>
           </div>
         </td>
         <td class=" pattern-form-input trace-line-padding">
-          <div id="data-entry-form" class="form-group">
+          <div class="form-group">
             <span class="pattern-form-label control-label">Form Name:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: dataEntryFormName, event: { blur: validate.bind($data, dataEntryFormName(), '#data-entry-form') }, enable: dataOption"/>
+              <input id="data-entry-form" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: dataEntryFormName, event: { blur: validate.bind($data, dataEntryFormName(), '#data-entry-form') }, enable: dataOption"/>
             </div>
           </div>
         </td>
@@ -111,27 +111,27 @@
       </tr>
       <tr>
         <td class="form-td-left pattern-form-input trace-line">
-          <div id="details-form" class="form-group">
+          <div class="form-group">
             <span class="pattern-form-label control-label">Details Name:</span>
             <div class="input-group details-name">
-              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: selectedDetailsName, event: { blur: validate.bind($data, selectedDetailsName(), '#details-form') }, enable: detailsOption"/>
+              <input id="details-form" class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: selectedDetailsName, event: { blur: validate.bind($data, selectedDetailsName(), '#details-form') }, enable: detailsOption"/>
             </div>
           </div>
         </td>
       </tr>
       <tr>
         <td class="collection-name form-td-left pattern-form-input trace-line">
-          <div id="collection-details-form" class="form-group">
+          <div class="form-group">
             <span class="pattern-form-label control-label">Collection:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionDetailsName, event: { blur: validate.bind($data, collectionDetailsName(), '#collection-details-form') }, enable: detailsOption"/>
+              <input id="collection-details-form" class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionDetailsName, event: { blur: validate.bind($data, collectionDetailsName(), '#collection-details-form') }, enable: detailsOption"/>
             </div>
           </div>
         </td>
         <td class="trace-line-padding shrink td-name">
-          <div id="pattern-form" class="form-group pattern-name">
+          <div class="form-group pattern-name">
             <div class="input-group">
-              <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
+              <input id="pattern-form" class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
             </div>
           </div>
         </td>

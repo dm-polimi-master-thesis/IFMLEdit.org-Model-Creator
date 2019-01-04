@@ -45,7 +45,7 @@ function SettingsPatternViewModel(options) {
         self.stepToAdd("");
         if(self.steps().length === 1){
           $('#input-field').prop('disabled',false);
-          $('#form-name-input').prop('disabled',false);
+          $('#form-name-form').prop('disabled',false);
         }
       }
     }
@@ -84,7 +84,7 @@ function SettingsPatternViewModel(options) {
       self.selected({name: "", formName: "", fields: [] });
       self.fields.removeAll();
       $('#input-field').prop('disabled',true);
-      $('#form-name-input').prop('disabled',true);
+      $('#form-name-form').prop('disabled',true);
     }
   }
 

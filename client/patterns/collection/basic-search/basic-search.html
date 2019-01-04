@@ -12,18 +12,18 @@
     <tbody>
       <tr>
         <td class="form-td-left pattern-form-input trace-line">
-          <div id="search-form" class="form-group">
+          <div class="form-group">
             <span class="pattern-form-label control-label">Search Field:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Field Name" type="text" data-bind="textInput: searchField, event: { blur: validate.bind($data, searchField(), '#search-form') }"/>
+              <input id="search-form" class="form-control form-smooth" placeholder="Field Name" type="text" data-bind="textInput: searchField, event: { blur: validate.bind($data, searchField(), '#search-form') }"/>
             </div>
           </div>
         </td>
         <td class=" pattern-form-input trace-line-padding">
-          <div id="details-form" class="form-group">
+          <div class="form-group">
             <span class="pattern-form-label control-label">Details Name:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: selectedDetailsName, event: { blur: validate.bind($data, selectedDetailsName(), '#details-form') }"/>
+              <input id="details-form" class="form-control form-smooth" placeholder="Details Name" type="text" data-bind="textInput: selectedDetailsName, event: { blur: validate.bind($data, selectedDetailsName(), '#details-form') }"/>
             </div>
           </div>
         </td>
@@ -44,10 +44,10 @@
       </tr>
       <tr>
         <td class="collection-name form-td-left pattern-form-input trace-line">
-          <div id="collection-form" class="form-group">
+          <div class="form-group">
             <span class="pattern-form-label control-label">Collection:</span>
             <div class="input-group">
-              <input class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionName, event: { blur: validate.bind($data, collectionName(), '#collection-form') }"/>
+              <input id="collection-form" class="form-control form-smooth" placeholder="Collection Name" type="text" data-bind="textInput: collectionName, event: { blur: validate.bind($data, collectionName(), '#collection-form') }"/>
             </div>
           </div>
         </td>
@@ -93,9 +93,9 @@
       </tr>
       <tr>
         <td class="trace-line-padding">
-          <div id="pattern-form" class="form-group">
+          <div class="form-group">
             <div class="input-group">
-              <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
+              <input id="pattern-form" class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
             </div>
           </div>
         </td>

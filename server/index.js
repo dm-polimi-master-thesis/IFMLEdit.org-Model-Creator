@@ -7,11 +7,9 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     lambdaLocal = require('lambda-local'),
-    path = require('path'),
-    socket;
+    path = require('path');
 
 function createRouter(io) {
-    socket = io;
 
     var router = express.Router();
 
@@ -25,31 +23,26 @@ function createRouter(io) {
             lambdaPath: path.join(__dirname, '../client/patterns/voice-assistant/alexa-skill.js'),
             lambdaHandler: "handler",
             timeoutMs: 5000
-        }).then(done => {
-            socket.emit('notify', done);
+        }).then(response => {
+            var model = response.sessionAttributes.model;
+            io.emit(model.state, model);
             res.send(done);
-        }).catch(err => {
-            socket.emit('notify', err);
-            res.send(err);
+        }).catch(error => {
+            res.send(error);
         });
     });
 
     router.get('/example', function(req,res){
-        socket.emit('notify', {message: 'Welcome'});
+        io.emit('notify', {message: 'Welcome'});
         res.sendStatus(200);
     });
 
     router.post('/prova', function(req,res){
-        socket.emit('notify', {message: 'Welcome'});
+        io.emit('notify', {message: 'Welcome'});
         res.sendStatus(200);
     });
 
     return router;
 }
 
-function socketIo () {
-  return socket;
-}
-
 exports.createRouter = createRouter;
-exports.socketIo = socketIo;

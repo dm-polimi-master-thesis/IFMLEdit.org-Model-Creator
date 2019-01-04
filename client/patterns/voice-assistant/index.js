@@ -1,16 +1,17 @@
 var io = require('socket.io-client'),
     socket = io("http://localhost:3000"),
-    model = {type: 'e-commerce'};
+    model = {};
 
 socket.on('notify', notify);
 
-function notify(pack){
+function notify(options){
   console.log('notify');
-  //alert("Notify!");
-  //$.notify({message: pack.message}, {allow_dismiss: true, type: 'success'});
+  $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
   model = pack.sessionAttributes.model;
-  console.log(JSON.stringify(pack));
-  console.log('model',model);
+}
+
+function demo(options){
+  
 }
 
 function getModel () {

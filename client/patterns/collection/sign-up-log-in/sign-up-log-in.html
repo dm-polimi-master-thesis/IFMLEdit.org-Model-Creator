@@ -12,18 +12,18 @@
     <tbody>
       <tr>
         <td class="name-step-field pattern-form-input trace-line">
-          <div id="sign-up-name-form" class="form-group">
+          <div class="form-group">
             <span id="form-name" class="pattern-form-label">Form Name:</span>
             <div class="input-group">
-              <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: signUpFormName, event: { change: validate.bind($data, signUpFormName(), '#sign-up-name-form') }"/>
+              <input id="sign-up-name-form" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: signUpFormName, event: { change: validate.bind($data, signUpFormName(), '#sign-up-name-form') }"/>
             </div>
           </div>
         </td>
         <td class="name-step-field pattern-form-input trace-line-padding">
-          <div id="log-in-name-form" class="form-group">
+          <div class="form-group">
             <span id="form-name" class="pattern-form-label">Form Name:</span>
             <div class="input-group">
-              <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: logInFormName, event: { change: validate.bind($data, logInFormName(), '#log-in-name-form') }"/>
+              <input id="log-in-name-form" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: logInFormName, event: { change: validate.bind($data, logInFormName(), '#log-in-name-form') }"/>
             </div>
           </div>
         </td>
@@ -97,9 +97,9 @@
           </div>
         </td>
         <td class="td-pattern-name trace-line-padding">
-          <div id="pattern-form" class="form-group">
+          <div class="form-group">
             <div class="input-group">
-              <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
+              <input id="pattern-form" class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
             </div>
           </div>
         </td>

@@ -11,10 +11,10 @@
     <tbody>
       <tr>
         <td class="name-step-field pattern-form-input">
-          <div id="data-form-name" class="form-group">
+          <div class="form-group">
             <span id="form-name" class="pattern-form-label">Form Name:</span>
             <div class="input-group">
-              <input id="form-name-input" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: dataFormName, event: { change: validate.bind($data, dataFormName(), '#data-form-name') }"/>
+              <input id="data-form-name" class="form-control form-smooth" placeholder="Form Name" type="text" data-bind="textInput: dataFormName, event: { change: validate.bind($data, dataFormName(), '#data-form-name') }"/>
             </div>
           </div>
         </td>
@@ -51,9 +51,9 @@
         </td>
       <tr>
         <td class="td-pattern-name">
-          <div id="pattern-form" class="form-group">
+          <div class="form-group">
             <div class="input-group">
-              <input class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
+              <input id="pattern-form" class="form-control form-smooth form-pattern-name" placeholder="Pattern Name" type="text" data-bind="textInput: name, event: { change: validate.bind($data, name(), '#pattern-form') }"/>
             </div>
           </div>
         </td>

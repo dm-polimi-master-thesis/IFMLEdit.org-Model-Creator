@@ -5,7 +5,7 @@ const itemInterceptor = {
     process(handlerInput) {
         return new Promise((resolve, reject) => {
             var attributes = handlerInput.attributesManager.getSessionAttributes();
-            if (!attributes.model) {
+            if (!(attributes.model) && !(handlerInput.requestEnvelope.request.intent.name === 'DemoIntent')) {
                 attributes.model = getModel();
                 handlerInput.attributesManager.setSessionAttributes(attributes);
                 resolve();
@@ -45,6 +45,25 @@ const StartCreateModelIntent = {
         var model = sessionAttributes.model;
 
             model.comment = 'Well done!';
+
+        return handlerInput.responseBuilder
+            .speak(speechText + model.type)
+            .getResponse();
+    }
+};
+
+const DemoIntent = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'DemoIntent';
+    },
+    handle(handlerInput) {
+        var sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const speechText = 'With great pleasure! Visualize the model in IFMLEdit!';
+
+        var model = sessionAttributes.model;
+
+        model.state = 'demo';
 
         return handlerInput.responseBuilder
             .speak(speechText + model.type)

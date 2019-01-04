@@ -69,7 +69,7 @@ gulp.task('vendor', function () {
                 './node_modules/jointjs/dist/joint.js',
                 './node_modules/bootstrap/dist/js/bootstrap.js',
                 './node_modules/bootstrap-notify/bootstrap-notify.js',
-                './node_modules/file-saver/FileSaver.js',
+                './node_modules/file-saver/dist/FileSaver.js',
                 './node_modules/almost/dist/almost.js',
                 './node_modules/almost-joint/dist/almost-joint.js'])
                 .pipe(gulpif(!production, sourcemaps.init()))
@@ -384,16 +384,16 @@ gulp.task('demo-mobile-index', function () {
         .pipe(gulp.dest('./public/mobile/js'));
 });
 
-gulp.task('demo-web-server', ['demo-web-server-index', 'demo-web-server-css', 'demo-web-server-js']);
-gulp.task('demo-web-client', ['demo-web-client-index', 'demo-web-client-html', 'demo-web-client-css', 'demo-web-client-js']);
-gulp.task('demo-mobile', ['demo-mobile-index', 'demo-mobile-html', 'demo-mobile-css', 'demo-mobile-images', 'demo-mobile-js']);
+gulp.task('demo-web-server', gulp.parallel('demo-web-server-index', 'demo-web-server-css', 'demo-web-server-js'));
+gulp.task('demo-web-client', gulp.parallel('demo-web-client-index', 'demo-web-client-html', 'demo-web-client-css', 'demo-web-client-js'));
+gulp.task('demo-mobile', gulp.parallel('demo-mobile-index', 'demo-mobile-html', 'demo-mobile-css', 'demo-mobile-images', 'demo-mobile-js'));
 
 if (production) {
-    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns', 'voice-assistant', 'alexa-skill']);
+    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns', 'voice-assistant', 'alexa-skill'));
 } else {
-    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns', 'voice-assistant', 'alexa-skill']);
+    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns', 'voice-assistant', 'alexa-skill'));
 }
 
-gulp.task('default', ['clean'], function () {
-    return gulp.start('build');
+gulp.task('default', gulp.series('clean', 'build'), function () {
+  return;
 });
