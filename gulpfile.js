@@ -91,6 +91,34 @@ gulp.task('vendor', function () {
                 .pipe(rename({suffix: '.min'}))
                 .pipe(gulpif(!production, sourcemaps.write('./')))
                 .pipe(gulp.dest('./public/js')),
+        gulp.src('./node_modules/ask-sdk/dist/index.js')
+                .pipe(rename('ask-sdk.js'))
+                .pipe(gulpif(!production, sourcemaps.init()))
+                .pipe(minifyjs())
+                .pipe(rename({suffix: '.min'}))
+                .pipe(gulpif(!production, sourcemaps.write('./')))
+                .pipe(gulp.dest('./public/js')),
+        gulp.src('./node_modules/ask-sdk-core/dist/index.js')
+                .pipe(rename('ask-sdk-core.js'))
+                .pipe(gulpif(!production, sourcemaps.init()))
+                .pipe(minifyjs())
+                .pipe(rename({suffix: '.min'}))
+                .pipe(gulpif(!production, sourcemaps.write('./')))
+                .pipe(gulp.dest('./public/js')),
+        gulp.src('./node_modules/socket.io/lib/socket.js')
+                .pipe(rename('socket.io.js'))
+                .pipe(gulpif(!production, sourcemaps.init()))
+                .pipe(minifyjs())
+                .pipe(rename({suffix: '.min'}))
+                .pipe(gulpif(!production, sourcemaps.write('./')))
+                .pipe(gulp.dest('./public/js')),
+        gulp.src('./node_modules/socket.io-client/dist/socket.io.js')
+                .pipe(rename('socket.io-client.js'))
+                .pipe(gulpif(!production, sourcemaps.init()))
+                .pipe(minifyjs())
+                .pipe(rename({suffix: '.min'}))
+                .pipe(gulpif(!production, sourcemaps.write('./')))
+                .pipe(gulp.dest('./public/js')),
         gulp.src(['./node_modules/jointjs/dist/joint.css',
                 './node_modules/bootstrap/dist/css/bootstrap.css',
                 './node_modules/almost-joint/dist/almost-joint.css'])
@@ -146,6 +174,48 @@ gulp.task('index', function () {
         })))
         .pipe(gulpif(production, minifyjs()))
         .pipe(gulp.dest('./public/js'));
+});
+
+gulp.task('voice-assistant', function () {
+    return browserify({
+        entries: './client/patterns/voice-assistant/index.js',
+        debug: !production,
+    })
+        .transform('exposify', {
+            expose: {
+                'jquery': '$'
+            }
+        })
+        .bundle()
+        .pipe(source('index.js'))
+        .pipe(buffer())
+        .pipe(gulpif(!production, extractor({
+            basedir: path.join(__dirname, './patterns/voice-assistant/'),
+            fakeFix: true
+        })))
+        .pipe(gulpif(production, minifyjs()))
+        .pipe(gulp.dest('./public/patterns/voice-assistant'));
+});
+
+gulp.task('alexa-skill', function () {
+    return browserify({
+        entries: './client/patterns/voice-assistant/alexa-skill.js',
+        debug: !production,
+    })
+        .transform('exposify', {
+            expose: {
+                'jquery': '$'
+            }
+        })
+        .bundle()
+        .pipe(source('alexa-skill.js'))
+        .pipe(buffer())
+        .pipe(gulpif(!production, extractor({
+            basedir: path.join(__dirname, './patterns/voice-assistant/'),
+            fakeFix: true
+        })))
+        .pipe(gulpif(production, minifyjs()))
+        .pipe(gulp.dest('./public/patterns/voice-assistant'));
 });
 
 gulp.task('sass', function () {
@@ -319,9 +389,9 @@ gulp.task('demo-web-client', ['demo-web-client-index', 'demo-web-client-html', '
 gulp.task('demo-mobile', ['demo-mobile-index', 'demo-mobile-html', 'demo-mobile-css', 'demo-mobile-images', 'demo-mobile-js']);
 
 if (production) {
-    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns']);
+    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns', 'voice-assistant', 'alexa-skill']);
 } else {
-    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns']);
+    gulp.task('build', ['html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns', 'voice-assistant', 'alexa-skill']);
 }
 
 gulp.task('default', ['clean'], function () {

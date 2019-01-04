@@ -1,57 +1,21 @@
-// Copyright (c) 2018, the IFMLEdit project authors. Please see the
-// AUTHORS file for details. All rights reserved. Use of this source code is
-// governed by the MIT license that can be found in the LICENSE file.
-/*jslint node: true, nomen: true */
-"use strict";
+var io = require('socket.io-client'),
+    socket = io("http://localhost:3000"),
+    model = {type: 'e-commerce'};
 
-var Alexa = require('ask-sdk-core'),
-    speakText,
-    repromptText;
+socket.on('notify', notify);
 
-const LaunchRequestHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
-  },
-  handle(handlerInput) {
-    speechText = "Welcome to the IFML Model Creator tool. How can I help you?";
-    repromptText = "Do you want to build a model for an application?";
+function notify(pack){
+  console.log('notify');
+  //alert("Notify!");
+  //$.notify({message: pack.message}, {allow_dismiss: true, type: 'success'});
+  model = pack.sessionAttributes.model;
+  console.log(JSON.stringify(pack));
+  console.log('model',model);
+}
 
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(repromptText)
-      .withSimpleCard('IFML Model Creator Tool',speechText
-      .getResponse();
-  }
-};
+function getModel () {
+  return model;
+}
 
-const CreateModelIntent = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' && handlerInput.requestEnvelope.request.name = 'CreateModelIntent';
-  },
-  handle(handlerInput) {
-    speechText = "Welcome to the IFML Model Creator tool. Let's start: the application requires to be registered in order to perform operations?";
-    repromptText = "The application requires to be registered in order to perform operations?";
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(repromptText)
-      .withSimpleCard('IFML Model Creator Tool',speechText)
-      .getResponse();
-  }
-};
-
-const HelpIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
-  },
-  handle(handlerInput) {
-    const speechText = 'You can ask to help you to build a model for a new application!';
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .withSimpleCard('IFML Model Creator Tool', speechText)
-      .getResponse();
-  }
-};
+exports.notify = notify;
+exports.getModel = getModel;
