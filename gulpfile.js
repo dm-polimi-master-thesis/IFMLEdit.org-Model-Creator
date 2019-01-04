@@ -69,7 +69,7 @@ gulp.task('vendor', function () {
                 './node_modules/jointjs/dist/joint.js',
                 './node_modules/bootstrap/dist/js/bootstrap.js',
                 './node_modules/bootstrap-notify/bootstrap-notify.js',
-                './node_modules/file-saver/dist/FileSaver.js',
+                './node_modules/file-saver/FileSaver.js',
                 './node_modules/almost/dist/almost.js',
                 './node_modules/almost-joint/dist/almost-joint.js'])
                 .pipe(gulpif(!production, sourcemaps.init()))
