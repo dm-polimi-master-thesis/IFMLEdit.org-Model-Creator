@@ -32,7 +32,9 @@ var _ = require('lodash'),
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
     AException = require('almost').Exception,
-    partialModelValidator = require('./ifml/utilities/validator/partialModelValidator.js').partialModelValidator;
+    partialModelValidator = require('./ifml/utilities/validator/partialModelValidator.js').partialModelValidator,
+    askTemplates = require('./ask-templates.js').templates,
+    io = require('socket.io-client');
 
 /**
   * Return a function to generate an element
@@ -638,3 +640,106 @@ $('#mobile .edit-db').click(function () {
 });
 
 $('#pcn').removeClass('active');
+
+
+var socket = io("http://localhost:3000");
+
+socket.on('notify', notify);
+socket.on('demo', demo);
+
+function notify(pack){
+  console.log('notify');
+  $.notify({message: "Welcome"}, {allow_dismiss: true, type: 'success'});
+}
+
+function demo(options) {
+  $.notify({message: "Demo"}, {allow_dismiss: true, type: 'success'});
+  var template = askTemplates[options.template].model;
+  voiceAssistantModelGenerator(template);
+}
+
+function voiceAssistantModelGenerator (template) {
+  try {
+      ifmlBoard.clearHistory();
+
+      function boundingBox(cells) {
+          var box = {
+              x: {
+                  min: Number.MAX_SAFE_INTEGER,
+                  max: Number.MIN_SAFE_INTEGER
+              },
+              y: {
+                  min: Number.MAX_SAFE_INTEGER,
+                  max: Number.MIN_SAFE_INTEGER
+              }
+          };
+          cells.map(function(element) {
+              if(element.attributes.type == 'ifml.ViewContainer' ||
+                  element.attributes.type == 'ifml.Action'){
+                  if (element.attributes.position.x < box.x.min) {
+                      box.x.min = element.attributes.position.x;
+                  }
+                  if (element.attributes.position.y < box.y.min) {
+                      box.y.min = element.attributes.position.y;
+                  }
+                  if (element.attributes.position.x + element.attributes.size.width > box.x.max) {
+                      box.x.max = element.attributes.position.x + element.attributes.size.width;
+                  }
+                  if (element.attributes.position.y + element.attributes.size.height > box.y.max) {
+                      box.y.max = element.attributes.position.y + element.attributes.size.height;
+                  }
+              }
+          });
+          return box;
+      }
+      var start = new Date(),
+          loaded_at = new Date();
+
+      var boardBB = {
+          x: {
+              min: 0,
+              max: 0
+          },
+          y: {
+              min: 0,
+              max: 0
+          }
+      };
+
+      var toBeAdded = ifml.fromJSON(template),
+          toBeAddedBB = boundingBox(toBeAdded);
+
+      if (ifmlModel.attributes.cells.models.length > 0) {
+          boardBB = boundingBox(ifmlModel.attributes.cells.models);
+          toBeAdded = ifml.fromJSON(partialModelValidator(ifml.toJSON(ifmlModel), template));
+      }
+
+      toBeAdded = _(toBeAdded).map(function(model) {
+          if (model.attributes.position) {
+              model.attributes.position.x += boardBB.x.max - toBeAddedBB.x.min + 20;
+              model.attributes.position.y += boardBB.y.min - toBeAddedBB.y.min;
+          }
+          if (model.attributes.vertices) {
+              for (var i = 0; i<model.attributes.vertices.length; i++){
+                  model.attributes.vertices[i].x += boardBB.x.max - toBeAddedBB.x.min + 20;
+                  model.attributes.vertices[i].y += boardBB.y.min - toBeAddedBB.y.min;
+              }
+          }
+          return model;
+      }).value();
+
+      ifmlModel.addCells(toBeAdded);
+      ifmlBoard.clearHistory();
+
+      $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
+  } catch (exception) {
+      console.log(exception);
+      ifmlBoard.clearHistory();
+      $.notify({message: 'Invalid input file!'}, {allow_dismiss: true, type: 'danger'});
+      return;
+  }
+
+  ifmlBoard.zoomE();
+
+  return false;
+}
