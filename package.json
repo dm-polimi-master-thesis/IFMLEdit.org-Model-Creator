@@ -10,7 +10,8 @@
     "postinstall": "npm run build",
     "start": "pm2 start --name=IFMLEdit.org index.js",
     "poststart": "node -e \"require('open')('http://localhost:3000')\"",
-    "stop": "pm2 stop IFMLEdit.org"
+    "stop": "pm2 stop IFMLEdit.org",
+    "dev": "nodemon --exec node index"
   },
   "repository": {
     "type": "git",

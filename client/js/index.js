@@ -647,13 +647,11 @@ var socket = io("http://localhost:3000");
 socket.on('notify', notify);
 socket.on('demo', demo);
 
-function notify(pack){
-  console.log('notify');
-  $.notify({message: "Welcome"}, {allow_dismiss: true, type: 'success'});
+function notify(options){
+  $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
 }
 
 function demo(options) {
-  $.notify({message: "Demo"}, {allow_dismiss: true, type: 'success'});
   var template = askTemplates[options.template].model;
   voiceAssistantModelGenerator(template);
 }

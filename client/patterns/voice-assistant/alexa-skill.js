@@ -1,17 +1,34 @@
-var Alexa = require('ask-sdk-core');
+var Alexa = require('ask-sdk-core'),
+    _ = require('lodash');
+
+const cleanAttributesInterceptor = {
+  process(handlerInput) {
+      return new Promise((resolve, reject) => {
+          var attributes = handlerInput.attributesManager.getSessionAttributes();
+          if (attributes.demo) {
+              attributes.demo = undefined;
+          }
+          if(attributes.notify) {
+              attributes.notify = undefined;
+          }
+
+          handlerInput.attributesManager.setSessionAttributes(attributes);
+          resolve();
+      });
+  }
+};
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speechText = 'Welcome to IFML model creator!';
-        var sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        var speechText = 'Welcome to IFML model creator!',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        sessionAttributes.options = {
-          state: 'notify',
-          message: 'Welcome!',
-          messageType: 'success'
+        sessionAttributes.notify = {
+            message: 'Welcome!',
+            messageType: 'success'
         };
 
         return handlerInput.responseBuilder
@@ -21,19 +38,23 @@ const LaunchRequestHandler = {
     }
 };
 
-const DemoModelIntent = {
+const DemoModelIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
             && handlerInput.requestEnvelope.request.intent.name === 'DemoModelIntent';
     },
     handle(handlerInput) {
-        const speechText = 'With great pleasure! Visualize the model in IFMLEdit!';
-        var sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        var speechText = 'With great pleasure! Visualize the model in IFMLEdit!',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        sessionAttributes.options = {
-            state: 'demo',
-            template: 'demo'
+        sessionAttributes.notify = {
+            message: 'Demo!',
+            messageType: 'success'
         };
+
+        sessionAttributes.demo = {
+            template: 'demo'
+        }
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -42,14 +63,173 @@ const DemoModelIntent = {
     }
 };
 
-const StartCreateModelIntent = {
+const CreateModelIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'StartCreateModelIntent';
+            && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
+            && !handlerInput.requestEnvelope.request.intent.slots.process.value;
     },
     handle(handlerInput) {
         var sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        const speechText = 'Hello from IFML Model Creator! The model type is: ';
+
+        sessionAttributes.notify = {
+            message: 'Let\'s start!',
+            messageType: 'success'
+        };
+
+        return handlerInput.responseBuilder
+            .addDelegateDirective()
+            .getResponse();
+    }
+};
+
+const GuidedModelIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
+            && handlerInput.requestEnvelope.request.intent.slots.process.value
+            && handlerInput.requestEnvelope.request.intent.slots.process.value === 'guided'
+            && !handlerInput.requestEnvelope.request.intent.slots.purpose.value;
+    },
+    handle(handlerInput) {
+        var speechText = 'What is the primary purpose of the application? Show and sell products, share contents or ask people to collaborate on some projects?',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        sessionAttributes.notify = {
+            message: 'What is the primary purpose?',
+            messageType: 'success'
+        };
+
+        sessionAttributes.model = {
+            type: '',
+            pattern: [],
+        };
+
+        return handlerInput.responseBuilder
+            .addDelegateDirective()
+            .getResponse();
+    }
+};
+
+const EcommerceModelIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
+            && handlerInput.requestEnvelope.request.intent.slots.purpose.value
+            && handlerInput.requestEnvelope.request.intent.slots.purpose.value === 'show and sell products'
+            && !handlerInput.attributesManager.getSessionAttributes().nextStep;
+    },
+    handle(handlerInput) {
+        var speechText = 'The products that you intend to sell are homogeneous or require to be divided into categories and sub-categories?',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        sessionAttributes.notify = {
+            message: 'E-commerce',
+            messageType: 'success'
+        };
+
+        sessionAttributes.model.type = 'e-commerce';
+
+        sessionAttributes.nextStep = 'master-details-pattern-handler';
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .addElicitSlotDirective('masterDetailsPattern')
+            .getResponse();
+    }
+};
+
+
+const MasterDetailsModelIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
+            && handlerInput.attributesManager.getSessionAttributes().nextStep
+            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'master-details-pattern-handler'
+    },
+    handle(handlerInput) {
+        var speechText = 'Do you want to allow or deny reviews to the products?',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        if (_.includes(handlerInput.requestEnvelope.request.intent.slots.masterDetailsPattern.value,'categories')) {
+            sessionAttributes.model.pattern.push('multilevel-master-details','restricted-search');
+            sessionAttributes.notify = {
+              message: 'Multilevel Master Details',
+              messageType: 'success'
+            };
+        } else {
+            sessionAttributes.model.pattern.push('master-details','basic-search');
+            sessionAttributes.notify = {
+              message: 'Master Details',
+              messageType: 'success'
+            };
+        }
+
+        sessionAttributes.nextStep = 'comment-content-manager-pattern-handler'
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .getResponse();
+    }
+};
+
+const CommentsContentManagementPatternModelIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
+            && handlerInput.attributesManager.getSessionAttributes().nextStep
+            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'comment-content-manager-pattern-handler'
+    },
+    handle(handlerInput) {
+        var speechText = 'It would be nice if users could save their favorite products on a wish list. What do you think about it?',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        if (handlerInput.requestEnvelope.request.intent.slots.masterDetailsPattern.value === 'allow') {
+            sessionAttributes.model.pattern.push('comment-content-management-pattern');
+            sessionAttributes.notify = {
+              message: 'Allow comments!',
+              messageType: 'success'
+            };
+        } else {
+            sessionAttributes.notify = {
+              message: 'Deny comments!',
+              messageType: 'success'
+            };
+        }
+
+        sessionAttributes.nextStep = 'favorite-content-manager-pattern-handler'
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .getResponse();
+    }
+};
+
+const FavoriteContentManagementPatternModelIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
+            && handlerInput.attributesManager.getSessionAttributes().nextStep
+            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'favorite-content-manager-pattern-handler'
+    },
+    handle(handlerInput) {
+        var speechText = '',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        if (handlerInput.requestEnvelope.request.intent.slots.masterDetailsPattern.value === 'allow') {
+            sessionAttributes.model.pattern.push('favorite-content-management-pattern');
+            sessionAttributes.notify = {
+              message: 'Allow wish list!',
+              messageType: 'success'
+            };
+        } else {
+            sessionAttributes.notify = {
+              message: 'Deny wish list!',
+              messageType: 'success'
+            };
+        }
+
+        sessionAttributes.nextStep = 'wizard-pattern-handler'
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -63,7 +243,13 @@ const HelpIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speechText = 'You can say hello to me!';
+        var speechText = 'You can say hello to me!',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        sessionAttributes.notify = {
+          message: 'Help!',
+          messageType: 'warning'
+        };
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -79,7 +265,13 @@ const CancelAndStopIntentHandler = {
                 handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speechText = 'Goodbye!';
+        var speechText = 'Goodbye!',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        sessionAttributes.notify = {
+          message: 'Goodbye!',
+          messageType: 'success'
+        };
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -92,7 +284,13 @@ const SessionEndedRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
     },
     handle(handlerInput) {
-        console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
+
+        var sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        sessionAttributes.notify = {
+          message: 'Session Ended!',
+          messageType: 'success'
+        };
 
         return handlerInput.responseBuilder.getResponse();
     },
@@ -103,11 +301,18 @@ const ErrorHandler = {
         return true;
     },
     handle(handlerInput, error) {
-        console.log(`Error handled: ${error.message}`);
+
+        var speechText = 'Sorry, I can\'t understand the command. Please say again.',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        sessionAttributes.notify = {
+          message: 'Error!',
+          messageType: 'danger'
+        };
 
         return handlerInput.responseBuilder
-            .speak('Sorry, I can\'t understand the command. Please say again.')
-            .reprompt('Sorry, I can\'t understand the command. Please say again.')
+            .speak(speechText)
+            .reprompt(speechText)
             .getResponse();
     },
 };
@@ -117,11 +322,17 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
     .addRequestHandlers(
         LaunchRequestHandler,
-        DemoModelIntent,
-        StartCreateModelIntent,
+        DemoModelIntentHandler,
+        CreateModelIntentHandler,
+        GuidedModelIntentHandler,
+        EcommerceModelIntentHandler,
+        MasterDetailsModelIntentHandler,
+        CommentsContentManagementPatternModelIntentHandler,
+        FavoriteContentManagementPatternModelIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler
     )
+    .addRequestInterceptors(cleanAttributesInterceptor)
     .addErrorHandlers(ErrorHandler)
     .lambda();

@@ -26,8 +26,17 @@ function createRouter(io) {
             lambdaHandler: "handler",
             timeoutMs: 5000
         }).then(done => {
-            var options = done.sessionAttributes.options;
-            socket.emit(options.state, options);
+            var options = done.sessionAttributes;
+
+            if(options.notify){
+                socket.emit('notify', options.notify);
+            }
+            if(options.info){
+                socket.emit('info', options.info);
+            }
+            if(options.demo){
+                socket.emit('demo', options.demo);
+            }
             res.send(done);
         }).catch(err => {
             socket.emit('notify', err);

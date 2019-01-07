@@ -1,0 +1,419 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "model creator",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "CreateModelIntent",
+                    "slots": [
+                        {
+                            "name": "process",
+                            "type": "IFML_PROCESS",
+                            "samples": [
+                                "I want some {process}",
+                                "I need some {process}",
+                                "I need to be {process}",
+                                "I want to be {process}",
+                                "{process}",
+                                "I need only some {process}",
+                                "some {process}",
+                                "I want to build a {process} model",
+                                "I want to build the model {process}"
+                            ]
+                        },
+                        {
+                            "name": "purpose",
+                            "type": "IFML_APPLICATION_TYPE",
+                            "samples": [
+                                "The purpose of the application must be {purpose}",
+                                "The purpose of the application is to {purpose}",
+                                "I need to {purpose}",
+                                "The application must {purpose}",
+                                "The application need to {purpose}",
+                                "I want to {purpose}"
+                            ]
+                        },
+                        {
+                            "name": "sharing",
+                            "type": "IFML_SHARING_CONTENT"
+                        },
+                        {
+                            "name": "masterDetailsPattern",
+                            "type": "IFML_MASTER_DETAILS_PATTERN",
+                            "samples": [
+                                "They will be divided in {masterDetailsPattern}",
+                                "They will be {masterDetailsPattern}",
+                                "They are {masterDetailsPattern}",
+                                "They must be divided in {masterDetailsPattern}",
+                                "They are of the {masterDetailsPattern}",
+                                "They will be of the {masterDetailsPattern}",
+                                "They are relative to the {masterDetailsPattern}",
+                                "They require to be divided in {masterDetailsPattern}",
+                                "They are divided in {masterDetailsPattern}"
+                            ]
+                        },
+                        {
+                            "name": "crowdPolicy",
+                            "type": "IFML_CROWD_POLICY"
+                        },
+                        {
+                            "name": "commentPolicy",
+                            "type": "IFML_COMMENT_POLICY",
+                            "samples": [
+                                "The application must {commentPolicy} comments",
+                                "The application must {commentPolicy} reviews",
+                                "I want to {commentPolicy} reviews",
+                                "I want to {commentPolicy} comments"
+                            ]
+                        },
+                        {
+                            "name": "favorite_policy",
+                            "type": "IFML_FAVORITE_POLICY",
+                            "samples": [
+                                "No {favorite_policy}",
+                                "Yes {favorite_policy}",
+                                "You are right {favorite_policy}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "I want to build a {process} model",
+                        "I want to build an {process} model",
+                        "I want to build a model with {process}",
+                        "help me to build a model with {process}",
+                        "help me to build an {process} model",
+                        "{process} me in the building of an application model",
+                        "{process} me in the building of a model for an application",
+                        "{process} me in the building of a model",
+                        "I want to build a model",
+                        "I want to build an application",
+                        "help me to build a model",
+                        "help me to build an application",
+                        "I want to create an application",
+                        "help me to create an application",
+                        "help me to create a model",
+                        "I want to create a model",
+                        "help me to create an application with IFML Edit",
+                        "I want to create an application with IFML Edit"
+                    ]
+                },
+                {
+                    "name": "DemoModelIntent",
+                    "slots": [],
+                    "samples": [
+                        "let's see a demo",
+                        "give me a demonstration",
+                        "show me a demonstration",
+                        "show me a demo"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "IFML_APPLICATION_TYPE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "share contents",
+                                "synonyms": [
+                                    "share"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "show and sell products",
+                                "synonyms": [
+                                    "show and sell products",
+                                    "sell products",
+                                    "show products",
+                                    "commercial",
+                                    "e-commerce"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "collaborate",
+                                "synonyms": [
+                                    "crowdsourcing",
+                                    "collaboration"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_PROCESS",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "authonomous",
+                                "synonyms": [
+                                    "independently",
+                                    "advice",
+                                    "independent",
+                                    "specifics"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "guided",
+                                "synonyms": [
+                                    "guide"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_SHARING_CONTENT",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "posts"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "articles"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_MASTER_DETAILS_PATTERN",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "categories",
+                                "synonyms": [
+                                    "categories and subcategories",
+                                    "subcategories",
+                                    "multilevel master details"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "homogeneous",
+                                "synonyms": [
+                                    "same topic",
+                                    "master details"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_CROWD_POLICY",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "publish"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "perform"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_COMMENT_POLICY",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "deny",
+                                "synonyms": [
+                                    "deny comment",
+                                    "cannot comment",
+                                    "deny review",
+                                    "deny",
+                                    "cannot review"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "allow",
+                                "synonyms": [
+                                    "allow review",
+                                    "permit review",
+                                    "allow comment",
+                                    "permit"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_FAVORITE_POLICY",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "deny",
+                                "synonyms": [
+                                    "no"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "allow",
+                                "synonyms": [
+                                    "yes"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "CreateModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "process",
+                            "type": "IFML_PROCESS",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.634400130083.224511035751"
+                            }
+                        },
+                        {
+                            "name": "purpose",
+                            "type": "IFML_APPLICATION_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1317178158731.994444446081"
+                            }
+                        },
+                        {
+                            "name": "sharing",
+                            "type": "IFML_SHARING_CONTENT",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "masterDetailsPattern",
+                            "type": "IFML_MASTER_DETAILS_PATTERN",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1347960586431.262751947557"
+                            }
+                        },
+                        {
+                            "name": "crowdPolicy",
+                            "type": "IFML_CROWD_POLICY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": ""
+                            }
+                        },
+                        {
+                            "name": "commentPolicy",
+                            "type": "IFML_COMMENT_POLICY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1500777218780.730792316230"
+                            }
+                        },
+                        {
+                            "name": "favorite_policy",
+                            "type": "IFML_FAVORITE_POLICY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1500777218780.1203992827892"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.634400130083.224511035751",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you need to be guided or receive some advice?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Do you need to be guided or would you like to receive just some advice to build your model independently?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1317178158731.994444446081",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "The primary purpose of the application is to show and sell products, share content or ask people to collaborate on some project?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1347960586431.262751947557",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you need a master detail pattern or a multilevel master detail pattern?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1500777218780.730792316230",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you want to deny or allow reviews to the products?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1500777218780.1203992827892",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "It would be nice if users could save their favorite products on a wish list. What do you think about it?"
+                    }
+                ]
+            }
+        ]
+    }
+}
