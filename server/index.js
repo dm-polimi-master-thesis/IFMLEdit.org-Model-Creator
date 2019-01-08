@@ -31,11 +31,11 @@ function createRouter(io) {
             if(options.notify){
                 socket.emit('notify', options.notify);
             }
-            if(options.info){
-                socket.emit('info', options.info);
-            }
             if(options.demo){
                 socket.emit('demo', options.demo);
+            }
+            if(options.state && options.state === 'COMPLETED'){
+                socket.emit(options.model.type, options.model);
             }
             res.send(done);
         }).catch(err => {

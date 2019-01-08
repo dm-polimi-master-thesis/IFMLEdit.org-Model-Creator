@@ -56,6 +56,8 @@ const DemoModelIntentHandler = {
             template: 'demo'
         }
 
+        sessionAttributes.state = 'IN_PROGRESS'
+
         return handlerInput.responseBuilder
             .speak(speechText)
             .reprompt(speechText)
@@ -145,10 +147,10 @@ const MasterDetailsModelIntentHandler = {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
             && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
             && handlerInput.attributesManager.getSessionAttributes().nextStep
-            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'master-details-pattern-handler'
+            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'master-details-pattern-handler';
     },
     handle(handlerInput) {
-        var speechText = 'Do you want to allow or deny reviews to the products?',
+        var speechText = 'Do you want to allow or deny reviews of the products?',
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         if (_.includes(handlerInput.requestEnvelope.request.intent.slots.masterDetailsPattern.value,'categories')) {
@@ -165,10 +167,11 @@ const MasterDetailsModelIntentHandler = {
             };
         }
 
-        sessionAttributes.nextStep = 'comment-content-manager-pattern-handler'
+        sessionAttributes.nextStep = 'comment-content-manager-pattern-handler';
 
         return handlerInput.responseBuilder
             .speak(speechText)
+            .addElicitSlotDirective('commentPolicy')
             .getResponse();
     }
 };
@@ -178,29 +181,31 @@ const CommentsContentManagementPatternModelIntentHandler = {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
             && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
             && handlerInput.attributesManager.getSessionAttributes().nextStep
-            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'comment-content-manager-pattern-handler'
+            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'comment-content-manager-pattern-handler';
     },
     handle(handlerInput) {
         var speechText = 'It would be nice if users could save their favorite products on a wish list. What do you think about it?',
-            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes(),
+            answer = handlerInput.requestEnvelope.request.intent.slots.commentPolicy.value;
 
-        if (handlerInput.requestEnvelope.request.intent.slots.masterDetailsPattern.value === 'allow') {
+        if (answer === 'allow' || answer === 'permit' || answer === 'yes') {
             sessionAttributes.model.pattern.push('comment-content-management-pattern');
             sessionAttributes.notify = {
               message: 'Allow comments!',
               messageType: 'success'
             };
-        } else {
+        } else if (answer === 'deny' || answer === 'cannot' || answer === 'no') {
             sessionAttributes.notify = {
               message: 'Deny comments!',
               messageType: 'success'
             };
         }
 
-        sessionAttributes.nextStep = 'favorite-content-manager-pattern-handler'
+        sessionAttributes.nextStep = 'favorite-content-manager-pattern-handler';
 
         return handlerInput.responseBuilder
             .speak(speechText)
+            .addElicitSlotDirective('favoritePolicy')
             .getResponse();
     }
 };
@@ -210,26 +215,63 @@ const FavoriteContentManagementPatternModelIntentHandler = {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
             && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
             && handlerInput.attributesManager.getSessionAttributes().nextStep
-            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'favorite-content-manager-pattern-handler'
+            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'favorite-content-manager-pattern-handler';
     },
     handle(handlerInput) {
-        var speechText = '',
-            sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        var speechText = 'The payment procedure is managed through a wizard pattern that progressively require information to the customer. It\'s good for you or do you want to create your personal procedure independently?',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes(),
+            answer = handlerInput.requestEnvelope.request.intent.slots.favoritePolicy.value;
 
-        if (handlerInput.requestEnvelope.request.intent.slots.masterDetailsPattern.value === 'allow') {
+        if (answer === 'allow' || answer === 'good idea' || answer === 'great idea' || answer === 'okay' || answer === 'yes') {
             sessionAttributes.model.pattern.push('favorite-content-management-pattern');
             sessionAttributes.notify = {
               message: 'Allow wish list!',
               messageType: 'success'
             };
-        } else {
+        } else if (answer === 'deny' || answer === 'bad idea' || answer === 'no') {
             sessionAttributes.notify = {
               message: 'Deny wish list!',
               messageType: 'success'
             };
         }
 
-        sessionAttributes.nextStep = 'wizard-pattern-handler'
+        sessionAttributes.nextStep = 'wizard-pattern-handler';
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .addElicitSlotDirective('wizardPolicy')
+            .getResponse();
+    }
+};
+
+const WizardPatternModelIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'CreateModelIntent'
+            && handlerInput.attributesManager.getSessionAttributes().nextStep
+            && handlerInput.attributesManager.getSessionAttributes().nextStep === 'wizard-pattern-handler';
+    },
+    handle(handlerInput) {
+        var speechText = 'Great! I think we have finished. Visualize the result in IFMLEdit!',
+            sessionAttributes = handlerInput.attributesManager.getSessionAttributes(),
+            answer = handlerInput.requestEnvelope.request.intent.slots.wizardPolicy.value;
+
+        if (answer === 'default' || answer === 'good' || answer === 'great' || answer === 'okay' || answer === 'yes') {
+            sessionAttributes.model.pattern.push('wizard-pattern');
+            sessionAttributes.notify = {
+              message: 'Default wizard payment procedure!',
+              messageType: 'success'
+            };
+        } else if (answer === 'personal' || answer === 'my' || answer === 'no') {
+            sessionAttributes.notify = {
+              message: 'Personal wizard payment procedure!',
+              messageType: 'success'
+            };
+        }
+
+        handlerInput.requestEnvelope.request.dialogState = 'COMPLETED';
+
+        sessionAttributes.state = 'COMPLETED';
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -329,6 +371,7 @@ exports.handler = skillBuilder
         MasterDetailsModelIntentHandler,
         CommentsContentManagementPatternModelIntentHandler,
         FavoriteContentManagementPatternModelIntentHandler,
+        WizardPatternModelIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler

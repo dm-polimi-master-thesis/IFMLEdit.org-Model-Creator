@@ -646,6 +646,7 @@ var socket = io("http://localhost:3000");
 
 socket.on('notify', notify);
 socket.on('demo', demo);
+socket.on('e-commerce',ecommerce);
 
 function notify(options){
   $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -653,6 +654,21 @@ function notify(options){
 
 function demo(options) {
   var template = askTemplates[options.template].model;
+  voiceAssistantModelGenerator(template);
+}
+
+function ecommerce(options) {
+  var name = 'ecommerce-',
+      pattern = options.pattern;
+
+  name += _.includes(pattern,'multilevel-master-details') ? '1' : '0';
+  name += _.includes(pattern,'comment-content-management-pattern') ? '1' : '0';
+  name += _.includes(pattern,'favorite-content-management-pattern') ? '1' : '0';
+  name += _.includes(pattern,'wizard-pattern') ? '1' : '0';
+
+  console.log(name);
+
+  var template = askTemplates[name].model;
   voiceAssistantModelGenerator(template);
 }
 
