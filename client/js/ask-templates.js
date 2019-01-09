@@ -36,6 +36,10 @@ templates['ecommerce-1011'] = { model: require('../patterns/voice-assistant/type
 templates['ecommerce-1100'] = { model: require('../patterns/voice-assistant/types/e-commerce/ecommerce-1100.json')},
 templates['ecommerce-1101'] = { model: require('../patterns/voice-assistant/types/e-commerce/ecommerce-1101.json')},
 templates['ecommerce-1110'] = { model: require('../patterns/voice-assistant/types/e-commerce/ecommerce-1110.json')},
-templates['ecommerce-1111'] = { model: require('../patterns/voice-assistant/types/e-commerce/ecommerce-1111.json')}
+templates['ecommerce-1111'] = { model: require('../patterns/voice-assistant/types/e-commerce/ecommerce-1111.json')},
+templates['crowdsourcing-00'] = { model: require('../patterns/voice-assistant/types/crowdsourcing/crowdsourcing-00.json')},
+templates['crowdsourcing-01'] = { model: require('../patterns/voice-assistant/types/crowdsourcing/crowdsourcing-01.json')},
+templates['crowdsourcing-10'] = { model: require('../patterns/voice-assistant/types/crowdsourcing/crowdsourcing-10.json')},
+templates['crowdsourcing-11'] = { model: require('../patterns/voice-assistant/types/crowdsourcing/crowdsourcing-11.json')}
 
 exports.templates = templates;

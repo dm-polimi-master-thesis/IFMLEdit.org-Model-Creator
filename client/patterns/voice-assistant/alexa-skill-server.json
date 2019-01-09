@@ -45,6 +45,7 @@
                             "name": "purpose",
                             "type": "IFML_APPLICATION_TYPE",
                             "samples": [
+                                "ask people to {purpose}",
                                 "The purpose of the application must be {purpose}",
                                 "The purpose of the application is to {purpose}",
                                 "I need to {purpose}",
@@ -55,12 +56,24 @@
                         },
                         {
                             "name": "sharing",
-                            "type": "IFML_SHARING_CONTENT"
+                            "type": "IFML_SHARING_CONTENT",
+                            "samples": [
+                                "can share {sharing}",
+                                "will share {sharing}",
+                                "Users must share {sharing}",
+                                "They must share {sharing}",
+                                "They will share {sharing}",
+                                "Users will share {sharing}",
+                                "They can share {sharing}",
+                                "Users can share {sharing}"
+                            ]
                         },
                         {
                             "name": "masterDetailsPattern",
                             "type": "IFML_MASTER_DETAILS_PATTERN",
                             "samples": [
+                                "They can be divided in {masterDetailsPattern}",
+                                "require to be divided in {masterDetailsPattern}",
                                 "They will be divided in {masterDetailsPattern}",
                                 "They will be {masterDetailsPattern}",
                                 "They are {masterDetailsPattern}",
@@ -74,25 +87,125 @@
                         },
                         {
                             "name": "crowdPolicy",
-                            "type": "IFML_CROWD_POLICY"
-                        },
-                        {
-                            "name": "commentPolicy",
-                            "type": "IFML_COMMENT_POLICY",
+                            "type": "IFML_CROWD_POLICY",
                             "samples": [
-                                "The application must {commentPolicy} comments",
-                                "The application must {commentPolicy} reviews",
-                                "I want to {commentPolicy} reviews",
-                                "I want to {commentPolicy} comments"
+                                "Can {crowdPolicy} taks",
+                                "The can also {crowdPolicy} tasks",
+                                "They can only {crowdPolicy} tasks"
                             ]
                         },
                         {
-                            "name": "favorite_policy",
-                            "type": "IFML_FAVORITE_POLICY",
+                            "name": "commentPolicy",
+                            "type": "IFML_AGREE_POLICY",
                             "samples": [
-                                "No {favorite_policy}",
-                                "Yes {favorite_policy}",
-                                "You are right {favorite_policy}"
+                                "{commentPolicy} comments",
+                                "{commentPolicy} reviews",
+                                "The application must {commentPolicy} comments",
+                                "The application must {commentPolicy} reviews",
+                                "I want to {commentPolicy} reviews",
+                                "I want to {commentPolicy} comments",
+                                "It is {commentPolicy} for me",
+                                "It is {commentPolicy}",
+                                "It is a {commentPolicy}",
+                                "I think it is a {commentPolicy}",
+                                "No {commentPolicy}",
+                                "Yes {commentPolicy}",
+                                "You are right {commentPolicy}",
+                                "I {commentPolicy}",
+                                "I {commentPolicy} it",
+                                "It is a {commentPolicy} idea"
+                            ]
+                        },
+                        {
+                            "name": "favoritePolicy",
+                            "type": "IFML_AGREE_POLICY",
+                            "samples": [
+                                "It is {favoritePolicy} for me",
+                                "It is {favoritePolicy}",
+                                "It is a {favoritePolicy}",
+                                "I think it is a {favoritePolicy}",
+                                "No {favoritePolicy}",
+                                "Yes {favoritePolicy}",
+                                "You are right {favoritePolicy}",
+                                "{favoritePolicy} wish list",
+                                "I {favoritePolicy}",
+                                "I {favoritePolicy} it",
+                                "It is a {favoritePolicy} idea"
+                            ]
+                        },
+                        {
+                            "name": "wizardPolicy",
+                            "type": "IFML_WIZARD_POLICY",
+                            "samples": [
+                                "I prefer to create {wizardPolicy} personal procedure",
+                                "I want to create {wizardPolicy} personal procedure",
+                                "I want to create {wizardPolicy} procedure",
+                                "I prefer to create {wizardPolicy} procedure",
+                                "I want to use my {wizardPolicy} procedure",
+                                "I want to use my {wizardPolicy} payment procedure",
+                                "I prefer to use my {wizardPolicy} payment procedure",
+                                "I prefer to use my {wizardPolicy} procedure",
+                                "I want to use the {wizardPolicy} payment procedure",
+                                "I prefer to use the {wizardPolicy} payment procedure",
+                                "I prefer to use the {wizardPolicy} procedure",
+                                "I want to use the {wizardPolicy} procedure",
+                                "I want to create my {wizardPolicy} procedure",
+                                "I prefer to create my {wizardPolicy} procedure",
+                                "it is {wizardPolicy} for me",
+                                "It is {wizardPolicy}"
+                            ]
+                        },
+                        {
+                            "name": "personalPagesPolicy",
+                            "type": "IFML_PERSONAL_PAGES_POLICY",
+                            "samples": [
+                                "i want users can {personalPagesPolicy}",
+                                "the application must be a sort of {personalPagesPolicy}",
+                                "the application must be a {personalPagesPolicy}",
+                                "users must only {personalPagesPolicy}",
+                                "users can only {personalPagesPolicy}",
+                                "A {personalPagesPolicy}",
+                                "I want a sort of {personalPagesPolicy}",
+                                "they can {personalPagesPolicy}",
+                                "they can only {personalPagesPolicy}"
+                            ]
+                        },
+                        {
+                            "name": "likePolicy",
+                            "type": "IFML_AGREE_POLICY",
+                            "samples": [
+                                "It is {likePolicy} for me",
+                                "It is {likePolicy}",
+                                "It is a {likePolicy}",
+                                "I think it is a {likePolicy}",
+                                "No {likePolicy}",
+                                "Yes {likePolicy}",
+                                "You are right {likePolicy}",
+                                "{likePolicy} wish list",
+                                "I {likePolicy}",
+                                "I {likePolicy} it",
+                                "It is a {likePolicy} idea"
+                            ]
+                        },
+                        {
+                            "name": "friendship",
+                            "type": "IFML_AGREE_POLICY",
+                            "samples": [
+                                "{friendship} it is",
+                                "{friendship} it is not",
+                                "{friendship} it is my case",
+                                "{friendship} it is not my case",
+                                "It is {friendship} for me",
+                                "It is {friendship}",
+                                "It is a {friendship}",
+                                "I think it is a {friendship}",
+                                "No {friendship}",
+                                "Yes {friendship}",
+                                "You are right {friendship}",
+                                "{friendship} wish list",
+                                "I {friendship}",
+                                "I {friendship} it",
+                                "It is a {friendship} idea"
                             ]
                         }
                     ],
@@ -126,6 +239,31 @@
                         "show me a demonstration",
                         "show me a demo"
                     ]
+                },
+                {
+                    "name": "AddViewContainerModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "xor",
+                            "type": "IFML_CONTAINER_PROPERTIES"
+                        },
+                        {
+                            "name": "default",
+                            "type": "IFML_CONTAINER_PROPERTIES"
+                        },
+                        {
+                            "name": "landmark",
+                            "type": "IFML_CONTAINER_PROPERTIES"
+                        }
+                    ],
+                    "samples": [
+                        "add a new view container",
+                        "I want to add a new view container"
+                    ]
                 }
             ],
             "types": [
@@ -134,9 +272,9 @@
                     "values": [
                         {
                             "name": {
-                                "value": "share contents",
+                                "value": "share",
                                 "synonyms": [
-                                    "share"
+                                    "share contents"
                                 ]
                             }
                         },
@@ -209,6 +347,7 @@
                             "name": {
                                 "value": "categories",
                                 "synonyms": [
+                                    "the second",
                                     "categories and subcategories",
                                     "subcategories",
                                     "multilevel master details"
@@ -219,6 +358,7 @@
                             "name": {
                                 "value": "homogeneous",
                                 "synonyms": [
+                                    "the first",
                                     "same topic",
                                     "master details"
                                 ]
@@ -231,51 +371,36 @@
                     "values": [
                         {
                             "name": {
-                                "value": "publish"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "perform"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "IFML_COMMENT_POLICY",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "deny",
+                                "value": "publish",
                                 "synonyms": [
-                                    "deny comment",
-                                    "cannot comment",
-                                    "deny review",
-                                    "deny",
-                                    "cannot review"
+                                    "the second",
+                                    "both",
+                                    "master"
                                 ]
                             }
                         },
                         {
                             "name": {
-                                "value": "allow",
+                                "value": "perform",
                                 "synonyms": [
-                                    "allow review",
-                                    "permit review",
-                                    "allow comment",
-                                    "permit"
+                                    "the first",
+                                    "worker"
                                 ]
                             }
                         }
                     ]
                 },
                 {
-                    "name": "IFML_FAVORITE_POLICY",
+                    "name": "IFML_AGREE_POLICY",
                     "values": [
                         {
                             "name": {
                                 "value": "deny",
                                 "synonyms": [
+                                    "not",
+                                    "cannot",
+                                    "disagree",
+                                    "bad idea",
                                     "no"
                                 ]
                             }
@@ -284,7 +409,186 @@
                             "name": {
                                 "value": "allow",
                                 "synonyms": [
+                                    "permit",
+                                    "agree",
+                                    "ok",
+                                    "okay",
+                                    "good idea",
+                                    "great idea",
                                     "yes"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_WIZARD_POLICY",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "default",
+                                "synonyms": [
+                                    "allow",
+                                    "yes",
+                                    "okay",
+                                    "great",
+                                    "good"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "personal",
+                                "synonyms": [
+                                    "deny",
+                                    "no",
+                                    "my"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_ELEMENT_NAME",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "sign in"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "log in"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "in-place"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "catalog"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "search"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "basic"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "restricted"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "multilevel"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "master"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "details"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hairdresser"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "baker"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "shop"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "place"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "chair"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "office"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Jack"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "David"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Andrew"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_CONTAINER_PROPERTIES",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "landmark"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "default"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "xor"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_PERSONAL_PAGES_POLICY",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "publish",
+                                "synonyms": [
+                                    "community"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "visualize",
+                                "synonyms": [
+                                    "see"
                                 ]
                             }
                         }
@@ -321,8 +625,10 @@
                             "name": "sharing",
                             "type": "IFML_SHARING_CONTENT",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.584663460413.314281424363"
+                            }
                         },
                         {
                             "name": "masterDetailsPattern",
@@ -339,12 +645,12 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": ""
+                                "elicitation": "Elicit.Slot.1391890115344.646151884368"
                             }
                         },
                         {
                             "name": "commentPolicy",
-                            "type": "IFML_COMMENT_POLICY",
+                            "type": "IFML_AGREE_POLICY",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
@@ -352,12 +658,48 @@
                             }
                         },
                         {
-                            "name": "favorite_policy",
-                            "type": "IFML_FAVORITE_POLICY",
+                            "name": "favoritePolicy",
+                            "type": "IFML_AGREE_POLICY",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.1500777218780.1203992827892"
+                            }
+                        },
+                        {
+                            "name": "wizardPolicy",
+                            "type": "IFML_WIZARD_POLICY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.912281436886.266259322797"
+                            }
+                        },
+                        {
+                            "name": "personalPagesPolicy",
+                            "type": "IFML_PERSONAL_PAGES_POLICY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.587043485874.383231943773"
+                            }
+                        },
+                        {
+                            "name": "likePolicy",
+                            "type": "IFML_AGREE_POLICY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.587043485874.1239347149300"
+                            }
+                        },
+                        {
+                            "name": "friendship",
+                            "type": "IFML_AGREE_POLICY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1326238111744.333734675310"
                             }
                         }
                     ]
@@ -371,10 +713,6 @@
                     {
                         "type": "PlainText",
                         "value": "Do you need to be guided or receive some advice?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "Do you need to be guided or would you like to receive just some advice to build your model independently?"
                     }
                 ]
             },
@@ -411,6 +749,60 @@
                     {
                         "type": "PlainText",
                         "value": "It would be nice if users could save their favorite products on a wish list. What do you think about it?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1391890115344.646151884368",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Are users limited to perform tasks or some users can publish tasks?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.912281436886.266259322797",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "The payment procedure is managed through a wizard pattern that progressively require information to the customer. It's good for you or do you want to create your personal procedure independently?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.584663460413.314281424363",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What type of content users can share, posts or articles?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.587043485874.383231943773",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Are you interested in creating a sort of community where users can publish articles or users can only visualize and execute operations on published articles?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.587043485874.1239347149300",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "It would be nice if users could express consent to a post through a like functionality. What do you think about it?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1326238111744.333734675310",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "In traditional social networks users can establish relationships. Is this your case?"
                     }
                 ]
             }
