@@ -674,7 +674,16 @@ function ecommerce(options) {
 }
 
 function blog(options) {
+    var name = 'blog-',
+        pattern = options.pattern;
 
+    name += _.includes(pattern,'multilevel-master-details') ? '1' : '0';
+    name += _.includes(pattern,'personal-pages-content-management-pattern') ? '1' : '0';
+    name += _.includes(pattern,'favorite-content-management-pattern') ? '1' : '0';
+    name += _.includes(pattern,'comment-content-management-pattern') ? '1' : '0';
+
+    var template = askTemplates[name].model;
+    voiceAssistantModelGenerator(template);
 }
 
 function crowdsourcing (options) {
