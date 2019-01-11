@@ -698,7 +698,15 @@ function crowdsourcing (options) {
 }
 
 function socialnetwork (options) {
+    var name = 'socialnetwork-',
+        pattern = options.pattern;
 
+    name += _.includes(pattern,'comment-content-management-pattern') ? '1' : '0';
+    name += _.includes(pattern,'like-content-management-pattern') ? '1' : '0';
+    name += _.includes(pattern,'friends-content-management-pattern') ? '1' : '0';
+
+    var template = askTemplates[name].model;
+    voiceAssistantModelGenerator(template);
 }
 
 function voiceAssistantModelGenerator (template) {
