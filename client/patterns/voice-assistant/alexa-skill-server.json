@@ -89,7 +89,7 @@
                             "name": "crowdPolicy",
                             "type": "IFML_CROWD_POLICY",
                             "samples": [
-                                "Can {crowdPolicy} taks",
+                                "Can {crowdPolicy} tasks",
                                 "The can also {crowdPolicy} tasks",
                                 "They can only {crowdPolicy} tasks"
                             ]
@@ -98,6 +98,13 @@
                             "name": "commentPolicy",
                             "type": "IFML_AGREE_POLICY",
                             "samples": [
+                                "{commentPolicy} they can't",
+                                "{commentPolicy} they can",
+                                "Users can also {commentPolicy}",
+                                "Users can only {commentPolicy} ",
+                                "Users must only {commentPolicy}",
+                                "They can also {commentPolicy}",
+                                "They can only {commentPolicy}",
                                 "{commentPolicy} comments",
                                 "{commentPolicy} reviews",
                                 "The application must {commentPolicy} comments",
@@ -120,6 +127,10 @@
                             "name": "favoritePolicy",
                             "type": "IFML_AGREE_POLICY",
                             "samples": [
+                                "{favoritePolicy} it is not",
+                                "{favoritePolicy} it is",
+                                "{favoritePolicy} they can't",
+                                "{favoritePolicy} they can",
                                 "It is {favoritePolicy} for me",
                                 "It is {favoritePolicy}",
                                 "It is a {favoritePolicy}",
@@ -397,10 +408,12 @@
                             "name": {
                                 "value": "deny",
                                 "synonyms": [
-                                    "not",
+                                    "not a good",
+                                    "not good",
+                                    "bad",
+                                    "visualize",
                                     "cannot",
                                     "disagree",
-                                    "bad idea",
                                     "no"
                                 ]
                             }
@@ -409,12 +422,17 @@
                             "name": {
                                 "value": "allow",
                                 "synonyms": [
+                                    "not a bad",
+                                    "not bad",
+                                    "can",
+                                    "good",
+                                    "great",
+                                    "publish",
+                                    "comment",
                                     "permit",
                                     "agree",
                                     "ok",
                                     "okay",
-                                    "good idea",
-                                    "great idea",
                                     "yes"
                                 ]
                             }
@@ -704,7 +722,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "delegationStrategy": "SKILL_RESPONSE"
         },
         "prompts": [
             {
