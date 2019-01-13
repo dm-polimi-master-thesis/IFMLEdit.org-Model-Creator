@@ -12,7 +12,7 @@ var _ = require('lodash'),
     format = require('./default.json'),
     editor = require('./editor.json');
 
-function parser(inPlaceLogIn){
+function create(inPlaceLogIn){
   var template = inPlaceLogIn.editorOption ? _.cloneDeep(editor) : _.cloneDeep(format),
       modelElementsHash = toHash(template.elements),
       editorRegularValues = fieldsManipulator.toRegularValues(inPlaceLogIn.editor.fields),
@@ -75,4 +75,4 @@ function parser(inPlaceLogIn){
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

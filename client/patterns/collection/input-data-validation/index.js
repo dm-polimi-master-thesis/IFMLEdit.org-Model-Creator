@@ -5,7 +5,7 @@
 "use strict";
 
 var _ = require('lodash'),
-    parser = require('./parser.js').parser;
+    create = require('./create.js').create;
 
 
 function SettingsPatternViewModel(options) {
@@ -84,7 +84,7 @@ function SettingsPatternViewModel(options) {
       data : { formName: self.dataFormName(), fields: fields }
     }
 
-    return parser(inputDataValidation);
+    return create(inputDataValidation);
   }
 
   self.validate = function (str,id) {

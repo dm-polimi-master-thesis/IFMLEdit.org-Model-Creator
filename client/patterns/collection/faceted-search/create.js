@@ -12,7 +12,7 @@ var _ = require('lodash'),
     fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json');
 
-function parser(facetedSearch){
+function create(facetedSearch){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements),
       specialValues = fieldsManipulator.toSpecialValues(facetedSearch.filters.fields);
@@ -51,4 +51,4 @@ function parser(facetedSearch){
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

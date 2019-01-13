@@ -109,7 +109,8 @@ module.exports = [
                     name: element.attributes.name,
                     'default': element.attributes.default,
                     landmark: element.attributes.landmark,
-                    xor: element.attributes.xor
+                    xor: element.attributes.xor,
+                    pattern: element.attributes.pattern || undefined
                 }
             };
         }

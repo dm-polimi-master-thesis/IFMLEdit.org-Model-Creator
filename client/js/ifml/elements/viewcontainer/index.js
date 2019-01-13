@@ -113,6 +113,10 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
         return editables.value();
     },
 
+    patternMatch: function () {
+      console.log('bingo!');
+    },
+
     statistics: function () {
         return this.get('statistics');
     },

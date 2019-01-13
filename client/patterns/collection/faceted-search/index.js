@@ -5,7 +5,7 @@
 "use strict";
 
 var _ = require('lodash'),
-    parser = require('./parser.js').parser;
+    create = require('./create.js').create;
 
 
 function SettingsPatternViewModel(options) {
@@ -147,7 +147,7 @@ function SettingsPatternViewModel(options) {
         fields: filters
       }
     }
-    return parser(facetedSearch);
+    return create(facetedSearch);
   }
 
   self.validate = function (str,id) {

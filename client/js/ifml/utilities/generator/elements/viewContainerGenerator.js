@@ -12,7 +12,8 @@ function generateViewContainer(template, options) {
           name: options.name,
           default: options.default || false,
           landmark: options.landmark || false,
-          xor: options.xor || false
+          xor: options.xor || false,
+          pattern: options.pattern || undefined
       },
       metadata: {
          graphics: {

@@ -12,7 +12,7 @@ var _ = require('lodash'),
     format = require('./default.json'),
     logOut = require('./log-out.json');
 
-function parser(signUpLogIn){
+function create(signUpLogIn){
   var template = signUpLogIn.logOut ? _.cloneDeep(logOut) : _.cloneDeep(format),
       modelElementsHash = toHash(template.elements),
       signUpRegularValues = fieldsManipulator.toRegularValues(signUpLogIn.signUp.fields),
@@ -59,4 +59,4 @@ function parser(signUpLogIn){
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

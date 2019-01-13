@@ -18,6 +18,7 @@ function configureViewContainer(element, template, options) {
   attributes.default = options.default || attributes.default;
   attributes.landmark = options.landmark || attributes.landmark;
   attributes.xor = options.xor || attributes.xor;
+  attributes.pattern = options.pattern || attributes.pattern;
 
   graphics.position = options.position || graphics.position;
   graphics.size = options.size || graphics.size;

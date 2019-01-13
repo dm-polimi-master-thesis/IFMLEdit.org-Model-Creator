@@ -11,10 +11,13 @@ var _ = require('lodash'),
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
     format = require('./default.json');
 
-function parser(alphabeticalFilter){
+function create(alphabeticalFilter){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
+  configurator(modelElementsHash['alphabetical-filter-pattern-view-container'], template, {
+      pattern: 'alphabetical-filter',
+  });
   configurator(modelElementsHash['xor-view-container'], template, {
       name: alphabeticalFilter.name,
   });
@@ -44,4 +47,4 @@ function parser(alphabeticalFilter){
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

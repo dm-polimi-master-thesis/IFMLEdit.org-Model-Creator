@@ -13,7 +13,7 @@ var _ = require('lodash'),
     fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json');
 
-function parser(pageManagement){
+function create(pageManagement){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements),
       regularValues = fieldsManipulator.toRegularValues(pageManagement.dataEntry.fields),
@@ -143,4 +143,4 @@ function parser(pageManagement){
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

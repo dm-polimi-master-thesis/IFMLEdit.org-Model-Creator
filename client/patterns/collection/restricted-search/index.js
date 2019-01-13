@@ -5,7 +5,7 @@
 "use strict";
 
 var _ = require('lodash'),
-    parser = require('./parser.js').parser;
+    create = require('./create.js').create;
 
 
 function SettingsPatternViewModel(options) {
@@ -114,7 +114,7 @@ function SettingsPatternViewModel(options) {
         fields: self.selectedFields.removeAll()
       }
     }
-    return parser(restrictedSearch);
+    return create(restrictedSearch);
   }
 
   self.validate = function (str,id) {

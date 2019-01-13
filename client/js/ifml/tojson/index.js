@@ -15,6 +15,7 @@ var transformer = createTransformer({
     }, 'm2a');
 
 exports.toJSON = function (graph) {
+    console.log(graph);
     return transformer(extender.extend({
         elements: graph.getCells(),
         relations: []

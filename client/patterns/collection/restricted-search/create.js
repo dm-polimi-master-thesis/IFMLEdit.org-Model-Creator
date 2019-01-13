@@ -11,35 +11,39 @@ var _ = require('lodash'),
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
     format = require('./default.json');
 
-function parser(basicSearch){
+function create(restrictedSearch){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
   configurator(modelElementsHash['xor-view-container'], template, {
-      name: basicSearch.name,
+      name: restrictedSearch.name,
   });
   configurator(modelElementsHash['keyword-form'], template, {
-      fields: basicSearch.search,
+      fields: restrictedSearch.search,
   });
   configurator(modelElementsHash['results-list'], template, {
-      name: basicSearch.list.collection.charAt(0).toUpperCase() + basicSearch.list.collection.slice(1),
-      collection: basicSearch.list.collection,
-      filters: basicSearch.search,
-      fields: basicSearch.list.fields
+      name: restrictedSearch.list.collection.charAt(0).toUpperCase() + restrictedSearch.list.collection.slice(1),
+      collection: restrictedSearch.list.collection,
+      filters: ['category', restrictedSearch.search[0]],
+      fields: restrictedSearch.list.fields
+  });
+  configurator(modelElementsHash['category-list'], template, {
+      name: restrictedSearch.filter.charAt(0).toUpperCase() + restrictedSearch.filter.slice(1),
+      collection: restrictedSearch.filter
   });
   configurator(modelElementsHash['product-view-container'], template, {
-      name: basicSearch.details.name
+      name: restrictedSearch.details.name
   });
   configurator(modelElementsHash['product-details'], template, {
-      name: basicSearch.details.name,
-      collection: basicSearch.list.collection,
-      fields: basicSearch.details.fields
+      name: restrictedSearch.details.name.charAt(0).toUpperCase() + restrictedSearch.details.name.slice(1),
+      collection: restrictedSearch.list.collection,
+      fields: restrictedSearch.details.fields
   });
   configurator(modelElementsHash['keyword-data-flow'], template, {
-      fields: basicSearch.search
+      fields: restrictedSearch.search
   });
 
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

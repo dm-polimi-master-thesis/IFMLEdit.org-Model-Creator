@@ -11,7 +11,7 @@ var _ = require('lodash'),
     fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator,
     format = require('./default.json');
 
-function parser(inputDataValidation){
+function create(inputDataValidation){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements),
       regularValues = fieldsManipulator.toRegularValues(inputDataValidation.data.fields),
@@ -40,4 +40,4 @@ function parser(inputDataValidation){
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

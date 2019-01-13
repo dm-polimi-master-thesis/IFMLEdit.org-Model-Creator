@@ -12,7 +12,7 @@ var _ = require('lodash'),
     format = require('./default.json'),
     xor = require('./xor.json');
 
-function parser(masterDetail){
+function create(masterDetail){
   var template,
       modelElementsHash;
 
@@ -50,4 +50,4 @@ function parser(masterDetail){
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

@@ -11,7 +11,7 @@ var _ = require('lodash'),
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
     format = require('./default.json');
 
-function parser(multilevelMasterDetail){
+function create(multilevelMasterDetail){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
@@ -130,4 +130,4 @@ function parser(multilevelMasterDetail){
   return template;
 }
 
-exports.parser = parser;
+exports.create = create;

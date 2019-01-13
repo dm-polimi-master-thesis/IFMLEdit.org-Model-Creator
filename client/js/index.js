@@ -28,6 +28,7 @@ var _ = require('lodash'),
     createModalPatterns = require('./modalpatterns').ModalPatterns,
     examples = require('./examples').examples,
     patterns = require('./patterns').patterns,
+    patternMatching = require('../patterns/utilities/patternMatching.js').patternMatching,
     ifml2code = require('./ifml2code').ifml2code,
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
@@ -161,11 +162,16 @@ function editPcnElement(cellView) {
     createModalEdit({cell: cellView.model, board: pcnBoard});
 }
 
+function searchPattern(cellView) {
+    patternMatching({cell: cellView.model, board: ifmlBoard});
+}
+
 function showElementStatistics(cellView) {
     createModalStatistics({cell: cellView.model});
 }
 
 ifmlBoard.on('cell:edit cell:pointerdblclick link:options', editIfmlElement);
+ifmlBoard.on('cell:pattern', searchPattern);
 statisticsBoard.on('cell:statistics cell:pointerdblclick link:options', showElementStatistics);
 pcnBoard.on('cell:edit cell:pointerdblclick', editPcnElement);
 
@@ -356,7 +362,7 @@ $('#ifml > .wrapper-example-modal').click(function () {
 }).click();
 
 $('#ifml > .wrapper-pattern-modal').click(function () {
-    createModalPatterns({patterns: patterns, load: function (pattern) {
+    createModalPatterns({patterns: patterns, type: 'create', load: function (pattern) {
         try {
           ifmlBoard.clearHistory();
 
