@@ -57,7 +57,7 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
 
     initialize: function () {
         this.on('change:size', this._sizeChanged, this);
-        this.on('change:name change:default change:landmark change:xor', this._nameChanged, this);
+        this.on('change:name change:default change:landmark change:xor change:pattern', this._nameChanged, this);
         this.on('change:default', this._defaultChanged, this);
         this.on('change:xor', this._xorChanged, this);
         this.on('change:landmark', this._landmarkChanged, this);
@@ -111,10 +111,6 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
             );
         }
         return editables.value();
-    },
-
-    patternMatch: function () {
-      console.log('bingo!');
     },
 
     statistics: function () {
@@ -202,6 +198,9 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
     _nameChanged: function () {
         var value,
             modifiers = [];
+        if (this.get('pattern')) {
+            modifiers.push('P');
+        }
         if (this.get('default')) {
             modifiers.push('D');
         }

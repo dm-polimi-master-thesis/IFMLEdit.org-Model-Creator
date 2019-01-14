@@ -272,8 +272,6 @@ function ModalEdit(options) {
     if (!(this instanceof ModalEdit)) { return new ModalEdit(options); }
     options = options || {};
 
-    console.log('cell', options.cell);
-
     if (typeof options.cell !== 'object') { throw new Error('cell should be provided'); }
     if (typeof options.board !== 'object') { throw new Error('board should be provided'); }
 

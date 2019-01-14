@@ -17,6 +17,7 @@ function configureViewComponent(element, template, options) {
 
   attributes.name = options.name || attributes.name;
   attributes.fields = options.fields || attributes.fields;
+  attributes.pattern = options.pattern || attributes.pattern;
 
   if (!(attributes.stereotype === 'form')) {
     attributes.collection = toId(options.collection,"") || toId(options.name,"") || attributes.collection || 'defaults';

@@ -10,7 +10,8 @@ function generateEvent(template, options) {
     return {
         attributes: {
             name: options.text,
-            stereotype: options.stereotype || undefined
+            stereotype: options.stereotype || undefined,
+            pattern: options.pattern || undefined
         },
         metadata: {
             graphics: {

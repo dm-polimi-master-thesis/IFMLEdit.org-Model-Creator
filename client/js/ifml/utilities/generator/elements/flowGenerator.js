@@ -28,7 +28,8 @@ function generateFlow(template, options) {
 
     return {
         attributes: {
-            bindings: _.flattenDeep(bindings)
+            bindings: _.flattenDeep(bindings),
+            pattern: options.pattern || undefined
         },
         metadata: {
             graphics: {

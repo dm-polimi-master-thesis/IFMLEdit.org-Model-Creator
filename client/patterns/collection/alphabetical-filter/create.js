@@ -9,17 +9,15 @@ var _ = require('lodash'),
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
+    graphBuilder = require('../../utilities/graphBuilder.js').graphBuilder,
     format = require('./default.json');
 
 function create(alphabeticalFilter){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
-  configurator(modelElementsHash['alphabetical-filter-pattern-view-container'], template, {
-      pattern: 'alphabetical-filter',
-  });
   configurator(modelElementsHash['xor-view-container'], template, {
-      name: alphabeticalFilter.name,
+      name: alphabeticalFilter.name
   });
   configurator(modelElementsHash['alphabetical-filter-list'], template, {
       name: alphabeticalFilter.filter.collection.charAt(0).toUpperCase() + alphabeticalFilter.filter.collection.slice(1),
@@ -42,6 +40,13 @@ function create(alphabeticalFilter){
   });
   configurator(modelElementsHash['filter-to-results-navigation-flow'], template, {
       fields: alphabeticalFilter.filter.fields
+  });
+  configurator(modelElementsHash['alphabetical-filter-pattern-view-container'], template, {
+      pattern: {
+        graph: graphBuilder(_.cloneDeep(template)),
+        role: "pattern-container",
+        priority: "high"
+      }
   });
 
   return template;

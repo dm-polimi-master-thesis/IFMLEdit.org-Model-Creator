@@ -491,6 +491,14 @@ html, body {
     }
 }
 
+.popover, .popover-title, .popover-content {
+    background-color: #18222d !important;
+}
+
+.popover > .arrow:after {
+    border-top-color: #18222d !important;
+}
+
 @import "./js/modaledit/index.scss";
 @import "./js/modalpatterns/index.scss";
 @import "./patterns/index.scss";

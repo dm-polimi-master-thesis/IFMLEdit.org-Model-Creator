@@ -17,6 +17,7 @@ function configureEvent(element, template, options) {
 
   attributes.name = options.text || attributes.name;
   attributes.stereotype = options.stereotype || undefined;
+  attributes.pattern = options.pattern || attributes.pattern;
 
   graphics.position = options.position || graphics.position;
   graphics.name = options.name || graphics.name;

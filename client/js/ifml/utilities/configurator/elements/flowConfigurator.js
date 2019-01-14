@@ -32,8 +32,9 @@ function configureFlow(element, template, options) {
       }
     }));
   }
-  
+
   attributes.bindings = _.flattenDeep(bindings);
+  attributes.pattern = options.pattern || attributes.pattern;
 
   if(options.vertices !== undefined){
       graphics.vertices = options.vertices;

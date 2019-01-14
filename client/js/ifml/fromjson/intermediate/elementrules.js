@@ -57,6 +57,7 @@ module.exports = [
             return {
                 elements: {
                     id: element.id,
+                    pattern: element.attributes.pattern || undefined,
                     vertices: element.metadata.graphics.vertices
                 }
             };
@@ -75,7 +76,8 @@ module.exports = [
                         horizontal: element.metadata.graphics.name.horizontal,
                         vertical: element.metadata.graphics.name.vertical
                     },
-                    stereotype: element.attributes.stereotype
+                    stereotype: element.attributes.stereotype,
+                    pattern: element.attributes.pattern || undefined
                 }
             };
         }
@@ -89,6 +91,7 @@ module.exports = [
             return {
                 elements: [{
                     id: element.id,
+                    pattern: element.attributes.pattern || undefined,
                     parent: element.metadata.graphics.parent
                 }, {
                     id: element.metadata.graphics.parent,
@@ -126,6 +129,7 @@ module.exports = [
                     type: element.type,
                     name: element.attributes.name,
                     stereotype: element.attributes.stereotype,
+                    pattern: element.attributes.pattern || undefined,
                     fields: (element.attributes.fields && _.map(element.attributes.fields, function (el) {
                       if(element.attributes.stereotype === 'form'){
                         return {

@@ -18,6 +18,7 @@ function configureAction(element, template, options) {
   attributes.name = options.name || attributes.name;
   attributes.parameters = options.parameters || attributes.parameters;
   attributes.results = options.results || attributes.results;
+  attributes.pattern = options.pattern || attributes.pattern;
 
   graphics.position = options.position || graphics.position;
   graphics.size = options.size || graphics.size;

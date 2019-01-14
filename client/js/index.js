@@ -28,7 +28,8 @@ var _ = require('lodash'),
     createModalPatterns = require('./modalpatterns').ModalPatterns,
     examples = require('./examples').examples,
     patterns = require('./patterns').patterns,
-    patternMatching = require('../patterns/utilities/patternMatching.js').patternMatching,
+    patternLoad = require('../patterns/utilities/patternLoad.js').patternLoad,
+    patternCheck = require('../patterns/utilities/patternCheck.js').patternCheck,
     ifml2code = require('./ifml2code').ifml2code,
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
@@ -162,8 +163,12 @@ function editPcnElement(cellView) {
     createModalEdit({cell: cellView.model, board: pcnBoard});
 }
 
-function searchPattern(cellView) {
-    patternMatching({cell: cellView.model, board: ifmlBoard});
+function loadPattern(cellView) {
+    patternLoad({cell: cellView.model, board: ifmlBoard});
+}
+
+function checkPattern(cellView) {
+    patternCheck({cell: cellView.model, board: ifmlBoard});
 }
 
 function showElementStatistics(cellView) {
@@ -171,7 +176,8 @@ function showElementStatistics(cellView) {
 }
 
 ifmlBoard.on('cell:edit cell:pointerdblclick link:options', editIfmlElement);
-ifmlBoard.on('cell:pattern', searchPattern);
+ifmlBoard.on('cell:pattern-load', loadPattern);
+ifmlBoard.on('cell:pattern-check', checkPattern);
 statisticsBoard.on('cell:statistics cell:pointerdblclick link:options', showElementStatistics);
 pcnBoard.on('cell:edit cell:pointerdblclick', editPcnElement);
 

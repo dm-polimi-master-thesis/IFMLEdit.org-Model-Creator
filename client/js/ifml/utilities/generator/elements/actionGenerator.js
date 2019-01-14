@@ -11,6 +11,7 @@ function generateAction(template, options) {
      attributes: {
         name: options.name,
         parameters: options.parameters || [],
+        pattern: options.pattern || undefined,
         results: options.results || []
      },
      metadata: {

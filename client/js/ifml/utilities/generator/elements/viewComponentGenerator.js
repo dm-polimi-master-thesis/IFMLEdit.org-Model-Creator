@@ -14,7 +14,8 @@ function generateViewComponent(template, options) {
           stereotype: options.stereotype,
           fields: options.fields || undefined,
           collection: options.stereotype !== 'form' ? toId(options.collection,"") || 'defaults' : undefined,
-          filters: options.filters || undefined
+          filters: options.filters || undefined,
+          pattern: options.pattern || undefined
       },
       metadata: {
           graphics: {

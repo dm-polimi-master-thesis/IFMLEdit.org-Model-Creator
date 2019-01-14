@@ -62,6 +62,15 @@ gulp.task('favicon', function () {
     return icongen('./client/favicon.svg', './public');
 });
 
+gulp.task('temp', function () {
+    return gulp.src('./node_modules/almost-joint/dist/almost-joint.js')
+            .pipe(gulpif(!production, sourcemaps.init()))
+            .pipe(minifyjs())
+            .pipe(rename({suffix: '.min'}))
+            .pipe(gulpif(!production, sourcemaps.write('./')))
+            .pipe(gulp.dest('./public/js'));
+});
+
 gulp.task('vendor', function () {
     return merge(
         gulp.src(['./node_modules/jquery/dist/jquery.js',
@@ -389,9 +398,9 @@ gulp.task('demo-web-client', gulp.parallel('demo-web-client-index', 'demo-web-cl
 gulp.task('demo-mobile', gulp.parallel('demo-mobile-index', 'demo-mobile-html', 'demo-mobile-css', 'demo-mobile-images', 'demo-mobile-js'));
 
 if (production) {
-    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns', 'alexa-skill'));
+    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns', 'alexa-skill', 'temp'));
 } else {
-    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns', 'alexa-skill'));
+    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns', 'alexa-skill', 'temp'));
 }
 
 gulp.task('default', gulp.series('clean', 'build'), function () {
