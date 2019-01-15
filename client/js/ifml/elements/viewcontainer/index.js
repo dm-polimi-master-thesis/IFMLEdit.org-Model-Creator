@@ -106,8 +106,35 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
                     ]}
                 );
             }
+
+            var patternTypes = ['root','node'],
+                patternValues = ['alphabetical filter','basic search','content management','faceted search','in-place log in','input data validation','master details','multilevel master details','restricted search','sign up and log in','wizard'],
+                cellsById = this.graph.attributes.cells._byId,
+                ancestorIds = _.map(this.getAncestors(), function (ancestor) { return ancestor.id; }),
+                embedsIds = _.map(this.getEmbeddedCells({deep:'true'}), function (embed) { return embed.id; }),
+                thisId = this.id;
+                console.log(this);
+                console.log('ancestors', ancestorIds);
+                console.log(cellsById);
+
+            _.forEach(_.flattenDeep([thisId,ancestorIds,embedsIds]), function (id) {
+                console.log(id);
+                var pattern = thisId === id ? cellsById[id].attributes.pattern : _.filter(cellsById[id].attributes.pattern, function (p) { return p.type === 'root' });
+
+                console.log(pattern);
+
+                if(pattern){
+                  patternValues = _.difference(patternValues, _.map(pattern, function (p) { return p.value }));
+                  if(_.includes(_.map(pattern, function (p) { return p.type; }), 'root') && patternTypes.length === 2) {
+                      patternTypes = ['node'];
+                  }
+                  console.log(patternTypes);
+                  console.log(patternValues);
+                }
+            });
+
             editables = editables.concat(
-                {property: 'pattern', name: 'Pattern', type: 'stringset'},
+                {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: patternTypes, patternValues: patternValues},
                 {property: 'embeds', name: 'Children', type: 'elementslist', filter: filter, display: display}
             );
         }

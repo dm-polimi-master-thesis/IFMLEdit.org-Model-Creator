@@ -115,7 +115,7 @@
                                     <!-- ko if: name === 'Pattern' -->
                                         <div class="form-group input-add-field">
                                             <select id="pattern-value" class="filter type-options type-options-pattern" data-bind="options: patternValues, value: patternValue"></select>
-                                            <a id="pattern-add" class="plus" href="#" data-bind="click: addPattern"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                            <a id="pattern-add" class="plus" href="#" data-bind="if: patternTypes().length > 0, click: addPattern"><i class="glyphicon glyphicon-plus-sign"></i></a>
                                         </div>
                                     <!-- /ko -->
                                     <!-- ko ifnot: name === 'Pattern' -->

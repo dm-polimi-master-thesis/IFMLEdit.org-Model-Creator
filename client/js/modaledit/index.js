@@ -50,7 +50,7 @@ function mapBooleanSet(e, f) {
     return field;
 }
 
-function mapStringSet(e, f) {
+function mapStringSet(e, f, c) {
     var field = {
         name: f.name,
         type: f.type,
@@ -59,10 +59,10 @@ function mapStringSet(e, f) {
         value: ko.observable(''),
         inputTypes: e.attributes.stereotype === 'form' ? ['text','textarea','password','reset','radio','checkbox','hidden','hidden-object'] : undefined,
         inputType: e.attributes.stereotype === 'form' ? ko.observableArray(['text']) : undefined,
-        patternTypes: f.name === 'Pattern' ? ko.observableArray(['root','node']) : undefined,
-        patternType: f.name === 'Pattern' ? ko.observable('node') : undefined,
-        patternValues: f.name === 'Pattern' ? ko.observableArray(['alphabetical filter','basic search','content management','faceted search','in-place log in','input data validation','master details','multilevel master details','restricted search','sign up and log in','wizard']) : undefined,
-        patternValue: f.name === 'Pattern' ? ko.observable('alphabetical filter') : undefined,
+        patternTypes: f.name === 'Pattern' ? ko.observableArray(f.patternTypes) : undefined,
+        patternType: f.name === 'Pattern' ? ko.observable(f.patternTypes[0]) : undefined,
+        patternValues: f.name === 'Pattern' ? ko.observableArray(f.patternValues) : undefined,
+        patternValue: f.name === 'Pattern' ? ko.observable(f.patternValues[0] ? f.patternValues[0] : '') : undefined,
         radio: ko.observable(0),
         checkbox: ko.observable(0),
         add: function () {
@@ -262,7 +262,8 @@ function mapElementsList(l, f) {
 
 function ElementViewModel(options, close) {
     var self = this,
-        cell = options.cell;
+        cell = options.cell,
+        cells = options.cells;
     self.id = ko.observable(cell.id);
     self.id_tentative = ko.observable(cell.id);
     self.id_duplicated = ko.observable(false);
@@ -289,7 +290,7 @@ function ElementViewModel(options, close) {
         case 'string':
             return mapString(cell, f);
         case 'stringset':
-            return mapStringSet(cell, f);
+            return mapStringSet(cell, f, cells);
         case 'boolean':
             return mapBoolean(cell, f);
         case 'enum':
@@ -311,8 +312,6 @@ function ModalEdit(options) {
 
     if (typeof options.cell !== 'object') { throw new Error('cell should be provided'); }
     if (typeof options.board !== 'object') { throw new Error('board should be provided'); }
-
-    console.log('cell',options.cell);
 
     var cell = options.cell,
         board = options.board,
