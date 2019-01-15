@@ -107,6 +107,7 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
                 );
             }
             editables = editables.concat(
+                {property: 'pattern', name: 'Pattern', type: 'stringset'},
                 {property: 'embeds', name: 'Children', type: 'elementslist', filter: filter, display: display}
             );
         }

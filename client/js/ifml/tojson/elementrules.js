@@ -99,7 +99,8 @@ module.exports = [
                     attributes: {
                         name: element.get('name'),
                         parameters: (element.get('parameters') || []).slice(),
-                        results: (element.get('results') || []).slice()
+                        results: (element.get('results') || []).slice(),
+                        pattern: (element.get('pattern') || []).slice()
                     },
                     metadata: {
                         graphics: {
@@ -121,7 +122,8 @@ module.exports = [
                     attributes: {
                         name: element.get('name'),
                         stereotype: element.get('stereotype'),
-                        fields: (element.get('fields') || []).slice()
+                        fields: (element.get('fields') || []).slice(),
+                        pattern: (element.get('pattern') || []).slice()
                     },
                 }
             };
@@ -171,7 +173,8 @@ module.exports = [
                         name: element.get('name'),
                         default: element.get('default'),
                         landmark: element.get('landmark'),
-                        xor: element.get('xor')
+                        xor: element.get('xor'),
+                        pattern: (element.get('pattern') || []).slice()
                     },
                 }
             };

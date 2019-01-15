@@ -57,7 +57,6 @@ module.exports = [
             return {
                 elements: {
                     id: element.id,
-                    pattern: element.attributes.pattern || undefined,
                     vertices: element.metadata.graphics.vertices
                 }
             };
@@ -76,8 +75,7 @@ module.exports = [
                         horizontal: element.metadata.graphics.name.horizontal,
                         vertical: element.metadata.graphics.name.vertical
                     },
-                    stereotype: element.attributes.stereotype,
-                    pattern: element.attributes.pattern || undefined
+                    stereotype: element.attributes.stereotype
                 }
             };
         }

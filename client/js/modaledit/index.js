@@ -59,6 +59,10 @@ function mapStringSet(e, f) {
         value: ko.observable(''),
         inputTypes: e.attributes.stereotype === 'form' ? ['text','textarea','password','reset','radio','checkbox','hidden','hidden-object'] : undefined,
         inputType: e.attributes.stereotype === 'form' ? ko.observableArray(['text']) : undefined,
+        patternTypes: f.name === 'Pattern' ? ko.observableArray(['root','node']) : undefined,
+        patternType: f.name === 'Pattern' ? ko.observable('node') : undefined,
+        patternValues: f.name === 'Pattern' ? ko.observableArray(['alphabetical filter','basic search','content management','faceted search','in-place log in','input data validation','master details','multilevel master details','restricted search','sign up and log in','wizard']) : undefined,
+        patternValue: f.name === 'Pattern' ? ko.observable('alphabetical filter') : undefined,
         radio: ko.observable(0),
         checkbox: ko.observable(0),
         add: function () {
@@ -93,8 +97,39 @@ function mapStringSet(e, f) {
             }
             field.value('');
         },
+        addPattern: function () {
+            field.strings(_(field.strings()).concat({
+              type: field.patternType(),
+              value: field.patternValue(),
+              active: false,
+            }).value());
+
+            field.patternValues.remove(field.patternValue());
+            field.patternValue(field.patternValues[0]);
+            if(field.patternType() === 'root'){
+                field.patternTypes.remove('root');
+                field.patternType('node');
+            }
+            if(field.patternValues().length < 1){
+              $('#pattern-type').prop('disabled',true);
+              $('#pattern-value').prop('disabled',true);
+              $('#pattern-add').hide();
+            }
+        },
         remove: function () {
             field.strings.remove(this);
+            if(field.name === 'Pattern') {
+                field.patternValues.push(this.value);
+                field.patternValue(field.patternValues[0]);
+                if(this.type === 'root'){
+                    field.patternTypes.push('root');
+                }
+                if(field.patternValues().length > 0){
+                  $('#pattern-type').prop('disabled',false);
+                  $('#pattern-value').prop('disabled',false);
+                  $('#pattern-add').show();
+                }
+            }
         },
         scrollHandle: function () {
           var scrollTop = $('#table-cont-' + field.name.toLowerCase()).scrollTop();
@@ -245,6 +280,8 @@ function ElementViewModel(options, close) {
         }
     });
 
+    console.log("options",options);
+
     self.fields = _.map(options.fields, function (f) {
         switch (f.type) {
         case 'number':
@@ -274,6 +311,8 @@ function ModalEdit(options) {
 
     if (typeof options.cell !== 'object') { throw new Error('cell should be provided'); }
     if (typeof options.board !== 'object') { throw new Error('board should be provided'); }
+
+    console.log('cell',options.cell);
 
     var cell = options.cell,
         board = options.board,
