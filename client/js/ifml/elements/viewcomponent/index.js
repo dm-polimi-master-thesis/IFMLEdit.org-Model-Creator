@@ -138,18 +138,18 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
                         {property: 'collection', name: 'Collection', type: 'string'},
                         {property: 'filters', name: 'Filters', type: 'stringset'},
                         {property: 'fields', name: 'Fields', type: 'stringset'},
-                        {property: 'pattern', name: 'Pattern', type: 'stringset'}
+                        {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: [], patternValues: []}
                     ];
                 case 'details':
                     return [
                         {property: 'collection', name: 'Collection', type: 'string'},
                         {property: 'fields', name: 'Fields', type: 'stringset'},
-                        {property: 'pattern', name: 'Pattern', type: 'stringset'}
+                        {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: [], patternValues: []}
                     ];
                 case 'form':
                     return [
                         {property: 'fields', name: 'Fields', type: 'stringset'},
-                        {property: 'pattern', name: 'Pattern', type: 'stringset'}
+                        {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: [], patternValues: []}
                     ];
                 default:
                     return [];

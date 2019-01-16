@@ -107,34 +107,74 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
                 );
             }
 
-            var patternTypes = ['root','node'],
-                patternValues = ['alphabetical filter','basic search','content management','faceted search','in-place log in','input data validation','master details','multilevel master details','restricted search','sign up and log in','wizard'],
+            var pattern = [],
+                types = [],
+                nodes = [],
+                values = ['alphabetical filter','basic search','content management','faceted search','in-place log in','input data validation','master details','multilevel master details','restricted search','sign up and log in','wizard'],
                 cellsById = this.graph.attributes.cells._byId,
-                ancestorIds = _.map(this.getAncestors(), function (ancestor) { return ancestor.id; }),
-                embedsIds = _.map(this.getEmbeddedCells({deep:'true'}), function (embed) { return embed.id; }),
-                thisId = this.id;
-                console.log(this);
-                console.log('ancestors', ancestorIds);
-                console.log(cellsById);
+                ancestors = _.map(this.getAncestors(), function (ancestor) { return ancestor.id; }),
+                embeds = _.map(this.getEmbeddedCells({deep:'true'}), function (embed) { return embed.id; });
 
-            _.forEach(_.flattenDeep([thisId,ancestorIds,embedsIds]), function (id) {
-                console.log(id);
-                var pattern = thisId === id ? cellsById[id].attributes.pattern : _.filter(cellsById[id].attributes.pattern, function (p) { return p.type === 'root' });
+                if (this.attributes.pattern && this.attributes.pattern.length > 0) {
+                    values = _.difference(values, _.map(this.attributes.pattern, function (p) { return p.value }));
 
-                console.log(pattern);
-
-                if(pattern){
-                  patternValues = _.difference(patternValues, _.map(pattern, function (p) { return p.value }));
-                  if(_.includes(_.map(pattern, function (p) { return p.type; }), 'root') && patternTypes.length === 2) {
-                      patternTypes = ['node'];
-                  }
-                  console.log(patternTypes);
-                  console.log(patternValues);
+                    if (this.attributes.pattern[0].type === 'root') {
+                        types = ['root'];
+                    } else if (this.attributes.pattern[0].type === 'node') {
+                        types = ['node'];
+                    }
+                } else {
+                    types = ['root','node'];
                 }
-            });
+
+                //if for a pattern value there is a root among the ancestors,
+                //the cell could be only a node for that value
+                _.forEach(_.flattenDeep(ancestors), function (id) {
+                    var cellPattern = cellsById[id].attributes.pattern;
+                    if(cellPattern && cellPattern.length > 0 && cellPattern[0].type === 'root'){
+                        cellPattern = _.map(cellPattern, function (p) { return p.value});
+
+                        var commonRoots = _.intersection(cellPattern,values);
+
+                        values = _.difference(values,commonRoots);
+
+                        commonRoots = _.map(commonRoots, function (c) {
+                            return {
+                                value: c,
+                                type: ['node']
+                            }
+                        });
+
+                        nodes.push(commonRoots);
+                    }
+                });
+
+                //if for a pattern value there is a corresponding root among the embeds,
+                //the cell cannot be part of the pattern nor as root neither as node
+                _.forEach(_.flattenDeep(embeds), function (id) {
+                    var cellPattern = cellsById[id].attributes.pattern;
+                    if(cellPattern && cellPattern.length > 0 && cellPattern[0].type === 'root'){
+                        cellPattern = _.map(cellPattern, function (p) { return p.value});
+                        values = _.difference(values,cellPattern);
+                    }
+                });
+
+                //the remainers can be only root because there is not a corresponding ancestor root
+                values = _.map(values, function (v) {
+                    return {
+                      value: v,
+                      type: ['root']
+                    }
+                })
+
+                if ((types.length === 2 && this.getAncestors().length > 0) || (types.length === 1 && types[0] === 'node')) {
+                    pattern = _.flattenDeep([values,nodes]);
+                } else if ((types.length === 2 && this.getAncestors().length === 0) || (types.length === 1 && types[0] === 'root')) {
+                    pattern = _.flattenDeep(values)
+                }
 
             editables = editables.concat(
-                {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: patternTypes, patternValues: patternValues},
+                {property: 'pattern', name: 'Pattern', type: 'stringset', pattern: pattern},
                 {property: 'embeds', name: 'Children', type: 'elementslist', filter: filter, display: display}
             );
         }

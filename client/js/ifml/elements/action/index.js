@@ -73,7 +73,7 @@ exports.Action = joint.shapes.basic.Generic.extend({
                 {property: 'name', name: 'Name', type: 'string'},
                 {property: 'parameters', name: 'Parameters', type: 'stringset'},
                 {property: 'results', name: 'Results', type: 'stringset'},
-                {property: 'pattern', name: 'Pattern', type: 'stringset'}
+                {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: [], patternValues: []}
             ]);
         if (graph) {
             editables = editables.concat(

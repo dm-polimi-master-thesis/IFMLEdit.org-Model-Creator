@@ -114,7 +114,7 @@
                                 <th class="col-sm-4 td-value">
                                     <!-- ko if: name === 'Pattern' -->
                                         <div class="form-group input-add-field">
-                                            <select id="pattern-value" class="filter type-options type-options-pattern" data-bind="options: patternValues, value: patternValue"></select>
+                                            <select id="pattern-value" class="filter type-options type-options-pattern" data-bind="options: patternValues, value: patternValue, event:{change: changePattern}"></select>
                                             <a id="pattern-add" class="plus" href="#" data-bind="if: patternTypes().length > 0, click: addPattern"><i class="glyphicon glyphicon-plus-sign"></i></a>
                                         </div>
                                     <!-- /ko -->
