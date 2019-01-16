@@ -16,6 +16,7 @@ exports.Action = joint.shapes.basic.Generic.extend({
         type: 'ifml.Action',
         size: {width: 75, height: 50},
         name: 'Action',
+        pattern: [],
         attrs: {
             '.': {magnet: 'passive'},
             '.ifml-action-reference-rect' : {'follow-scale': 'auto'},
@@ -69,11 +70,33 @@ exports.Action = joint.shapes.basic.Generic.extend({
                 }
             },
             display = function (id) { return graph.getCell(id).prop('name/text'); },
-            editables = _.chain([
+            pattern = [],
+            values = [],
+            cellsById = this.graph.attributes.cells._byId,
+            ancestors = _.map(this.getAncestors(), function (ancestor) { return ancestor.id; });
+
+        _.forEach(_.flattenDeep(ancestors), function (id) {
+            var cellPattern = cellsById[id].attributes.pattern;
+            if(cellPattern){
+                cellPattern = _.map(cellPattern, function (p) { return p.value });
+                values = _.union(values,cellPattern);
+            }
+        });
+
+        values = _.difference(values, _.map(this.attributes.pattern, function (p) { return p.value }));
+
+        pattern = _.sortBy(_.map(values, function (v) {
+            return {
+              value: v,
+              type: ['node']
+            }
+        }),'value');
+
+        var editables = _.chain([
                 {property: 'name', name: 'Name', type: 'string'},
                 {property: 'parameters', name: 'Parameters', type: 'stringset'},
                 {property: 'results', name: 'Results', type: 'stringset'},
-                {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: [], patternValues: []}
+                {property: 'pattern', name: 'Pattern', type: 'stringset', pattern: pattern}
             ]);
         if (graph) {
             editables = editables.concat(

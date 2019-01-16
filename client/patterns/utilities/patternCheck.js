@@ -1,5 +1,5 @@
 function patternCheck (options) {
-    console.log("check");
+    console.log("brain");
 }
 
 exports.patternCheck = patternCheck;

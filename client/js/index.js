@@ -177,7 +177,7 @@ function showElementStatistics(cellView) {
 
 ifmlBoard.on('cell:edit cell:pointerdblclick link:options', editIfmlElement);
 ifmlBoard.on('cell:pattern-load', loadPattern);
-ifmlBoard.on('cell:pattern-check', checkPattern);
+ifmlBoard.on('cell:pattern-brain', checkPattern);
 statisticsBoard.on('cell:statistics cell:pointerdblclick link:options', showElementStatistics);
 pcnBoard.on('cell:edit cell:pointerdblclick', editPcnElement);
 

@@ -114,8 +114,6 @@ function mapStringSet(e, f, c) {
               active: false,
             }).value());
 
-            console.log(field.pattern);
-
             if(field.patternType() === 'root'){
 
                 var list = field.patternValues(),
@@ -144,7 +142,6 @@ function mapStringSet(e, f, c) {
               $('#pattern-value').prop('disabled',true);
               $('#pattern-add').hide();
             }
-            console.log(field.pattern);
         },
         remove: function () {
             field.strings.remove(this);
@@ -163,7 +160,6 @@ function mapStringSet(e, f, c) {
                             field.patternType(type[0].type);
                             field.patternType(type[0].type[0]);
                         }
-                        console.log(field.pattern);
                     }
                 } else if(this.type === 'node'){
                     var nodes = _.filter(field.strings(), function (s) {return _.includes(s.type,'node') });
@@ -178,7 +174,6 @@ function mapStringSet(e, f, c) {
                             field.patternType(type[0].type[0])
                         }
                     }
-                    console.log(field.pattern);
                 }
                 if(field.patternValues().length > 0){
                   $('#pattern-type').prop('disabled',false);

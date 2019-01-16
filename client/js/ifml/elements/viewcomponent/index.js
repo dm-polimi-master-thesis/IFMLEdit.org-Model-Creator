@@ -22,6 +22,7 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
         size: {width: 150, height: 60},
         name: 'View Component',
         stereotype: 'form',
+        pattern: [],
         attrs: {
             '.': {magnet: 'passive'},
             '.ifml-component-reference-rect' : {'follow-scale': 'auto'},
@@ -132,78 +133,46 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
         var self = this;
         return _([{property: 'name', name: 'Name', type: 'string'}])
             .concat((function () {
+                var pattern = [],
+                    values = [],
+                    cellsById = self.graph.attributes.cells._byId,
+                    ancestors = _.map(self.getAncestors(), function (ancestor) { return ancestor.id; });
+
+                _.forEach(_.flattenDeep(ancestors), function (id) {
+                    var cellPattern = cellsById[id].attributes.pattern;
+                    if(cellPattern){
+                        cellPattern = _.map(cellPattern, function (p) { return p.value });
+                        values = _.union(values,cellPattern);
+                    }
+                });
+
+                values = _.difference(values, _.map(self.attributes.pattern, function (p) { return p.value }));
+
+                pattern = _.sortBy(_.map(values, function (v) {
+                    return {
+                      value: v,
+                      type: ['node']
+                    }
+                }),'value');
+
                 switch (self.get('stereotype')) {
                 case 'list':
-                    var pattern = [],
-                        types = [],
-                        nodes = [],
-                        values = ['alphabetical filter','basic search','content management','faceted search','in-place log in','input data validation','master details','multilevel master details','restricted search','sign up and log in','wizard'],
-                        cellsById = this.graph.attributes.cells._byId,
-                        ancestors = _.map(this.getAncestors(), function (ancestor) { return ancestor.id; }),
-                        embeds = _.map(this.getEmbeddedCells({deep:'true'}), function (embed) { return embed.id; });
-
-                    values = _.difference(values, _.map(this.attributes.pattern, function (p) { return p.value }));
-                    //if for a pattern value there is a root among the ancestors,
-                    //the cell could be only a node for that value
-                    _.forEach(_.flattenDeep(ancestors), function (id) {
-                        var cellPattern = cellsById[id].attributes.pattern;
-                        if(cellPattern && cellPattern.length > 0 && cellPattern[0].type === 'root'){
-                            cellPattern = _.map(cellPattern, function (p) { return p.value});
-
-                            var commonRoots = _.intersection(cellPattern,values);
-
-                            values = _.difference(values,commonRoots);
-
-                            commonRoots = _.map(commonRoots, function (c) {
-                                return {
-                                    value: c,
-                                    type: ['node']
-                                }
-                            });
-
-                            nodes.push(commonRoots);
-                        }
-                    });
-
-                    //if for a pattern value there is a corresponding root among the embeds,
-                    //the cell cannot be part of the pattern nor as root neither as node
-                    _.forEach(_.flattenDeep(embeds), function (id) {
-                        var cellPattern = cellsById[id].attributes.pattern;
-                        if(cellPattern && cellPattern.length > 0 && cellPattern[0].type === 'root'){
-                            cellPattern = _.map(cellPattern, function (p) { return p.value});
-                            values = _.difference(values,cellPattern);
-                        }
-                    });
-
-                    //the remainers can be only root because there is not a corresponding ancestor root
-                    values = _.map(values, function (v) {
-                        return {
-                          value: v,
-                          type: ['root']
-                        }
-                    })
-
-                    if ((types.length === 2 && this.getAncestors().length > 0) || (types.length === 1 && types[0] === 'node')) {
-                        pattern = _.flattenDeep([values,nodes]);
-                    } else if ((types.length === 2 && this.getAncestors().length === 0) || (types.length === 1 && types[0] === 'root')) {
-                        pattern = _.flattenDeep(values)
-                    }
                     return [
                         {property: 'collection', name: 'Collection', type: 'string'},
                         {property: 'filters', name: 'Filters', type: 'stringset'},
                         {property: 'fields', name: 'Fields', type: 'stringset'},
-                        {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: [], patternValues: []}
+                        {property: 'pattern', name: 'Pattern', type: 'stringset', pattern: pattern}
                     ];
                 case 'details':
                     return [
                         {property: 'collection', name: 'Collection', type: 'string'},
                         {property: 'fields', name: 'Fields', type: 'stringset'},
-                        {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: [], patternValues: []}
+                        {property: 'pattern', name: 'Pattern', type: 'stringset', pattern: pattern}
                     ];
                 case 'form':
                     return [
                         {property: 'fields', name: 'Fields', type: 'stringset'},
-                        {property: 'pattern', name: 'Pattern', type: 'stringset', patternTypes: [], patternValues: []}
+                        {property: 'pattern', name: 'Pattern', type: 'stringset', pattern: pattern}
                     ];
                 default:
                     return [];
