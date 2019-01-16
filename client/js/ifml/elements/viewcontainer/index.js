@@ -20,6 +20,7 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
         name: 'View Container',
         'default': false,
         landmark: false,
+        pattern: [],
         xor: false,
         attrs: {
             '.': {marker: 'passive'},
@@ -115,63 +116,63 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
                 ancestors = _.map(this.getAncestors(), function (ancestor) { return ancestor.id; }),
                 embeds = _.map(this.getEmbeddedCells({deep:'true'}), function (embed) { return embed.id; });
 
-                if (this.attributes.pattern && this.attributes.pattern.length > 0) {
-                    values = _.difference(values, _.map(this.attributes.pattern, function (p) { return p.value }));
+            if (this.attributes.pattern && this.attributes.pattern.length > 0) {
+                values = _.difference(values, _.map(this.attributes.pattern, function (p) { return p.value }));
 
-                    if (this.attributes.pattern[0].type === 'root') {
-                        types = ['root'];
-                    } else if (this.attributes.pattern[0].type === 'node') {
-                        types = ['node'];
-                    }
-                } else {
-                    types = ['root','node'];
+                if (this.attributes.pattern[0].type === 'root') {
+                    types = ['root'];
+                } else if (this.attributes.pattern[0].type === 'node') {
+                    types = ['node'];
                 }
+            } else {
+                types = ['root','node'];
+            }
 
-                //if for a pattern value there is a root among the ancestors,
-                //the cell could be only a node for that value
-                _.forEach(_.flattenDeep(ancestors), function (id) {
-                    var cellPattern = cellsById[id].attributes.pattern;
-                    if(cellPattern && cellPattern.length > 0 && cellPattern[0].type === 'root'){
-                        cellPattern = _.map(cellPattern, function (p) { return p.value});
+            //if for a pattern value there is a root among the ancestors,
+            //the cell could be only a node for that value
+            _.forEach(_.flattenDeep(ancestors), function (id) {
+                var cellPattern = cellsById[id].attributes.pattern;
+                if(cellPattern && cellPattern.length > 0 && cellPattern[0].type === 'root'){
+                    cellPattern = _.map(cellPattern, function (p) { return p.value});
 
-                        var commonRoots = _.intersection(cellPattern,values);
+                    var commonRoots = _.intersection(cellPattern,values);
 
-                        values = _.difference(values,commonRoots);
+                    values = _.difference(values,commonRoots);
 
-                        commonRoots = _.map(commonRoots, function (c) {
-                            return {
-                                value: c,
-                                type: ['node']
-                            }
-                        });
+                    commonRoots = _.map(commonRoots, function (c) {
+                        return {
+                            value: c,
+                            type: ['node']
+                        }
+                    });
 
-                        nodes.push(commonRoots);
-                    }
-                });
-
-                //if for a pattern value there is a corresponding root among the embeds,
-                //the cell cannot be part of the pattern nor as root neither as node
-                _.forEach(_.flattenDeep(embeds), function (id) {
-                    var cellPattern = cellsById[id].attributes.pattern;
-                    if(cellPattern && cellPattern.length > 0 && cellPattern[0].type === 'root'){
-                        cellPattern = _.map(cellPattern, function (p) { return p.value});
-                        values = _.difference(values,cellPattern);
-                    }
-                });
-
-                //the remainers can be only root because there is not a corresponding ancestor root
-                values = _.map(values, function (v) {
-                    return {
-                      value: v,
-                      type: ['root']
-                    }
-                })
-
-                if ((types.length === 2 && this.getAncestors().length > 0) || (types.length === 1 && types[0] === 'node')) {
-                    pattern = _.flattenDeep([values,nodes]);
-                } else if ((types.length === 2 && this.getAncestors().length === 0) || (types.length === 1 && types[0] === 'root')) {
-                    pattern = _.flattenDeep(values)
+                    nodes.push(commonRoots);
                 }
+            });
+
+            //if for a pattern value there is a corresponding root among the embeds,
+            //the cell cannot be part of the pattern nor as root neither as node
+            _.forEach(_.flattenDeep(embeds), function (id) {
+                var cellPattern = cellsById[id].attributes.pattern;
+                if(cellPattern && cellPattern.length > 0 && cellPattern[0].type === 'root'){
+                    cellPattern = _.map(cellPattern, function (p) { return p.value});
+                    values = _.difference(values,cellPattern);
+                }
+            });
+
+            //the remainers can be only root because there is not a corresponding ancestor root
+            values = _.map(values, function (v) {
+                return {
+                  value: v,
+                  type: ['root']
+                }
+            })
+
+            if ((types.length === 2 && this.getAncestors().length > 0) || (types.length === 1 && types[0] === 'node')) {
+                pattern = _.sortBy(_.flattenDeep([values,nodes]),'value');
+            } else if ((types.length === 2 && this.getAncestors().length === 0) || (types.length === 1 && types[0] === 'root')) {
+                pattern = _.sortBy(_.flattenDeep(values),'value');
+            }
 
             editables = editables.concat(
                 {property: 'pattern', name: 'Pattern', type: 'stringset', pattern: pattern},
@@ -266,7 +267,8 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
     _nameChanged: function () {
         var value,
             modifiers = [];
-        if (this.get('pattern')) {
+            console.log(this.get('pattern'));
+        if (this.get('pattern') && this.get('pattern').length > 0) {
             modifiers.push('P');
         }
         if (this.get('default')) {
