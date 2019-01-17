@@ -114,14 +114,9 @@ function mapStringSet(e, f, c) {
             }).value());
 
             if(field.patternType() === 'root'){
-                var list = field.patternValues(),
-                    filtered = _.filter(field.pattern.values, function (p) { return _.includes(p.type,'root') && p.value !== field.patternValue(); });
-                filtered = _.intersection(list,_.map(filtered, function (l) { return l.value }));
-                field.patternValues(filtered);
-                field.patternValue(filtered[0] ? filtered[0] : '');
-                field.patternValues.sort();
-                field.patternTypes(['root']);
-                field.patternType('root');
+                field.patternValues([]),
+                field.patternTypes([]);
+                field.patternType('');
             } else if (field.patternType() === 'node') {
                 var list = field.patternValues(),
                     filtered = _.filter(field.pattern.values, function (l) { return _.includes(l.type,'node') && l.value !== field.patternValue(); });

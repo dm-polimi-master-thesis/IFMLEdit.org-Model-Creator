@@ -12,12 +12,12 @@ function update(cell) {
     return {
         type: 'update',
         name: tree['pattern-container'].attributes.name,
-        filterField: tree['alphabet-list'].attributes.fields[0],
+        filterField: tree['alphabet-list'].attributes.fields[0].label,
         filterCollection: tree['alphabet-list'].attributes.collection,
         resultsCollection: tree['results-list'].attributes.collection,
         selectedDetailsName: tree['result-details'].attributes.name,
-        resultsFields: tree['results-list'].attributes.fields,
-        selectedFields: tree['result-details'].attributes.fields
+        resultsFields: _.map(tree['results-list'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: 'text', name: '' }}),
+        selectedFields: _.map(tree['result-details'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: 'text', name: '' }})
     }
 }
 

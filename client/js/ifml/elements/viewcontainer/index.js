@@ -183,8 +183,6 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
                 }
             }
 
-            console.log('pattern--',pattern);
-
             editables = editables.concat(
                 {property: 'pattern', name: 'Pattern', type: 'stringset', pattern: pattern},
                 {property: 'embeds', name: 'Children', type: 'elementslist', filter: filter, display: display}

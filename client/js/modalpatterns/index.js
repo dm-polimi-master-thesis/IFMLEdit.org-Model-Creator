@@ -131,11 +131,6 @@ function ModalPatterns(options) {
 
         var fields = update(options.cell);
 
-        console.log(fields);
-        console.log(update);
-        console.log(setPattern);
-        console.log(html);
-
         ko.applyBindings(new ModalPatternUpdateViewModal({ id: id, setPattern: setPattern, html:html, fields: fields, cell: options.cell }, function () { el.modal('hide'); }), el.find('#pattern-modal')[0]);
         el.modal('show').on('hidden.bs.modal', tearDown);
     }

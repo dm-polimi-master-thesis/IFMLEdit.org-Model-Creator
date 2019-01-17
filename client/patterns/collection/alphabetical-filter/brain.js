@@ -19,13 +19,11 @@ function brain(options) {
         var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'alphabetical filter' && !p.active;}),
             attributes = child.attributes;
         if(childPattern.length > 0 && attributes.type === 'ifml.ViewComponent' && attributes.stereotype === 'list') {
-            tree['alphabet-list'] = child;
             var links = _.filter(graph.getConnectedLinks(child,{deep:'true', outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
 
             _.forEach(links, function (l1) {
                 var targetList = l1.collection._byId[l1.attributes.target.id];
                 if (targetList && targetList.attributes.type === 'ifml.ViewComponent' && targetList.attributes.stereotype === 'list') {
-                    tree['results-list'] = targetList;
                     var targetListPattern = _.filter(targetList.attributes.pattern, function (p) {return p.value === 'alphabetical filter' && !p.active});
                     if(targetListPattern.length > 0) {
                         links = _.filter(graph.getConnectedLinks(targetList,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
@@ -34,6 +32,8 @@ function brain(options) {
                             if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
                                 var targetDetailspattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'alphabetical filter' && !p.active});
                                 if(targetDetailspattern.length > 0) {
+                                    tree['alphabet-list'] = child;
+                                    tree['results-list'] = targetList;
                                     tree['result-details'] = targetDetails;
 
                                     options.pattern.tree = tree;
@@ -45,7 +45,7 @@ function brain(options) {
                                       'success'
                                     );
 
-                                    return false;
+                                    return;
                                 }
                             }
                         });
