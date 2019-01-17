@@ -10,20 +10,25 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-
-  var self = this;
+  console.log('settings',options);
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
-  self.type = options.type || 'create';
-  self.name = ko.observable(options.name || "Alphabetical Filter");
-  self.filterField = ko.observable(options.filterField || "");
-  self.filterCollection = ko.observable(options.filterCollection || "");
-  self.resultsCollection = ko.observable(options.resultsCollection || "");
-  self.selectedDetailsName = ko.observable(options.selectedDetailsName || "");
+  self.type = fields ? fields.type : 'create';
+  self.name = ko.observable(fields ? fields.name : "Alphabetical Filter");
+  self.filterField = ko.observable(fields ? fields.filterField : "");
+  self.filterCollection = ko.observable(fields ? fields.filterCollection : "");
+  self.resultsCollection = ko.observable(fields ? fields.resultsCollection : "");
+  self.selectedDetailsName = ko.observable(fields ? fields.selectedDetailsName : "");
   self.resultsFieldToAdd = ko.observable("");
   self.selectedFieldToAdd = ko.observable("");
-  self.resultsFields = ko.observableArray(options.resultsFields || []);
-  self.selectedFields = ko.observableArray(options.selectedFields || []);
+  self.resultsFields = ko.observableArray(fields ? fields.resultsFields : []);
+  self.selectedFields = ko.observableArray(fields ? fields.selectedFields : []);
+
+  console.log(this);
+  console.log(options);
 
   self.addField = function (type) {
     var fieldToAdd;
@@ -132,7 +137,7 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(alphabeticalFilter);
     } else {
-        return load(alphabeticalFilter);
+        return load(alphabeticalFilter,cell);
     }
   }
 

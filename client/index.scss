@@ -516,6 +516,24 @@ html, body {
     background-color: #001722 !important;
 }
 
+.pattern-update-in {
+    opacity: 0;
+    padding: 10px;
+    position:relative;
+    animation: patternContentIn 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+}
+
+@keyframes patternContentIn {
+  0% {
+    opacity: 0;
+    padding: 10px;
+  }
+  100% {
+    opacity: 1;
+    padding: 36px;
+  }
+}
+
 @import "./js/modaledit/index.scss";
 @import "./js/modalpatterns/index.scss";
 @import "./patterns/index.scss";

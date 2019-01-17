@@ -5,7 +5,8 @@
             "name":"Alphabetical Filter Pattern",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": []
          },
          "metadata":{
             "graphics":{
@@ -27,7 +28,8 @@
             "name":"Xor",
             "default":false,
             "landmark":false,
-            "xor":true
+            "xor":true,
+            "pattern": []
          },
          "metadata":{
             "graphics":{
@@ -49,7 +51,8 @@
             "name":"Result",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": []
          },
          "metadata":{
             "graphics":{
@@ -71,7 +74,8 @@
             "name":"Filter",
             "default":true,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": []
          },
          "metadata":{
             "graphics":{
@@ -95,7 +99,8 @@
             "fields":[
 
             ],
-            "collection":""
+            "collection":"",
+            "pattern": []
          },
          "metadata":{
             "graphics":{
@@ -124,7 +129,8 @@
             "collection":"alphabet",
             "filters":[
 
-            ]
+            ],
+            "pattern": []
          },
          "metadata":{
             "graphics":{
@@ -151,7 +157,8 @@
             "collection":"",
             "filters":[
 
-            ]
+            ],
+            "pattern": []
          },
          "metadata":{
             "graphics":{

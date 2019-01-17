@@ -14,11 +14,11 @@
                 </center>
             </div>
             <div id="pattern-modal" class="modal-footer">
-                <!-- ko if: firstStep() && modalType() === 'create' -->
+                <!-- ko if: modalType() === 'create' && firstStep() -->
                 <a href="#!" class="btn btn-default btn-close" data-dismiss="modal">Close</a>
                 <a href="#!" class="btn btn-default btn-selection" data-bind="click: nextStep">Select</a>
                 <!-- /ko -->
-                <!-- ko ifnot: firstStep() || modalType() === 'update' -->
+                <!-- ko ifnot: modalType() === 'update' || firstStep() -->
                 <a href="#!" class="btn btn-default btn-close" data-bind="click: back">Back</a>
                 <a href="#!" class="btn btn-default btn-selection" data-bind="click: load">Load</a>
                 <!-- /ko -->

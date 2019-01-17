@@ -60,10 +60,10 @@ function mapStringSet(e, f, c) {
         inputTypes: e.attributes.stereotype === 'form' ? ['text','textarea','password','reset','radio','checkbox','hidden','hidden-object'] : undefined,
         inputType: e.attributes.stereotype === 'form' ? ko.observableArray(['text']) : undefined,
         pattern : f.pattern,
-        patternTypes: f.name === 'Pattern' ? ko.observableArray(f.pattern[0] ? f.pattern[0].type : []) : undefined,
-        patternType: f.name === 'Pattern' ? ko.observable(f.pattern[0] ? f.pattern[0].type[0] : '') : undefined,
-        patternValues: f.name === 'Pattern' ? ko.observableArray(_.map(f.pattern, function (p) {return p.value})) : undefined,
-        patternValue: f.name === 'Pattern' ? ko.observable(f.pattern[0] ? f.pattern[0].value : '') : undefined,
+        patternTypes: f.name === 'Pattern' ? ko.observableArray(f.pattern.values[0] ? f.pattern.values[0].type : []) : undefined,
+        patternType: f.name === 'Pattern' ? ko.observable(f.pattern.values[0] ? f.pattern.values[0].type[0] : '') : undefined,
+        patternValues: f.name === 'Pattern' ? ko.observableArray(_.map(f.pattern.values, function (p) {return p.value})) : undefined,
+        patternValue: f.name === 'Pattern' ? ko.observable(f.pattern.values[0] ? f.pattern.values[0].value : '') : undefined,
         radio: ko.observable(0),
         checkbox: ko.observable(0),
         add: function () {
@@ -100,8 +100,7 @@ function mapStringSet(e, f, c) {
         },
         changePattern: function () {
             var self = this,
-                filtered = _.filter(field.pattern, function (p) {return p.value === field.patternValue()});
-
+                filtered = _.filter(field.pattern.reset || field.pattern.values, function (p) {return p.value === field.patternValue()});
             if(filtered.length > 0){
                 field.patternTypes(filtered[0].type);
                 field.patternType(filtered[0].type[0]);
@@ -115,19 +114,17 @@ function mapStringSet(e, f, c) {
             }).value());
 
             if(field.patternType() === 'root'){
-
                 var list = field.patternValues(),
-                    filtered = _.filter(field.pattern, function (p) { return _.includes(p.type,'root') && p.value !== field.patternValue(); });
-
+                    filtered = _.filter(field.pattern.values, function (p) { return _.includes(p.type,'root') && p.value !== field.patternValue(); });
                 filtered = _.intersection(list,_.map(filtered, function (l) { return l.value }));
-                field.patternValue(filtered[0] ? filtered[0] : '');
                 field.patternValues(filtered);
+                field.patternValue(filtered[0] ? filtered[0] : '');
                 field.patternValues.sort();
                 field.patternTypes(['root']);
                 field.patternType('root');
             } else if (field.patternType() === 'node') {
                 var list = field.patternValues(),
-                    filtered = _.filter(field.pattern, function (l) { return _.includes(l.type,'node') && l.value !== field.patternValue(); });
+                    filtered = _.filter(field.pattern.values, function (l) { return _.includes(l.type,'node') && l.value !== field.patternValue(); });
 
                 filtered = _.intersection(list,_.map(filtered, function (p) { return p.value}));
                 field.patternValue(filtered[0] ? filtered[0] : '');
@@ -137,6 +134,7 @@ function mapStringSet(e, f, c) {
                 field.patternType('node');
             }
             if(field.patternValues().length < 1){
+              field.patternTypes([]);
               field.patternType('');
               $('#pattern-type').prop('disabled',true);
               $('#pattern-value').prop('disabled',true);
@@ -151,28 +149,33 @@ function mapStringSet(e, f, c) {
                 if(this.type === 'root'){
                     var roots = _.filter(field.strings(), function (s) {return _.includes(s.type,'root')});
                     if(roots.length === 0) {
-                        var filtered = _.filter(field.pattern, function (p) { return _.includes(p.type,'node') });
-                        if(filtered.length > 0){
-                            field.patternValues(_.flattenDeep([field.patternValues(),_.map(filtered, function (l) { return l.value})]));
-                            field.patternValues.sort();
-                            field.patternValue(field.patternValues()[0].value);
-                            var type = _.filter(field.pattern, function(p) { return p.value === field.patternValue() });
-                            field.patternType(type[0].type);
-                            field.patternType(type[0].type[0]);
+                        if(field.pattern.reset){
+                            field.pattern.values = field.pattern.reset;
+                            field.patternValues(_.map(field.pattern.values, function (r) { return r.value}));
+                            field.patternValue(field.pattern.values[0].value);
+                            field.patternTypes(field.pattern.values[0].type);
+                            field.patternType(field.pattern.values[0].type[0]);
                         }
+                    } else {
+                        field.patternTypes(['root']);
+                        field.patternType('root');
                     }
                 } else if(this.type === 'node'){
                     var nodes = _.filter(field.strings(), function (s) {return _.includes(s.type,'node') });
-                    if(nodes.length === 0) {
-                        var filtered = _.filter(field.pattern, function (p) { return _.includes(p.type, 'root') });
-                        if(filtered.length > 0){
-                            field.patternValues(_.flattenDeep([field.patternValues(),_.map(filtered, function (l) { return l.value})]));
-                            field.patternValues.sort();;
-                            field.patternValue(field.patternValues()[0].value);
-                            var type = _.filter(field.pattern, function(p) { return p.value === field.patternValue() });
-                            field.patternTypes(type[0].type);
-                            field.patternType(type[0].type[0])
+                    if(nodes.length === 0) {if(field.pattern.reset){
+                            field.pattern.values = field.pattern.reset;
+                            var filtered = _.filter(field.pattern.values, function (r) { return _.includes(r.type, 'root') });
+                            field.patternValues(_.map(field.pattern.values, function (r) { return r.value}));
+                            field.patternValue(field.pattern.values[0].value);
+                            field.patternTypes(field.pattern.values[0].type);
+                            field.patternType(field.pattern.values[0].type[0]);
+                        } else {
+                            field.patternTypes(['node']);
+                            field.patternType('node');
                         }
+                    } else {
+                        field.patternTypes(['node']);
+                        field.patternType('node');
                     }
                 }
                 if(field.patternValues().length > 0){

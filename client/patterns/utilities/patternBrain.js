@@ -4,17 +4,16 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var alphabeticalFilterBrain = require('../collection/alphabetical-filter/brain.js').brain,
-    alphabeticalFilterLoad = require('../collection/alphabetical-filter/load.js').load;
+var alphabeticalFilterBrain = require('../collection/alphabetical-filter/brain.js').brain;
 
-function patternManipulator (options) {
+function patternBrain (options) {
     var pattern = options.cell.attributes.pattern[0].value;
 
     options.pattern = options.cell.attributes.pattern[0];
 
     switch (pattern) {
       case 'alphabetical filter':
-        options.operation === 'load' ? alphabeticalFilterLoad(options) : alphabeticalFilterBrain(options);
+        alphabeticalFilterBrain(options);
         break;
       case 'basic search':
 
@@ -51,4 +50,4 @@ function patternManipulator (options) {
     }
 }
 
-exports.patternManipulator = patternManipulator;
+exports.patternBrain = patternBrain;

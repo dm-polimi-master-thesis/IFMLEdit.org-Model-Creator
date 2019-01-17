@@ -85,12 +85,14 @@ exports.Action = joint.shapes.basic.Generic.extend({
 
         values = _.difference(values, _.map(this.attributes.pattern, function (p) { return p.value }));
 
-        pattern = _.sortBy(_.map(values, function (v) {
-            return {
-              value: v,
-              type: ['node']
-            }
-        }),'value');
+        pattern = {
+            values: _.sortBy(_.map(values, function (v) {
+                return {
+                  value: v,
+                  type: ['node']
+                }
+            }),'value')
+        }
 
         var editables = _.chain([
                 {property: 'name', name: 'Name', type: 'string'},

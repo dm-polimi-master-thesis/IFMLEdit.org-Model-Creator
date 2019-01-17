@@ -7,9 +7,11 @@
 function update(cell) {
     var tree = cell.attributes.pattern[0].tree;
 
+    console.log('update', tree);
+    console.log('tree',tree['alphabet-list'].attributes.fields);
     return {
         type: 'update',
-        name: cell.attributes.name,
+        name: tree['pattern-container'].attributes.name,
         filterField: tree['alphabet-list'].attributes.fields[0],
         filterCollection: tree['alphabet-list'].attributes.collection,
         resultsCollection: tree['results-list'].attributes.collection,

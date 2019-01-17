@@ -12,7 +12,7 @@ function generateViewContainer(template, options) {
           name: options.name,
           default: options.default || false,
           landmark: options.landmark || false,
-          pattern: options.pattern || undefined,
+          pattern: options.pattern || [],
           xor: options.xor || false
       },
       metadata: {

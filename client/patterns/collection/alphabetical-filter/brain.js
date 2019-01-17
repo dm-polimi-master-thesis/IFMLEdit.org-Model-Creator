@@ -23,23 +23,16 @@ function brain(options) {
             var links = _.filter(graph.getConnectedLinks(child,{deep:'true', outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
 
             _.forEach(links, function (l1) {
-                console.log('l1',l1);
                 var targetList = l1.collection._byId[l1.attributes.target.id];
-                console.log('targetList',targetList);
                 if (targetList && targetList.attributes.type === 'ifml.ViewComponent' && targetList.attributes.stereotype === 'list') {
                     tree['results-list'] = targetList;
                     var targetListPattern = _.filter(targetList.attributes.pattern, function (p) {return p.value === 'alphabetical filter' && !p.active});
-                    console.log('targetListPattern',targetListPattern);
                     if(targetListPattern.length > 0) {
                         links = _.filter(graph.getConnectedLinks(targetList,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-                        console.log('links',links);
                         _.forEach(links, function (l2) {
                             var targetDetails = l2.collection._byId[l2.attributes.target.id];
-                            console.log('l2',l2);
-                            console.log('targetDetails',targetDetails);
                             if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
                                 var targetDetailspattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'alphabetical filter' && !p.active});
-                                console.log('targetDetailspattern',targetDetailspattern);
                                 if(targetDetailspattern.length > 0) {
                                     tree['result-details'] = targetDetails;
 

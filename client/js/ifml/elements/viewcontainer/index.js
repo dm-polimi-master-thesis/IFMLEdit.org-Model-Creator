@@ -166,13 +166,24 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
                   value: v,
                   type: ['root']
                 }
-            })
+            });
 
-            if ((types.length === 2 && this.getAncestors().length > 0) || (types.length === 1 && types[0] === 'node')) {
-                pattern = _.sortBy(_.flattenDeep([values,nodes]),'value');
+            if ((types.length === 2 && this.getAncestors().length > 0)) {
+                pattern = {
+                    values: _.sortBy(_.flattenDeep([values,nodes]),'value')
+                }
             } else if ((types.length === 2 && this.getAncestors().length === 0) || (types.length === 1 && types[0] === 'root')) {
-                pattern = _.sortBy(_.flattenDeep(values),'value');
+                pattern = {
+                    values: _.sortBy(_.flattenDeep(values),'value')
+                }
+            } else if (types.length === 1 && types[0] === 'node') {
+                pattern = {
+                    values: _.sortBy(_.flattenDeep(nodes),'value'),
+                    reset: _.sortBy(_.flattenDeep([_.map(this.attributes.pattern, function (p) { return { value: p.value, type: [p.type] } }),nodes,values]),'value')
+                }
             }
+
+            console.log('pattern--',pattern);
 
             editables = editables.concat(
                 {property: 'pattern', name: 'Pattern', type: 'stringset', pattern: pattern},
@@ -267,7 +278,6 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
     _nameChanged: function () {
         var value,
             modifiers = [];
-            console.log(this.get('pattern'));
         if (this.get('pattern') && this.get('pattern').length > 0) {
             modifiers.push('P');
         }

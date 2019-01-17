@@ -4,6 +4,8 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
+var _ = require('lodash');
+
 function ModalPatternsViewModel(options, close) {
     var self = this;
 
@@ -61,29 +63,22 @@ function ModalPatternsViewModel(options, close) {
     }
 }
 
-function ModalPatternMatchingViewModal(options,close) {
-    var self = this;
+function ModalPatternUpdateViewModal(options,close) {
+    var self = this,
+        fields = options.fields;
 
-    if (typeof options.cell !== 'object') { throw new Error('cell should be provided'); }
-    if (typeof options.board !== 'object') { throw new Error('board should be provided'); }
-
-    var cell = options.cell,
-        board = options.board,
-        fields = cell.pattern && cell.pattern(),
-        el = $(require('./modal.html'));
-
-    self.pattern = options.setPattern( { id: options.pattern } );
-
-    self.close = close;
     self.modalType = ko.observable('update');
+    self.close = close;
+
+    $('#pattern-home').remove();
+    $('#pattern-settings').append(options.html)
+        .addClass('pattern-update-in')
+        .show();
+    self.pattern = options.setPattern( { id: options.id, fields: options.fields, cell: options.cell } );
 
     self.update = function () {
-      /*var result = self.pattern.transform();
-
-      if(result !== undefined){
-        options.load(result);
-        self.close();
-      }*/
+      self.pattern.transform();
+      self.close();
     }
 }
 
@@ -95,7 +90,8 @@ function ModalPatterns(options) {
 
     if (options.type === undefined) { throw new Error('missing type option');}
 
-    var el = $(require('./modal.html'));
+    var self = this,
+        el = $(require('./modal.html'));
 
     $(document.body).append(el);
 
@@ -114,17 +110,33 @@ function ModalPatterns(options) {
 
         ko.applyBindings(new ModalPatternsViewModel({ patterns: patterns, load: load, createHome: createHome }, function () { el.modal('hide'); }), el.find('#pattern-modal')[0]);
         el.modal('show').on('hidden.bs.modal', tearDown);
-    } else if (options.type === 'load') {
-        if (options.pattern === undefined) { throw new Error('missing match option');}
+    } else if (options.type === 'update') {
 
-        var pattern = options.cell.attributes.pattern[0].value.replace(/\s+/g),
-            update = require('../../patterns/collection' + pattern + '/update.js').update,
-            load = require('../../patterns/collection' + pattern + '/load.js').load,
-            setPattern = require('../../patterns/collection' + pattern + '/index.js').SettingsPattern;
+        self.modelType = ko.observable('update');
+
+        var id = options.cell.attributes.pattern[0].value.replace(/\s+/g,'-'),
+            update,
+            setPattern,
+            html;
+
+        _.forEach(options.patterns, function (category) {
+            var filtered = _.filter(category.list, function (l) { return l.id === id});
+
+            if(filtered.length === 1){
+              update = filtered[0].updatePattern;
+              setPattern = filtered[0].createPattern;
+              html = filtered[0].html
+            }
+        });
 
         var fields = update(options.cell);
 
-        ko.applyBindings(new ModalPatternMatchingViewModal({ id: pattern, setPattern: setPattern, fileds: fields, load: load }, function () { el.modal('hide'); }), el.find('#pattern-modal')[0]);
+        console.log(fields);
+        console.log(update);
+        console.log(setPattern);
+        console.log(html);
+
+        ko.applyBindings(new ModalPatternUpdateViewModal({ id: id, setPattern: setPattern, html:html, fields: fields, cell: options.cell }, function () { el.modal('hide'); }), el.find('#pattern-modal')[0]);
         el.modal('show').on('hidden.bs.modal', tearDown);
     }
 }

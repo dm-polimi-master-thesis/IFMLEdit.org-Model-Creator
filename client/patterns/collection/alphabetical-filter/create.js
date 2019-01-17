@@ -9,7 +9,6 @@ var _ = require('lodash'),
     toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
     configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
     generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
-    graphBuilder = require('../../utilities/graphBuilder.js').graphBuilder,
     format = require('./default.json');
 
 function create(alphabeticalFilter){
@@ -40,13 +39,6 @@ function create(alphabeticalFilter){
   });
   configurator(modelElementsHash['filter-to-results-navigation-flow'], template, {
       fields: alphabeticalFilter.filter.fields
-  });
-  configurator(modelElementsHash['alphabetical-filter-pattern-view-container'], template, {
-      pattern: {
-        role: 'pattern-container',
-        priority: 'high',
-        active: 'true'
-      }
   });
 
   return template;

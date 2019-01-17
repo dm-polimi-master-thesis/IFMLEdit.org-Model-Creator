@@ -4,27 +4,16 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var _ = require('lodash'),
-    idValidator = require('../../../js/ifml/utilities/validator/idValidator.js').idValidator,
-    toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
-    configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
-    generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
-    graphBuilder = require('../../utilities/graphBuilder.js').graphBuilder,
-    format = require('./default.json');
-
-function load(cell) {
+function load(template,cell) {
     var tree = cell.attributes.pattern[0].tree;
 
-    return {
-        type: 'update',
-        name: cell.attributes.name,
-        filterField: tree['alphabet-list'].attributes.fields[0],
-        filterCollection: tree['alphabet-list'].attributes.collection,
-        resultsCollection: tree['results-list'].attributes.collection,
-        selectedDetailsName: tree['result-details'].attributes.name,
-        resultsFields: tree['results-list'].attributes.fields,
-        selectedFields: tree['result-details'].attributes.fields
-    }
+    tree['pattern-container'].attributes.name = template.name,
+    tree['alphabet-list'].attributes.collection = template.filter.collection,
+    tree['alphabet-list'].attributes.fields = template.filter.fields,
+    tree['results-list'].attributes.collection = template.list.collection,
+    tree['results-list'].attributes.fields = template.list.fields,
+    tree['result-details'].attributes.name = template.details.name,
+    tree['result-details'].attributes.fields = template.details.fields
 }
 
 exports.load = load;

@@ -28,7 +28,7 @@ var _ = require('lodash'),
     createModalPatterns = require('./modalpatterns').ModalPatterns,
     examples = require('./examples').examples,
     patterns = require('./patterns').patterns,
-    patternManipulator = require('../patterns/utilities/patternManipulator.js').patternManipulator,
+    patternBrain = require('../patterns/utilities/patternBrain.js').patternBrain,
     ifml2code = require('./ifml2code').ifml2code,
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
@@ -164,7 +164,7 @@ function editPcnElement(cellView) {
 
 function patternLoad(cellView) {
     try {
-        createModalPatterns({patterns: patterns, type: 'load', cell: cellView.model, board: pcnBoard});
+        createModalPatterns({patterns: patterns, type: 'update', cell: cellView.model});
     } catch (exception) {
         console.log(exception);
         ifmlBoard.clearHistory();
@@ -175,7 +175,7 @@ function patternLoad(cellView) {
 
 function patternMatching(cellView) {
     try {
-        patternManipulator({cell: cellView.model, board: ifmlBoard, operation: 'brain'});
+        patternBrain({cell: cellView.model});
     } catch (exception) {
         console.log(exception);
         ifmlBoard.clearHistory();
