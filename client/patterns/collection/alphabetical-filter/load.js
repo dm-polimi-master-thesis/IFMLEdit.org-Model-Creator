@@ -4,7 +4,15 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-function update(cell) {
+var _ = require('lodash'),
+    idValidator = require('../../../js/ifml/utilities/validator/idValidator.js').idValidator,
+    toHash = require('../../../js/ifml/utilities/validator/toHash.js').toHash,
+    configurator = require('../../../js/ifml/utilities/configurator/elementConfigurator.js').configurator,
+    generator = require('../../../js/ifml/utilities/generator/elementGenerator.js').generator,
+    graphBuilder = require('../../utilities/graphBuilder.js').graphBuilder,
+    format = require('./default.json');
+
+function load(cell) {
     var tree = cell.attributes.pattern[0].tree;
 
     return {
@@ -19,4 +27,4 @@ function update(cell) {
     }
 }
 
-exports.update = update;
+exports.load = load;

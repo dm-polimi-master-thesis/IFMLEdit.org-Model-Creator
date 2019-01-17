@@ -5,11 +5,7 @@
             "name":"Alphabetical Filter Pattern",
             "default":false,
             "landmark":false,
-            "xor":false,
-            "pattern": {
-              "role": "pattern-container",
-              "priority": "high"
-            }
+            "xor":false
          },
          "metadata":{
             "graphics":{
@@ -31,12 +27,7 @@
             "name":"Xor",
             "default":false,
             "landmark":false,
-            "xor":true,
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "xor-pattern-container",
-              "priority":"high"
-            }
+            "xor":true
          },
          "metadata":{
             "graphics":{
@@ -58,12 +49,7 @@
             "name":"Result",
             "default":false,
             "landmark":false,
-            "xor":false,
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "result-container",
-              "priority":"high"
-            }
+            "xor":false
          },
          "metadata":{
             "graphics":{
@@ -85,12 +71,7 @@
             "name":"Filter",
             "default":true,
             "landmark":false,
-            "xor":false,
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "filter-container",
-              "priority":"high"
-            }
+            "xor":false
          },
          "metadata":{
             "graphics":{
@@ -114,12 +95,7 @@
             "fields":[
 
             ],
-            "collection":"",
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "result-details",
-              "priority":"high"
-            }
+            "collection":""
          },
          "metadata":{
             "graphics":{
@@ -148,12 +124,7 @@
             "collection":"alphabet",
             "filters":[
 
-            ],
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "filter-list",
-              "priority":"high"
-            }
+            ]
          },
          "metadata":{
             "graphics":{
@@ -180,12 +151,7 @@
             "collection":"",
             "filters":[
 
-            ],
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "filter-results",
-              "priority":"high"
-            }
+            ]
          },
          "metadata":{
             "graphics":{
@@ -205,12 +171,7 @@
       {
          "attributes":{
             "name":"Selected",
-            "stereotype":"selection",
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "selected-filter-event",
-              "priority":"low"
-            }
+            "stereotype":"selection"
          },
          "metadata":{
             "graphics":{
@@ -230,12 +191,7 @@
       {
          "attributes":{
             "name":"Selected",
-            "stereotype":"selection",
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "selected-result-event",
-              "priority":"low"
-            }
+            "stereotype":"selection"
          },
          "metadata":{
             "graphics":{
@@ -256,12 +212,7 @@
          "attributes":{
             "bindings":[
 
-            ],
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "filter-navigation",
-              "priority":"low"
-            }
+            ]
          },
          "metadata":{
             "graphics":{
@@ -287,12 +238,7 @@
                   "input":"id",
                   "output":"id"
                }
-            ],
-            "pattern": {
-              "root": "alphabetical-filter-pattern-view-container",
-              "role": "result-navigation",
-              "priority":"low"
-            }
+            ]
          },
          "metadata":{
             "graphics":{

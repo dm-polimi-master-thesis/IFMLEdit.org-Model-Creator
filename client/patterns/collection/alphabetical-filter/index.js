@@ -5,7 +5,8 @@
 "use strict";
 
 var _ = require('lodash'),
-    create = require('./create.js').create;
+    create = require('./create.js').create,
+    load = require('./load.js').load;
 
 
 function SettingsPatternViewModel(options) {
@@ -19,8 +20,8 @@ function SettingsPatternViewModel(options) {
   self.filterCollection = ko.observable(options.filterCollection || "");
   self.resultsCollection = ko.observable(options.resultsCollection || "");
   self.selectedDetailsName = ko.observable(options.selectedDetailsName || "");
-  self.resultsFieldToAdd = ko.observable(options.resultsFieldToAdd || "");
-  self.selectedFieldToAdd = ko.observable(options.selectedFieldToAdd || "");
+  self.resultsFieldToAdd = ko.observable("");
+  self.selectedFieldToAdd = ko.observable("");
   self.resultsFields = ko.observableArray(options.resultsFields || []);
   self.selectedFields = ko.observableArray(options.selectedFields || []);
 
@@ -131,7 +132,7 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(alphabeticalFilter);
     } else {
-        return update(alphabeticalFilter);
+        return load(alphabeticalFilter);
     }
   }
 

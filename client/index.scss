@@ -499,6 +499,23 @@ html, body {
     border-top-color: #18222d !important;
 }
 
+.swal2-popup, .swal2-modal, .swal2-success-fix, .swal2-success-circular-line-left, .swal2-success-circular-line-right, .swal2-title {
+    background-color: #18222d !important;
+}
+
+.swal2-title {
+    color: white !important;
+}
+
+.swal2-content {
+    color: #ffffff70 !important;
+}
+
+.swal2-confirm {
+    border-color: #001722 !important;
+    background-color: #001722 !important;
+}
+
 @import "./js/modaledit/index.scss";
 @import "./js/modalpatterns/index.scss";
 @import "./patterns/index.scss";

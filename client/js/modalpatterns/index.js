@@ -114,14 +114,17 @@ function ModalPatterns(options) {
 
         ko.applyBindings(new ModalPatternsViewModel({ patterns: patterns, load: load, createHome: createHome }, function () { el.modal('hide'); }), el.find('#pattern-modal')[0]);
         el.modal('show').on('hidden.bs.modal', tearDown);
-    } else if (options.type === 'update') {
-        if (options.match === undefined) { throw new Error('missing match option');}
+    } else if (options.type === 'load') {
+        if (options.pattern === undefined) { throw new Error('missing match option');}
 
-        var pattern = options.match;
+        var pattern = options.cell.attributes.pattern[0].value.replace(/\s+/g),
+            update = require('../../patterns/collection' + pattern + '/update.js').update,
+            load = require('../../patterns/collection' + pattern + '/load.js').load,
+            setPattern = require('../../patterns/collection' + pattern + '/index.js').SettingsPattern;
 
-        var setPattern = require('../../patterns/collection' + pattern + '/index.js').SettingsPattern;
+        var fields = update(options.cell);
 
-        ko.applyBindings(new ModalPatternMatchingViewModal({ id: pattern, setPattern: setPattern }, function () { el.modal('hide'); }), el.find('#pattern-modal')[0]);
+        ko.applyBindings(new ModalPatternMatchingViewModal({ id: pattern, setPattern: setPattern, fileds: fields, load: load }, function () { el.modal('hide'); }), el.find('#pattern-modal')[0]);
         el.modal('show').on('hidden.bs.modal', tearDown);
     }
 }

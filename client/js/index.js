@@ -28,8 +28,7 @@ var _ = require('lodash'),
     createModalPatterns = require('./modalpatterns').ModalPatterns,
     examples = require('./examples').examples,
     patterns = require('./patterns').patterns,
-    patternLoad = require('../patterns/utilities/patternLoad.js').patternLoad,
-    patternCheck = require('../patterns/utilities/patternCheck.js').patternCheck,
+    patternManipulator = require('../patterns/utilities/patternManipulator.js').patternManipulator,
     ifml2code = require('./ifml2code').ifml2code,
     createIFBrowser = require('./ifbrowser').IFBrowser,
     createIFClient = require('./ifclient').IFClient,
@@ -163,12 +162,26 @@ function editPcnElement(cellView) {
     createModalEdit({cell: cellView.model, board: pcnBoard});
 }
 
-function loadPattern(cellView) {
-    patternLoad({cell: cellView.model, board: ifmlBoard});
+function patternLoad(cellView) {
+    try {
+        createModalPatterns({patterns: patterns, type: 'load', cell: cellView.model, board: pcnBoard});
+    } catch (exception) {
+        console.log(exception);
+        ifmlBoard.clearHistory();
+        $.notify({message: 'Something goes wrong...'}, {allow_dismiss: true, type: 'danger'});
+        return;
+    }
 }
 
-function checkPattern(cellView) {
-    patternCheck({cell: cellView.model, board: ifmlBoard});
+function patternMatching(cellView) {
+    try {
+        patternManipulator({cell: cellView.model, board: ifmlBoard, operation: 'brain'});
+    } catch (exception) {
+        console.log(exception);
+        ifmlBoard.clearHistory();
+        $.notify({message: 'Something goes wrong...'}, {allow_dismiss: true, type: 'danger'});
+        return;
+    }
 }
 
 function showElementStatistics(cellView) {
@@ -176,8 +189,8 @@ function showElementStatistics(cellView) {
 }
 
 ifmlBoard.on('cell:edit cell:pointerdblclick link:options', editIfmlElement);
-ifmlBoard.on('cell:pattern-load', loadPattern);
-ifmlBoard.on('cell:pattern-brain', checkPattern);
+ifmlBoard.on('cell:pattern-load', patternLoad);
+ifmlBoard.on('cell:pattern-brain', patternMatching);
 statisticsBoard.on('cell:statistics cell:pointerdblclick link:options', showElementStatistics);
 pcnBoard.on('cell:edit cell:pointerdblclick', editPcnElement);
 

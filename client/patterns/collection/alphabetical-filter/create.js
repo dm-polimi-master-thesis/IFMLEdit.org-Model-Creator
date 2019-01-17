@@ -43,9 +43,9 @@ function create(alphabeticalFilter){
   });
   configurator(modelElementsHash['alphabetical-filter-pattern-view-container'], template, {
       pattern: {
-        graph: graphBuilder(_.cloneDeep(template)),
-        role: "pattern-container",
-        priority: "high"
+        role: 'pattern-container',
+        priority: 'high',
+        active: 'true'
       }
   });
 

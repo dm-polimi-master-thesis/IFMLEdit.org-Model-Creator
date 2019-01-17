@@ -80,7 +80,8 @@ gulp.task('vendor', function () {
                 './node_modules/bootstrap-notify/bootstrap-notify.js',
                 './node_modules/file-saver/FileSaver.js',
                 './node_modules/almost/dist/almost.js',
-                './node_modules/almost-joint/dist/almost-joint.js'])
+                './node_modules/almost-joint/dist/almost-joint.js',
+                './node_modules/sweetalert2/dist/sweetalert2.js'])
                 .pipe(gulpif(!production, sourcemaps.init()))
                 .pipe(minifyjs())
                 .pipe(rename({suffix: '.min'}))
@@ -130,7 +131,8 @@ gulp.task('vendor', function () {
                 .pipe(gulp.dest('./public/js')),
         gulp.src(['./node_modules/jointjs/dist/joint.css',
                 './node_modules/bootstrap/dist/css/bootstrap.css',
-                './node_modules/almost-joint/dist/almost-joint.css'])
+                './node_modules/almost-joint/dist/almost-joint.css',
+                './node_modules/sweetalert2/dist/sweetalert2.css'])
                 .pipe(gulpif(!production, sourcemaps.init()))
                 .pipe(minifyCss({compatibility: 'ie8'}))
                 .pipe(rename({suffix: '.min'}))
