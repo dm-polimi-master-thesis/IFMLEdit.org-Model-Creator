@@ -80,6 +80,11 @@ function ModalPatternUpdateViewModal(options,close) {
       self.pattern.transform();
       self.close();
     }
+
+    self.cancel = function () {
+      self.pattern.cancel();
+      self.close();
+    }
 }
 
 function ModalPatterns(options) {

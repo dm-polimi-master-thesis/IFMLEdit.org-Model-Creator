@@ -12,61 +12,139 @@ function brain(options) {
         cell = options.cell,
         graph = options.cell.graph,
         embeds = cell.getEmbeddedCells({deep:'true'}),
-        found = false;
+        deleteFound = false,
+        dataEntryFound = false,
+        detailsPageFound = false;
 
     tree['pattern-container'] = cell;
 
     _.forEach(embeds, function (child) {
-        var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'basic search' && !p.active;}),
+        var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'content management' && !p.active;}),
             attributes = child.attributes;
-        if(childPattern.length > 0 && attributes.type === 'ifml.ViewComponent' && attributes.stereotype === 'form') {
-            var links = _.filter(graph.getConnectedLinks(child,{deep:'true', outbound:'true'}), function (l) {return l.attributes.type === 'ifml.DataFlow'});
+        if(childPattern.length > 0 && attributes.type === 'ifml.ViewComponent' && attributes.stereotype === 'list') {
+            var links = _.filter(graph.getConnectedLinks(child,{deep:'true', outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
 
             _.forEach(links, function (l1) {
-                var targetList = l1.collection._byId[l1.attributes.target.id];
-                if (targetList && targetList.attributes.type === 'ifml.ViewComponent' && targetList.attributes.stereotype === 'list') {
-                    var targetListPattern = _.filter(targetList.attributes.pattern, function (p) {return p.value === 'basic search' && !p.active});
-                    if(targetListPattern.length > 0) {
-                        links = _.filter(graph.getConnectedLinks(targetList,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-                        _.forEach(links, function (l2) {
-                            var targetDetails = l2.collection._byId[l2.attributes.target.id];
-                            if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
-                                var targetDetailspattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'basic search' && !p.active});
-                                if(targetDetailspattern.length > 0) {
-                                    tree['keyword-form'] = child;
-                                    tree['keyword-flow'] = l1;
-                                    tree['results-list'] = targetList;
-                                    tree['result-details'] = targetDetails;
+                var targetDetails = l1.collection._byId[l1.attributes.target.id];
+                if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
+                    var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                    if(targetDetailsPattern.length > 0) {
+                        var linksDetails = _.filter(graph.getConnectedLinks(targetDetails,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+                        _.forEach(linksDetails, function (l2) {
+                            var targetAction = l2.collection._byId[l2.attributes.target.id];
+                            if (targetAction && targetAction.attributes.type === 'ifml.Action') {
+                                var targetActionPattern = _.filter(targetAction.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                                if(targetActionPattern.length > 0) {
+                                    tree['page-list'] = child;
+                                    tree['delete-page-details'] = targetDetails;
+                                    tree['delete-action'] = targetAction;
 
-                                    options.pattern.tree = tree;
-                                    options.pattern.active = true;
+                                    links = _.filter(links, function (l) {return l.id !== l1.id });
 
-                                    swal(
-                                      'Basic Search Found',
-                                      'Click on the pattern settings to manage the pattern',
-                                      'success'
-                                    );
-
-                                    found = true;
+                                    deleteFound = true;
                                     return false;
                                 }
                             }
                         });
                     }
                 }
-                if(found){
+                if(deleteFound){
                   return false;
                 }
             });
+            if (deleteFound) {
+                _.forEach(links, function (l1) {
+                    var targetLoadAction = l1.collection._byId[l1.attributes.target.id];
+                    if (targetLoadAction && targetLoadAction.attributes.type === 'ifml.Action') {
+                        var targetLoadActionPattern = _.filter(targetLoadAction.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                        if(targetLoadActionPattern.length > 0) {
+                            var linksLoadAction = _.filter(graph.getConnectedLinks(targetLoadAction,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+                            _.forEach(linksLoadAction, function (l2) {
+                                var targetForm = l2.collection._byId[l2.attributes.target.id];
+                                if (targetForm && targetForm.attributes.type === 'ifml.ViewComponent' && targetForm.attributes.stereotype === 'form') {
+                                    var targetFormPattern = _.filter(targetForm.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                                    if(targetFormPattern.length > 0) {
+                                        var linksForm = _.filter(graph.getConnectedLinks(targetForm,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+                                        _.forEach(linksForm, function (l3) {
+                                            var targetSaveAction = l3.collection._byId[l3.attributes.target.id];
+                                            if (targetSaveAction && targetSaveAction.attributes.type === 'ifml.Action') {
+                                                var targetSaveActionPattern = _.filter(targetSaveAction.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                                                if(targetSaveActionPattern.length > 0) {
+                                                    tree['load-content-action'] = targetLoadAction;
+                                                    tree['load-data-entry-flow'] = l2;
+                                                    tree['data-entry-form'] = targetForm;
+                                                    tree['save-data-entry-flow'] = l3;
+                                                    tree['save-action'] = targetSaveAction;
+
+                                                    var linksSaveAction = _.filter(graph.getConnectedLinks(targetSaveAction,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+
+                                                    linksSaveAction = _.filter(linksSaveAction, function (l4) { return l4.attributes.target.id === targetForm.id })
+
+                                                    if(linksSaveAction.length > 0){
+                                                        tree['failed-data-entry-flow'] = linksSaveAction[0];
+                                                    }
+
+                                                    links = _.filter(links, function (l) {return l.id !== l1.id });
+
+                                                    dataEntryFound = true;
+                                                    return false;
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                                if(dataEntryFound) {
+                                  return false;
+                                }
+                            });
+                        }
+                    }
+                    if(dataEntryFound){
+                      return false;
+                    }
+                });
+                _.forEach(links, function (l1) {
+                    var targetDetails = l1.collection._byId[l1.attributes.target.id];
+                    if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
+                        var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                        if(targetDetailsPattern.length > 0) {
+                            tree['page-details'] = targetDetails;
+                            detailsPageFound = true;
+
+                            if(dataEntryFound) {
+                              var linksDetails = _.filter(graph.getConnectedLinks(targetDetails,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+
+                              linksDetails = _.filter(linksDetails, function (l2) { return l2.attributes.target.id === tree['data-entry-form'].id })
+
+                              if(linksDetails.length > 0){
+                                  tree['modify-flow'] = linksDetails[0];
+                              }
+                            }
+                        }
+                    }
+                    if(detailsPageFound){
+                      return false;
+                    }
+                });
+            }
         }
-        if(found){
+        if(deleteFound){
+          options.pattern.tree = tree;
+          options.pattern.active = true;
+
+          console.log(tree);
+
+          swal(
+            'Content Management Found',
+            'Click on the pattern settings to manage the pattern',
+            'success'
+          );
           return false;
         }
     });
-
-    if(!found){
+    if(!(deleteFound)){
         swal(
-          'Basic Search Not Found',
+          'Content Management Not Found',
           'Check if all the containers, components and connections of the pattern are built and configured correctly',
           'error'
         );

@@ -31,8 +31,8 @@ function brain(options) {
                         _.forEach(links, function (l2) {
                             var targetDetails = l2.collection._byId[l2.attributes.target.id];
                             if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
-                                var targetDetailspattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'alphabetical filter' && !p.active});
-                                if(targetDetailspattern.length > 0) {
+                                var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'alphabetical filter' && !p.active});
+                                if(targetDetailsPattern.length > 0) {
                                     tree['alphabet-list'] = child;
                                     tree['filter-link'] = l1;
                                     tree['results-list'] = targetList;
@@ -45,7 +45,9 @@ function brain(options) {
                                       'Alphabetical Pattern Found',
                                       'Click on the pattern settings to manage the pattern',
                                       'success'
-                                    );
+                                    ).then((result) => {
+                                        options.load({patterns: options.patterns, type: 'update', cell: cell});
+                                    });
 
                                     found = true;
                                     return false;

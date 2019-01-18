@@ -31,8 +31,8 @@ function brain(options) {
                         _.forEach(links, function (l2) {
                             var targetDetails = l2.collection._byId[l2.attributes.target.id];
                             if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
-                                var targetDetailspattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'basic search' && !p.active});
-                                if(targetDetailspattern.length > 0) {
+                                var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'basic search' && !p.active});
+                                if(targetDetailsPattern.length > 0) {
                                     tree['keyword-form'] = child;
                                     tree['keyword-flow'] = l1;
                                     tree['results-list'] = targetList;

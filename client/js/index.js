@@ -175,7 +175,7 @@ function patternLoad(cellView) {
 
 function patternMatching(cellView) {
     try {
-        patternBrain({cell: cellView.model});
+        patternBrain({cell: cellView.model, patterns: patterns, load: createModalPatterns });
     } catch (exception) {
         console.log(exception);
         ifmlBoard.clearHistory();
