@@ -17,17 +17,17 @@ function SettingsPatternViewModel(options) {
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
   self.name = ko.observable(fields ? fields.name : "Content Management");
-  self.dataOption = fields ? undefined : ko.observable(fields ? fields.dataOption : true);
-  self.detailsOption = fields ? undefined : ko.observable(fields ? fields.detailsOption : true);
-  self.pageListOption = fields ? undefined : ko.observable(fields ? fields.pageListOption : true);
+  self.dataOption = ko.observable(fields ? fields.dataOption : true);
+  self.detailsOption = ko.observable(fields ? fields.detailsOption : true);
+  self.pageListOption = ko.observable(fields ? fields.pageListOption : true);
   self.selectedDetailsName = ko.observable(fields ? fields.selectedDetailsName : "");
   self.dataEntryFormName = ko.observable(fields ? fields.dataEntryFormName : "");
   self.collectionListName = ko.observable(fields ? fields.collectionListName : "");
   self.collectionDetailsName = ko.observable(fields ? fields.collectionDetailsName : "");
   self.resultsFieldToAdd = ko.observable("");
   self.dataEntryFieldToAdd = ko.observable("");
-  self.resultsFields = ko.observableArray(fields ? fields.resultsFields : []);
-  self.dataEntryFields = ko.observableArray(fields ? fields.dataEntryFields : []);
+  self.resultsFields = ko.observableArray(fields ? _.map(fields.resultsFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
+  self.dataEntryFields = ko.observableArray(fields ? _.map(fields.dataEntryFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {
@@ -186,6 +186,21 @@ function SettingsPatternViewModel(options) {
         $('#detailsOption').prop('disabled', false);
         $('#pageListOption').prop('disabled', false);
     }
+  }
+
+  if (self.type === 'update') {
+      $('#dataOption').prop('disabled',true);
+      $('#detailsOption').prop('disabled', true);
+      $('#pageListOption').prop('disabled', true);
+      if (!self.dataOption()){
+          $('#data-entry-form').prop('disable',true);
+      } else if (!self.pageListOption()) {
+          $('#collection-list-form').prop('disable',true);
+          $('#field-page-list').prop('disable',true);
+      } else if (!self.detailsOption()) {
+          $('#details-form').prop('disable',true);
+          $('#collection-details-form').prop('disable',true);
+      }
   }
 }
 

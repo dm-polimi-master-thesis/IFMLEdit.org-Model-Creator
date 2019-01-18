@@ -44,8 +44,10 @@ function brain(options) {
                                       'Basic Search Found',
                                       'Click on the pattern settings to manage the pattern',
                                       'success'
-                                    );
-
+                                    ).then((result) => {
+                                        options.load({patterns: options.patterns, type: 'update', cell: cell});
+                                    });
+                                    
                                     found = true;
                                     return false;
                                 }

@@ -190,12 +190,10 @@ function brain(options) {
         'Content Management Found',
         'Click on the pattern settings to manage the pattern',
         'success'
-      );
-      return false;
+      ).then((result) => {
+          options.load({patterns: options.patterns, type: 'update', cell: cell});
+      });
     } else {
-
-      console.log(tree);
-
       swal(
         'Content Management Not Found',
         'Check if all the containers, components and connections of the pattern are built and configured correctly',

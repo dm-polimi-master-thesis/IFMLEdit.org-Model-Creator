@@ -49,7 +49,7 @@
           <div class="form-group">
             <span class="pattern-form-label control-label">Field:</span>
             <div class="input-group">
-              <input class="form-control" placeholder="Add new field" type="text" data-bind="textInput: resultsFieldToAdd, executeOnEnter: addField.bind($data,'list'), enable: pageListOption"/>
+              <input id="field-page-list" class="form-control" placeholder="Add new field" type="text" data-bind="textInput: resultsFieldToAdd, executeOnEnter: addField.bind($data,'list'), enable: pageListOption"/>
               <div class="input-group-addon">
                 <a class="plus" href="#" data-bind="click: addField.bind($data,'list'), enable: pageListOption"><i class="glyphicon glyphicon-plus-sign"></i></a>
               </div>
