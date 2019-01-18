@@ -12,7 +12,7 @@ function brain(options) {
         cell = options.cell,
         graph = options.cell.graph,
         embeds = cell.getEmbeddedCells({deep:'true'}),
-        deleteFound = false,
+        listFound = false,
         dataEntryFound = false,
         detailsPageFound = false;
 
@@ -41,18 +41,18 @@ function brain(options) {
 
                                     links = _.filter(links, function (l) {return l.id !== l1.id });
 
-                                    deleteFound = true;
+                                    listFound = true;
                                     return false;
                                 }
                             }
                         });
                     }
                 }
-                if(deleteFound){
+                if(listFound){
                   return false;
                 }
             });
-            if (deleteFound) {
+            if (listFound) {
                 _.forEach(links, function (l1) {
                     var targetLoadAction = l1.collection._byId[l1.attributes.target.id];
                     if (targetLoadAction && targetLoadAction.attributes.type === 'ifml.Action') {
@@ -128,25 +128,79 @@ function brain(options) {
                 });
             }
         }
-        if(deleteFound){
-          options.pattern.tree = tree;
-
-          console.log(tree);
-
-          swal(
-            'Content Management Found',
-            'Click on the pattern settings to manage the pattern',
-            'success'
-          );
-          return false;
-        }
     });
-    if(!(deleteFound)){
-        swal(
-          'Content Management Not Found',
-          'Check if all the containers, components and connections of the pattern are built and configured correctly',
-          'error'
-        );
+    if(!(listFound)){
+        _.forEach(embeds, function (child) {
+            var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'content management'}),
+                attributes = child.attributes;
+            if(childPattern.length > 0 && attributes.type === 'ifml.ViewComponent' && attributes.stereotype === 'form') {
+                var linksForm = _.filter(graph.getConnectedLinks(child,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+                _.forEach(linksForm, function (l1) {
+                    var targetSaveAction = l1.collection._byId[l1.attributes.target.id];
+                    if (targetSaveAction && targetSaveAction.attributes.type === 'ifml.Action') {
+                        var targetSaveActionPattern = _.filter(targetSaveAction.attributes.pattern, function (p) {return p.value === 'content management'});
+                        if(targetSaveActionPattern.length > 0) {
+                            var linksSaveAction = _.filter(graph.getConnectedLinks(targetSaveAction,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+                            if(linksSaveAction.length > 0){
+                              _.forEach(linksSaveAction, function (l2) {
+                                  var targetElement= l2.collection._byId[l2.attributes.target.id];
+                                  if (targetElement && targetElement.attributes.type === 'ifml.ViewComponent' && targetElement.attributes.stereotype === 'details') {
+                                      var targetDetailsPattern = _.filter(targetElement.attributes.pattern, function (p) {return p.value === 'content management'});
+                                      if(targetDetailsPattern.length > 0) {
+                                          tree['data-entry-form'] = child;
+                                          tree['save-data-entry-flow'] = l1;
+                                          tree['save-action'] = targetSaveAction;
+                                          tree['page-details'] = targetElement;
+
+                                          dataEntryFound = true;
+                                          detailsPageFound = true;
+
+                                          var linksDetails = _.filter(graph.getConnectedLinks(targetElement,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+
+                                          linksDetails = _.filter(linksDetails, function (l3) { return l3.attributes.target.id === tree['data-entry-form'].id })
+
+                                          if(linksDetails.length > 0){
+                                              tree['modify-flow'] = linksDetails[0];
+                                          }
+                                      }
+                                  } else if (targetElement.id === child.id) {
+                                      tree['failed-data-entry-flow'] = linksSaveAction[0];
+                                  }
+                              });
+                            }
+                        }
+                    }
+                    if(dataEntryFound && detailsPageFound){
+                      return false;
+                    }
+                });
+            }
+            if(dataEntryFound && detailsPageFound){
+              return false;
+            }
+        });
+    }
+
+    if(listFound || (listFound && dataEntryFound) || (listFound && detailsPageFound) || (dataEntryFound && detailsPageFound)){
+      options.pattern.tree = tree;
+
+      console.log(tree);
+
+      swal(
+        'Content Management Found',
+        'Click on the pattern settings to manage the pattern',
+        'success'
+      );
+      return false;
+    } else {
+
+      console.log(tree);
+
+      swal(
+        'Content Management Not Found',
+        'Check if all the containers, components and connections of the pattern are built and configured correctly',
+        'error'
+      );
     }
 }
 

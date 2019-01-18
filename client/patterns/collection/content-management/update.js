@@ -8,12 +8,14 @@ function update(cell) {
     var tree = cell.attributes.pattern[0].tree;
     return {
         type: 'update',
+        dataEntryOption: tree['data-entry-form'] ? true : false,
         name: tree['pattern-container'].attributes.name,
-        searchField: tree['keyword-form'].attributes.fields[0].label,
-        selectedDetailsName: tree['result-details'].attributes.name,
-        collectionName: tree['results-list'].attributes.collection,
-        resultsFields: _.map(tree['results-list'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: 'text', name: '' }}),
-        selectedFields: _.map(tree['result-details'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: 'text', name: '' }})
+        selectedDetailsName: tree['page-details'].attributes.name,
+        dataEntryFormName: tree['data-entry-form'].attributes.name,
+        collectionListName: tree['page-list'].attributes.collection,
+        collectionDetailsName: tree['page-details'].attributes.collection,
+        resultsFields: tree['page-list'].attributes.fields,
+        dataEntryFields: tree['data-entry-form'].attributes.collection
     }
 }
 
