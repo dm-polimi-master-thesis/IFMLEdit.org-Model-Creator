@@ -10,7 +10,6 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-  console.log('settings',options);
   var self = this,
       fields = options.fields || undefined,
       cell = options.cell || undefined;
@@ -26,9 +25,6 @@ function SettingsPatternViewModel(options) {
   self.selectedFieldToAdd = ko.observable("");
   self.resultsFields = ko.observableArray(fields ? fields.resultsFields : []);
   self.selectedFields = ko.observableArray(fields ? fields.selectedFields : []);
-
-  console.log(this);
-  console.log(options);
 
   self.addField = function (type) {
     var fieldToAdd;

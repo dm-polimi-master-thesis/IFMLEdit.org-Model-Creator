@@ -5,22 +5,25 @@
 "use strict";
 
 var _ = require('lodash'),
-    create = require('./create.js').create;
-
+    create = require('./create.js').create,
+    load = require('./load.js').load;
 
 function SettingsPatternViewModel(options) {
 
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
-  self.name = ko.observable("Basic Search");
-  self.searchField = ko.observable("");
-  self.selectedDetailsName = ko.observable("");
-  self.collectionName = ko.observable("");
+  self.type = fields ? fields.type : 'create';
+  self.name = ko.observable(fields ? fields.name : "Basic Search");
+  self.searchField = ko.observable(fields ? fields.searchField : "");
+  self.selectedDetailsName = ko.observable(fields ? fields.selectedDetailsName : "");
+  self.collectionName = ko.observable(fields ? fields.collectionName : "");
   self.resultsFieldToAdd = ko.observable("");
   self.selectedFieldToAdd = ko.observable("");
-  self.resultsFields = ko.observableArray([]);
-  self.selectedFields = ko.observableArray([]);
+  self.resultsFields = ko.observableArray(fields ? fields.resultsFields : []);
+  self.selectedFields = ko.observableArray(fields ? fields.selectedFields : []);
 
   self.addField = function (type) {
     var fieldToAdd;
@@ -107,7 +110,11 @@ function SettingsPatternViewModel(options) {
         fields: self.selectedFields.removeAll()
       }
     }
-    return create(basicSearch);
+    if(self.type === 'create'){
+        return create(basicSearch);
+    } else {
+        return load(basicSearch,cell);
+    }
   }
 
   self.validate = function (str,id) {

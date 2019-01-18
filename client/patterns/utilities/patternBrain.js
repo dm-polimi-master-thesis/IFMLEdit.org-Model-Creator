@@ -4,7 +4,8 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var alphabeticalFilterBrain = require('../collection/alphabetical-filter/brain.js').brain;
+var alphabeticalFilterBrain = require('../collection/alphabetical-filter/brain.js').brain,
+    basicSearchBrain = require('../collection/basic-search/brain.js').brain;
 
 function patternBrain (options) {
     var pattern = options.cell.attributes.pattern[0].value;
@@ -16,7 +17,7 @@ function patternBrain (options) {
         alphabeticalFilterBrain(options);
         break;
       case 'basic search':
-
+        basicSearchBrain(options);
         break;
       case 'content management':
 

@@ -157,16 +157,16 @@ function mapStringSet(e, f, c) {
                     }
                 } else if(this.type === 'node'){
                     var nodes = _.filter(field.strings(), function (s) {return _.includes(s.type,'node') });
-                    if(nodes.length === 0) {if(field.pattern.reset){
+                    if(nodes.length === 0) {
+                        if(field.pattern.reset){
                             field.pattern.values = field.pattern.reset;
-                            var filtered = _.filter(field.pattern.values, function (r) { return _.includes(r.type, 'root') });
                             field.patternValues(_.map(field.pattern.values, function (r) { return r.value}));
                             field.patternValue(field.pattern.values[0].value);
                             field.patternTypes(field.pattern.values[0].type);
                             field.patternType(field.pattern.values[0].type[0]);
                         } else {
-                            field.patternTypes(['node']);
-                            field.patternType('node');
+                          field.patternTypes(['node']);
+                          field.patternType('node');
                         }
                     } else {
                         field.patternTypes(['node']);

@@ -172,9 +172,14 @@ exports.ViewContainer = joint.shapes.basic.Generic.extend({
                 pattern = {
                     values: _.sortBy(_.flattenDeep([values,nodes]),'value')
                 }
-            } else if ((types.length === 2 && this.getAncestors().length === 0) || (types.length === 1 && types[0] === 'root')) {
+            } else if ((types.length === 2 && this.getAncestors().length === 0)) {
                 pattern = {
                     values: _.sortBy(_.flattenDeep(values),'value')
+                }
+            } else if (types.length === 1 && types[0] === 'root') {
+                pattern = {
+                    values: [],
+                    reset: _.sortBy(_.flattenDeep([_.map(this.attributes.pattern, function (p) { return { value: p.value, type: [p.type] } }),nodes,values]),'value')
                 }
             } else if (types.length === 1 && types[0] === 'node') {
                 pattern = {

@@ -1,4 +1,4 @@
-// Copyright (c) 2index18, the IFMLEdit.org project authors. Please see the
+// Copyright (c) 2019, the IFMLEdit project authors. Please see the
 // AUTHORS file for details. All rights reserved. Use of this source code is
 // governed by the MIT license that can be found in the LICENSE file.
 /*jslint node: true, nomen: true */
@@ -6,9 +6,6 @@
 
 function update(cell) {
     var tree = cell.attributes.pattern[0].tree;
-
-    console.log('update', tree);
-    console.log('tree',tree['alphabet-list'].attributes.fields);
     return {
         type: 'update',
         name: tree['pattern-container'].attributes.name,
