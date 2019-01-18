@@ -15,10 +15,10 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
-  self.name = ko.observable("Input Data Validation");
-  self.dataFormName = ko.observable("Data Form");
+  self.name = ko.observable(fields ? fields.name : "Input Data Validation");
+  self.dataFormName = ko.observable(fields ? fields.dataFormName : "Data Form");
   self.fieldToAdd = ko.observable("");
-  self.fields = ko.observableArray();
+  self.fields = ko.observableArray(fields ? fields.fields : []);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function () {

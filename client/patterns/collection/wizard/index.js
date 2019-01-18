@@ -15,11 +15,11 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
-  self.name = ko.observable("Wizard");
+  self.name = ko.observable(fields ? fields.name : "Wizard");
   self.stepToAdd = ko.observable("");
   self.fieldToAdd = ko.observable("");
-  self.steps = ko.observableArray([{ name: "Step 1", formName: "Step 1 Form", fields: [] }, { name: "Step 2", formName: "Step 2 Form", fields: [] }]);
-  self.fields = ko.observableArray([]);
+  self.steps = ko.observableArray(fields ? fields.steps : [{ name: "Step 1", formName: "Step 1 Form", fields: [] }, { name: "Step 2", formName: "Step 2 Form", fields: [] }]);
+  self.fields = ko.observableArray(fields ? fields.fields : []);
   self.selected = ko.observable(self.steps()[0]);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 

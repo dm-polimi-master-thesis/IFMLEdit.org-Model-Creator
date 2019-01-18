@@ -16,18 +16,18 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
-  self.name = ko.observable("Content Management");
-  self.dataOption = ko.observable(true);
-  self.detailsOption = ko.observable(true);
-  self.pageListOption = ko.observable(true);
-  self.selectedDetailsName = ko.observable("");
-  self.dataEntryFormName = ko.observable("");
-  self.collectionListName = ko.observable("");
-  self.collectionDetailsName = ko.observable("");
+  self.name = ko.observable(fields ? fields.name : "Content Management");
+  self.dataOption = fields ? undefined : ko.observable(fields ? fields.dataOption : true);
+  self.detailsOption = fields ? undefined : ko.observable(fields ? fields.detailsOption : true);
+  self.pageListOption = fields ? undefined : ko.observable(fields ? fields.pageListOption : true);
+  self.selectedDetailsName = ko.observable(fields ? fields.selectedDetailsName : "");
+  self.dataEntryFormName = ko.observable(fields ? fields.dataEntryFormName : "");
+  self.collectionListName = ko.observable(fields ? fields.collectionListName : "");
+  self.collectionDetailsName = ko.observable(fields ? fields.collectionDetailsName : "");
   self.resultsFieldToAdd = ko.observable("");
   self.dataEntryFieldToAdd = ko.observable("");
-  self.resultsFields = ko.observableArray([]);
-  self.dataEntryFields = ko.observableArray([]);
+  self.resultsFields = ko.observableArray(fields ? fields.resultsFields : []);
+  self.dataEntryFields = ko.observableArray(fields ? fields.dataEntryFields : []);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {

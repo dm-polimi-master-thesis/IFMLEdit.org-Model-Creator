@@ -15,18 +15,18 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
-  self.name = ko.observable("Sign Up and Log In");
-  self.logOutOption = ko.observable(true);
-  self.signUpFormName = ko.observable("Sign Up Form");
-  self.logInFormName = ko.observable("Log In Form");
-  self.signUpFieldToAdd = ko.observable("");
-  self.logInFieldToAdd = ko.observable("");
-  self.signUpFields = ko.observableArray([{ label: "name", value: "name", type: ko.observable('text'), name: ko.observable('') },
-                                          { label: "surname", value: "surname", type: ko.observable('text'), name: ko.observable('') },
-                                          { label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },
-                                          { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
-  self.logInFields = ko.observableArray([{ label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },
-                                         { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
+  self.name = ko.observable(fields ? fields.name : "Sign Up and Log In");
+  self.logOutOption = fields ? undefined : ko.observable(true);
+  self.signUpFormName = ko.observable(fields ? fields.signUpFormName : "Sign Up Form");
+  self.logInFormName = ko.observable(fields ? fields.logInFormName : "Log In Form");
+  self.signUpFieldToAdd = ko.observable(fields ? fields.signUpFieldToAdd : "");
+  self.logInFieldToAdd = ko.observable(fields ? fields.logInFieldToAdd : "");
+  self.signUpFields = ko.observableArray(fields ? fields.signUpFields : [{ label: "name", value: "name", type: ko.observable('text'), name: ko.observable('') },
+                                                                         { label: "surname", value: "surname", type: ko.observable('text'), name: ko.observable('') },
+                                                                         { label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },
+                                                                         { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
+  self.logInFields = ko.observableArray(fields ? fields.logInFields : [{ label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },
+                                                                       { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {

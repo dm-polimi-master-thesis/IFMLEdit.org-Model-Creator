@@ -15,15 +15,14 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
-  self.name = ko.observable("In-Place Log In");
-  self.editorOption = ko.observable(true);
-  self.editorFormName = ko.observable("Editor Form");
-  self.logInFormName = ko.observable("Log In Form");
+  self.name = ko.observable(fields ? fields.name : "In-Place Log In");
+  self.editorOption = ko.observable(fields ? fields.editorOption : true);
+  self.editorFormName = ko.observable(fields ? fields.editorFormName : "Editor Form");
+  self.logInFormName = ko.observable(fields ? fields.logInFormName : "Log In Form");
   self.editorFieldToAdd = ko.observable("");
   self.logInFieldToAdd = ko.observable("");
-  self.editorFields = ko.observableArray([]);
-  self.logInFields = ko.observableArray([{ label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },
-                                         { label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
+  self.editorFields = ko.observableArray(fields ? fields.editorFields : []);
+  self.logInFields = ko.observableArray(fields ? fields.logInFields : [{ label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },{ label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {

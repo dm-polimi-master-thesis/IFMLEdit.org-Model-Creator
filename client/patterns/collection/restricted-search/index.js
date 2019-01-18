@@ -15,15 +15,15 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
-  self.name = ko.observable("Restricted Search");
-  self.searchField = ko.observable("");
-  self.selectedDetailsName = ko.observable("");
-  self.collectionName = ko.observable("");
+  self.name = ko.observable(fields ? fields.name : "Restricted Search");
+  self.searchField = ko.observable(fields ? fields.searchField : "");
+  self.selectedDetailsName = ko.observable(fields ? fields.selectedDetailsName : "");
+  self.collectionName = ko.observable(fields ? fields.collectionName : "");
   self.resultsFieldToAdd = ko.observable("");
   self.selectedFieldToAdd = ko.observable("");
-  self.filterName = ko.observable("");
-  self.resultsFields = ko.observableArray([]);
-  self.selectedFields = ko.observableArray([]);
+  self.filterName = ko.observable(fields ? fields.filterName : "");
+  self.resultsFields = ko.observableArray(fields ? fields.resultsFields : []);
+  self.selectedFields = ko.observableArray(fields ? fields.selectedFields : []);
 
   self.addField = function (type) {
     var fieldToAdd;

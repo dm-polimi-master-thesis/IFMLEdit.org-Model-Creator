@@ -15,15 +15,15 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
-  self.name = ko.observable("Multilevel Master Detail");
-  self.detailsName = ko.observable("");
-  self.steps = ko.observableArray([{ name: "Step 1", collection: "", fields: [] }, { name: "Step 2", collection: "", fields: [] }]);
+  self.name = ko.observable(fields ? fields.name : "Multilevel Master Detail");
+  self.detailsName = ko.observable(fields ? fields.detailsName : "");
+  self.steps = ko.observableArray(fields ? fields.steps : [{ name: "Step 1", collection: "", fields: [] }, { name: "Step 2", collection: "", fields: [] }]);
   self.stepToAdd = ko.observable("");
   self.listFieldToAdd = ko.observable("");
   self.detailsFieldToAdd = ko.observable("");
-  self.listFields = ko.observableArray([]);
-  self.detailsFields = ko.observableArray([]);
-  self.selected = ko.observable(self.steps()[0]);
+  self.listFields = ko.observableArray(fields ? fields.listFields : []);
+  self.detailsFields = ko.observableArray(fields ? fields.detailsFields : []);
+  self.selected = ko.observable(fields ? fields.selected : self.steps()[0]);
 
   self.select = function () {
     self.selected().fields = self.listFields.removeAll();

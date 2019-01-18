@@ -16,13 +16,13 @@ function SettingsPatternViewModel(options) {
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Master Detail");
-  self.detailsName = ko.observable("");
-  self.collectionName = ko.observable("");
-  self.listFieldToAdd = ko.observable("");
-  self.detailsFieldToAdd = ko.observable("");
-  self.listFields = ko.observableArray([]);
-  self.detailsFields = ko.observableArray([]);
-  self.xorOption = ko.observable(true);
+  self.detailsName = ko.observable(fields ? fields.detailsName : "");
+  self.collectionName = ko.observable(fields ? fields.collectionName : "");
+  self.listFieldToAdd = ko.observable(fields ? fields.listFieldToAdd : "");
+  self.detailsFieldToAdd = ko.observable(fields ? fields.detailsFieldToAdd : "");
+  self.listFields = ko.observableArray(fields ? fields.listFields : []);
+  self.detailsFields = ko.observableArray(fields ? fields.detailsFields : []);
+  self.xorOption = fields ? undefined : ko.observable(true);
 
   self.addField = function (type) {
     var fieldToAdd;

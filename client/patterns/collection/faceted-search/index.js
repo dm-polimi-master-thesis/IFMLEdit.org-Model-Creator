@@ -15,17 +15,17 @@ function SettingsPatternViewModel(options) {
 
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
-  self.name = ko.observable("Faceted Search");
-  self.searchField = ko.observable("");
-  self.selectedDetailsName = ko.observable("");
-  self.filtersFormName = ko.observable("");
-  self.collectionName = ko.observable("");
+  self.name = ko.observable(fields ? fields.name : "Faceted Search");
+  self.searchField = ko.observable(fields ? fields.searchField : "");
+  self.selectedDetailsName = ko.observable(fields ? fields.selectedDetailsName : "");
+  self.filtersFormName = ko.observable(fields ? fields.filtersFormName : "");
+  self.collectionName = ko.observable(fields ? fields.collectionName : "");
   self.resultsFieldToAdd = ko.observable("");
   self.selectedFieldToAdd = ko.observable("");
   self.filtersFieldToAdd = ko.observable("");
-  self.resultsFields = ko.observableArray([]);
-  self.selectedFields = ko.observableArray([]);
-  self.filtersFields = ko.observableArray([]);
+  self.resultsFields = ko.observableArray(fields ? fields.resultsFields : []);
+  self.selectedFields = ko.observableArray(fields ? fields.selectedFields : []);
+  self.filtersFields = ko.observableArray(fields ? fields.filtersFields : []);
   self.types = ['checkbox','radio'];
 
   self.addField = function (type) {
