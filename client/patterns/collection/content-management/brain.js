@@ -181,7 +181,7 @@ function brain(options) {
         });
     }
 
-    if(listFound || (listFound && dataEntryFound) || (listFound && detailsPageFound) || (dataEntryFound && detailsPageFound)){
+    if((listFound && dataEntryFound) || (listFound && detailsPageFound) || (dataEntryFound && detailsPageFound)){
       options.pattern.tree = tree;
 
       console.log(tree);

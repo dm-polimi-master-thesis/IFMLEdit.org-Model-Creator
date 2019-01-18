@@ -8,7 +8,7 @@
         <th class="trace-line th-left">
           <div id="xor-form" class="page-list-switch-form form-group">
             <div class=" material-switch pull-right">
-              <input id="pageListOption" name="pageListOption" type="checkbox" data-bind="checked: pageListOption"/>
+              <input id="pageListOption" name="pageListOption" type="checkbox" data-bind="checked: pageListOption, event:{change:checkbox}"/>
               <label for="pageListOption" class="label-success"></label>
             </div>
           </div>
@@ -17,7 +17,7 @@
         <th class="trace-line-padding">
           <div id="data-switch-form" class="data-switch-form form-group">
             <div class=" material-switch pull-right">
-              <input id="dataOption" name="dataOption" type="checkbox" data-bind="checked: dataOption"/>
+              <input id="dataOption" name="dataOption" type="checkbox" data-bind="checked: dataOption, event:{change:checkbox}"/>
               <label for="dataOption" class="label-success"></label>
             </div>
           </div>
@@ -102,7 +102,7 @@
         <th class="trace-line th-left">
           <div id="xor-form" class="page-switch-form form-group">
             <div class=" material-switch pull-right">
-              <input id="detailsOption" name="detailsOption" type="checkbox" data-bind="checked: detailsOption"/>
+              <input id="detailsOption" name="detailsOption" type="checkbox" data-bind="checked: detailsOption, event:{change:checkbox}"/>
               <label for="detailsOption" class="label-success"></label>
             </div>
           </div>

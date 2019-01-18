@@ -164,6 +164,29 @@ function SettingsPatternViewModel(options) {
       $(id).addClass('has-error');
     }
   }
+
+  self.checkbox = function () {
+    if (!self.pageListOption()) {
+        self.dataOption(true);
+        self.detailsOption(true);
+        $('#dataOption').prop('disabled',true);
+        $('#detailsOption').prop('disabled',true);
+    } else if (!self.dataOption()) {
+        self.pageListOption(true);
+        self.detailsOption(true);
+        $('#pageListOption').prop('disabled',true);
+        $('#detailsOption').prop('disabled',true);
+    } else if (!self.detailsOption()){
+        self.pageListOption(true);
+        self.dataOption(true);
+        $('#pageListOption').prop('disabled',true);
+        $('#dataOption').prop('disabled',true);
+    } else if (self.pageListOption() && self.dataOption() && self.detailsOption()) {
+        $('#dataOption').prop('disabled',false);
+        $('#detailsOption').prop('disabled', false);
+        $('#pageListOption').prop('disabled', false);
+    }
+  }
 }
 
 function SettingsPattern(options) {
