@@ -5,14 +5,17 @@
 "use strict";
 
 var _ = require('lodash'),
-    create = require('./create.js').create;
+    create = require('./create.js').create,
+    load = require('./load.js').load;
 
 
 function SettingsPatternViewModel(options) {
-
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Content Management");
   self.dataOption = ko.observable(true);
   self.detailsOption = ko.observable(true);
@@ -147,7 +150,11 @@ function SettingsPatternViewModel(options) {
       dataOption: self.dataOption()
     }
 
-    return create(pageManagement);
+    if(self.type === 'create'){
+        return create(pageManagement);
+    } else {
+        return load(pageManagement,cell);
+    }
   }
 
   self.validate = function (str,id) {

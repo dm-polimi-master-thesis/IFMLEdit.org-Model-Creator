@@ -9,10 +9,12 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Input Data Validation");
   self.dataFormName = ko.observable("Data Form");
   self.fieldToAdd = ko.observable("");
@@ -84,7 +86,11 @@ function SettingsPatternViewModel(options) {
       data : { formName: self.dataFormName(), fields: fields }
     }
 
-    return create(inputDataValidation);
+    if(self.type === 'create'){
+        return create(inputDataValidation);
+    } else {
+        return load(inputDataValidation,cell);
+    }
   }
 
   self.validate = function (str,id) {

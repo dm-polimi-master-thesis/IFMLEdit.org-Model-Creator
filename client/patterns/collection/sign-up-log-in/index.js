@@ -9,10 +9,12 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Sign Up and Log In");
   self.logOutOption = ko.observable(true);
   self.signUpFormName = ko.observable("Sign Up Form");
@@ -124,7 +126,11 @@ function SettingsPatternViewModel(options) {
       logOut: self.logOutOption()
     }
 
-    return create(signUpLogIn);
+    if(self.type === 'create'){
+        return create(signUpLogIn);
+    } else {
+        return load(signUpLogIn,cell);
+    }
   }
 
   self.validate = function (str,id) {

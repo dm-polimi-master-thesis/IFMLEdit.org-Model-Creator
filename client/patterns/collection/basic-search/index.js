@@ -9,7 +9,6 @@ var _ = require('lodash'),
     load = require('./load.js').load;
 
 function SettingsPatternViewModel(options) {
-
   var self = this,
       fields = options.fields || undefined,
       cell = options.cell || undefined;

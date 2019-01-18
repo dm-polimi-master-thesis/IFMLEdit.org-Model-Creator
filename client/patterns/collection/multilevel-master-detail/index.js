@@ -9,9 +9,12 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Multilevel Master Detail");
   self.detailsName = ko.observable("");
   self.steps = ko.observableArray([{ name: "Step 1", collection: "", fields: [] }, { name: "Step 2", collection: "", fields: [] }]);
@@ -176,7 +179,12 @@ function SettingsPatternViewModel(options) {
         fields: self.detailsFields.removeAll()
       }
     }
-    return create(multilevelMasterDetail);
+
+    if(self.type === 'create'){
+        return create(multilevelMasterDetail);
+    } else {
+        return load(multilevelMasterDetail,cell);
+    }
   }
 
   self.validate = function (str,id) {

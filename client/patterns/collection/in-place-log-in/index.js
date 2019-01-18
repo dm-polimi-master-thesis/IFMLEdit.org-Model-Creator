@@ -9,10 +9,12 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("In-Place Log In");
   self.editorOption = ko.observable(true);
   self.editorFormName = ko.observable("Editor Form");
@@ -121,7 +123,11 @@ function SettingsPatternViewModel(options) {
       editorOption: self.editorOption()
     }
 
-    return create(inPlaceLogIn);
+    if(self.type === 'create'){
+        return create(inPlaceLogIn);
+    } else {
+        return load(inPlaceLogIn,cell);
+    }
   }
 
   self.validate = function (str,id) {

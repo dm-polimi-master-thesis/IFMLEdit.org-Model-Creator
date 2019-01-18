@@ -9,10 +9,12 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Faceted Search");
   self.searchField = ko.observable("");
   self.selectedDetailsName = ko.observable("");
@@ -147,7 +149,12 @@ function SettingsPatternViewModel(options) {
         fields: filters
       }
     }
-    return create(facetedSearch);
+
+    if(self.type === 'create'){
+        return create(facetedSearch);
+    } else {
+        return load(facetedSearch,cell);
+    }
   }
 
   self.validate = function (str,id) {

@@ -9,10 +9,12 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Wizard");
   self.stepToAdd = ko.observable("");
   self.fieldToAdd = ko.observable("");
@@ -166,7 +168,11 @@ function SettingsPatternViewModel(options) {
       steps : self.steps()
     }
 
-    return create(wizard);
+    if(self.type === 'create'){
+        return create(wizard);
+    } else {
+        return load(wizard,cell);
+    }
   }
 
   self.validate = function (str,id) {

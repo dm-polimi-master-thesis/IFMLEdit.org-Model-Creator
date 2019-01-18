@@ -8,7 +8,6 @@ var _ = require('lodash'),
     create = require('./create.js').create,
     load = require('./load.js').load;
 
-
 function SettingsPatternViewModel(options) {
   var self = this,
       fields = options.fields || undefined,

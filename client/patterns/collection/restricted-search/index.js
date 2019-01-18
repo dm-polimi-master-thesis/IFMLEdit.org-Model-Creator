@@ -9,9 +9,12 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Restricted Search");
   self.searchField = ko.observable("");
   self.selectedDetailsName = ko.observable("");
@@ -114,7 +117,12 @@ function SettingsPatternViewModel(options) {
         fields: self.selectedFields.removeAll()
       }
     }
-    return create(restrictedSearch);
+
+    if(self.type === 'create'){
+        return create(restrictedSearch);
+    } else {
+        return load(restrictedSearch,cell);
+    }
   }
 
   self.validate = function (str,id) {

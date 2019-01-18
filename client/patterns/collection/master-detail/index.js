@@ -9,9 +9,12 @@ var _ = require('lodash'),
 
 
 function SettingsPatternViewModel(options) {
-  var self = this;
+  var self = this,
+      fields = options.fields || undefined,
+      cell = options.cell || undefined;
 
   self.id = options.id;
+  self.type = fields ? fields.type : 'create';
   self.name = ko.observable("Master Detail");
   self.detailsName = ko.observable("");
   self.collectionName = ko.observable("");
@@ -101,7 +104,11 @@ function SettingsPatternViewModel(options) {
       xor: self.xorOption()
     }
 
-    return create(masterDetail);
+    if(self.type === 'create'){
+        return create(masterDetail);
+    } else {
+        return load(masterDetail,cell);
+    }
   }
 
   self.validate = function (str,id) {
