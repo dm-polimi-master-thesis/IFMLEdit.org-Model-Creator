@@ -19,7 +19,7 @@ function brain(options) {
     tree['pattern-container'] = cell;
 
     _.forEach(embeds, function (child) {
-        var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'content management' && !p.active;}),
+        var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'content management'}),
             attributes = child.attributes;
         if(childPattern.length > 0 && attributes.type === 'ifml.ViewComponent' && attributes.stereotype === 'list') {
             var links = _.filter(graph.getConnectedLinks(child,{deep:'true', outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
@@ -27,13 +27,13 @@ function brain(options) {
             _.forEach(links, function (l1) {
                 var targetDetails = l1.collection._byId[l1.attributes.target.id];
                 if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
-                    var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                    var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'content management'});
                     if(targetDetailsPattern.length > 0) {
                         var linksDetails = _.filter(graph.getConnectedLinks(targetDetails,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
                         _.forEach(linksDetails, function (l2) {
                             var targetAction = l2.collection._byId[l2.attributes.target.id];
                             if (targetAction && targetAction.attributes.type === 'ifml.Action') {
-                                var targetActionPattern = _.filter(targetAction.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                                var targetActionPattern = _.filter(targetAction.attributes.pattern, function (p) {return p.value === 'content management'});
                                 if(targetActionPattern.length > 0) {
                                     tree['page-list'] = child;
                                     tree['delete-page-details'] = targetDetails;
@@ -56,19 +56,19 @@ function brain(options) {
                 _.forEach(links, function (l1) {
                     var targetLoadAction = l1.collection._byId[l1.attributes.target.id];
                     if (targetLoadAction && targetLoadAction.attributes.type === 'ifml.Action') {
-                        var targetLoadActionPattern = _.filter(targetLoadAction.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                        var targetLoadActionPattern = _.filter(targetLoadAction.attributes.pattern, function (p) {return p.value === 'content management'});
                         if(targetLoadActionPattern.length > 0) {
                             var linksLoadAction = _.filter(graph.getConnectedLinks(targetLoadAction,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
                             _.forEach(linksLoadAction, function (l2) {
                                 var targetForm = l2.collection._byId[l2.attributes.target.id];
                                 if (targetForm && targetForm.attributes.type === 'ifml.ViewComponent' && targetForm.attributes.stereotype === 'form') {
-                                    var targetFormPattern = _.filter(targetForm.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                                    var targetFormPattern = _.filter(targetForm.attributes.pattern, function (p) {return p.value === 'content management'});
                                     if(targetFormPattern.length > 0) {
                                         var linksForm = _.filter(graph.getConnectedLinks(targetForm,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
                                         _.forEach(linksForm, function (l3) {
                                             var targetSaveAction = l3.collection._byId[l3.attributes.target.id];
                                             if (targetSaveAction && targetSaveAction.attributes.type === 'ifml.Action') {
-                                                var targetSaveActionPattern = _.filter(targetSaveAction.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                                                var targetSaveActionPattern = _.filter(targetSaveAction.attributes.pattern, function (p) {return p.value === 'content management'});
                                                 if(targetSaveActionPattern.length > 0) {
                                                     tree['load-content-action'] = targetLoadAction;
                                                     tree['load-data-entry-flow'] = l2;
@@ -106,7 +106,7 @@ function brain(options) {
                 _.forEach(links, function (l1) {
                     var targetDetails = l1.collection._byId[l1.attributes.target.id];
                     if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
-                        var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'content management' && !p.active});
+                        var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'content management'});
                         if(targetDetailsPattern.length > 0) {
                             tree['page-details'] = targetDetails;
                             detailsPageFound = true;
@@ -130,7 +130,6 @@ function brain(options) {
         }
         if(deleteFound){
           options.pattern.tree = tree;
-          options.pattern.active = true;
 
           console.log(tree);
 

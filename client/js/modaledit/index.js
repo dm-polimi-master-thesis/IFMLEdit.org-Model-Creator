@@ -109,8 +109,7 @@ function mapStringSet(e, f, c) {
         addPattern: function () {
             field.strings(_(field.strings()).concat({
               type: field.patternType(),
-              value: field.patternValue(),
-              active: false,
+              value: field.patternValue()
             }).value());
 
             if(field.patternType() === 'root'){

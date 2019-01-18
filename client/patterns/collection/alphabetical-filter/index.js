@@ -6,8 +6,7 @@
 
 var _ = require('lodash'),
     create = require('./create.js').create,
-    load = require('./load.js').load,
-    deactivate = require('./deactivate.js').deactivate;
+    load = require('./load.js').load;
 
 function SettingsPatternViewModel(options) {
   var self = this,
@@ -133,13 +132,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(alphabeticalFilter);
     } else {
-        deactivate(cell);
         return load(alphabeticalFilter,cell);
     }
-  }
-
-  self.cancel = function () {
-    deactivate(cell);
   }
 
   self.validate = function (str,id) {

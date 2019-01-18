@@ -17,7 +17,7 @@ function brain(options) {
     tree['pattern-container'] = cell;
 
     _.forEach(embeds, function (child) {
-        var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'basic search' && !p.active;}),
+        var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'basic search'}),
             attributes = child.attributes;
         if(childPattern.length > 0 && attributes.type === 'ifml.ViewComponent' && attributes.stereotype === 'form') {
             var links = _.filter(graph.getConnectedLinks(child,{deep:'true', outbound:'true'}), function (l) {return l.attributes.type === 'ifml.DataFlow'});
@@ -25,13 +25,13 @@ function brain(options) {
             _.forEach(links, function (l1) {
                 var targetList = l1.collection._byId[l1.attributes.target.id];
                 if (targetList && targetList.attributes.type === 'ifml.ViewComponent' && targetList.attributes.stereotype === 'list') {
-                    var targetListPattern = _.filter(targetList.attributes.pattern, function (p) {return p.value === 'basic search' && !p.active});
+                    var targetListPattern = _.filter(targetList.attributes.pattern, function (p) {return p.value === 'basic search'});
                     if(targetListPattern.length > 0) {
                         links = _.filter(graph.getConnectedLinks(targetList,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
                         _.forEach(links, function (l2) {
                             var targetDetails = l2.collection._byId[l2.attributes.target.id];
                             if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
-                                var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'basic search' && !p.active});
+                                var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'basic search'});
                                 if(targetDetailsPattern.length > 0) {
                                     tree['keyword-form'] = child;
                                     tree['keyword-flow'] = l1;
@@ -39,7 +39,6 @@ function brain(options) {
                                     tree['result-details'] = targetDetails;
 
                                     options.pattern.tree = tree;
-                                    options.pattern.active = true;
 
                                     swal(
                                       'Basic Search Found',
