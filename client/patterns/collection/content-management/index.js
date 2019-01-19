@@ -83,6 +83,16 @@ function SettingsPatternViewModel(options) {
     }
   }
 
+  self.visible = function(id) {
+      console.log(id);
+      console.log(this);
+      console.log(this.type());
+      console.log(this.name());
+      if(this.type() === 'checkbox' || this.type() === 'radio') {
+          $('#' + id).show();
+      }
+  }
+
   self.transform = function () {
     var error = false;
 

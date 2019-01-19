@@ -5,7 +5,8 @@
 "use strict";
 
 var _ = require('lodash'),
-    create = require('./create.js').create;
+    create = require('./create.js').create,
+    load = require('./load.js').load;
 
 
 function SettingsPatternViewModel(options) {

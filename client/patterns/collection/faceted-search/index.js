@@ -5,7 +5,8 @@
 "use strict";
 
 var _ = require('lodash'),
-    create = require('./create.js').create;
+    create = require('./create.js').create,
+    load = require('./load.js').load;
 
 
 function SettingsPatternViewModel(options) {
@@ -23,9 +24,9 @@ function SettingsPatternViewModel(options) {
   self.resultsFieldToAdd = ko.observable("");
   self.selectedFieldToAdd = ko.observable("");
   self.filtersFieldToAdd = ko.observable("");
-  self.resultsFields = ko.observableArray(fields ? fields.resultsFields : []);
-  self.selectedFields = ko.observableArray(fields ? fields.selectedFields : []);
-  self.filtersFields = ko.observableArray(fields ? fields.filtersFields : []);
+  self.resultsFields = ko.observableArray(fields ? _.map(fields.resultsFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
+  self.selectedFields = ko.observableArray(fields ? _.map(fields.selectedFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
+  self.filtersFields = ko.observableArray(fields ? _.map(fields.filtersFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
   self.types = ['checkbox','radio'];
 
   self.addField = function (type) {

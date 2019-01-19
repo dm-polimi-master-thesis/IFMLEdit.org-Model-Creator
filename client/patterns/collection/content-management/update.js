@@ -16,8 +16,8 @@ function update(cell) {
         dataEntryFormName: tree['data-entry-form'] ? tree['data-entry-form'].attributes.name: "",
         collectionListName: tree['page-list'] ? tree['page-list'].attributes.collection : "",
         collectionDetailsName: tree['page-details'] ? tree['page-details'].attributes.collection : "",
-        resultsFields: tree['page-list'] ? _.map(tree['page-list'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: f.type || 'text', name: '' }}) : [],
-        dataEntryFields: tree['data-entry-form'] ? _.map(tree['data-entry-form'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: f.type || 'text', name: '' }}) : []
+        resultsFields: tree['page-list'] ? _.map(tree['page-list'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: f.type || 'text', name: f.name || '' }}) : [],
+        dataEntryFields: tree['data-entry-form'] ? _.map(tree['data-entry-form'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: f.type || 'text', name: f.name || '' }}) : []
     }
 }
 

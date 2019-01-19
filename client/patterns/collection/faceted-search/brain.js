@@ -38,7 +38,7 @@ function brain(options) {
               visited.push(tree[key]);
             };
 
-            path = [{name: 'filters-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'keyword-flow',linkType: 'ifml.DataFlow', revisit: false},
+            path = [{name: 'filters-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'filters-flow',linkType: 'ifml.DataFlow', revisit: false},
                     {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: undefined, revisit: true}];
 
             result = false;
@@ -67,7 +67,7 @@ function brain(options) {
             'Click on the pattern settings to manage the pattern',
             'success'
           ).then((result) => {
-              //options.load({patterns: options.patterns, type: 'update', cell: cell});
+              options.load({patterns: options.patterns, type: 'update', cell: cell});
           });
 
           return false;
