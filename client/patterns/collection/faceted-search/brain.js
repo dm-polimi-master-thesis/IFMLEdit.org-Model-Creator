@@ -17,12 +17,11 @@ function brain(options) {
 
     tree['pattern-container'] = cell;
 
-    var path = [{name: 'keyword-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'keyword-flow',linkType: 'ifml.DataFlow'},
-                {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: 'ifml.NavigationFlow'},
-                {name: 'result-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined,linkType: undefined}];
+    var path = [{name: 'keyword-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'keyword-flow',linkType: 'ifml.DataFlow', revisit: false},
+                {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: 'ifml.NavigationFlow', revisit: false},
+                {name: 'result-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined,linkType: undefined, revisit: false}];
 
     _.forEach(embeds, function (child) {
-        console.log('embeds',child);
         var result = graphNavigation({
             cell: child,
             graph: graph,
@@ -39,14 +38,13 @@ function brain(options) {
               visited.push(tree[key]);
             };
 
-            path = [{name: 'filters-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'keyword-flow',linkType: 'ifml.DataFlow'},
-                    {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: undefined}];
+            path = [{name: 'filters-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'keyword-flow',linkType: 'ifml.DataFlow', revisit: false},
+                    {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: undefined, revisit: true}];
+
+            result = false;
 
             var remainder = _.difference(embeds,visited);
-            console.log('remainder',remainder);
-            result = false;
             _.forEach(remainder, function (child) {
-                console.log('embeds',child);
                 var result = graphNavigation({
                     cell: child,
                     graph: graph,
@@ -57,19 +55,18 @@ function brain(options) {
 
                 if (result) {
                     found = tree['results-list'].id === list.id ? true : false;
-                    console.log('identity', tree['results-list'] === list);
                     return false;
                 }
             });
         }
 
         if(found) {
+          options.pattern.tree = tree;
           swal(
             'Faceted Search Found',
             'Click on the pattern settings to manage the pattern',
             'success'
           ).then((result) => {
-              console.log(tree);
               //options.load({patterns: options.patterns, type: 'update', cell: cell});
           });
 
@@ -77,7 +74,6 @@ function brain(options) {
         }
     });
     if(!found){
-      console.log('tree',tree);
       swal(
         'Faceted Search Not Found',
         'Check if all the containers, components and connections of the pattern are built and configured correctly',

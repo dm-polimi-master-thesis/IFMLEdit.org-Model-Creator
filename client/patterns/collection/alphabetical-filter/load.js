@@ -16,7 +16,7 @@ function load(template,cell) {
     tree['result-details'].attributes.name = template.details.name;
     tree['result-details'].attributes.collection = template.list.collection;
     tree['result-details'].attributes.fields = template.details.fields;
-    tree['filter-link'].attributes.bindings = [{input: template.filter.fields[0].label, output: template.filter.fields[0].label}];
+    tree['filter-flow'].attributes.bindings = [{input: template.filter.fields[0].label, output: template.filter.fields[0].label}];
 }
 
 exports.load = load;

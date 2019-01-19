@@ -5,7 +5,8 @@
 "use strict";
 
 var _ = require('lodash'),
-    swal = require('sweetalert2');
+    swal = require('sweetalert2'),
+    graphNavigation = require('../../utilities/graphNavigation.js').graphNavigation;
 
 function brain(options) {
 

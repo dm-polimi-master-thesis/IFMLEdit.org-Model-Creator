@@ -5,7 +5,8 @@
 "use strict";
 
 var _ = require('lodash'),
-    swal = require('sweetalert2');
+    swal = require('sweetalert2'),
+    graphNavigation = require('../../utilities/graphNavigation.js').graphNavigation;
 
 function brain(options) {
     var tree = [],
@@ -18,169 +19,123 @@ function brain(options) {
 
     tree['pattern-container'] = cell;
 
+    var path = [{name: 'page-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined,linkType: 'ifml.NavigationFlow', revisit: false},
+                {name: 'delete-page-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined, linkType: 'ifml.NavigationFlow', revisit: false},
+                {name: 'delete-action', type:'ifml.Action', stereotype: undefined, linkName: undefined,linkType: undefined, revisit: false}];
+
     _.forEach(embeds, function (child) {
-        var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'content management'}),
-            attributes = child.attributes;
-        if(childPattern.length > 0 && attributes.type === 'ifml.ViewComponent' && attributes.stereotype === 'list') {
-            var links = _.filter(graph.getConnectedLinks(child,{deep:'true', outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+        var result = graphNavigation({
+            cell: child,
+            graph: graph,
+            value: 'content management',
+            path: _.cloneDeep(path),
+            tree: tree
+        });
 
-            _.forEach(links, function (l1) {
-                var targetDetails = l1.collection._byId[l1.attributes.target.id];
-                if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
-                    var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'content management'});
-                    if(targetDetailsPattern.length > 0) {
-                        var linksDetails = _.filter(graph.getConnectedLinks(targetDetails,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-                        _.forEach(linksDetails, function (l2) {
-                            var targetAction = l2.collection._byId[l2.attributes.target.id];
-                            if (targetAction && targetAction.attributes.type === 'ifml.Action') {
-                                var targetActionPattern = _.filter(targetAction.attributes.pattern, function (p) {return p.value === 'content management'});
-                                if(targetActionPattern.length > 0) {
-                                    tree['page-list'] = child;
-                                    tree['delete-page-details'] = targetDetails;
-                                    tree['delete-action'] = targetAction;
-
-                                    links = _.filter(links, function (l) {return l.id !== l1.id });
-
-                                    listFound = true;
-                                    return false;
-                                }
-                            }
-                        });
-                    }
-                }
-                if(listFound){
-                  return false;
-                }
-            });
-            if (listFound) {
-                _.forEach(links, function (l1) {
-                    var targetLoadAction = l1.collection._byId[l1.attributes.target.id];
-                    if (targetLoadAction && targetLoadAction.attributes.type === 'ifml.Action') {
-                        var targetLoadActionPattern = _.filter(targetLoadAction.attributes.pattern, function (p) {return p.value === 'content management'});
-                        if(targetLoadActionPattern.length > 0) {
-                            var linksLoadAction = _.filter(graph.getConnectedLinks(targetLoadAction,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-                            _.forEach(linksLoadAction, function (l2) {
-                                var targetForm = l2.collection._byId[l2.attributes.target.id];
-                                if (targetForm && targetForm.attributes.type === 'ifml.ViewComponent' && targetForm.attributes.stereotype === 'form') {
-                                    var targetFormPattern = _.filter(targetForm.attributes.pattern, function (p) {return p.value === 'content management'});
-                                    if(targetFormPattern.length > 0) {
-                                        var linksForm = _.filter(graph.getConnectedLinks(targetForm,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-                                        _.forEach(linksForm, function (l3) {
-                                            var targetSaveAction = l3.collection._byId[l3.attributes.target.id];
-                                            if (targetSaveAction && targetSaveAction.attributes.type === 'ifml.Action') {
-                                                var targetSaveActionPattern = _.filter(targetSaveAction.attributes.pattern, function (p) {return p.value === 'content management'});
-                                                if(targetSaveActionPattern.length > 0) {
-                                                    tree['load-content-action'] = targetLoadAction;
-                                                    tree['load-data-entry-flow'] = l2;
-                                                    tree['data-entry-form'] = targetForm;
-                                                    tree['save-data-entry-flow'] = l3;
-                                                    tree['save-action'] = targetSaveAction;
-
-                                                    var linksSaveAction = _.filter(graph.getConnectedLinks(targetSaveAction,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-
-                                                    linksSaveAction = _.filter(linksSaveAction, function (l4) { return l4.attributes.target.id === targetForm.id })
-
-                                                    if(linksSaveAction.length > 0){
-                                                        tree['failed-data-entry-flow'] = linksSaveAction[0];
-                                                    }
-
-                                                    links = _.filter(links, function (l) {return l.id !== l1.id });
-
-                                                    dataEntryFound = true;
-                                                    return false;
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                                if(dataEntryFound) {
-                                  return false;
-                                }
-                            });
-                        }
-                    }
-                    if(dataEntryFound){
-                      return false;
-                    }
-                });
-                _.forEach(links, function (l1) {
-                    var targetDetails = l1.collection._byId[l1.attributes.target.id];
-                    if (targetDetails && targetDetails.attributes.type === 'ifml.ViewComponent' && targetDetails.attributes.stereotype === 'details') {
-                        var targetDetailsPattern = _.filter(targetDetails.attributes.pattern, function (p) {return p.value === 'content management'});
-                        if(targetDetailsPattern.length > 0) {
-                            tree['page-details'] = targetDetails;
-                            detailsPageFound = true;
-
-                            if(dataEntryFound) {
-                              var linksDetails = _.filter(graph.getConnectedLinks(targetDetails,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-
-                              linksDetails = _.filter(linksDetails, function (l2) { return l2.attributes.target.id === tree['data-entry-form'].id })
-
-                              if(linksDetails.length > 0){
-                                  tree['modify-flow'] = linksDetails[0];
-                              }
-                            }
-                        }
-                    }
-                    if(detailsPageFound){
-                      return false;
-                    }
-                });
-            }
+        if(result) {
+            listFound = true;
+            return false;
         }
     });
-    if(!(listFound)){
-        _.forEach(embeds, function (child) {
-            var childPattern = _.filter(child.attributes.pattern, function (p) {return p.value === 'content management'}),
-                attributes = child.attributes;
-            if(childPattern.length > 0 && attributes.type === 'ifml.ViewComponent' && attributes.stereotype === 'form') {
-                var linksForm = _.filter(graph.getConnectedLinks(child,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-                _.forEach(linksForm, function (l1) {
-                    var targetSaveAction = l1.collection._byId[l1.attributes.target.id];
-                    if (targetSaveAction && targetSaveAction.attributes.type === 'ifml.Action') {
-                        var targetSaveActionPattern = _.filter(targetSaveAction.attributes.pattern, function (p) {return p.value === 'content management'});
-                        if(targetSaveActionPattern.length > 0) {
-                            var linksSaveAction = _.filter(graph.getConnectedLinks(targetSaveAction,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
-                            if(linksSaveAction.length > 0){
-                              _.forEach(linksSaveAction, function (l2) {
-                                  var targetElement= l2.collection._byId[l2.attributes.target.id];
-                                  if (targetElement && targetElement.attributes.type === 'ifml.ViewComponent' && targetElement.attributes.stereotype === 'details') {
-                                      var targetDetailsPattern = _.filter(targetElement.attributes.pattern, function (p) {return p.value === 'content management'});
-                                      if(targetDetailsPattern.length > 0) {
-                                          tree['data-entry-form'] = child;
-                                          tree['save-data-entry-flow'] = l1;
-                                          tree['save-action'] = targetSaveAction;
-                                          tree['page-details'] = targetElement;
 
-                                          dataEntryFound = true;
-                                          detailsPageFound = true;
+    var remainder = [],
+        visited = [];
+    if (listFound) {
+        var list = _.cloneDeep(tree['page-list']);
 
-                                          var linksDetails = _.filter(graph.getConnectedLinks(targetElement,{deep:'true',outbound:'true'}), function (l) {return l.attributes.type === 'ifml.NavigationFlow'});
+        for (var key in tree) {
+          if(key !== 'page-list'){
+              visited.push(tree[key]);
+          }
+        };
 
-                                          linksDetails = _.filter(linksDetails, function (l3) { return l3.attributes.target.id === tree['data-entry-form'].id })
+        path = [{name: 'page-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined,linkType: 'ifml.NavigationFlow', revisit: true},
+                {name: 'load-content-action', type:'ifml.Action', stereotype: undefined, linkName: 'load-data-entry-flow', linkType: 'ifml.NavigationFlow', revisit: false},
+                {name: 'data-entry-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'save-data-entry-flow', linkType: 'ifml.NavigationFlow', revisit: false},
+                {name: 'save-action', type:'ifml.Action', stereotype: undefined, linkName: undefined, linkType: undefined, revisit: false}];
 
-                                          if(linksDetails.length > 0){
-                                              tree['modify-flow'] = linksDetails[0];
-                                          }
-                                      }
-                                  } else if (targetElement.id === child.id) {
-                                      tree['failed-data-entry-flow'] = linksSaveAction[0];
-                                  }
-                              });
-                            }
-                        }
-                    }
-                    if(dataEntryFound && detailsPageFound){
-                      return false;
-                    }
-                });
-            }
-            if(dataEntryFound && detailsPageFound){
-              return false;
-            }
-        });
+        remainder = _.difference(embeds,visited);
+    } else {
+        listFound = false;
+
+        path = [{name: 'data-entry-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'save-data-entry-flow', linkType: 'ifml.NavigationFlow', revisit: false},
+                {name: 'save-action', type:'ifml.Action', stereotype: undefined, linkName: undefined, linkType: 'ifml.NavigationFlow', revisit: false},
+                {name: 'page-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined, linkType: undefined, revisit: false}];
+
+        remainder = embeds;
     }
 
+    _.forEach(remainder, function (child) {
+        var result = graphNavigation({
+            cell: child,
+            graph: graph,
+            value: 'content management',
+            path: _.cloneDeep(path),
+            tree: tree
+        });
+
+        if (result) {
+            if(listFound && list.id === tree['page-list'].id) {
+                dataEntryFound = true;
+            } else {
+                dataEntryFound = true;
+                detailsPageFound = true;
+            }
+
+            var linksSaveAction = _.chain(graph.getConnectedLinks(tree['save-action'],{deep:'true',outbound:'true'}))
+                                   .filter(function (l) {return l.attributes.type === 'ifml.NavigationFlow'})
+                                   .filter(function (l) { return l.attributes.target.id === tree['data-entry-form'].id })
+                                   .value();
+
+            if(linksSaveAction.length > 0){
+                tree['failed-data-entry-flow'] = linksSaveAction[0];
+            }
+            return false;
+        }
+    });
+
+    if (listFound) {
+      visited = [];
+
+      for (var key in tree) {
+        if(key !== 'page-list'){
+            visited.push(tree[key]);
+        }
+      };
+
+      path = [{name: 'page-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined,linkType: 'ifml.NavigationFlow', revisit: true},
+              {name: 'page-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined, linkType: undefined, revisit: false}];
+
+      remainder = _.difference(embeds,visited);
+      console.log(embeds);
+      console.log(visited);
+      console.log(remainder);
+      console.log(_.intersection(embeds,visited));
+      _.forEach(remainder, function (child) {
+          var result = graphNavigation({
+              cell: child,
+              graph: graph,
+              value: 'content management',
+              path: _.cloneDeep(path),
+              tree: tree
+          });
+
+          if (result && list.id === tree['page-list'].id) {
+              detailsPageFound = true;
+
+              if(dataEntryFound){
+                  var linksDetails = _.chain(graph.getConnectedLinks(tree['page-details'],{deep:'true',outbound:'true'}))
+                                      .filter(function (l) {return l.attributes.type === 'ifml.NavigationFlow'})
+                                      .filter(function (l) {return l.attributes.target.id === tree['data-entry-form'].id })
+                                      .value();
+
+                  if(linksDetails.length > 0){
+                      tree['modify-flow'] = linksDetails[0];
+                  }
+              }
+          }
+      });
+    }
     if((listFound && dataEntryFound) || (listFound && detailsPageFound) || (dataEntryFound && detailsPageFound)){
       options.pattern.tree = tree;
 
@@ -194,6 +149,10 @@ function brain(options) {
           options.load({patterns: options.patterns, type: 'update', cell: cell});
       });
     } else {
+      console.log(tree);
+      console.log(dataEntryFound);
+      console.log(listFound);
+      console.log(detailsPageFound);
       swal(
         'Content Management Not Found',
         'Check if all the containers, components and connections of the pattern are built and configured correctly',
