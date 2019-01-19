@@ -22,9 +22,11 @@ function graphNavigation(options) {
     for (var key in tree) {
       visited.push(tree[key].id);
     };
-
+    console.log('visited',visited);
+    console.log('step',step);
+    console.log('cell',cell);
     if ((!step.revisit && !_.includes(visited,cell.id)) || (step.revisit && _.includes(visited,cell.id))) {
-
+        console.log('id',cell.id);
         //console.log('step',step);
         //console.log('path',_.cloneDeep(path));
         //console.log('pattern',pattern);
