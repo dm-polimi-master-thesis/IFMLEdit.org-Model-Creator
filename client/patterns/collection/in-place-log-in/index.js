@@ -22,8 +22,8 @@ function SettingsPatternViewModel(options) {
   self.logInFormName = ko.observable(fields ? fields.logInFormName : "Log In Form");
   self.editorFieldToAdd = ko.observable("");
   self.logInFieldToAdd = ko.observable("");
-  self.editorFields = ko.observableArray(fields ? fields.editorFields : []);
-  self.logInFields = ko.observableArray(fields ? fields.logInFields : [{ label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },{ label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
+  self.editorFields = ko.observableArray(fields ? _.map(fields.editorFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
+  self.logInFields = ko.observableArray(fields ? _.map(fields.logInFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : [{ label: "username", value: "username", type: ko.observable('text'), name: ko.observable('') },{ label: "password", value: "password", type: ko.observable('password'), name: ko.observable('') }]);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {

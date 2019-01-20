@@ -18,29 +18,39 @@ function brain(options) {
 
   tree['pattern-container'] = cell;
 
-  var path = [{name: 'content-send-action', type:'ifml.Action', stereotype: undefined, linkName: 'send-flow',linkType: 'ifml.NavigationFlow', revisit: false},
-              {name: 'log-in-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'log-in-flow', linkType: 'ifml.NavigationFlow', revisit: false},
-              {name: 'log-in-send-action', type:'ifml.Action', stereotype: undefined, linkName: undefined, linkType: undefined, revisit: false}];
+  var candidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'form'});
 
-  _.forEach(embeds, function (child) {
-      logFound = graphNavigation({
-          cell: child,
+  _.forEach(candidates, function (candidate) {
+      var path = [{name: 'log-in-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'log-in-send-flow', linkType: 'ifml.NavigationFlow', revisit: false},
+                  {name: 'log-in-send-action', type:'ifml.Action', stereotype: undefined, linkName: undefined, linkType: undefined, revisit: false}];
+
+      var result = graphNavigation({
+          cell: candidate,
           graph: graph,
           value: 'in-place log in',
           path: _.cloneDeep(path),
           tree: tree
       });
 
-      path = [{name: 'log-in-send-action', type:'ifml.Action', stereotype: undefined, linkName: 'failed-log-in-send-flow', linkType: undefined, revisit: false},
-              {name: 'log-in-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: undefined, linkType: undefined, revisit: true}];
+      if (result) {
+          var actionCandidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.Action'});
+          path = [{name: 'content-send-action', type:'ifml.Action', stereotype: undefined, linkName: 'log-in-flow',linkType: 'ifml.NavigationFlow', revisit: false},
+                  {name: 'log-in-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: undefined, linkType: 'ifml.NavigationFlow', revisit: true},
+                  {name: 'log-in-send-action', type:'ifml.Action', stereotype: undefined, linkName: 'failed-log-in-send-flow', linkType: 'ifml.NavigationFlow', revisit: true},
+                  {name: 'log-in-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: undefined, linkType: undefined, revisit: true}];
 
-      if (logFound) {
-          logFound = graphNavigation({
-              cell: tree['log-in-send-action'],
-              graph: graph,
-              value: 'in-place log in',
-              path: _.cloneDeep(path),
-              tree: tree
+          _.forEach(actionCandidates, function (candidate) {
+              logFound = graphNavigation({
+                  cell: candidate,
+                  graph: graph,
+                  value: 'in-place log in',
+                  path: _.cloneDeep(path),
+                  tree: tree
+              });
+
+              if(logFound){
+                  return false;
+              }
           });
       }
 
@@ -50,7 +60,7 @@ function brain(options) {
                   {name: 'content-send-action', type:'ifml.Action', stereotype: undefined, linkName: undefined, linkType: undefined, revisit: true}];
 
           editorFound = graphNavigation({
-              cell: tree['conten-send-action'],
+              cell: tree['content-send-action'],
               graph: graph,
               value: 'in-place log in',
               path: _.cloneDeep(path),
@@ -58,16 +68,18 @@ function brain(options) {
           });
 
           options.pattern.tree = tree;
-
+          console.log(tree);
           swal(
             'In-Place Log In Found',
             'Click on the pattern settings to manage the pattern',
             'success'
           ).then((result) => {
-              console.log(tree);
-              //options.load({patterns: options.patterns, type: 'update', cell: cell});
+              options.load({patterns: options.patterns, type: 'update', cell: cell});
           });
           return false;
+      } else {
+        tree = [];
+        tree['pattern-container'] = cell;
       }
   });
   if(!logFound){

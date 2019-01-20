@@ -7,7 +7,6 @@
 var _ = require('lodash');
 
 function graphNavigation(options) {
-    //console.log('graphNavigation');
     var cell = options.cell,
         graph = options.graph,
         value = options.value,
@@ -22,25 +21,13 @@ function graphNavigation(options) {
     for (var key in tree) {
       visited.push(tree[key].id);
     };
-    console.log('visited',visited);
-    console.log('step',step);
-    console.log('cell',cell);
     if ((!step.revisit && !_.includes(visited,cell.id)) || (step.revisit && _.includes(visited,cell.id))) {
-        console.log('id',cell.id);
-        //console.log('step',step);
-        //console.log('path',_.cloneDeep(path));
-        //console.log('pattern',pattern);
-        //console.log('attributes',attributes);
 
         if(pattern.length > 0 && attributes.type === step.type) {
-            //console.log(1);
             if(!step.stereotype || attributes.stereotype === step.stereotype){
-              //console.log(2);
                 if(step.linkType){
-                  //console.log(3);
-                    var links = _.filter(graph.getConnectedLinks(cell,{deep:'true', outbound:'true'}), function (link) {return link.attributes.type === step.linkType});
+                    var links = _.filter(graph.getConnectedLinks(cell,{deep:'true'}), function (link) {return link.attributes.type === step.linkType});
                     _.forEach(links, function (link) {
-                      //console.log(4);
                         var target = link.collection._byId[link.attributes.target.id];
 
                         found = graphNavigation({
@@ -51,7 +38,6 @@ function graphNavigation(options) {
                             tree: tree
                         });
                         if(found){
-                          //console.log(5);
                             tree[step.name] = cell;
                             if(step.linkName){
                                 tree[step.linkName] = link;
@@ -61,14 +47,12 @@ function graphNavigation(options) {
                     });
                     return found;
                 } else {
-                    //console.log(6);
                     tree[step.name] = cell;
                     return true;
                 }
             }
         }
     }
-    //console.log(7);
     return false;
 }
 

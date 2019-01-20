@@ -8,8 +8,7 @@ var _ = require('lodash');
 
 function load(template,cell) {
     var tree = cell.attributes.pattern[0].tree;
-
-    tree['pattern-container'].attributes.name = template.name;
+    tree['pattern-container'].prop('name',template.name);
     if(tree['data-entry-form']){
         tree['data-entry-form'].attributes.name = template.dataEntry.name;
         tree['data-entry-form'].attributes.fields = template.dataEntry.fields;

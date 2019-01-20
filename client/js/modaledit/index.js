@@ -136,7 +136,11 @@ function mapStringSet(e, f, c) {
             }
         },
         remove: function () {
-            field.strings.remove(this);
+            var strings = field.strings(),
+                toRemove = [this];
+
+            field.strings(_.difference(strings,toRemove));
+
             if(field.name === 'Pattern') {
                 field.patternValues.push(this.value);
                 field.patternValue(field.patternValues[0]);
