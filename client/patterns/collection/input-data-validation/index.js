@@ -19,7 +19,7 @@ function SettingsPatternViewModel(options) {
   self.name = ko.observable(fields ? fields.name : "Input Data Validation");
   self.dataFormName = ko.observable(fields ? fields.dataFormName : "Data Form");
   self.fieldToAdd = ko.observable("");
-  self.fields = ko.observableArray(fields ? fields.fields : []);
+  self.fields = ko.observableArray(fields ? _.map(fields.fields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function () {
@@ -48,6 +48,12 @@ function SettingsPatternViewModel(options) {
     } else {
       $('#' + id).hide();
     }
+  }
+
+  self.visible = function(id) {
+      if(this.type() === 'checkbox' || this.type() === 'radio') {
+          $('#' + id).show();
+      }
   }
 
   self.deleteField = function () {
@@ -99,6 +105,14 @@ function SettingsPatternViewModel(options) {
       $(id).removeClass('has-error');
     } else {
       $(id).addClass('has-error');
+    }
+  }
+
+  self.validateName = function () {
+    if (this.name().trim().length && _.findIndex(self.fields(), {'label' : this.name()}) !== -1) {
+        $.notify({message: 'Your request cannot be processed: ' + this.name() + ' has the same name of a field.'},
+          {allow_dismiss: true, type: 'danger'});
+        this.name('');
     }
   }
 }

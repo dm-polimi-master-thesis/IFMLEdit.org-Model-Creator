@@ -141,6 +141,22 @@ function SettingsPatternViewModel(options) {
       $(id).addClass('has-error');
     }
   }
+
+  self.validateSignUpFieldName = function () {
+    if (this.name().trim().length && _.findIndex(self.signUpFields(), {'label' : this.name()}) !== -1) {
+        $.notify({message: 'Your request cannot be processed: ' + this.name() + ' has the same name of a field.'},
+          {allow_dismiss: true, type: 'danger'});
+        this.name('');
+    }
+  }
+
+  self.validateLogInfFieldName = function () {
+    if (this.name().trim().length && _.findIndex(self.logInFields(), {'label' : this.name()}) !== -1) {
+        $.notify({message: 'Your request cannot be processed: ' + this.name() + ' has the same name of a field.'},
+          {allow_dismiss: true, type: 'danger'});
+        this.name('');
+    }
+  }
 }
 
 function SettingsPattern(options) {

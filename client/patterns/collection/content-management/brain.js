@@ -152,8 +152,6 @@ function brain(options) {
     if((listFound && dataEntryFound) || (listFound && detailsPageFound) || (dataEntryFound && detailsPageFound)){
       options.pattern.tree = tree;
 
-      console.log(tree);
-
       swal(
         'Content Management Found',
         'Click on the pattern settings to manage the pattern',
@@ -162,7 +160,6 @@ function brain(options) {
           options.load({patterns: options.patterns, type: 'update', cell: cell});
       });
     } else {
-      console.log(tree);
       swal(
         'Content Management Not Found',
         'Check if all the containers, components and connections of the pattern are built and configured correctly',

@@ -68,7 +68,7 @@ function brain(options) {
           });
 
           options.pattern.tree = tree;
-          console.log(tree);
+
           swal(
             'In-Place Log In Found',
             'Click on the pattern settings to manage the pattern',
@@ -83,7 +83,6 @@ function brain(options) {
       }
   });
   if(!logFound){
-      console.log(tree);
       swal(
         'In-Place Log In Not Found',
         'Check if all the containers, components and connections of the pattern are built and configured correctly',

@@ -16,7 +16,7 @@ function toRegularValues (fields) {
 function toSpecialValues (fields) {
   return _.chain(fields)
           .filter(function (f) {
-              return f.type === 'radio' || f.type === 'checkbox' || f.type === 'hidden' || f.type === 'hidden-object';
+              return (((f.type === 'radio' || f.type === 'checkbox') && (f.name.length > 0)) || (f.type === 'hidden' || f.type === 'hidden-object'));
            })
           .map(function (f) {
               return (f.type === 'hidden' || f.type === 'hidden-object') ? f.label : f.name ;

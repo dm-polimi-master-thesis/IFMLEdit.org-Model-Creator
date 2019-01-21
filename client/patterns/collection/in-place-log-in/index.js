@@ -73,6 +73,12 @@ function SettingsPatternViewModel(options) {
     }
   }
 
+  self.visible = function(id) {
+      if(this.type() === 'checkbox' || this.type() === 'radio') {
+          $('#' + id).show();
+      }
+  }
+
   self.transform = function () {
     var error = false;
 
@@ -135,6 +141,22 @@ function SettingsPatternViewModel(options) {
       $(id).removeClass('has-error');
     } else {
       $(id).addClass('has-error');
+    }
+  }
+
+  self.validateEditorFieldName = function () {
+    if (this.name().trim().length && _.findIndex(self.editorFields(), {'label' : this.name()}) !== -1) {
+        $.notify({message: 'Your request cannot be processed: ' + this.name() + ' has the same name of a field.'},
+          {allow_dismiss: true, type: 'danger'});
+        this.name('');
+    }
+  }
+
+  self.validateLogInFieldName = function () {
+    if (this.name().trim().length && _.findIndex(self.logInFields(), {'label' : this.name()}) !== -1) {
+        $.notify({message: 'Your request cannot be processed: ' + this.name() + ' has the same name of a field.'},
+          {allow_dismiss: true, type: 'danger'});
+        this.name('');
     }
   }
 }

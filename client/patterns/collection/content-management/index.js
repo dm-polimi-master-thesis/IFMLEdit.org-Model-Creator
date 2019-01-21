@@ -171,6 +171,14 @@ function SettingsPatternViewModel(options) {
     }
   }
 
+  self.validateName = function () {
+    if (this.name().trim().length && _.findIndex(self.dataEntryFields(), {'label' : this.name()}) !== -1) {
+        $.notify({message: 'Your request cannot be processed: ' + this.name() + ' has the same name of a field.'},
+          {allow_dismiss: true, type: 'danger'});
+        this.name('');
+    }
+  }
+
   self.checkbox = function () {
     if (!self.pageListOption()) {
         self.dataOption(true);

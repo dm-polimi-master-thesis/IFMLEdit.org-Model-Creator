@@ -4,7 +4,7 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-function update(options) {
+function update(cell) {
 
 }
 

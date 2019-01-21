@@ -70,7 +70,7 @@
                   <div class="field-operations-div">
                     <select class="field-select" data-bind="options: $parent.types, value: type, event: { change: $parent.changeName.bind($data, 'editor-name-' + $index()) }"></select>
                     <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'editor')"><i class="glyphicon glyphicon-minus-sign"></i></a>
-                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'editor-name-' + $index()}"></input>
+                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'editor-name-' + $index()}, template: {afterRender: $parent.visible.bind($data, 'editor-name-' + $index())}, event:{change: $parent.validateEditorFieldName}"></input>
                   </div>
                 </div>
               </li>
@@ -86,7 +86,7 @@
                   <div class="field-operations-div">
                     <select class="field-select" data-bind="options: $parent.types, value: type, event: { change: $parent.changeName.bind($data, 'log-in-name-' + $index()) }"></select>
                     <a class="minus" href="#" data-bind="click: $parent.deleteField.bind($data, 'log-in')"><i class="glyphicon glyphicon-minus-sign"></i></a>
-                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'log-in-name-' + $index()}"></input>
+                    <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="textInput: name, attr: { id: 'log-in-name-' + $index()}, template: {afterRender: $parent.visible.bind($data, 'log-in-name-' + $index())}, event:{change: $parent.validateLogInFieldName}"></input>
                   </div>
                 </div>
               </li>

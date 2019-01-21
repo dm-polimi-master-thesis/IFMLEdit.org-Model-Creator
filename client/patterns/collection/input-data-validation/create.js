@@ -18,6 +18,11 @@ function create(inputDataValidation){
       specialValues = fieldsManipulator.toSpecialValues(inputDataValidation.data.fields),
       errorValues = fieldsManipulator.toErrorValues(regularValues);
 
+  console.log(inputDataValidation.data.fields);
+  console.log(regularValues);
+  console.log(specialValues);
+  console.log(errorValues);
+
   configurator(modelElementsHash['input-data-validation-pattern-view-container'], template, {
       name: inputDataValidation.name
   });
