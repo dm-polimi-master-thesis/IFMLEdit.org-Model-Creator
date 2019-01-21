@@ -30,18 +30,18 @@ function create(masterDetail){
     });
   }
 
-  configurator(modelElementsHash['mail-list-view-container'], template, {
+  configurator(modelElementsHash['master-list-view-container'], template, {
       name: masterDetail.list.collection.charAt(0).toUpperCase() + masterDetail.list.collection.slice(1)
   });
-  configurator(modelElementsHash['mail-list'], template, {
+  configurator(modelElementsHash['master-list'], template, {
       name: masterDetail.list.collection.charAt(0).toUpperCase() + masterDetail.list.collection.slice(1),
       collection: masterDetail.list.collection,
       fields: masterDetail.list.fields
   });
-  configurator(modelElementsHash['mail-details-view-container'], template, {
+  configurator(modelElementsHash['master-details-view-container'], template, {
       name: masterDetail.details.name.charAt(0).toUpperCase() + masterDetail.details.name.slice(1)
   });
-  configurator(modelElementsHash['mail-details'], template, {
+  configurator(modelElementsHash['master-details'], template, {
       name: masterDetail.details.name.charAt(0).toUpperCase() + masterDetail.details.name.slice(1),
       collection: masterDetail.list.collection,
       fields: masterDetail.details.fields

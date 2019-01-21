@@ -7,7 +7,14 @@
 var _ = require('lodash');
 
 function load(template,cell) {
+    var tree = cell.attributes.pattern[0].tree;
 
+    tree['pattern-container'].prop('name',template.name);
+    tree['master-list'].prop('collection',template.list.collection);
+    tree['master-list'].attributes.fields = template.list.fields;
+    tree['master-details'].prop('name',template.details.name);
+    tree['master-details'].prop('collection',template.list.collection);
+    tree['master-details'].attributes.fields = template.details.fields;
 }
 
 exports.load = load;

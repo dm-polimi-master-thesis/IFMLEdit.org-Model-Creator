@@ -46,7 +46,7 @@
       },
       {
          "attributes":{
-            "name":"Mail List",
+            "name":"master List",
             "default":true,
             "landmark":true,
             "xor":false
@@ -63,12 +63,12 @@
                }
             }
          },
-         "id":"mail-list-view-container",
+         "id":"master-list-view-container",
          "type":"ifml.ViewContainer"
       },
       {
          "attributes":{
-            "name":"Mail Details",
+            "name":"master Details",
             "default":false,
             "landmark":false,
             "xor":false
@@ -85,19 +85,19 @@
                }
             }
          },
-         "id":"mail-details-view-container",
+         "id":"master-details-view-container",
          "type":"ifml.ViewContainer"
       },
       {
          "attributes":{
-            "name":"Mail List",
+            "name":"master List",
             "stereotype":"list",
             "fields":[
                "date",
                "from",
                "subject"
             ],
-            "collection":"mails",
+            "collection":"masters",
             "filters":[
 
             ]
@@ -114,12 +114,12 @@
                }
             }
          },
-         "id":"mail-list",
+         "id":"master-list",
          "type":"ifml.ViewComponent"
       },
       {
          "attributes":{
-            "name":"Mail Details",
+            "name":"master Details",
             "stereotype":"details",
             "fields":[
                "date",
@@ -128,7 +128,7 @@
                "text",
                "to"
             ],
-            "collection":"mails"
+            "collection":"masters"
          },
          "metadata":{
             "graphics":{
@@ -142,7 +142,7 @@
                }
             }
          },
-         "id":"mail-details",
+         "id":"master-details",
          "type":"ifml.ViewComponent"
       },
       {
@@ -162,7 +162,7 @@
                }
             }
          },
-         "id":"selected-mail-event",
+         "id":"selected-master-event",
          "type":"ifml.Event"
       },
       {
@@ -192,37 +192,37 @@
       {
          "type":"hierarchy",
          "parent":"xor-view-container",
-         "child":"mail-list-view-container"
+         "child":"master-list-view-container"
       },
       {
          "type":"hierarchy",
          "parent":"xor-view-container",
-         "child":"mail-details-view-container"
+         "child":"master-details-view-container"
       },
       {
          "type":"hierarchy",
-         "parent":"mail-list-view-container",
-         "child":"mail-list"
+         "parent":"master-list-view-container",
+         "child":"master-list"
       },
       {
          "type":"hierarchy",
-         "parent":"mail-details-view-container",
-         "child":"mail-details"
+         "parent":"master-details-view-container",
+         "child":"master-details"
       },
       {
          "type":"hierarchy",
-         "parent":"mail-list",
-         "child":"selected-mail-event"
+         "parent":"master-list",
+         "child":"selected-master-event"
       },
       {
          "type":"source",
          "flow":"list-to-result",
-         "source":"selected-mail-event"
+         "source":"selected-master-event"
       },
       {
          "type":"target",
          "flow":"list-to-result",
-         "target":"mail-details"
+         "target":"master-details"
       }
    ],
    "statistics":{

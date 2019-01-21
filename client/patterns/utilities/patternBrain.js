@@ -40,10 +40,10 @@ function patternBrain (options) {
       case 'input data validation':
         inputDataValidationBrain(options)
         break;
-      case 'master details':
+      case 'master detail':
         masterDetailsBrain(options)
         break;
-      case 'multilevel master details':
+      case 'multilevel master detail':
         multilevelMasterDetailsBrain(options)
         break;
       case 'restricted search':

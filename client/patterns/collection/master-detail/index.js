@@ -23,7 +23,7 @@ function SettingsPatternViewModel(options) {
   self.detailsFieldToAdd = ko.observable(fields ? fields.detailsFieldToAdd : "");
   self.listFields = ko.observableArray(fields ? fields.listFields : []);
   self.detailsFields = ko.observableArray(fields ? fields.detailsFields : []);
-  self.xorOption = fields ? undefined : ko.observable(true);
+  self.xorOption = ko.observable(true);
 
   self.addField = function (type) {
     var fieldToAdd;
@@ -118,6 +118,10 @@ function SettingsPatternViewModel(options) {
     } else {
       $(id).addClass('has-error');
     }
+  }
+
+  if (self.type === 'update') {
+      $('.material-switch').hide();
   }
 }
 
