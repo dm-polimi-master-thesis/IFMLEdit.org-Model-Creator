@@ -4,35 +4,41 @@
 /*jslint node: true, nomen: true */
 "use strict";
 
-var _ = require('lodash');
+var _ = require('lodash'),
+    fieldsManipulator = require('../../../js/ifml/utilities/manipulator/fields.js').fieldsManipulator;
 
 function load(template,cell) {
-    var tree = cell.attributes.pattern[0].tree;
+    var tree = cell.attributes.pattern[0].tree,
+        regularValues = fieldsManipulator.toRegularValues(template.dataEntry.fields),
+        specialValues = fieldsManipulator.toSpecialValues(template.dataEntry.fields),
+        errorValues = fieldsManipulator.toErrorValues(regularValues);
+
     tree['pattern-container'].prop('name',template.name);
     if(tree['data-entry-form']){
-        tree['data-entry-form'].attributes.name = template.dataEntry.name;
+        tree['data-entry-form'].prop('name',template.name);
         tree['data-entry-form'].attributes.fields = template.dataEntry.fields;
-        tree['save-data-entry-flow'].attributes.bindings = _.map(template.dataEntry.fields, function (f) {return {input: f.label, output: f.label}});
-        tree['save-action'].attributes.parameters = template.dataEntry.fields;
+        tree['save-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
+        tree['save-action'].attributes.parameters = _.flattenDeep([{ label: 'id' }, regularValues, specialValues]);
+        tree['save-action'].attributes.results = _.flattenDeep([{ label: 'id' }, errorValues, regularValues, specialValues]);
     }
     if(tree['page-details']){
-        tree['page-details'].attributes.name = template.details.name;
-        tree['page-details'].attributes.collection = template.details.collection;
+        tree['page-details'].prop('name',template.name);
+        tree['page-details'].prop('collection',template.details.collection);
         tree['page-details'].attributes.fields = template.details.fields;
     }
     if(tree['page-list']){
-        tree['page-list'].attributes.collection = template.list.collection;
+        tree['page-list'].prop('collection',template.list.collection);
         tree['page-list'].attributes.fields = template.list.fields;
     }
     if(tree['load-content-action']){
-        tree['load-content-action'].attributes.results = template.dataEntry.fields;
-        tree['load-data-entry-flow'].attributes.bindings = _.map(template.dataEntry.fields, function (f) {return {input: f.label, output: f.label}});
+        tree['load-content-action'].attributes.results = _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, regularValues, specialValues]);
+        tree['load-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues]), function (f) {return {input: f.label, output: f.label}});
     }
     if(tree['failed-data-entry-flow']){
-        tree['failed-data-entry-flow'].attributes.bindings = _.map(template.dataEntry.fields, function (f) {return {input: f.label, output: f.label}});
+        tree['failed-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, errorValues, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
     }
     if(tree['modify-flow']){
-        tree['modify-flow'].attributes.bindings = _.map(template.dataEntry.fields, function (f) {return {input: f.label, output: f.label}});
+        tree['modify-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues]), function (f) {return {input: f.label, output: f.label}});
     }
 }
 
