@@ -143,6 +143,7 @@ function SettingsPatternViewModel(options) {
       if (!(step.formName.length > 0)) {
         error = true;
         self.selected(step);
+        self.fields(self.selected().fields);
         $('#form-name-form').addClass('has-error');
         $.notify({message: 'Your request cannot be processed: ' + step.name + ' cannot have an empty form name.'},
           {allow_dismiss: true, type: 'danger'});

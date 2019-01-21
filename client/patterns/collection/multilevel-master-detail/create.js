@@ -83,6 +83,7 @@ function create(multilevelMasterDetail){
           type: 'ifml.ViewComponent',
           stereotype: 'list',
           name: step.collection.charAt(0).toUpperCase() + step.collection.slice(1),
+          collection: step.collection,
           fields: step.fields,
           filters: index === 0 ? multilevelMasterDetail.steps[1].filters : collection[index - 1].filters,
           position: {

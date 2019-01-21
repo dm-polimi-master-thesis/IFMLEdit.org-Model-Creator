@@ -24,12 +24,19 @@ function SettingsPatternViewModel(options) {
   self.detailsFieldToAdd = ko.observable("");
   self.listFields = ko.observableArray(fields ? fields.listFields : []);
   self.detailsFields = ko.observableArray(fields ? fields.detailsFields : []);
-  self.selected = ko.observable(fields ? fields.selected : self.steps()[0]);
+  self.selected = ko.observable(self.steps()[0]);
 
   self.select = function () {
     self.selected().fields = self.listFields.removeAll();
     self.selected(this);
     self.listFields(self.selected().fields);
+    if(!(self.selected().collection.length > 0)){
+      $('#collection-form').addClass('has-error');
+    } else {
+      $('#collection-form').removeClass('has-error');
+    }
+
+
   }
 
   self.addStep = function () {
@@ -122,6 +129,7 @@ function SettingsPatternViewModel(options) {
   }
 
   self.transform = function () {
+    self.selected().fields = self.listFields.removeAll();
     var error = false;
 
     if(self.steps().length < 2){
@@ -141,14 +149,24 @@ function SettingsPatternViewModel(options) {
       $.notify({message: 'Your request cannot be processed: details form cannot have an empty name.'},
         {allow_dismiss: true, type: 'danger'});
     }
-    _.forEach(self.steps(), function(step) {
+    _.forEach(self.steps(), function(step, index, collection) {
       if(!(step.collection.length > 0)){
         error = true;
-        self.selected(step);
         $('#collection-form').addClass('has-error');
         $.notify({message: 'Your request cannot be processed: ' + step.name + ' cannot have an empty form name.'},
           {allow_dismiss: true, type: 'danger'});
-        return false;
+      }
+      if(index !== (collection.length -1)){
+        if ( _.filter(step.fields, function (f) { return f.filter }).length < 1 ) {
+          error = true;
+          $.notify({message: 'Your request cannot be processed: ' + step.name + ' is an intermediate list, but does not present any filter (that has to be set at the previous step).'},
+            {allow_dismiss: true, type: 'danger'});
+        }
+      }
+      if (error) {
+          self.selected(step);
+          self.listFields(self.selected().fields);
+          return false;
       }
     });
     if(error){

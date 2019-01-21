@@ -17,13 +17,15 @@ function brain(options) {
 
     tree['pattern-container'] = cell;
 
-    var path = [{name: 'alphabet-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: 'filter-flow',linkType: 'ifml.NavigationFlow', revisit: false},
-                {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: 'ifml.NavigationFlow', revisit: false},
-                {name: 'result-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined,linkType: undefined, revisit: false}];
+    var candidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'list'});
 
-    _.forEach(embeds, function (child) {
+    _.forEach(candidates, function (candidate) {
+        var path = [{name: 'alphabet-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: 'filter-flow',linkType: 'ifml.NavigationFlow', revisit: false},
+                    {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: 'ifml.NavigationFlow', revisit: false},
+                    {name: 'result-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined,linkType: undefined, revisit: false}];
+
         found = graphNavigation({
-            cell: child,
+            cell: candidate,
             graph: graph,
             value: 'alphabetical filter',
             path: _.cloneDeep(path),

@@ -17,12 +17,14 @@ function brain(options) {
 
     tree['pattern-container'] = cell;
 
-    var path = [{name: 'master-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined,linkType: 'ifml.NavigationFlow', revisit: false},
-                {name: 'master-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined,linkType: undefined, revisit: false}];
+    var candidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'list'});
 
-    _.forEach(embeds, function (child) {
+    _.forEach(candidates, function (candidate) {
+        var path = [{name: 'master-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined,linkType: 'ifml.NavigationFlow', revisit: false},
+                    {name: 'master-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined,linkType: undefined, revisit: false}];
+
         found = graphNavigation({
-            cell: child,
+            cell: candidate,
             graph: graph,
             value: 'master detail',
             path: _.cloneDeep(path),
@@ -31,7 +33,6 @@ function brain(options) {
 
         if(found) {
           options.pattern.tree = tree;
-          console.log(tree);
           swal(
             'Master Detail Found',
             'Click on the pattern settings to manage the pattern',
@@ -43,7 +44,6 @@ function brain(options) {
         }
     });
     if(!found){
-        console.log(tree);
         swal(
           'Master Detail Not Found',
           'Check if all the containers, components and connections of the pattern are built and configured correctly',

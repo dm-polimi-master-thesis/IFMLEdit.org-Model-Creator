@@ -27,6 +27,11 @@ function graphNavigation(options) {
             if(!step.stereotype || attributes.stereotype === step.stereotype){
                 if(step.linkType){
                     var links = _.filter(graph.getConnectedLinks(cell,{deep:'true'}), function (link) {return link.attributes.type === step.linkType});
+
+                    if (step.linkBindings){
+                        links = _.filter(links, function (link) { return link.attributes.bindings.length > 0 })
+                    }
+
                     _.forEach(links, function (link) {
                         var target = link.collection._byId[link.attributes.target.id];
 
