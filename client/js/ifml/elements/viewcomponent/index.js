@@ -135,14 +135,66 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
             .concat((function () {
                 var pattern = [],
                     values = [],
+                    states = [
+                      {
+                        pattern: 'multilevel master detail',
+                        values: ['intermediate step','start step'],
+                        value: _.chain(self.attributes.pattern)
+                                .filter(function (p) {return p.value === 'multilevel master detail'})
+                                .map(function (p) {return p.state})
+                                .value()[0] || 'intermediate'
+                      },
+                      {
+                        pattern: 'wizard',
+                        values: ['intermediate step','start step'],
+                        value: _.chain(self.attributes.pattern)
+                                .filter(function (p) {return p.value === 'wizard'})
+                                .map(function (p) {return p.state})
+                                .value()[0] || 'intermediate'
+                      }
+                    ],
                     cellsById = self.graph.attributes.cells._byId,
                     ancestors = _.map(self.getAncestors(), function (ancestor) { return ancestor.id; });
 
                 _.forEach(_.flattenDeep(ancestors), function (id) {
                     var cellPattern = cellsById[id].attributes.pattern;
                     if(cellPattern){
-                        cellPattern = _.map(cellPattern, function (p) { return p.value });
-                        values = _.union(values,cellPattern);
+                        var cellPatternValues = _.map(cellPattern, function (p) { return p.value });
+                        values = _.union(values,cellPatternValues);
+
+                        if ((_.includes(cellPatternValues,'multilevel master detail') && states[0].value !== 'start') || (_.includes(cellPatternValues,'wizard') && states[1].value !== 'start')) {
+                            if (cellPattern[0].type === 'root') {
+                                var children = cellsById[id].getEmbeddedCells({deep:'true'}),
+                                    startFound = false;
+
+                                _.chain(children)
+                                 .filter(function (child) { return child.attributes.type === 'ifml.ViewComponent' && child.attributes.stereotype !== 'details' && child.attributes.id !== self.attributes.id})
+                                 .forEach(function (child) {
+                                      var childPattern = child.attributes.pattern;
+                                      _.forEach(childPattern, function (p) {
+                                          if (p.value === 'multilevel master detail' && child.attributes.stereotype === 'list') {
+                                              if (p.state === 'start step') {
+                                                  startFound = true;
+                                                  states[0].values = ['intermediate step'];
+                                                  return false;
+                                              }
+                                          } else if (p.value === 'wizard' && child.attributes.stereotype === 'form') {
+                                            if (p.state === 'start step') {
+                                                startFound = true;
+                                                states[1].values = ['intermediate step'];
+                                                return false;
+                                            }
+                                          }
+                                      })
+
+                                      if (startFound) {
+                                          return false;
+                                      }
+                                 })
+                                .value();
+
+                            }
+                        }
                     }
                 });
 
@@ -154,9 +206,9 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
                             value: v,
                             type: ['node']
                         }
-                    }),'value')
+                    }),'value'),
+                    states: (self.attributes.stereotype === 'list' || self.attributes.stereotype === 'form') ? states : undefined
                 }
-
                 switch (self.get('stereotype')) {
                 case 'list':
                     return [

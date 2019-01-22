@@ -18,7 +18,18 @@ function brain(options) {
 
     tree['pattern-container'] = cell;
 
-    var candidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'list' && e.attributes.filters.length === 0 });
+    var candidates = _.chain(embeds)
+                      .filter(function (child) {
+                          return _.chain(child.attributes.pattern)
+                                  .filter(function (p) {
+                                      return p.state === 'start step'
+                                  })
+                                  .value().length > 0
+                      })
+                      .filter(function (e) {
+                          return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'list'
+                      })
+                      .value();
 
     _.forEach(candidates, function (candidate) {
         var path = [{name: 'step-1-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: 'step-1-flow',linkType: 'ifml.NavigationFlow', linkBindings: true, revisit: false},
@@ -66,7 +77,6 @@ function brain(options) {
 
             if (detailsFound) {
                 options.pattern.tree = tree;
-                console.log(tree);
                 swal(
                   'Multilevel Master Detail Found',
                   'Click on the pattern settings to manage the pattern',
@@ -79,7 +89,6 @@ function brain(options) {
         }
     });
     if(!(listFound && detailsFound)){
-        console.log(tree);
         swal(
           'Multilevel Master Detail Not Found',
           'Check if all the containers, components and connections of the pattern are built and configured correctly',

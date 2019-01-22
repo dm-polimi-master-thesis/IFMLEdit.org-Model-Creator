@@ -64,6 +64,10 @@ function mapStringSet(e, f, c) {
         patternType: f.name === 'Pattern' ? ko.observable(f.pattern.values[0] ? f.pattern.values[0].type[0] : '') : undefined,
         patternValues: f.name === 'Pattern' ? ko.observableArray(_.map(f.pattern.values, function (p) {return p.value})) : undefined,
         patternValue: f.name === 'Pattern' ? ko.observable(f.pattern.values[0] ? f.pattern.values[0].value : '') : undefined,
+        multilevelStateValues: f.name === 'Pattern' && f.pattern.states ? ko.observableArray(f.pattern.states[0].values) : undefined,
+        multilevelStateValue: f.name === 'Pattern' && f.pattern.states ? ko.observable(f.pattern.states[0].value) : undefined,
+        wizardStateValues: f.name === 'Pattern' && f.pattern.states ? ko.observableArray(f.pattern.states[1].values) : undefined,
+        wizardStateValue: f.name === 'Pattern' && f.pattern.states ? ko.observable(f.pattern.states[1].value) : undefined,
         radio: ko.observable(0),
         checkbox: ko.observable(0),
         add: function () {
@@ -106,10 +110,18 @@ function mapStringSet(e, f, c) {
                 field.patternType(filtered[0].type[0]);
             }
         },
+        changeState: function () {
+            if (this.value === 'multilevel master detail') {
+                this.state = field.multilevelStateValue();
+            } else if (this.value === 'wizard') {
+                this.state = field.wizardStateValue();
+            }
+        },
         addPattern: function () {
             field.strings(_(field.strings()).concat({
               type: field.patternType(),
-              value: field.patternValue()
+              value: field.patternValue(),
+              state: (field.stereotype === 'form' && field.patternValue() === 'wizard') || (field.stereotype === 'list' && field.patternValue() === 'multilevel master detail') ? 'intermediate-step' : undefined
             }).value());
 
             if(field.patternType() === 'root'){

@@ -83,14 +83,17 @@
                                             </div>
                                         </td>
                                         <!-- ko if: $parent.stereotype === 'form' && $parent.name === 'Fields' -->
-                                          <td class="col-sm-3 td-name" data-bind="if: type === 'checkbox' || type === 'radio'">
+                                        <td class="col-sm-3 td-name" data-bind="if: type === 'checkbox' || type === 'radio'">
                                             <div class="right-inner-addon">
                                               <input class="field-input-text form-control input-name" type="text" placeholder="Name" data-bind="value: name, event: { change: $parent.validate }, attr: { id: label + '-radio-check-name' }"></input>
                                             </div>
-                                          </td>
+                                        </td>
                                         <!-- /ko -->
                                         <!-- ko ifnot: $parent.stereotype === 'form' && $parent.name === 'Fields' -->
-                                          <td class="col-sm-3 td-name"></td>
+                                        <td class="col-sm-3 td-name">
+                                            <select id="pattern-value" class="filter type-options type-options-pattern" data-bind="options: $parent.multilevelStateValues, value: $parent.multilevelStateValue, event: {change : $parent.changeState}, visible: $parent.name === 'Pattern' && $parent.stereotype === 'list' && $data.value === 'multilevel master detail'"></select>
+                                            <select id="pattern-value" class="filter type-options type-options-pattern" data-bind="options: $parent.wizardStateValues, value: $parent.wizardStateValue, event: {change : $parent.changeState}, visible: $parent.name === 'Pattern' && $parent.stereotype === 'form' && $data.value === 'wizard'"></select>
+                                        </td>
                                         <!-- /ko -->
                                     </tr>
                                 </tbody>
