@@ -129,7 +129,7 @@ function brain(options) {
         if (detailsFound) {
             var countDown = count;
 
-            path = [{name: 'result-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: 'previous-review-flow', linkType: 'ifml.NavigationFlow', revisit: true},
+            path = [{name: 'result-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: 'previous-step-' + count + '-flow', linkType: 'ifml.NavigationFlow', revisit: true},
                     {name: 'previous-step-' + countDown + '-action', type:'ifml.Action', stereotype: undefined, linkName: 'to-step-' + countDown + '-flow', linkType: 'ifml.NavigationFlow', revisit: false},
                     {name: 'step-' + countDown +'-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: undefined, linkType: undefined, revisit: true}];
 
@@ -142,7 +142,7 @@ function brain(options) {
             });
 
             while (result && countDown > 1) {
-                path = [{name: 'step-' + countDown +'-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'previous-' + countDown + '-flow', linkType: 'ifml.NavigationFlow', revisit: true},
+                path = [{name: 'step-' + countDown +'-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'previous-step-' + countDown + '-flow', linkType: 'ifml.NavigationFlow', revisit: true},
                         {name: 'previous-step-' + (countDown - 1) + '-action', type:'ifml.Action', stereotype: undefined, linkName: 'to-step-' + (countDown - 1) +'-flow', linkType: 'ifml.NavigationFlow', revisit: false},
                         {name: 'step-' + (countDown - 1) + '-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: undefined, linkType: undefined, revisit: true}];
 
@@ -168,24 +168,24 @@ function brain(options) {
                     var links = _.filter(graph.getConnectedLinks(tree['validate-step-' + countUp + '-action'],{deep:'true',outbound:'true'}), function (link) {return link.attributes.target.id === tree['step-' + countUp + '-form'].attributes.id});
 
                     if (links.length === 1) {
-                        tree['failed-validate-step-' + countUp + '-flow'];
-                        countUp ++;
+                        tree['failed-validate-step-' + countUp + '-flow'] = links[0];
+                        countUp++;
                     } else {
                         failedFlow = false;
                     }
-
-                    if (failedFlow && countUp === count) {
-                        structureDetected = true;
-                        options.pattern.tree = tree;
-                        swal(
-                          'Wizard Found',
-                          'Click on the pattern settings to manage the pattern',
-                          'success'
-                        ).then((result) => {
-                            //options.load({patterns: options.patterns, type: 'update', cell: cell});
-                        });
-                        return false;
-                    }
+                }
+                if (failedFlow) {
+                    structureDetected = true;
+                    options.pattern.tree = tree;
+                    console.log(tree);
+                    swal(
+                      'Wizard Found',
+                      'Click on the pattern settings to manage the pattern',
+                      'success'
+                    ).then((result) => {
+                        options.load({patterns: options.patterns, type: 'update', cell: cell});
+                    });
+                    return false;
                 }
             }
         }

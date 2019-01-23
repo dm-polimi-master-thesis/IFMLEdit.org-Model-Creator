@@ -192,6 +192,12 @@ function SettingsPatternViewModel(options) {
         this.name('');
     }
   }
+
+  self.visible = function(id) {
+      if(this.type() === 'checkbox' || this.type() === 'radio') {
+          $('#' + id).show();
+      }
+  }
 }
 
 function SettingsPattern(options) {

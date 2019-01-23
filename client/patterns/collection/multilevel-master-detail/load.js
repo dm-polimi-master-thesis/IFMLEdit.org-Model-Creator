@@ -15,8 +15,6 @@ function load(template,cell) {
     tree['pattern-container'].prop('name',template.name);
 
     while (count >= 1) {
-      console.log('step-' + count + 'list');
-      console.log(tree['step-' + count + 'list']);
         var parentViewContainer = graph.attributes.cells._byId[tree['step-' + count + '-list'].attributes.parent];
         parentViewContainer.prop('name',steps[count-1].name);
 
