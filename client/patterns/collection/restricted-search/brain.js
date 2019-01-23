@@ -24,7 +24,6 @@ function brain(options) {
                 {name: 'result-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined,linkType: undefined, revisit: false}];
 
     _.forEach(candidates, function (candidate) {
-        console.log('first', candidate);
         var result = graphNavigation({
             cell: candidate,
             graph: graph,
@@ -42,7 +41,6 @@ function brain(options) {
             var candidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'list'});
 
             _.forEach(candidates, function (candidate) {
-                console.log('second',candidate);
                 var result = graphNavigation({
                     cell: candidate,
                     graph: graph,

@@ -142,7 +142,7 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
                         value: _.chain(self.attributes.pattern)
                                 .filter(function (p) {return p.value === 'multilevel master detail'})
                                 .map(function (p) {return p.state})
-                                .value()[0] || 'intermediate'
+                                .value()[0] || 'intermediate step'
                       },
                       {
                         pattern: 'wizard',
@@ -150,7 +150,15 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
                         value: _.chain(self.attributes.pattern)
                                 .filter(function (p) {return p.value === 'wizard'})
                                 .map(function (p) {return p.state})
-                                .value()[0] || 'intermediate'
+                                .value()[0] || 'intermediate step'
+                      },
+                      {
+                        pattern: 'wizard',
+                        values: ['log in','sign up'],
+                        value: _.chain(self.attributes.pattern)
+                                .filter(function (p) {return p.value === 'sign up and log in'})
+                                .map(function (p) {return p.state})
+                                .value()[0] || ''
                       }
                     ],
                     cellsById = self.graph.attributes.cells._byId,
@@ -162,10 +170,9 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
                         var cellPatternValues = _.map(cellPattern, function (p) { return p.value });
                         values = _.union(values,cellPatternValues);
 
-                        if ((_.includes(cellPatternValues,'multilevel master detail') && states[0].value !== 'start') || (_.includes(cellPatternValues,'wizard') && states[1].value !== 'start')) {
+                        if (_.includes(cellPatternValues,'multilevel master detail') || _.includes(cellPatternValues,'wizard') || _.includes(cellPatternValues,'sign up and log in')) {
                             if (cellPattern[0].type === 'root') {
-                                var children = cellsById[id].getEmbeddedCells({deep:'true'}),
-                                    startFound = false;
+                                var children = cellsById[id].getEmbeddedCells({deep:'true'});
 
                                 _.chain(children)
                                  .filter(function (child) { return child.attributes.type === 'ifml.ViewComponent' && child.attributes.stereotype !== 'details' && child.attributes.id !== self.attributes.id})
@@ -174,22 +181,20 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
                                       _.forEach(childPattern, function (p) {
                                           if (p.value === 'multilevel master detail' && child.attributes.stereotype === 'list') {
                                               if (p.state === 'start step') {
-                                                  startFound = true;
                                                   states[0].values = ['intermediate step'];
-                                                  return false;
                                               }
                                           } else if (p.value === 'wizard' && child.attributes.stereotype === 'form') {
-                                            if (p.state === 'start step') {
-                                                startFound = true;
-                                                states[1].values = ['intermediate step'];
-                                                return false;
-                                            }
+                                              if (p.state === 'start step') {
+                                                  states[1].values = ['intermediate step'];
+                                              }
+                                          } else if (p.value === 'sign up and log in' && child.attributes.stereotype === 'form') {
+                                              if (p.state === 'log in') {
+                                                  states[2].values = _.difference(states[2].values,['log in']);
+                                              } else if (p.state === 'sign up') {
+                                                  states[2].values = _.difference(states[2].values,['sign up']);
+                                              }
                                           }
                                       })
-
-                                      if (startFound) {
-                                          return false;
-                                      }
                                  })
                                 .value();
 

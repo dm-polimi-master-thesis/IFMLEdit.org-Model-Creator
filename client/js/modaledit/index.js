@@ -68,6 +68,8 @@ function mapStringSet(e, f, c) {
         multilevelStateValue: f.name === 'Pattern' && f.pattern.states ? ko.observable(f.pattern.states[0].value) : undefined,
         wizardStateValues: f.name === 'Pattern' && f.pattern.states ? ko.observableArray(f.pattern.states[1].values) : undefined,
         wizardStateValue: f.name === 'Pattern' && f.pattern.states ? ko.observable(f.pattern.states[1].value) : undefined,
+        logInStateValues: f.name === 'Pattern' && f.pattern.states ? ko.observableArray(f.pattern.states[2].values) : undefined,
+        logInStateValue: f.name === 'Pattern' && f.pattern.states ? ko.observable(f.pattern.states[2].value) : undefined,
         radio: ko.observable(0),
         checkbox: ko.observable(0),
         add: function () {
@@ -115,14 +117,23 @@ function mapStringSet(e, f, c) {
                 this.state = field.multilevelStateValue();
             } else if (this.value === 'wizard') {
                 this.state = field.wizardStateValue();
+            } else if (this.value === 'sign up and log in') {
+                this.state = field.logInStateValue();
             }
         },
         addPattern: function () {
-            field.strings(_(field.strings()).concat({
+            var pattern = {
               type: field.patternType(),
-              value: field.patternValue(),
-              state: (field.stereotype === 'form' && field.patternValue() === 'wizard') || (field.stereotype === 'list' && field.patternValue() === 'multilevel master detail') ? 'intermediate-step' : undefined
-            }).value());
+              value: field.patternValue()
+            }
+
+            if ((field.stereotype === 'form' && field.patternValue() === 'wizard') || (field.stereotype === 'list' && field.patternValue() === 'multilevel master detail')) {
+                pattern.state = 'intermediate step'
+            } else if (field.stereotype === 'form' && field.patternValue() === 'sign up and log in') {
+                pattern.state = field.logInStateValues()[0] ? field.logInStateValues()[0] : ''
+            }
+
+            field.strings(_(field.strings()).concat(pattern).value());
 
             if(field.patternType() === 'root'){
                 field.patternValues([]),

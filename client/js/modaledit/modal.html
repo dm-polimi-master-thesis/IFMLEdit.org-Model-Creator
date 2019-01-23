@@ -93,6 +93,7 @@
                                         <td class="col-sm-3 td-name">
                                             <select id="pattern-value" class="filter type-options type-options-pattern" data-bind="options: $parent.multilevelStateValues, value: $parent.multilevelStateValue, event: {change : $parent.changeState}, visible: $parent.name === 'Pattern' && $parent.stereotype === 'list' && $data.value === 'multilevel master detail'"></select>
                                             <select id="pattern-value" class="filter type-options type-options-pattern" data-bind="options: $parent.wizardStateValues, value: $parent.wizardStateValue, event: {change : $parent.changeState}, visible: $parent.name === 'Pattern' && $parent.stereotype === 'form' && $data.value === 'wizard'"></select>
+                                            <select id="pattern-value" class="filter type-options type-options-pattern" data-bind="options: $parent.logInStateValues, value: $parent.logInStateValue, event: {change : $parent.changeState}, visible: $parent.name === 'Pattern' && $parent.stereotype === 'form' && $data.value === 'sign up and log in'"></select>
                                         </td>
                                         <!-- /ko -->
                                     </tr>
