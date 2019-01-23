@@ -24,12 +24,13 @@ function create(restrictedSearch){
   configurator(modelElementsHash['results-list'], template, {
       name: restrictedSearch.list.collection.charAt(0).toUpperCase() + restrictedSearch.list.collection.slice(1),
       collection: restrictedSearch.list.collection,
-      filters: ['category', restrictedSearch.search[0]],
+      filters: [restrictedSearch.filter, restrictedSearch.search[0]],
       fields: restrictedSearch.list.fields
   });
   configurator(modelElementsHash['category-list'], template, {
       name: restrictedSearch.filter.charAt(0).toUpperCase() + restrictedSearch.filter.slice(1),
-      collection: restrictedSearch.filter
+      collection: "categories",
+      fields: [{ label:restrictedSearch.filter }]
   });
   configurator(modelElementsHash['product-view-container'], template, {
       name: restrictedSearch.details.name
@@ -41,6 +42,9 @@ function create(restrictedSearch){
   });
   configurator(modelElementsHash['keyword-data-flow'], template, {
       fields: restrictedSearch.search
+  });
+  configurator(modelElementsHash['filter-data-flow'], template, {
+      fields: [{ label:restrictedSearch.filter }]
   });
 
   return template;

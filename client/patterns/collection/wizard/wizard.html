@@ -17,7 +17,9 @@
                 <li>
                   <div class="right-inner-addon">
                     <span data-bind="text: name, click: $root.select"></span>
-                    <a class="minus" href="#" data-bind="click: $parent.deleteStep"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <!-- ko if: $parent.type === 'create' -->
+                        <a class="minus" href="#" data-bind="click: $parent.deleteStep"><i class="glyphicon glyphicon-minus-sign"></i></a>
+                    <!-- /ko -->
                   </div>
                 </li>
               </ul>

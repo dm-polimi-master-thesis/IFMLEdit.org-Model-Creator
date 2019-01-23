@@ -15,7 +15,7 @@ function configureFlow(element, template, options) {
         oldId: element.id
       };
   var bindings = _.cloneDeep(attributes.bindings);
-  if(options.fields !== undefined){
+  if(options.fields !== undefined || options.bindings !== undefined){
     bindings = _.map(options.fields || options.bindings, function(field){
       return {
         input: field.label || field.input,

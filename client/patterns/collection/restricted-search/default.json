@@ -252,10 +252,7 @@
       {
          "attributes":{
             "bindings":[
-               {
-                  "input":"category",
-                  "output":"id"
-               }
+              
             ]
          },
          "metadata":{

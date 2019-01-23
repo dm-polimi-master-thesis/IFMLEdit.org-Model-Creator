@@ -9,7 +9,7 @@ function update(cell) {
     return {
         type: 'update',
         name: tree['pattern-container'].attributes.name,
-        filterField: tree['alphabet-list'].attributes.fields[0].label,
+        filterField: tree['alphabet-list'].attributes.fields[0] ? tree['alphabet-list'].attributes.fields[0].label : '',
         filterCollection: tree['alphabet-list'].attributes.collection,
         resultsCollection: tree['results-list'].attributes.collection,
         selectedDetailsName: tree['result-details'].attributes.name,

@@ -46,7 +46,6 @@ function configureViewComponent(element, template, options) {
       }
     }
   }
-
   dross.newId = element.id;
   return dross;
 }

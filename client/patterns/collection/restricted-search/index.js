@@ -111,11 +111,11 @@ function SettingsPatternViewModel(options) {
       filter: self.filterName(),
       list: {
         collection: self.collectionName(),
-        fields: self.resultsFields.removeAll()
+        fields: _.map(self.resultsFields.removeAll(), function (field) { return { label: field.label, value: field.value, type: field.type(), name: field.name() } })
       },
       details: {
         name: self.selectedDetailsName(),
-        fields: self.selectedFields.removeAll()
+        fields: _.map(self.selectedFields.removeAll(), function (field) { return { label: field.label, value: field.value, type: field.type(), name: field.name() } })
       }
     }
 

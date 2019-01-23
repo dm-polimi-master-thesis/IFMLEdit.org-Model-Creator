@@ -17,7 +17,7 @@ function brain(options) {
 
     tree['pattern-container'] = cell;
 
-    var candidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'list'});
+    var candidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'form'});
 
     _.forEach(candidates, function (candidate) {
         var path = [{name: 'keyword-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'keyword-flow',linkType: 'ifml.DataFlow', revisit: false},

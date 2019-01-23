@@ -17,13 +17,15 @@ function brain(options) {
 
     tree['pattern-container'] = cell;
 
+    var candidates = _.filter(embeds, function (e) {return e.attributes.type === 'ifml.ViewComponent' && e.attributes.stereotype === 'form'});
+
     var path = [{name: 'keyword-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'keyword-flow',linkType: 'ifml.DataFlow', revisit: false},
                 {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: 'ifml.NavigationFlow', revisit: false},
                 {name: 'result-details', type:'ifml.ViewComponent', stereotype: 'details', linkName: undefined,linkType: undefined, revisit: false}];
 
-    _.forEach(embeds, function (child) {
+    _.forEach(candidates, function (candidate) {
         var result = graphNavigation({
-            cell: child,
+            cell: candidate,
             graph: graph,
             value: 'faceted search',
             path: _.cloneDeep(path),
@@ -31,22 +33,15 @@ function brain(options) {
         });
 
         if(result) {
-            var list = _.cloneDeep(tree['results-list']),
-                visited = [];
-
-            for (var key in tree) {
-              visited.push(tree[key]);
-            };
 
             path = [{name: 'filters-form', type:'ifml.ViewComponent', stereotype: 'form', linkName: 'filters-flow',linkType: 'ifml.DataFlow', revisit: false},
                     {name: 'results-list', type:'ifml.ViewComponent', stereotype: 'list', linkName: undefined, linkType: undefined, revisit: true}];
 
             result = false;
 
-            var remainder = _.difference(embeds,visited);
-            _.forEach(remainder, function (child) {
+            _.forEach(candidates, function (candidate) {
                 var result = graphNavigation({
-                    cell: child,
+                    cell: candidate,
                     graph: graph,
                     value: 'faceted search',
                     path: _.cloneDeep(path),
@@ -54,7 +49,7 @@ function brain(options) {
                 });
 
                 if (result) {
-                    found = tree['results-list'].id === list.id ? true : false;
+                    found = true;
                     return false;
                 }
             });
