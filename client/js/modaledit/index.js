@@ -172,11 +172,11 @@ function mapStringSet(e, f, c) {
                     if(roots.length === 0) {
                         if(field.pattern.reset){
                             field.pattern.values = field.pattern.reset;
-                            field.patternValues(_.map(field.pattern.values, function (r) { return r.value}));
-                            field.patternValue(field.pattern.values[0].value);
-                            field.patternTypes(field.pattern.values[0].type);
-                            field.patternType(field.pattern.values[0].type[0]);
                         }
+                        field.patternValues(_.map(field.pattern.values, function (r) { return r.value}));
+                        field.patternValue(field.pattern.values[0].value);
+                        field.patternTypes(field.pattern.values[0].type);
+                        field.patternType(field.pattern.values[0].type[0]);
                     } else {
                         field.patternTypes(['root']);
                         field.patternType('root');
