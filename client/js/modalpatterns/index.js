@@ -117,7 +117,7 @@ function ModalPatterns(options) {
 
         self.modelType = ko.observable('update');
 
-        var id = options.cell.attributes.pattern[0].value.replace(/\s+/g,'-'),
+        var id = options.cell.attributes.pattern[0].value.replace(/\s+/g,'-').replace('-and-','-'),
             update,
             setPattern,
             html;

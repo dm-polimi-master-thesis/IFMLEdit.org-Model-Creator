@@ -17,7 +17,7 @@ function SettingsPatternViewModel(options) {
   self.id = options.id;
   self.type = fields ? fields.type : 'create';
   self.name = ko.observable(fields ? fields.name : "Sign Up and Log In");
-  self.logOutOption = fields ? undefined : ko.observable(true);
+  self.logOutOption = ko.observable(true);
   self.signUpFormName = ko.observable(fields ? fields.signUpFormName : "Sign Up Form");
   self.logInFormName = ko.observable(fields ? fields.logInFormName : "Log In Form");
   self.signUpFieldToAdd = ko.observable(fields ? fields.signUpFieldToAdd : "");
@@ -157,6 +157,16 @@ function SettingsPatternViewModel(options) {
           {allow_dismiss: true, type: 'danger'});
         this.name('');
     }
+  }
+
+  self.visible = function(id) {
+      if(this.type() === 'checkbox' || this.type() === 'radio') {
+          $('#' + id).show();
+      }
+  }
+
+  if (self.type === 'update') {
+      $('.material-switch').hide();
   }
 }
 

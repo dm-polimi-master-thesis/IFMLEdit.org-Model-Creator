@@ -114,29 +114,21 @@ function brain(options) {
         var logInLinks = _.filter(graph.getConnectedLinks(tree['log-in-form'],{deep:'true', outbound:'true'}), function (link) {return link.attributes.target.id === signUpParent.attributes.id}),
             signUpLinks = _.filter(graph.getConnectedLinks(tree['sign-up-form'],{deep:'true', outbound:'true'}), function (link) {return link.attributes.target.id === logInParent.attributes.id});
 
-        console.log(signUpParent);
-        console.log(logInParent);
-        console.log(logInLinks);
-        console.log(signUpLinks);
-
         if (logInLinks.length === 1 && signUpLinks.length === 1) {
             structureDetected = true;
 
             options.pattern.tree = tree;
-
-            console.log(tree);
 
             swal(
               'Sign Up and Log In Found',
               'Click on the pattern settings to manage the pattern',
               'success'
             ).then((result) => {
-                //options.load({patterns: options.patterns, type: 'update', cell: cell});
+                options.load({patterns: options.patterns, type: 'update', cell: cell});
             });
         }
     }
     if(!structureDetected){
-        console.log(tree);
         swal(
           'Sign Up and Log In Not Found',
           'Check if all the containers, components and connections of the pattern are built and configured correctly',
