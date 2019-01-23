@@ -53,7 +53,7 @@ function SettingsPatternViewModel(options) {
       });
 
       if(!duplicate){
-        fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: ko.observable('text'), name: ko.observable('') });
+        fields.push({ label: fieldToAdd(), value: fieldToAdd(), type: 'text', name: '' });
         fieldToAdd("");
       }
     }
@@ -111,18 +111,19 @@ function SettingsPatternViewModel(options) {
       filter: self.filterName(),
       list: {
         collection: self.collectionName(),
-        fields: _.map(self.resultsFields.removeAll(), function (field) { return { label: field.label, value: field.value, type: field.type(), name: field.name() } })
+        fields: self.resultsFields.removeAll()
       },
       details: {
         name: self.selectedDetailsName(),
-        fields: _.map(self.selectedFields.removeAll(), function (field) { return { label: field.label, value: field.value, type: field.type(), name: field.name() } })
+        fields: self.selectedFields.removeAll()
       }
     }
 
     if(self.type === 'create'){
         return create(restrictedSearch);
     } else {
-        return load(restrictedSearch,cell);
+        load(restrictedSearch,cell);
+        return true;
     }
   }
 

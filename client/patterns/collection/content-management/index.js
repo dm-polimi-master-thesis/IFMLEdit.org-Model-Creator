@@ -159,7 +159,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(pageManagement);
     } else {
-        return load(pageManagement,cell);
+        load(pageManagement,cell);
+        return true;
     }
   }
 

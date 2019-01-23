@@ -6,17 +6,17 @@
 
 function update(cell) {
     var tree = cell.attributes.pattern[0].tree,
-        filter = _.filter(tree['filters-list'].attributes.fields, function (field) {
+        filters = _.filter(tree['filters-list'].attributes.fields, function (field) {
           var fields = _.map(tree['results-list'].attributes.filters, function (filter) { return filter.label });
           return _.includes(fields, field.label);
-        })[0].label;
+        });
     return {
       type: 'update',
       name: tree['pattern-container'].attributes.name,
       searchField: tree['keyword-form'].attributes.fields[0] ? tree['keyword-form'].attributes.fields[0].label : '',
       selectedDetailsName: tree['result-details'].attributes.name,
       collectionName: tree['results-list'].attributes.collection,
-      filterName: filter,
+      filterName: filters[0] ? filters[0].label : '',
       resultsFields: _.map(tree['results-list'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: f.type || 'text', name: f.name || '' }}),
       selectedFields: _.map(tree['result-details'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: f.type || 'text', name: f.name || '' }}),
       filtersFields: _.map(tree['filters-list'].attributes.fields, function (f) {return { label: f.label, value: f.label, type: f.type || 'text', name: f.name || '' }})

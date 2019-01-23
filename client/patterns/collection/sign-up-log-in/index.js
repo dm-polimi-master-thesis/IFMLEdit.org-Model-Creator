@@ -130,7 +130,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(signUpLogIn);
     } else {
-        return load(signUpLogIn,cell);
+        load(signUpLogIn,cell);
+        return true;
     }
   }
 

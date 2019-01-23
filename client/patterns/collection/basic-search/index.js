@@ -112,7 +112,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(basicSearch);
     } else {
-        return load(basicSearch,cell);
+        load(basicSearch,cell);
+        return true;
     }
   }
 

@@ -132,7 +132,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(alphabeticalFilter);
     } else {
-        return load(alphabeticalFilter,cell);
+        load(alphabeticalFilter,cell);
+        return true;
     }
   }
 

@@ -132,7 +132,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(inPlaceLogIn);
     } else {
-        return load(inPlaceLogIn,cell);
+        load(inPlaceLogIn,cell);
+        return true;
     }
   }
 

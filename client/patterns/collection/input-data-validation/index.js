@@ -96,7 +96,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(inputDataValidation);
     } else {
-        return load(inputDataValidation,cell);
+        load(inputDataValidation,cell);
+        return true;
     }
   }
 

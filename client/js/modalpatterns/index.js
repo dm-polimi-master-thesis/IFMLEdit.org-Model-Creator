@@ -77,8 +77,11 @@ function ModalPatternUpdateViewModal(options,close) {
     self.pattern = options.setPattern( { id: options.id, fields: options.fields, cell: options.cell } );
 
     self.update = function () {
-      self.pattern.transform();
-      self.close();
+      var result = self.pattern.transform();
+
+      if (result !== undefined) {
+          self.close();
+      }
     }
 }
 

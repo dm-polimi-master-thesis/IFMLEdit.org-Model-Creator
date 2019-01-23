@@ -154,7 +154,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(facetedSearch);
     } else {
-        return load(facetedSearch,cell);
+        load(facetedSearch,cell);
+        return true;
     }
   }
 

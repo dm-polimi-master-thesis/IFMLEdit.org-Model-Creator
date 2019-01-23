@@ -173,7 +173,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(wizard);
     } else {
-        return load(wizard,cell);
+        load(wizard,cell);
+        return true;
     }
   }
 

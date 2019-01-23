@@ -202,7 +202,8 @@ function SettingsPatternViewModel(options) {
     if(self.type === 'create'){
         return create(multilevelMasterDetail);
     } else {
-        return load(multilevelMasterDetail,cell);
+        load(multilevelMasterDetail,cell);
+        return true;
     }
   }
 
