@@ -26,8 +26,8 @@ function SettingsPatternViewModel(options) {
   self.collectionDetailsName = ko.observable(fields ? fields.collectionDetailsName : "");
   self.resultsFieldToAdd = ko.observable("");
   self.dataEntryFieldToAdd = ko.observable("");
-  self.resultsFields = ko.observableArray(fields ? _.map(fields.resultsFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
-  self.dataEntryFields = ko.observableArray(fields ? _.map(fields.dataEntryFields, function (f) {return {label: f.label, value: f.value, type: ko.observable(f.type), name: ko.observable(f.name)}}) : []);
+  self.resultsFields = fields ? fields.resultsFields : [];
+  self.dataEntryFields = fields ? fields.dataEntryFields : [];
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {

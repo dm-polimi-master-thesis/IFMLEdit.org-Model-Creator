@@ -163,7 +163,7 @@ function mapStringSet(e, f, c) {
                 toRemove = [this];
 
             field.strings(_.difference(strings,toRemove));
-
+            
             if(field.name === 'Pattern') {
                 field.patternValues.push(this.value);
                 field.patternValue(field.patternValues[0]);
@@ -173,7 +173,7 @@ function mapStringSet(e, f, c) {
                         if(field.pattern.reset){
                             field.pattern.values = field.pattern.reset;
                         }
-                        field.patternValues(_.map(field.pattern.values, function (r) { return r.value}));
+                        field.patternValues(_.map(field.pattern.values, function (r) { return r.value }));
                         field.patternValue(field.pattern.values[0].value);
                         field.patternTypes(field.pattern.values[0].type);
                         field.patternType(field.pattern.values[0].type[0]);
@@ -186,14 +186,12 @@ function mapStringSet(e, f, c) {
                     if(nodes.length === 0) {
                         if(field.pattern.reset){
                             field.pattern.values = field.pattern.reset;
-                            field.patternValues(_.map(field.pattern.values, function (r) { return r.value}));
-                            field.patternValue(field.pattern.values[0].value);
-                            field.patternTypes(field.pattern.values[0].type);
-                            field.patternType(field.pattern.values[0].type[0]);
-                        } else {
-                          field.patternTypes(['node']);
-                          field.patternType('node');
+                            field.pattern.values = field.pattern.reset;
                         }
+                        field.patternValues(_.map(field.pattern.values, function (r) { return r.value}));
+                        field.patternValue(field.pattern.values[0].value);
+                        field.patternTypes(field.pattern.values[0].type);
+                        field.patternType(field.pattern.values[0].type[0]);
                     } else {
                         field.patternTypes(['node']);
                         field.patternType('node');

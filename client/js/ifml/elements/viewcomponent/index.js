@@ -135,6 +135,7 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
             .concat((function () {
                 var pattern = [],
                     values = [],
+                    reset = [],
                     states = [
                       {
                         pattern: 'multilevel master detail',
@@ -203,17 +204,23 @@ exports.ViewComponent = joint.shapes.basic.Generic.extend({
                     }
                 });
 
-                values = _.difference(values, _.map(self.attributes.pattern, function (p) { return p.value }));
+                values = _.chain(values)
+                 .difference(_.map(self.attributes.pattern, function (p) { return p.value }))
+                 .map(function (value) {
+                     return {
+                         value: value,
+                         type: ['node']
+                     }
+                 })
+                 .sortBy('value')
+                 .value()
 
                 pattern = {
-                    values: _.sortBy(_.map(values, function (v) {
-                        return {
-                            value: v,
-                            type: ['node']
-                        }
-                    }),'value'),
+                    values: values,
+                    reset: self.attributes.pattern.length > 0 ? _.sortBy(_.flattenDeep([_.map(self.attributes.pattern, function (p) { return { value: p.value, type: [p.type] } }),values]),'value') : undefined,
                     states: (self.attributes.stereotype === 'list' || self.attributes.stereotype === 'form') ? states : undefined
                 }
+
                 switch (self.get('stereotype')) {
                 case 'list':
                     return [

@@ -17,7 +17,7 @@ function update(cell) {
             var step = tree['step-' + count + '-list'],
                 fields = [],
                 filters = [];
-                
+
             _.forEach(step.attributes.fields, function (field) {
                 var nextStep = tree['step-' + (count + 1) + '-list'];
 
@@ -41,7 +41,7 @@ function update(cell) {
         detailsName: tree['result-details'].attributes.name,
         steps: steps,
         listFields: steps[0].fields,
-        detailsFields: _.map(tree['result-details'].fields, function (f) { return { label: f.label, value: f.label, type: f.type || 'text', name: f.name || '' }})
+        detailsFields: _.map(tree['result-details'].attributes.fields, function (f) { return { label: f.label, value: f.label, type: f.type || 'text', name: f.name || '' }})
     }
 }
 
