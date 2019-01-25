@@ -30,13 +30,15 @@
                             "name": "process",
                             "type": "IFML_PROCESS",
                             "samples": [
+                                "I want to build a model {process}",
+                                "I want to build a model following {process}",
+                                "I need to build a model using {process}",
                                 "I want some {process}",
                                 "I need some {process}",
                                 "I need to be {process}",
                                 "I want to be {process}",
-                                "{process}",
-                                "I need only some {process}",
-                                "some {process}",
+                                "I need to build an {process} model",
+                                "I want to build an {process} model",
                                 "I want to build a {process} model",
                                 "I want to build the model {process}"
                             ]
@@ -275,6 +277,33 @@
                         "add a new view container",
                         "I want to add a new view container"
                     ]
+                },
+                {
+                    "name": "ZoomModelIntent",
+                    "slots": [
+                        {
+                            "name": "times",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "zoom",
+                            "type": "IFML_ZOOM",
+                            "samples": [
+                                "I want to {zoom} {times} times.",
+                                "{zoom} {times} times.",
+                                "{zoom} for {times} times.",
+                                "I want to {zoom} for {times} times."
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "{zoom} for {times} times",
+                        "{zoom}",
+                        "Apply a {zoom}",
+                        "Execute a {zoom} for {times} times",
+                        "Apply a {zoom} for {times} times",
+                        "{zoom} {times} times."
+                    ]
                 }
             ],
             "types": [
@@ -317,8 +346,9 @@
                     "values": [
                         {
                             "name": {
-                                "value": "authonomous",
+                                "value": "advanced",
                                 "synonyms": [
+                                    "authonomous",
                                     "independently",
                                     "advice",
                                     "independent",
@@ -611,6 +641,21 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "IFML_ZOOM",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "zoom out"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "zoom in"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -721,6 +766,29 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "ZoomModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "times",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "zoom",
+                            "type": "IFML_ZOOM",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1228221077485.1112251246201"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -731,7 +799,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Do you need to be guided or receive some advice?"
+                        "value": "Do you need to be guided or build an advanced model?"
                     }
                 ]
             },
@@ -822,6 +890,15 @@
                     {
                         "type": "PlainText",
                         "value": "In traditional social networks users can establish relationships. Is this your case?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1228221077485.1112251246201",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you want to zoom in or zoom out?"
                     }
                 ]
             }
