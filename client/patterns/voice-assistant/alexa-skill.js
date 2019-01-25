@@ -1,32 +1,34 @@
 var Alexa = require('ask-sdk-core'),
     _ = require('lodash'),
     cleanAttributesInterceptor = require('./interceptors/cleanAttributesInterceptor.js').cleanAttributesInterceptor,
-    ErrorHandler = require('./handlers/ErrorHandler.js').ErrorHandler;
+    ErrorHandler = require('./handlers/defaults/ErrorHandler.js').ErrorHandler;
 
 const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
     .addRequestHandlers(
-        BlogModelIntentHandler = require('./handlers/BlogModelIntentHandler.js').BlogModelIntentHandler,
-        CancelAndStopIntentHandler = require('./handlers/CancelAndStopIntentHandler.js').CancelAndStopIntentHandler,
-        CommentsModelIntentHandler = require('./handlers/CommentsModelIntentHandler.js').CommentsModelIntentHandler,
-        CreateModelIntentHandler = require('./handlers/CreateModelIntentHandler.js').CreateModelIntentHandler,
-        CrowdsourcingModelIntentHandler = require('./handlers/CrowdsourcingModelIntentHandler.js').CrowdsourcingModelIntentHandler,
-        CrowdPolicyModelIntentHandler = require('./handlers/CrowdPolicyModelIntentHandler.js').CrowdPolicyModelIntentHandler,
-        DemoModelIntentHandler = require('./handlers/DemoModelIntentHandler.js').DemoModelIntentHandler,
-        EcommerceModelIntentHandler = require('./handlers/EcommerceModelIntentHandler.js').EcommerceModelIntentHandler,
-        FavoriteModelIntentHandler = require('./handlers/FavoriteModelIntentHandler.js').FavoriteModelIntentHandler,
-        FriendshipModelIntentHandler = require('./handlers/FriendshipModelIntentHandler.js').FriendshipModelIntentHandler,
-        GuidedModelIntentHandler = require('./handlers/GuidedModelIntentHandler.js').GuidedModelIntentHandler,
-        HelpIntentHandler = require('./handlers/HelpIntentHandler.js').HelpIntentHandler,
-        LaunchRequestHandler = require('./handlers/LaunchRequestHandler.js').LaunchRequestHandler,
-        LikesModelIntentHandler = require('./handlers/LikesModelIntentHandler.js').LikesModelIntentHandler,
-        MasterDetailsModelIntentHandler = require('./handlers/MasterDetailsModelIntentHandler.js').MasterDetailsModelIntentHandler,
-        PersonalPagesModelIntentHandler = require('./handlers/PersonalPagesModelIntentHandler.js').PersonalPagesModelIntentHandler,
-        SessionEndedRequestHandler = require('./handlers/SessionEndedRequestHandler.js').SessionEndedRequestHandler,
-        ShareContentModelIntentHandler = require('./handlers/ShareContentModelIntentHandler.js').ShareContentModelIntentHandler,
-        SocialNetworkModelIntentHandler = require('./handlers/SocialNetworkModelIntentHandler.js').SocialNetworkModelIntentHandler,
-        WizardModelIntentHandler = require('./handlers/WizardModelIntentHandler.js').WizardModelIntentHandler
+        AdvancedModelIntentHandler = require('./handlers/advanced/AdvancedModelIntentHandler.js').AdvancedModelIntentHandler,
+        BlogModelIntentHandler = require('./handlers/guided/BlogModelIntentHandler.js').BlogModelIntentHandler,
+        CancelAndStopIntentHandler = require('./handlers/defaults/CancelAndStopIntentHandler.js').CancelAndStopIntentHandler,
+        CommentsModelIntentHandler = require('./handlers/guided/CommentsModelIntentHandler.js').CommentsModelIntentHandler,
+        CreateModelIntentHandler = require('./handlers/invocation/CreateModelIntentHandler.js').CreateModelIntentHandler,
+        CrowdsourcingModelIntentHandler = require('./handlers/guided/CrowdsourcingModelIntentHandler.js').CrowdsourcingModelIntentHandler,
+        CrowdPolicyModelIntentHandler = require('./handlers/guided/CrowdPolicyModelIntentHandler.js').CrowdPolicyModelIntentHandler,
+        DemoModelIntentHandler = require('./handlers/guided/DemoModelIntentHandler.js').DemoModelIntentHandler,
+        EcommerceModelIntentHandler = require('./handlers/guided/EcommerceModelIntentHandler.js').EcommerceModelIntentHandler,
+        FavoriteModelIntentHandler = require('./handlers/guided/FavoriteModelIntentHandler.js').FavoriteModelIntentHandler,
+        FriendshipModelIntentHandler = require('./handlers/guided/FriendshipModelIntentHandler.js').FriendshipModelIntentHandler,
+        GuidedModelIntentHandler = require('./handlers/guided/GuidedModelIntentHandler.js').GuidedModelIntentHandler,
+        HelpIntentHandler = require('./handlers/defaults/HelpIntentHandler.js').HelpIntentHandler,
+        LaunchRequestHandler = require('./handlers/invocation/LaunchRequestHandler.js').LaunchRequestHandler,
+        LikesModelIntentHandler = require('./handlers/guided/LikesModelIntentHandler.js').LikesModelIntentHandler,
+        MasterDetailsModelIntentHandler = require('./handlers/guided/MasterDetailsModelIntentHandler.js').MasterDetailsModelIntentHandler,
+        PersonalPagesModelIntentHandler = require('./handlers/guided/PersonalPagesModelIntentHandler.js').PersonalPagesModelIntentHandler,
+        SessionEndedRequestHandler = require('./handlers/defaults/SessionEndedRequestHandler.js').SessionEndedRequestHandler,
+        ShareContentModelIntentHandler = require('./handlers/guided/ShareContentModelIntentHandler.js').ShareContentModelIntentHandler,
+        SocialNetworkModelIntentHandler = require('./handlers/guided/SocialNetworkModelIntentHandler.js').SocialNetworkModelIntentHandler,
+        WizardModelIntentHandler = require('./handlers/guided/WizardModelIntentHandler.js').WizardModelIntentHandler,
+        ZoomModelIntentHandler = require('./handlers/advanced/ZoomModelIntentHandler.js').ZoomModelIntentHandler
     )
     .addRequestInterceptors(cleanAttributesInterceptor)
     .addErrorHandlers(ErrorHandler)

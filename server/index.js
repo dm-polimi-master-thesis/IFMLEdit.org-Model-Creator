@@ -28,14 +28,17 @@ function createRouter(io) {
         }).then(done => {
             var options = done.sessionAttributes;
 
-            if(options.notify){
+            if (options.notify) {
                 socket.emit('notify', options.notify);
             }
-            if(options.demo){
+            if (options.demo) {
                 socket.emit('demo', options.demo);
             }
-            if(options.state && options.state === 'COMPLETED'){
+            if (options.state && options.state === 'COMPLETED') {
                 socket.emit(options.model.type, options.model);
+            }
+            if (options.advanced) {
+                socket.emit(options.advanced.operation, options.advanced.options);
             }
             res.send(done);
         }).catch(err => {

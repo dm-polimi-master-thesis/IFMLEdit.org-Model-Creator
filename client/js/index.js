@@ -675,6 +675,7 @@ socket.on('e-commerce', ecommerce);
 socket.on('blog', blog);
 socket.on('crowdsourcing', crowdsourcing);
 socket.on('social-network', socialnetwork);
+socket.on('zoom', zoom);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -683,6 +684,21 @@ function notify(options){
 function demo(options) {
     var template = askTemplates[options.template].model;
     voiceAssistantModelGenerator(template);
+}
+
+function zoom(options) {
+    var delta = 1,
+        zoom = options.zoom,
+        times = options.times;
+
+    console.log('zoom');
+
+    if (options.zoom === 'zoom out') {
+        options.times *= -1;
+        delta = -1;
+    }
+
+    ifmlBoard.zoomVoiceAssistant(times,delta);
 }
 
 function ecommerce(options) {
