@@ -30,8 +30,9 @@ function load(template,cell) {
         tree['validate-step-' + count + '-flow'].attributes.bindings = _.map(_.flattenDeep([regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
         tree['failed-validate-step-' + count + '-flow'].attributes.bindings = _.map(_.flattenDeep([errorValues, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
         tree['previous-step-' + count + '-action'].attributes.results = _.flattenDeep([regularValues, specialValues]);
+        tree['to-step-' + count + '-flow'].attributes.bindings = _.map(_.flattenDeep([regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
         if (count !== 1) {
-            tree['previous-step-' + count + '-flow'].attributes.results = _.flattenDeep([regularValues, specialValues]);
+            tree['previous-step-' + count + '-flow'].attributes.bindings = _.map(_.flattenDeep([regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
         }
 
         if (count < steps.length) {

@@ -26,8 +26,8 @@ function SettingsPatternViewModel(options) {
   self.collectionDetailsName = ko.observable(fields ? fields.collectionDetailsName : "");
   self.resultsFieldToAdd = ko.observable("");
   self.dataEntryFieldToAdd = ko.observable("");
-  self.resultsFields = fields ? fields.resultsFields : [];
-  self.dataEntryFields = fields ? fields.dataEntryFields : [];
+  self.resultsFields = fields ? ko.observableArray(fields.resultsFields) : ko.observableArray([]);
+  self.dataEntryFields = fields ? ko.observableArray(fields.dataEntryFields) : ko.observableArray([]);
   self.types = ['text','textarea','password','checkbox','radio','reset','hidden','hidden-object'];
 
   self.addField = function (type) {
@@ -51,6 +51,10 @@ function SettingsPatternViewModel(options) {
       _.forEach(fields(), function(field) {
          if(field.value.toLowerCase() === fieldToAdd().toLowerCase()){
            $.notify({message: 'Duplicate field name is not accepted.'},
+             {allow_dismiss: true, type: 'danger'});
+           duplicate = true;
+         } else if (typeof field.type === 'function' && (field.type() === 'checkbox' || field.type() === 'radio') && field.name() === fieldToAdd()) {
+           $.notify({message: 'A checkbox or radio field presents the same name'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
          }

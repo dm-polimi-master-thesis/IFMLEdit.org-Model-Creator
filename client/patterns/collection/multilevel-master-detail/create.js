@@ -16,6 +16,10 @@ function create(multilevelMasterDetail){
       modelElementsHash = toHash(template.elements);
 
   configurator(modelElementsHash['multilevel-master-detail-pattern-view-container'], template, {
+      pattern: [{
+        type: 'root',
+        value: 'multilevel master detail'
+      }],
       size: {
         height: modelElementsHash['multilevel-master-detail-pattern-view-container'].metadata.graphics.size.height,
         width: modelElementsHash['multilevel-master-detail-pattern-view-container'].metadata.graphics.size.width + 250 * (multilevelMasterDetail.steps.length - 2)
@@ -31,7 +35,11 @@ function create(multilevelMasterDetail){
   configurator(modelElementsHash['final-details'], template, {
       name: multilevelMasterDetail.details.name.charAt(0).toUpperCase() + multilevelMasterDetail.details.name.slice(1),
       collection: multilevelMasterDetail.steps[multilevelMasterDetail.steps.length - 1].collection,
-      fields: multilevelMasterDetail.details.fields
+      fields: multilevelMasterDetail.details.fields,
+      pattern: [{
+        type: 'node',
+        value: 'multilevel master detail'
+      }]
   });
 
   _.slice(multilevelMasterDetail.steps, 0, 2)
@@ -43,7 +51,12 @@ function create(multilevelMasterDetail){
          name: step.collection.charAt(0).toUpperCase() + step.collection.slice(1),
          collection: step.collection,
          fields: step.fields,
-         filters: index === 1 ? collection[0].filters : []
+         filters: index === 1 ? collection[0].filters : [],
+         pattern: [{
+           type: 'node',
+           value: 'multilevel master detail',
+           state: index === 0 ? 'start step' : 'intermediate step'
+         }]
      });
      if (index === 0) {
        configurator(modelElementsHash['selected-step-' + (index + 1) + '-navigation-flow'], template, {
@@ -86,6 +99,11 @@ function create(multilevelMasterDetail){
           collection: step.collection,
           fields: step.fields,
           filters: index === 0 ? multilevelMasterDetail.steps[1].filters : collection[index - 1].filters,
+          pattern: [{
+            type: 'node',
+            value: 'multilevel master detail',
+            state: 'intermediate step'
+          }],
           position: {
             x: reference['viewContainer'].metadata.graphics.position.x + 20,
             y: reference['viewContainer'].metadata.graphics.position.y + 40

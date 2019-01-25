@@ -177,7 +177,6 @@ function brain(options) {
                 if (failedFlow) {
                     structureDetected = true;
                     options.pattern.tree = tree;
-                    console.log(tree);
                     swal(
                       'Wizard Found',
                       'Click on the pattern settings to manage the pattern',

@@ -55,6 +55,10 @@ function SettingsPatternViewModel(options) {
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
+         } else if (typeof field.type === 'function' && (field.type() === 'checkbox' || field.type() === 'radio') && field.name() === fieldToAdd()) {
+           $.notify({message: 'A checkbox or radio field presents the same name'},
+             {allow_dismiss: true, type: 'danger'});
+           duplicate = true;
          }
       });
 
@@ -85,6 +89,12 @@ function SettingsPatternViewModel(options) {
     } else {
       $('#' + id).hide();
     }
+  }
+
+  self.visible = function(id) {
+      if(this.type() === 'checkbox' || this.type() === 'radio') {
+          $('#' + id).show();
+      }
   }
 
   self.transform = function () {
@@ -164,6 +174,14 @@ function SettingsPatternViewModel(options) {
       $(id).removeClass('has-error');
     } else {
       $(id).addClass('has-error');
+    }
+  }
+
+  self.validateName = function () {
+    if (this.name().trim().length && _.findIndex(self.filtersFields(), {'label' : this.name()}) !== -1) {
+        $.notify({message: 'Your request cannot be processed: ' + this.name() + ' has the same name of a field.'},
+          {allow_dismiss: true, type: 'danger'});
+        this.name('');
     }
   }
 }

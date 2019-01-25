@@ -18,22 +18,29 @@ function create(inputDataValidation){
       specialValues = fieldsManipulator.toSpecialValues(inputDataValidation.data.fields),
       errorValues = fieldsManipulator.toErrorValues(regularValues);
 
-  console.log(inputDataValidation.data.fields);
-  console.log(regularValues);
-  console.log(specialValues);
-  console.log(errorValues);
-
   configurator(modelElementsHash['input-data-validation-pattern-view-container'], template, {
-      name: inputDataValidation.name
+      name: inputDataValidation.name,
+      pattern: [{
+        type: 'root',
+        value: 'input data validation'
+      }]
   });
   configurator(modelElementsHash['data-form'], template, {
       name: inputDataValidation.data.formName,
-      fields: inputDataValidation.data.fields
+      fields: inputDataValidation.data.fields,
+      pattern: [{
+        type: 'node',
+        value: 'input data validation'
+      }]
   });
   configurator(modelElementsHash['validate-action'], template, {
       parameters: _.flattenDeep([regularValues, specialValues]),
       results: _.flattenDeep([errorValues, regularValues, specialValues]),
-      parent: modelElementsHash['input-data-validation-pattern-view-container'].id
+      parent: modelElementsHash['input-data-validation-pattern-view-container'].id,
+      pattern: [{
+        type: 'node',
+        value: 'input data validation'
+      }]
   });
   configurator(modelElementsHash['send-navigation-flow'], template, {
       fields: _.flattenDeep([regularValues, specialValues])

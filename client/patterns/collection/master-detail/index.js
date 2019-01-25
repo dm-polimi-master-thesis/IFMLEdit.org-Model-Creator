@@ -48,6 +48,10 @@ function SettingsPatternViewModel(options) {
            $.notify({message: 'Duplicate field name is not accepted.'},
              {allow_dismiss: true, type: 'danger'});
            duplicate = true;
+         } else if (typeof field.type === 'function' && (field.type() === 'checkbox' || field.type() === 'radio') && field.name() === fieldToAdd()) {
+           $.notify({message: 'A checkbox or radio field presents the same name'},
+             {allow_dismiss: true, type: 'danger'});
+           duplicate = true;
          }
       });
 

@@ -28,14 +28,30 @@ function create(inPlaceLogIn){
         name: ''
       };
 
+  configurator(modelElementsHash['in-place-log-in-pattern-view-container'], template, {
+      name: inPlaceLogIn.logIn.formName,
+      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, contentToSend]),
+      pattern: [{
+        type: 'root',
+        value: 'in-place log in'
+      }]
+  });
   configurator(modelElementsHash['log-in-form'], template, {
       name: inPlaceLogIn.logIn.formName,
-      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, contentToSend])
+      fields: _.flattenDeep([inPlaceLogIn.logIn.fields, contentToSend]),
+      pattern: [{
+        type: 'node',
+        value: 'in-place log in'
+      }]
   });
   configurator(modelElementsHash['log-in-and-send-action'], template, {
       parameters: _.flattenDeep([logInRegularValues, logInSpecialValues, { label: contentToSend.label }]),
       results: _.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues, { label: contentToSend.label }]),
-      parent: modelElementsHash['in-place-log-in-pattern-view-container'].id
+      parent: modelElementsHash['in-place-log-in-pattern-view-container'].id,
+      pattern: [{
+        type: 'node',
+        value: 'in-place log in'
+      }]
   });
   configurator(modelElementsHash['log-in-navigation-flow'], template, {
       fields: _.flattenDeep([logInRegularValues, logInSpecialValues, contentToSend])
@@ -47,12 +63,20 @@ function create(inPlaceLogIn){
   if (inPlaceLogIn.editorOption) {
     configurator(modelElementsHash['editor-form'], template, {
         name: inPlaceLogIn.editor.formName,
-        fields: inPlaceLogIn.editor.fields
+        fields: inPlaceLogIn.editor.fields,
+        pattern: [{
+          type: 'node',
+          value: 'in-place log in'
+        }]
     });
     configurator(modelElementsHash['send-action'], template, {
         parameters: _.flattenDeep([editorRegularValues, editorSpecialValues]),
         results: _.flattenDeep([editorErrorValues, editorRegularValues, editorSpecialValues, { label: contentToSend.label }]),
-        parent: modelElementsHash['in-place-log-in-pattern-view-container'].id
+        parent: modelElementsHash['in-place-log-in-pattern-view-container'].id,
+        pattern: [{
+          type: 'node',
+          value: 'in-place log in'
+        }]
     });
     configurator(modelElementsHash['send-navigation-flow'], template, {
         fields: _.flattenDeep([editorRegularValues, editorSpecialValues])

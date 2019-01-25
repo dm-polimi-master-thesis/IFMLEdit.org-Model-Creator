@@ -22,26 +22,50 @@ function create(signUpLogIn){
       logInSpecialValues = fieldsManipulator.toSpecialValues(signUpLogIn.logIn.fields),
       logInErrorValues = fieldsManipulator.toErrorValues(logInRegularValues);
 
+  configurator(modelElementsHash['sign-up-and-log-in-pattern-view-container'], template, {
+      pattern: [{
+        type: 'root',
+        value: 'sign up and log in'
+      }]
+  });
   configurator(modelElementsHash['xor-view-container'], template, {
       name: signUpLogIn.name
   });
   configurator(modelElementsHash['sign-up-form'], template, {
       name: signUpLogIn.signUp.formName,
-      fields: signUpLogIn.signUp.fields
+      fields: signUpLogIn.signUp.fields,
+      pattern: [{
+        type: 'node',
+        value: 'sign up and log in',
+        state: 'sign up'
+      }]
   });
   configurator(modelElementsHash['log-in-form'], template, {
       name: signUpLogIn.logIn.formName,
-      fields: signUpLogIn.logIn.fields
+      fields: signUpLogIn.logIn.fields,
+      pattern: [{
+        type: 'node',
+        value: 'sign up and log in',
+        state: 'log in'
+      }]
   });
   configurator(modelElementsHash['registration-action'], template, {
       parameters: _.flattenDeep([signUpRegularValues, signUpSpecialValues]),
       results: _.flattenDeep([signUpErrorValues, signUpRegularValues, signUpSpecialValues]),
-      parent: modelElementsHash['sign-up-and-log-in-pattern-view-container'].id
+      parent: modelElementsHash['sign-up-and-log-in-pattern-view-container'].id,
+      pattern: [{
+        type: 'node',
+        value: 'sign up and log in'
+      }]
   });
   configurator(modelElementsHash['log-in-action'], template, {
       parameters: _.flattenDeep([logInRegularValues, logInSpecialValues]),
       results: _.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues]),
-      parent: modelElementsHash['sign-up-and-log-in-pattern-view-container'].id
+      parent: modelElementsHash['sign-up-and-log-in-pattern-view-container'].id,
+      pattern: [{
+        type: 'node',
+        value: 'sign up and log in'
+      }]
   });
   configurator(modelElementsHash['registration-navigation-flow'], template, {
       fields: _.flattenDeep([signUpRegularValues, signUpSpecialValues])

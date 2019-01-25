@@ -15,17 +15,31 @@ function create(basicSearch){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
+  configurator(modelElementsHash['basic-search-pattern-view-container'], template, {
+      pattern: [{
+        type: 'root',
+        value: 'basic search'
+      }]
+  });
   configurator(modelElementsHash['xor-view-container'], template, {
       name: basicSearch.name,
   });
   configurator(modelElementsHash['keyword-form'], template, {
       fields: basicSearch.search,
+      pattern: [{
+        type: 'node',
+        value: 'basic search'
+      }]
   });
   configurator(modelElementsHash['results-list'], template, {
       name: basicSearch.list.collection.charAt(0).toUpperCase() + basicSearch.list.collection.slice(1),
       collection: basicSearch.list.collection,
       filters: basicSearch.search,
-      fields: basicSearch.list.fields
+      fields: basicSearch.list.fields,
+      pattern: [{
+        type: 'node',
+        value: 'basic search'
+      }]
   });
   configurator(modelElementsHash['product-view-container'], template, {
       name: basicSearch.details.name
@@ -33,7 +47,11 @@ function create(basicSearch){
   configurator(modelElementsHash['product-details'], template, {
       name: basicSearch.details.name,
       collection: basicSearch.list.collection,
-      fields: basicSearch.details.fields
+      fields: basicSearch.details.fields,
+      pattern: [{
+        type: 'node',
+        value: 'basic search'
+      }]
   });
   configurator(modelElementsHash['keyword-data-flow'], template, {
       fields: basicSearch.search

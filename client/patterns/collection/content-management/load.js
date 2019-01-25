@@ -32,13 +32,13 @@ function load(template,cell) {
     }
     if(tree['load-content-action']){
         tree['load-content-action'].attributes.results = _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, regularValues, specialValues]);
-        tree['load-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues]), function (f) {return {input: f.label, output: f.label}});
+        tree['load-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
     }
     if(tree['failed-data-entry-flow']){
         tree['failed-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, errorValues, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
     }
     if(tree['modify-flow']){
-        tree['modify-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues]), function (f) {return {input: f.label, output: f.label}});
+        tree['modify-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
     }
 }
 

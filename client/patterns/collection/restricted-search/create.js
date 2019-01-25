@@ -15,22 +15,40 @@ function create(restrictedSearch){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
+  configurator(modelElementsHash['restricted-search-pattern-view-container'], template, {
+      pattern: [{
+        type: 'root',
+        value: 'restricted search'
+      }]
+  });
   configurator(modelElementsHash['xor-view-container'], template, {
       name: restrictedSearch.name,
   });
   configurator(modelElementsHash['keyword-form'], template, {
       fields: restrictedSearch.search,
+      pattern: [{
+        type: 'node',
+        value: 'restricted search'
+      }]
   });
   configurator(modelElementsHash['results-list'], template, {
       name: restrictedSearch.list.collection.charAt(0).toUpperCase() + restrictedSearch.list.collection.slice(1),
       collection: restrictedSearch.list.collection,
       filters: [restrictedSearch.filter, restrictedSearch.search[0]],
-      fields: restrictedSearch.list.fields
+      fields: restrictedSearch.list.fields,
+      pattern: [{
+        type: 'node',
+        value: 'restricted search'
+      }]
   });
   configurator(modelElementsHash['category-list'], template, {
       name: restrictedSearch.filter.charAt(0).toUpperCase() + restrictedSearch.filter.slice(1),
       collection: "categories",
-      fields: [{ label:restrictedSearch.filter }]
+      fields: [{ label:restrictedSearch.filter }],
+      pattern: [{
+        type: 'node',
+        value: 'restricted search'
+      }]
   });
   configurator(modelElementsHash['product-view-container'], template, {
       name: restrictedSearch.details.name
@@ -38,7 +56,11 @@ function create(restrictedSearch){
   configurator(modelElementsHash['product-details'], template, {
       name: restrictedSearch.details.name.charAt(0).toUpperCase() + restrictedSearch.details.name.slice(1),
       collection: restrictedSearch.list.collection,
-      fields: restrictedSearch.details.fields
+      fields: restrictedSearch.details.fields,
+      pattern: [{
+        type: 'node',
+        value: 'restricted search'
+      }]
   });
   configurator(modelElementsHash['keyword-data-flow'], template, {
       fields: restrictedSearch.search

@@ -30,13 +30,23 @@ function create(masterDetail){
     });
   }
 
+  configurator(modelElementsHash['master-detail-pattern-view-container'], template, {
+      pattern: [{
+        type: 'root',
+        value: 'master detail'
+      }]
+  });
   configurator(modelElementsHash['master-list-view-container'], template, {
       name: masterDetail.list.collection.charAt(0).toUpperCase() + masterDetail.list.collection.slice(1)
   });
   configurator(modelElementsHash['master-list'], template, {
       name: masterDetail.list.collection.charAt(0).toUpperCase() + masterDetail.list.collection.slice(1),
       collection: masterDetail.list.collection,
-      fields: masterDetail.list.fields
+      fields: masterDetail.list.fields,
+      pattern: [{
+        type: 'node',
+        value: 'master detail'
+      }]
   });
   configurator(modelElementsHash['master-details-view-container'], template, {
       name: masterDetail.details.name.charAt(0).toUpperCase() + masterDetail.details.name.slice(1)
@@ -44,7 +54,11 @@ function create(masterDetail){
   configurator(modelElementsHash['master-details'], template, {
       name: masterDetail.details.name.charAt(0).toUpperCase() + masterDetail.details.name.slice(1),
       collection: masterDetail.list.collection,
-      fields: masterDetail.details.fields
+      fields: masterDetail.details.fields,
+      pattern: [{
+        type: 'node',
+        value: 'master detail'
+      }]
   });
 
   return template;

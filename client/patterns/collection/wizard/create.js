@@ -17,10 +17,14 @@ function create(wizard){
       modelElementsHash = toHash(template.elements);
 
   configurator(modelElementsHash['wizard-pattern-view-container'], template, {
+      pattern: [{
+        type: 'root',
+        value: 'wizard'
+      }],
       size: {
         height: modelElementsHash['wizard-pattern-view-container'].metadata.graphics.size.height,
         width: modelElementsHash['wizard-pattern-view-container'].metadata.graphics.size.width + 400 * (wizard.steps.length - 2)
-      }
+      },
   });
   configurator(modelElementsHash['xor-view-container'], template, {
       name: wizard.name,
@@ -28,6 +32,18 @@ function create(wizard){
         height: modelElementsHash['xor-view-container'].metadata.graphics.size.height,
         width: modelElementsHash['xor-view-container'].metadata.graphics.size.width + 400 * (wizard.steps.length - 2)
       }
+  });
+  configurator(modelElementsHash['review-details'], template, {
+      pattern: [{
+        type: 'node',
+        value: 'wizard'
+      }]
+  });
+  configurator(modelElementsHash['save-action'], template, {
+      pattern: [{
+        type: 'node',
+        value: 'wizard'
+      }]
   });
 
   _.slice(wizard.steps, 0, 2)
@@ -41,19 +57,32 @@ function create(wizard){
      });
      configurator(modelElementsHash['step-' + (index + 1) + '-form'], template, {
          name: step.formName,
-         fields: step.fields
+         fields: step.fields,
+         pattern: [{
+           type: 'node',
+           value: 'wizard',
+           state: index === 0 ? 'start step' : 'intermediate step'
+         }]
      });
      configurator(modelElementsHash['validate-step-' + (index + 1) + '-action'], template, {
          name: 'Validate ' + step.name,
          parameters: _.flattenDeep([regularValues, specialValues]),
          results: _.flattenDeep([errorValues, regularValues, specialValues]),
-         parent: modelElementsHash['xor-view-container'].id
+         parent: modelElementsHash['xor-view-container'].id,
+         pattern: [{
+           type: 'node',
+           value: 'wizard'
+         }]
      });
      configurator(modelElementsHash['previous-step-' + (index + 1) + '-action'], template, {
          name: 'Previous ' + step.name,
          parameters: index === 0 ? _.flattenDeep([fieldsManipulator.toRegularValues(collection[index + 1].fields), fieldsManipulator.toSpecialValues(collection[index + 1].fields)]) : [],
          results: _.flattenDeep([regularValues, specialValues]),
-         parent: modelElementsHash['xor-view-container'].id
+         parent: modelElementsHash['xor-view-container'].id,
+         pattern: [{
+           type: 'node',
+           value: 'wizard'
+         }]
      });
      configurator(modelElementsHash['next-step-' + (index + 1) + '-navigation-flow'], template, {
          name: 'Next ' + step.name,
@@ -93,21 +122,24 @@ function create(wizard){
         nextErrorValues;
 
     configurator(modelElementsHash['previous-step-2-action'], template, {
-      parameters: _.flattenDeep([fieldsManipulator.toRegularValues(wizard.steps[2].fields), fieldsManipulator.toSpecialValues(wizard.steps[2].fields)])
+      parameters: _.flattenDeep([fieldsManipulator.toRegularValues(wizard.steps[2].fields), fieldsManipulator.toSpecialValues(wizard.steps[2].fields)]),
+      pattern: [{
+        type: 'node',
+        value: 'wizard'
+      }]
     });
 
     _.slice(wizard.steps, 2, wizard.steps.length)
      .forEach(function (step, index, collection) {
-       previousRegularValues = index !== 0 ? regularValues : fieldsManipulator.toRegularValues(modelElementsHash['step-2-form'].fields),
-       previousSpecialValues = index !== 0 ? specialValues : fieldsManipulator.toSpecialValues(modelElementsHash['step-2-form'].fields),
-       previousErrorValues = index !== 0 ? errorValues : fieldsManipulator.toErrorValues(previousRegularValues),
-       regularValues = index !== 0 ? nextRegularValues : fieldsManipulator.toRegularValues(step.fields),
-       specialValues = index !== 0 ? nextSpecialValues : fieldsManipulator.toSpecialValues(step.fields),
-       errorValues = index !== 0 ? nextErrorValues : fieldsManipulator.toErrorValues(regularValues),
-       nextRegularValues = index !== (collection.length - 1) ? fieldsManipulator.toRegularValues(collection[index + 1]) : [],
-       nextSpecialValues = index !== (collection.length - 1) ? fieldsManipulator.toSpecialValues(collection[index + 1]) : [],
-       nextErrorValues = index !== (collection.length - 1) ? fieldsManipulator.toErrorValues(nextRegularValues) : [];
-
+       previousRegularValues = index !== 0 ? _.cloneDeep(regularValues) : fieldsManipulator.toRegularValues(modelElementsHash['step-2-form'].attributes.fields),
+       previousSpecialValues = index !== 0 ? _.cloneDeep(specialValues) : fieldsManipulator.toSpecialValues(modelElementsHash['step-2-form'].attributes.fields),
+       previousErrorValues = index !== 0 ? _.cloneDeep(errorValues) : fieldsManipulator.toErrorValues(previousRegularValues),
+       regularValues = index !== 0 ? _.cloneDeep(nextRegularValues) : fieldsManipulator.toRegularValues(step.fields),
+       specialValues = index !== 0 ? _.cloneDeep(nextSpecialValues) : fieldsManipulator.toSpecialValues(step.fields),
+       errorValues = index !== 0 ? _.cloneDeep(nextErrorValues) : fieldsManipulator.toErrorValues(regularValues),
+       nextRegularValues = index !== (collection.length - 1) ? _.cloneDeep(fieldsManipulator.toRegularValues(collection[index + 1].fields)) : [],
+       nextSpecialValues = index !== (collection.length - 1) ? _.cloneDeep(fieldsManipulator.toSpecialValues(collection[index + 1].fields)) : [],
+       nextErrorValues = index !== (collection.length - 1) ? _.cloneDeep(fieldsManipulator.toErrorValues(nextRegularValues)) : [];
 
         reference['viewContainer'] = generator(template, {
           type: 'ifml.ViewContainer',
@@ -127,7 +159,12 @@ function create(wizard){
             x: reference['viewContainer'].metadata.graphics.position.x + 20,
             y: reference['viewContainer'].metadata.graphics.position.y + 40
           },
-          parent: reference['viewContainer'].id
+          parent: reference['viewContainer'].id,
+          pattern: [{
+            type: 'node',
+            value: 'wizard',
+            state: 'intermediate step'
+          }]
         });
         reference['validateAction'] = generator(template, {
           type: 'ifml.Action',
@@ -139,19 +176,27 @@ function create(wizard){
            x: modelElementsHash['validate-step-2-action'].metadata.graphics.position.x + 400 * (1 + index),
            y: modelElementsHash['validate-step-2-action'].metadata.graphics.position.y
           },
-          parent: modelElementsHash['xor-view-container'].id
+          parent: modelElementsHash['xor-view-container'].id,
+          pattern: [{
+            type: 'node',
+            value: 'wizard'
+          }]
         });
         reference['previousAction'] = generator(template, {
           type: 'ifml.Action',
           name: 'Previous ' + step.name,
           parameters: _.flattenDeep([nextRegularValues, nextSpecialValues]),
-          results: _.flattenDeep([previousRegularValues, previousSpecialValues]),
+          results: _.flattenDeep([regularValues, specialValues]),
           parent: modelElementsHash['xor-view-container'].id,
           position: {
            x: modelElementsHash['previous-step-2-action'].metadata.graphics.position.x + 400 * (1 + index),
            y: modelElementsHash['previous-step-2-action'].metadata.graphics.position.y
-         },
-         parent: modelElementsHash['xor-view-container'].id
+          },
+          parent: modelElementsHash['xor-view-container'].id,
+          pattern: [{
+            type: 'node',
+            value: 'wizard'
+          }]
         });
         reference['cancelEvent'] = generator(template, {
           type: 'ifml.Event',
@@ -257,6 +302,7 @@ function create(wizard){
         });
 
         for (var key in reference) {
+          previous[key] = _.cloneDeep(reference[key]);
           template.elements.push(reference[key]);
         };
 
@@ -281,11 +327,8 @@ function create(wizard){
         modelElementsHash['end-wizard-event'].metadata.graphics.position.x += 400;
         modelElementsHash['previous-review-navigation-flow'].metadata.graphics.vertices[0].x += 400;
         modelElementsHash['save-action'].metadata.graphics.position.x += 400;
-
-        previous = _.cloneDeep(reference);
     });
   }
-
   return template;
 }
 
