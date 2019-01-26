@@ -744,16 +744,22 @@ function moveBoard(options) {
 }
 
 function generateViewContainer(options) {
-    var id = toId(options.name),
-        viewContainer = generator(ifml.toJSON(ifmlModel), {
-            type: 'ifml.ViewContainer',
-            id: idValidator(id),
-            name: options.name,
-            xor: options.xor,
-            landmark: options.landmark,
-            default: options.default,
-            parent: modelElementsHash['xor-view-container'].id
-        });
+    var id = toId(options.name,'view-container'),
+        properties = options.properties,
+        template = {
+            elements: [],
+            relations: []
+        };
+    template.elements.push(generator(template, {
+        type: 'ifml.ViewContainer',
+        id: idValidator(id),
+        name: options.name,
+        xor: properties.xor,
+        landmark: properties.landmark,
+        default: properties.default,
+        parent: options.parent || undefined
+    }));
+    console.log(template);
     voiceAssistantModelGenerator(template);
 }
 

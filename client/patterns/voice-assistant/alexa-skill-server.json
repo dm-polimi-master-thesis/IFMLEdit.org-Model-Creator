@@ -267,18 +267,6 @@
                             ]
                         },
                         {
-                            "name": "xor",
-                            "type": "IFML_CONTAINER_PROPERTIES"
-                        },
-                        {
-                            "name": "default",
-                            "type": "IFML_CONTAINER_PROPERTIES"
-                        },
-                        {
-                            "name": "landmark",
-                            "type": "IFML_CONTAINER_PROPERTIES"
-                        },
-                        {
                             "name": "properties",
                             "type": "IFML_CONTAINER_PROPERTIES"
                         },
@@ -551,6 +539,36 @@
                 {
                     "name": "IFML_ELEMENT_NAME",
                     "values": [
+                        {
+                            "name": {
+                                "value": "details container"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "list container"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "first container"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "form container"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "smartphone container"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "shopping list"
+                            }
+                        },
                         {
                             "name": {
                                 "value": "supermarket"
@@ -932,27 +950,6 @@
                                     ]
                                 }
                             ]
-                        },
-                        {
-                            "name": "xor",
-                            "type": "IFML_CONTAINER_PROPERTIES",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "default",
-                            "type": "IFML_CONTAINER_PROPERTIES",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "landmark",
-                            "type": "IFML_CONTAINER_PROPERTIES",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
                         },
                         {
                             "name": "properties",

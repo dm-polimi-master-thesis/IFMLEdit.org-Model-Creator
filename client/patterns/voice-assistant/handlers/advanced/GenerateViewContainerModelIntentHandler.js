@@ -7,7 +7,7 @@ const GenerateViewContainerModelIntentHandler = {
         var sessionAttributes = handlerInput.attributesManager.getSessionAttributes(),
             name = handlerInput.requestEnvelope.request.intent.slots.name.value
             properties = handlerInput.requestEnvelope.request.intent.slots.properties.value ? handlerInput.requestEnvelope.request.intent.slots.properties.resolutions.resolutionsPerAuthority[0].values[0].value.name : undefined,
-            parent = handlerInput.requestEnvelope.request.intent.slots.properties.value,
+            parent = handlerInput.requestEnvelope.request.intent.slots.parent.value,
             message;
 
         if (name) {
@@ -15,12 +15,45 @@ const GenerateViewContainerModelIntentHandler = {
 
             if (properties) {
                 message += properties + ' '
+
+                switch (properties) {
+                  case 'landmark and default':
+                      properties = {
+                          xor: false,
+                          landmark: true,
+                          default: true
+                      }
+                      break;
+                  case 'landmark':
+                      properties = {
+                          xor: false,
+                          landmark: true,
+                          default: false
+                      }
+                      break;
+                  case 'default':
+                      properties = {
+                          xor: false,
+                          landmark: true,
+                          default: true
+                      }
+                      break;
+                  case 'xor':
+                      properties = {
+                          xor: true,
+                          landmark: false,
+                          default: false
+                      }
+                      break;
+                  default:
+
+                }
             }
 
             message += 'View Container with name ' + name;
 
             if (parent) {
-                message += 'and parent' + parent
+                message += ' and parent ' + parent
             }
 
             sessionAttributes.notify = {
@@ -31,7 +64,7 @@ const GenerateViewContainerModelIntentHandler = {
                 operation: 'generate-view-container',
                 options: {
                     name: name,
-                    properties: properties,
+                    properties: properties || {},
                     parent: parent
                 }
             }
