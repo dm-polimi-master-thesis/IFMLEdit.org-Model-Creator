@@ -772,24 +772,28 @@ function generateViewContainer(options) {
             }
         }
     }
-    if (properties.parent) {
+    if (options.parent) {
         var parent = ifmlModel.attributes.cells.model._byId[properties.parent];
         if (!parent) {
             $.notify({message: 'The parent does not exist'}, {allow_dismiss: true, type: 'danger'});
             return;
         }
+
+        //var ancestors = parent.getAncestors()
     }
 
-    template.elements.push(generator(template, {
-        type: 'ifml.ViewContainer',
-        id: idValidator(id),
-        name: options.name,
-        xor: properties.xor,
-        landmark: properties.landmark,
-        default: properties.default,
-        parent: options.parent || undefined
-    }));
-    voiceAssistantModelGenerator(template);
+    if (!options.parent) {
+        template.elements.push(generator(template, {
+            type: 'ifml.ViewContainer',
+            id: idValidator(id),
+            name: options.name,
+            xor: properties.xor,
+            landmark: properties.landmark,
+            default: properties.default,
+            parent: options.parent || undefined
+        }));
+        voiceAssistantModelGenerator(template);
+    }
 }
 
 function deleteViewContainer(options) {

@@ -33,14 +33,16 @@ function createRouter(io) {
             }
             if (options.demo) {
                 socket.emit('demo', options.demo);
+                done.sessionAttributes = {};
             }
             if (options.state && options.state === 'COMPLETED') {
                 socket.emit(options.model.type, options.model);
+                done.sessionAttributes = {};
             }
             if (options.advanced) {
                 socket.emit(options.advanced.operation, options.advanced.options);
+                done.sessionAttributes = {};
             }
-            done.sessionAttributes = {};
             res.send(done);
         }).catch(err => {
             socket.emit('notify', err);
