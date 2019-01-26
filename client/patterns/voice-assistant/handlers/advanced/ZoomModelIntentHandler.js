@@ -12,7 +12,7 @@ const ZoomModelIntentHandler = {
 
         if (times) {
           times = times >= 1 ? times : 1;
-          message = zoom + ' X' + times;
+          message = zoom + ' x' + times;
         } else {
           message = zoom;
         }

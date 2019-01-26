@@ -676,7 +676,7 @@ socket.on('blog', blog);
 socket.on('crowdsourcing', crowdsourcing);
 socket.on('social-network', socialnetwork);
 socket.on('zoom', zoom);
-socket.on('moveBoard',moveBoard);
+socket.on('move-board',moveBoard);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -695,13 +695,47 @@ function zoom(options) {
         zoom = options.zoom,
         times = options.times * 20;
 
-
-
     ifmlBoard.zoomVoiceAssistant(times,delta);
 }
 
 function moveBoard(options) {
-    
+    if (options.times > 4) {
+      options.times = 1;
+    }
+    var move = options.move,
+        times = options.times * 300,
+        delta = {};
+
+    try {
+        switch (move) {
+          case 'move up':
+            delta.x = 0;
+            delta.y = -1;
+            break;
+          case 'move down':
+            delta.x = 0;
+            delta.y = 1;
+            break;
+          case 'move right':
+            delta.x = 1;
+            delta.y = 0;
+            break;
+          case 'move left':
+            delta.x = -1;
+            delta.y = 0;
+            break;
+          default:
+            throw 'Unexpected move request';
+            break;
+        }
+    } catch (exception) {
+        console.log(exception);
+        ifmlBoard.clearHistory();
+        $.notify({message: 'Something goes wrong...'}, {allow_dismiss: true, type: 'danger'});
+        return;
+    }
+
+    ifmlBoard.moveBoardVoiceAssistant(times,delta);
 }
 
 function ecommerce(options) {

@@ -2,19 +2,19 @@ const MoveBoardModelIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
             && handlerInput.requestEnvelope.request.intent.name === 'MoveBoardModelIntent'
-            && handlerInput.requestEnvelope.request.intent.slots.zoom.value
+            && handlerInput.requestEnvelope.request.intent.slots.move.value
     },
     handle(handlerInput) {
         var sessionAttributes = handlerInput.attributesManager.getSessionAttributes(),
-            zoom = handlerInput.requestEnvelope.request.intent.slots.zoom.resolutions.resolutionsPerAuthority[0].values[0].value.name,
+            move = handlerInput.requestEnvelope.request.intent.slots.move.resolutions.resolutionsPerAuthority[0].values[0].value.name,
             times = handlerInput.requestEnvelope.request.intent.slots.times.value || 1,
             message;
 
         if (times) {
           times = times >= 1 ? times : 1;
-          message = zoom + ' X' + times;
+          message = move + ' x' + times;
         } else {
-          message = zoom;
+          message = move;
         }
 
         sessionAttributes.notify = {
@@ -23,9 +23,9 @@ const MoveBoardModelIntentHandler = {
         };
 
         sessionAttributes.advanced = {
-            operation: 'zoom',
+            operation: 'move-board',
             options: {
-                zoom: zoom,
+                move: move,
                 times: times
             }
         }
@@ -37,4 +37,4 @@ const MoveBoardModelIntentHandler = {
     }
 };
 
-exports.ZoomModelIntentHandler = ZoomModelIntentHandler;
+exports.MoveBoardModelIntentHandler = MoveBoardModelIntentHandler;
