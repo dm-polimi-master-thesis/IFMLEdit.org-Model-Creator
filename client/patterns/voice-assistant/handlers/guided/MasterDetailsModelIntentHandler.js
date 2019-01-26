@@ -36,6 +36,7 @@ const MasterDetailsModelIntentHandler = {
               sessionAttributes.nextStep = undefined;
               return handlerInput.responseBuilder
                   .speak('Great! I think we have finished. Visualize the result in IFMLEdit!')
+                  .withShouldEndSession(false)
                   .getResponse();
           case 'blog':
               sessionAttributes.nextStep = 'personal-pages-content-management-pattern-handler';

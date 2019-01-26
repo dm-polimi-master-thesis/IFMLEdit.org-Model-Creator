@@ -30,6 +30,7 @@ const FriendshipModelIntentHandler = {
 
               return handlerInput.responseBuilder
                   .speak('Great! I think we have finished. Visualize the result in IFMLEdit!')
+                  .withShouldEndSession(false)
                   .getResponse();
           default:
               return handlerInput.responseBuilder

@@ -35,6 +35,7 @@ const CommentsModelIntentHandler = {
               sessionAttributes.nextStep = undefined;
               return handlerInput.responseBuilder
                   .speak('Great! I think we have finished. Visualize the result in IFMLEdit!')
+                  .withShouldEndSession(false)
                   .getResponse();
           case 'social-network':
               sessionAttributes.nextStep = 'like-content-management-pattern-handler';

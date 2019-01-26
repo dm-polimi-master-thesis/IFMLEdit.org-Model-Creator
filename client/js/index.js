@@ -750,6 +750,36 @@ function generateViewContainer(options) {
             elements: [],
             relations: []
         };
+
+    if (properties.xor) {
+        if (!properties.parent) {
+            $.notify({message: 'You try to insert a View Container with XOR property in a position not allowed by the hierarchy of the elements.'}, {allow_dismiss: true, type: 'danger'});
+            return;
+        } else {
+            var parent = ifmlModel.attributes.cells.model._byId[properties.parent];
+            if (parent.attributes.xor) {
+                $.notify({message: 'You try to insert a View Container with XOR property in a position not allowed by the hierarchy of the elements (the parent is a XOR View Container).'}, {allow_dismiss: true, type: 'danger'});
+                return;
+            }
+        }
+    }
+    if (properties.landmark || properties.default) {
+        if (properties.parent) {
+            var parent = ifmlModel.attributes.cells.model._byId[properties.parent];
+            if (!parent.attributes.xor) {
+                $.notify({message: 'You try to insert a View Container with Landmark or Default property in a position not allowed by the hierarchy of the elements (the parent is not a XOR View Container).'}, {allow_dismiss: true, type: 'danger'});
+                return;
+            }
+        }
+    }
+    if (properties.parent) {
+        var parent = ifmlModel.attributes.cells.model._byId[properties.parent];
+        if (!parent) {
+            $.notify({message: 'The parent does not exist'}, {allow_dismiss: true, type: 'danger'});
+            return;
+        }
+    }
+
     template.elements.push(generator(template, {
         type: 'ifml.ViewContainer',
         id: idValidator(id),
@@ -759,7 +789,6 @@ function generateViewContainer(options) {
         default: properties.default,
         parent: options.parent || undefined
     }));
-    console.log(template);
     voiceAssistantModelGenerator(template);
 }
 
