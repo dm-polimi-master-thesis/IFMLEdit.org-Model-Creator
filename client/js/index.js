@@ -35,7 +35,10 @@ var _ = require('lodash'),
     AException = require('almost').Exception,
     partialModelValidator = require('./ifml/utilities/validator/partialModelValidator.js').partialModelValidator,
     askTemplates = require('./ask-templates.js').templates,
-    io = require('socket.io-client');
+    io = require('socket.io-client'),
+    generator = require('./ifml/utilities/generator/elementGenerator.js').generator,
+    toId = require('./ifml/utilities/validator/toId.js').toId,
+    idValidator = require('./ifml/utilities/validator/idValidator.js').idValidator;
 
 /**
   * Return a function to generate an element
@@ -677,6 +680,7 @@ socket.on('crowdsourcing', crowdsourcing);
 socket.on('social-network', socialnetwork);
 socket.on('zoom', zoom);
 socket.on('move-board',moveBoard);
+socket.on('generate-view-container',generateViewContainer);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -699,6 +703,7 @@ function zoom(options) {
 }
 
 function moveBoard(options) {
+    console.log(options);
     if (options.times > 4) {
       options.times = 1;
     }
@@ -736,6 +741,26 @@ function moveBoard(options) {
     }
 
     ifmlBoard.moveBoardVoiceAssistant(times,delta);
+}
+
+function generateViewContainer(options) {
+    var id = toId(options.name),
+        viewContainer = generator(ifml.toJSON(ifmlModel), {
+            type: 'ifml.ViewContainer',
+            id: idValidator(id),
+            name: options.name,
+            xor: options.xor,
+            landmark: options.landmark,
+            default: options.default,
+            parent: modelElementsHash['xor-view-container'].id
+        });
+    voiceAssistantModelGenerator(template);
+}
+
+function deleteViewContainer(options) {
+    var id = [toId(options.name)],
+        template = delator(id,ifml.toJSON(ifmlModel));
+    voiceAssistantModelGenerator(template);
 }
 
 function ecommerce(options) {
@@ -860,7 +885,6 @@ function voiceAssistantModelGenerator (template) {
       ifmlModel.addCells(toBeAdded);
       ifmlBoard.clearHistory();
 
-      $.notify({message: 'File loaded in ' + (Math.floor((new Date() - start) / 10) / 100) + ' seconds!'}, {allow_dismiss: true, type: 'success'});
   } catch (exception) {
       console.log(exception);
       ifmlBoard.clearHistory();

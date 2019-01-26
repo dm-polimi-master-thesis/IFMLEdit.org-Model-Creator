@@ -18,6 +18,7 @@ exports.handler = skillBuilder
         EcommerceModelIntentHandler = require('./handlers/guided/EcommerceModelIntentHandler.js').EcommerceModelIntentHandler,
         FavoriteModelIntentHandler = require('./handlers/guided/FavoriteModelIntentHandler.js').FavoriteModelIntentHandler,
         FriendshipModelIntentHandler = require('./handlers/guided/FriendshipModelIntentHandler.js').FriendshipModelIntentHandler,
+        GenerateViewContainerModelIntentHandler = require('./handlers/advanced/GenerateViewContainerModelIntentHandler').GenerateViewContainerModelIntentHandler,
         GuidedModelIntentHandler = require('./handlers/guided/GuidedModelIntentHandler.js').GuidedModelIntentHandler,
         HelpIntentHandler = require('./handlers/defaults/HelpIntentHandler.js').HelpIntentHandler,
         LaunchRequestHandler = require('./handlers/invocation/LaunchRequestHandler.js').LaunchRequestHandler,

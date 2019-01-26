@@ -254,11 +254,17 @@
                     ]
                 },
                 {
-                    "name": "AddViewContainerModelIntent",
+                    "name": "GenerateViewContainerModelIntent",
                     "slots": [
                         {
                             "name": "name",
-                            "type": "IFML_ELEMENT_NAME"
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "It's name is {name}",
+                                "Name it {name}",
+                                "Is {name}",
+                                "The name is {name}"
+                            ]
                         },
                         {
                             "name": "xor",
@@ -271,9 +277,35 @@
                         {
                             "name": "landmark",
                             "type": "IFML_CONTAINER_PROPERTIES"
+                        },
+                        {
+                            "name": "properties",
+                            "type": "IFML_CONTAINER_PROPERTIES"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "IFML_ELEMENT_NAME"
                         }
                     ],
                     "samples": [
+                        "generate new {properties} view container",
+                        "generate new {properties} view container with parent {parent}",
+                        "generate view container with parent {parent}",
+                        "add view container with parent {parent}",
+                        "add new {properties} view container with parent {parent}",
+                        "add a new {properties} view container",
+                        "view container with parent {parent}",
+                        "new {properties} view container with parent {parent}",
+                        "new {properties} view container",
+                        "{properties} view container",
+                        "{properties} view container with name {name} and parent {parent}",
+                        "new {properties} view container with name {name} and parent {parent}",
+                        "Add a new {properties} view container with name {name}",
+                        "Add a new {properties} view container with name {name} and parent {parent}",
+                        "view container with name {name}",
+                        "view container with name {name} and parent {parent}",
+                        "New view container with name {name} and parent {parent}",
+                        "Add a new view container with name {name} and parent {parent}",
                         "add a new view container",
                         "I want to add a new view container"
                     ]
@@ -303,6 +335,26 @@
                         "Execute a {zoom} for {times} times",
                         "Apply a {zoom} for {times} times",
                         "{zoom} {times} times."
+                    ]
+                },
+                {
+                    "name": "MoveBoardModelIntent",
+                    "slots": [
+                        {
+                            "name": "move",
+                            "type": "IFML_MOVE"
+                        },
+                        {
+                            "name": "times",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{move} for {times} times",
+                        "Execute a {move} for {times} times",
+                        "{move} {times} times",
+                        "Apply a {move} for {times} times",
+                        "{move}"
                     ]
                 }
             ],
@@ -501,6 +553,41 @@
                     "values": [
                         {
                             "name": {
+                                "value": "supermarket"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tea shop"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "coffie shop"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "shoes shop"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "music shop"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "music catalog"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "music"
+                            }
+                        },
+                        {
+                            "name": {
                                 "value": "sign in"
                             }
                         },
@@ -606,6 +693,14 @@
                     "values": [
                         {
                             "name": {
+                                "value": "landmark and default",
+                                "synonyms": [
+                                    "default and landmark"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
                                 "value": "landmark"
                             }
                         },
@@ -653,6 +748,31 @@
                         {
                             "name": {
                                 "value": "zoom in"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_MOVE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "move up"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "move down"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "move right"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "move left"
                             }
                         }
                     ]
@@ -789,6 +909,66 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "GenerateViewContainerModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1263543885966.24429760108"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isNotInSet",
+                                    "prompt": "Slot.Validation.600295670316.865989312032.530603774699",
+                                    "values": [
+                                        "asiodiasdoasdio"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "xor",
+                            "type": "IFML_CONTAINER_PROPERTIES",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "default",
+                            "type": "IFML_CONTAINER_PROPERTIES",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "landmark",
+                            "type": "IFML_CONTAINER_PROPERTIES",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "properties",
+                            "type": "IFML_CONTAINER_PROPERTIES",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "parent",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -899,6 +1079,24 @@
                     {
                         "type": "PlainText",
                         "value": "Do you want to zoom in or zoom out?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1263543885966.24429760108",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the container you want to create?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.600295670316.865989312032.530603774699",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Please express an existing name in the dictionary"
                     }
                 ]
             }

@@ -40,6 +40,7 @@ function createRouter(io) {
             if (options.advanced) {
                 socket.emit(options.advanced.operation, options.advanced.options);
             }
+            done.sessionAttributes = {};
             res.send(done);
         }).catch(err => {
             socket.emit('notify', err);
