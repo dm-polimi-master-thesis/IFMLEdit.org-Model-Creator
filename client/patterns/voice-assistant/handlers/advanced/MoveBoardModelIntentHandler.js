@@ -1,7 +1,7 @@
-const ZoomModelIntentHandler = {
+const MoveBoardModelIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'ZoomModelIntent'
+            && handlerInput.requestEnvelope.request.intent.name === 'MoveBoardModelIntent'
             && handlerInput.requestEnvelope.request.intent.slots.zoom.value
     },
     handle(handlerInput) {

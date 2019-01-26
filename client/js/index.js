@@ -676,6 +676,7 @@ socket.on('blog', blog);
 socket.on('crowdsourcing', crowdsourcing);
 socket.on('social-network', socialnetwork);
 socket.on('zoom', zoom);
+socket.on('moveBoard',moveBoard);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -687,18 +688,20 @@ function demo(options) {
 }
 
 function zoom(options) {
-    var delta = 1,
-        zoom = options.zoom,
-        times = options.times;
-
-    console.log('zoom');
-
-    if (options.zoom === 'zoom out') {
-        options.times *= -1;
-        delta = -1;
+    if (options.times > 4) {
+      options.times = 1;
     }
+    var delta = options.zoom === 'zoom in' ? 0.4 : -0.4,
+        zoom = options.zoom,
+        times = options.times * 20;
+
+
 
     ifmlBoard.zoomVoiceAssistant(times,delta);
+}
+
+function moveBoard(options) {
+    
 }
 
 function ecommerce(options) {
