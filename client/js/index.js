@@ -679,8 +679,10 @@ socket.on('blog', blog);
 socket.on('crowdsourcing', crowdsourcing);
 socket.on('social-network', socialnetwork);
 socket.on('zoom', zoom);
-socket.on('move-board',moveBoard);
-socket.on('generate-view-container',generateViewContainer);
+socket.on('move-board', moveBoard);
+socket.on('generate-view-container', generateViewContainer);
+socket.on('delete-element', deleteElement);
+socket.on('drag-and-drop', dragDropElement)
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -796,10 +798,80 @@ function generateViewContainer(options) {
     }
 }
 
-function deleteViewContainer(options) {
+function deleteElement(options) {
     var id = [toId(options.name)],
         template = delator(id,ifml.toJSON(ifmlModel));
     voiceAssistantModelGenerator(template);
+}
+
+function dragDropElement (options) {
+    console.log(options);
+
+    var name = options.name,
+        type = options.type.toLowerCase().replace(/\W/g,"-"),
+        id = toId(name,type),
+        firstDirection = options.firstDirection,
+        firstDelta = options.firstDelta,
+        secondDirection = options.secondDirection,
+        secondDelta = options.secondDelta,
+        delta = {
+            x: 0,
+            y: 0
+        };
+
+    var element = ifmlModel.attributes.cells.model._byId[id];
+
+    if (element) {
+        try {
+            switch (firstDirection) {
+              case 'up':
+                delta.y -= firstDelta;
+                break;
+              case 'down':
+                delta.y += firstDelta;
+                break;
+              case 'right':
+                delta.x += firstDelta;
+                break;
+              case 'left':
+                delta.x -= firstDelta;
+                break;
+              default:
+                throw 'Unexpected move request';
+                break;
+            }
+
+            if (secondDirection && secondDelta) {
+                switch (secondDirection) {
+                  case 'up':
+                    delta.y -= secondDelta;
+                    break;
+                  case 'down':
+                    delta.y += secondDelta;
+                    break;
+                  case 'right':
+                    delta.x += secondDelta;
+                    break;
+                  case 'left':
+                    delta.x -= secondDelta;
+                    break;
+                  default:
+                    throw 'Unexpected move request';
+                    break;
+                }
+            }
+        } catch (exception) {
+            console.log(exception);
+            ifmlBoard.clearHistory();
+            $.notify({message: 'Something goes wrong...'}, {allow_dismiss: true, type: 'danger'});
+            return;
+        }
+
+        ifmlBoard.dragDropElementVoiceAssistant(element,delta);
+    } else {
+        $.notify({message: 'Element not found...'}, {allow_dismiss: true, type: 'danger'});
+        return;
+    }
 }
 
 function ecommerce(options) {

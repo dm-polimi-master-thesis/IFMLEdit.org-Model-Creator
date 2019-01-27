@@ -15,6 +15,7 @@ exports.handler = skillBuilder
         CrowdsourcingModelIntentHandler = require('./handlers/guided/CrowdsourcingModelIntentHandler.js').CrowdsourcingModelIntentHandler,
         CrowdPolicyModelIntentHandler = require('./handlers/guided/CrowdPolicyModelIntentHandler.js').CrowdPolicyModelIntentHandler,
         DemoModelIntentHandler = require('./handlers/guided/DemoModelIntentHandler.js').DemoModelIntentHandler,
+        DragDropElementModelIntentHandler = require('./handlers/advanced/DragDropElementModelIntentHandler.js').DragDropElementModelIntentHandler,
         EcommerceModelIntentHandler = require('./handlers/guided/EcommerceModelIntentHandler.js').EcommerceModelIntentHandler,
         FavoriteModelIntentHandler = require('./handlers/guided/FavoriteModelIntentHandler.js').FavoriteModelIntentHandler,
         FriendshipModelIntentHandler = require('./handlers/guided/FriendshipModelIntentHandler.js').FriendshipModelIntentHandler,

@@ -344,6 +344,63 @@
                         "Apply a {move} for {times} times",
                         "{move}"
                     ]
+                },
+                {
+                    "name": "DragDropElementModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                ""
+                            ]
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "samples": [
+                                ""
+                            ]
+                        },
+                        {
+                            "name": "firstDirection",
+                            "type": "IFML_DIRECTION",
+                            "samples": [
+                                ""
+                            ]
+                        },
+                        {
+                            "name": "firstDelta",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                ""
+                            ]
+                        },
+                        {
+                            "name": "secondDirection",
+                            "type": "IFML_DIRECTION"
+                        },
+                        {
+                            "name": "secondDelta",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "drag and drop {type} {firstDirection} for {firstDelta}",
+                        "drag and drop {type} {firstDirection}",
+                        "move {type} {firstDirection}",
+                        "move {type} {firstDirection} for {firstDelta}",
+                        "drag and drop {name} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
+                        "drag and drop {name} {firstDirection} for {firstDelta}",
+                        "drag and drop {name}",
+                        "drag and drop{name} {type}",
+                        "move {name}",
+                        "move {name} {type}",
+                        "move {name} {type} {firstDirection} for {firstDelta}",
+                        "move {type} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
+                        "drag and drop{name} {type} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
+                        "drag and drop {name} {type} {firstDirection} for {firstDelta}"
+                    ]
                 }
             ],
             "types": [
@@ -794,6 +851,70 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "IFML_DIRECTION",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "left"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "right"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "down"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "up"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "values": []
+                },
+                {
+                    "name": "IFML_ELEMENT_TYPE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "form"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "view container"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "list"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "details"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "event"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "action"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -966,6 +1087,63 @@
                             "prompts": {}
                         }
                     ]
+                },
+                {
+                    "name": "DragDropElementModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.785408354430.1066837535586"
+                            }
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.785408354430.132259589837"
+                            }
+                        },
+                        {
+                            "name": "firstDirection",
+                            "type": "IFML_DIRECTION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.785408354430.681287446996"
+                            }
+                        },
+                        {
+                            "name": "firstDelta",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.785408354430.1270752763476"
+                            }
+                        },
+                        {
+                            "name": "secondDirection",
+                            "type": "IFML_DIRECTION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "secondDelta",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -1094,6 +1272,42 @@
                     {
                         "type": "PlainText",
                         "value": "Please express an existing name in the dictionary"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.785408354430.1066837535586",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the element you want to drag and drop?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.785408354430.132259589837",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the element you want to drag and drop?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.785408354430.681287446996",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "In which direction do you want to move the element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.785408354430.1270752763476",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "How many pixels do you want to move the element?"
                     }
                 ]
             }
