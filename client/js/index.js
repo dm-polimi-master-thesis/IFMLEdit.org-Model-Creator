@@ -682,9 +682,10 @@ socket.on('social-network', socialnetwork);
 socket.on('zoom', zoom);
 socket.on('move-board', moveBoard);
 socket.on('generate-view-container', generateViewContainer);
-socket.on('delete-element', deleteElement);
+socket.on('delete', deleteElement);
 socket.on('drag-and-drop', dragDropElement);
-socket.on('select-element', selectElement);
+socket.on('select', selectElement);
+socket.on('resize', resizeElement);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -884,6 +885,48 @@ function selectElement(options) {
         console.log(selectedElement);
     } else {
         $.notify({message: 'Element not found...'}, {allow_dismiss: true, type: 'danger'});
+    }
+}
+
+function resizeElement (options) {
+    var name = options.name,
+        type = options.type ? options.type.toLowerCase().replace(/\W/g,"-") : undefined,
+        id = name ? toId(name,'-' + type) : undefined,
+        direction,
+        delta = options.delta;
+
+    var element = id ? ifmlModel.attributes.cells._byId[id] : selectedElement;
+
+    if (element) {
+        try {
+            switch (options.direction) {
+              case 'up':
+                direction = 'n'
+                break;
+              case 'down':
+                direction = 's'
+                break;
+              case 'right':
+                direction = 'e'
+                break;
+              case 'left':
+                direction = 'w'
+                break;
+              default:
+                throw 'Unexpected resize request';
+                break;
+            }
+        } catch (exception) {
+            console.log(exception);
+            ifmlBoard.clearHistory();
+            $.notify({message: 'Something goes wrong...'}, {allow_dismiss: true, type: 'danger'});
+            return;
+        }
+
+        ifmlBoard.resizeElementVoiceAssistant(element,delta,direction);
+    } else {
+        $.notify({message: 'Element not found... Select an existing element.'}, {allow_dismiss: true, type: 'danger'});
+        return;
     }
 }
 

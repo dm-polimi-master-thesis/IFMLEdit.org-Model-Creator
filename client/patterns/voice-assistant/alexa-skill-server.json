@@ -260,6 +260,7 @@
                             "name": "name",
                             "type": "IFML_ELEMENT_NAME",
                             "samples": [
+                                "{name}",
                                 "It's name is {name}",
                                 "Name it {name}",
                                 "Is {name}",
@@ -352,6 +353,8 @@
                             "name": "name",
                             "type": "IFML_ELEMENT_NAME",
                             "samples": [
+                                "The name is {name}",
+                                "{name}",
                                 "It is {name}"
                             ]
                         },
@@ -361,7 +364,7 @@
                             "samples": [
                                 "a {type}",
                                 "It is a {type}",
-                                ""
+                                "The type is {type}"
                             ]
                         },
                         {
@@ -371,8 +374,7 @@
                                 "I want to drag and drop the element {firstDirection}",
                                 "drag and drop the element {firstDirection}",
                                 "move the element {firstDirection}",
-                                "I want to move the element {firstDirection}",
-                                ""
+                                "I want to move the element {firstDirection}"
                             ]
                         },
                         {
@@ -409,6 +411,78 @@
                         "move {type} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
                         "drag and drop {name} {type} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
                         "drag and drop {name} {type} {firstDirection} for {firstDelta}"
+                    ]
+                },
+                {
+                    "name": "SelectElementModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{name}",
+                                "The name is {name}",
+                                "It is {name}"
+                            ]
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "samples": [
+                                "It is {type}",
+                                "{type}",
+                                "The type is {type}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Select",
+                        "Select {type}",
+                        "Select {name}",
+                        "Select {name} {type}",
+                        "Select {name} {type} element"
+                    ]
+                },
+                {
+                    "name": "ResizeElementModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE"
+                        },
+                        {
+                            "name": "direction",
+                            "type": "IFML_DIRECTION",
+                            "samples": [
+                                "I want to drag and drop the element {direction}",
+                                "drag and drop the element {direction}",
+                                "move the element {direction}",
+                                "I want to move the element {direction}"
+                            ]
+                        },
+                        {
+                            "name": "delta",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                    "move the element for {delta} pixels",
+                                    "I need to move the element for {delta} pixels",
+                                    "I want to move the element for {delta} pixels",
+                                    ""
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Resize {type} {name}",
+                        "Resize {type}",
+                        "Resize {name}",
+                        "Resize for {delta}",
+                        "Resize {direction}",
+                        "Resize {direction} for {delta} pixels",
+                        "Resize {name} {type} {direction} for {delta} pixels"
                     ]
                 }
             ],
@@ -1140,6 +1214,70 @@
                             "prompts": {}
                         }
                     ]
+                },
+                {
+                    "name": "SelectElementModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.35386194954.197518747559"
+                            }
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.35386194954.1361919067898"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ResizeElementModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "direction",
+                            "type": "IFML_DIRECTION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.892753350958.418735730965"
+                            }
+                        },
+                        {
+                            "name": "delta",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.892753350958.1218777596640"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -1300,6 +1438,42 @@
             },
             {
                 "id": "Elicit.Slot.785408354430.1270752763476",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "How many pixels do you want to move the element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.35386194954.1361919067898",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the element you want to select?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.35386194954.197518747559",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the element you want to select?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.892753350958.418735730965",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "In which direction do you want to move the element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.892753350958.1218777596640",
                 "variations": [
                     {
                         "type": "PlainText",
