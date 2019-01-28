@@ -468,21 +468,61 @@
                             "name": "delta",
                             "type": "AMAZON.NUMBER",
                             "samples": [
-                                    "move the element for {delta} pixels",
-                                    "I need to move the element for {delta} pixels",
-                                    "I want to move the element for {delta} pixels",
-                                    ""
+                                "move the element for {delta} pixels",
+                                "I need to move the element for {delta} pixels",
+                                "I want to move the element for {delta} pixels"
                             ]
+                        },
+                        {
+                            "name": "sign",
+                            "type": "IFML_SIGN"
                         }
                     ],
                     "samples": [
+                        "Resize {direction} for {delta} pixels",
+                        "Resize {name} {direction} for {delta} pixels",
+                        "Resize {type} {direction} for {delta} pixels",
+                        "Resize {name} for {delta} pixels",
+                        "Resize {type} for {delta} pixels",
+                        "Resize {type} for {sign} {delta} pixels",
+                        "Resize {name} for {sign} {delta} pixels",
+                        "Resize {type} {direction}",
+                        "Resize {type} {direction} for {sign} {delta} pixels",
+                        "Resize {name} {direction}",
+                        "Resize {name} {direction} for {sign} {delta} pixels",
                         "Resize {type} {name}",
                         "Resize {type}",
                         "Resize {name}",
-                        "Resize for {delta}",
+                        "Resize for {delta} pixels",
                         "Resize {direction}",
-                        "Resize {direction} for {delta} pixels",
-                        "Resize {name} {type} {direction} for {delta} pixels"
+                        "Resize {direction} for {sign} {delta} pixels"
+                    ]
+                },
+                {
+                    "name": "InsertElementModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{name}",
+                                "Is {name}",
+                                "The name is {name}",
+                                "It is {name}"
+                            ]
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Move {name} {type} inside {parent} view container",
+                        "Insert {name} {type} inside {parent} view container"
                     ]
                 }
             ],
@@ -994,6 +1034,21 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "IFML_SIGN",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "minus"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "plus"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -1276,6 +1331,43 @@
                             "prompts": {
                                 "elicitation": "Elicit.Slot.892753350958.1218777596640"
                             }
+                        },
+                        {
+                            "name": "sign",
+                            "type": "IFML_SIGN",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "InsertElementModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.672853002908.127025490888"
+                            }
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "parent",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 }
@@ -1478,6 +1570,15 @@
                     {
                         "type": "PlainText",
                         "value": "How many pixels do you want to move the element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.672853002908.127025490888",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the element you want to insert inside the parent view container?"
                     }
                 ]
             }
