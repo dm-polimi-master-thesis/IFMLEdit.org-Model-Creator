@@ -670,7 +670,8 @@ $('#mobile .edit-db').click(function () {
 $('#pcn').removeClass('active');
 
 
-var socket = io("http://localhost:3000");
+var socket = io("http://localhost:3000"),
+    selectedElement;
 
 socket.on('notify', notify);
 socket.on('demo', demo);
@@ -682,7 +683,8 @@ socket.on('zoom', zoom);
 socket.on('move-board', moveBoard);
 socket.on('generate-view-container', generateViewContainer);
 socket.on('delete-element', deleteElement);
-socket.on('drag-and-drop', dragDropElement)
+socket.on('drag-and-drop', dragDropElement);
+socket.on('select-element', selectElement);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -705,7 +707,6 @@ function zoom(options) {
 }
 
 function moveBoard(options) {
-    console.log(options);
     if (options.times > 4) {
       options.times = 1;
     }
@@ -805,8 +806,6 @@ function deleteElement(options) {
 }
 
 function dragDropElement (options) {
-    console.log(options);
-
     var name = options.name,
         type = options.type.toLowerCase().replace(/\W/g,"-"),
         id = toId(name,'-' + type),
@@ -871,6 +870,20 @@ function dragDropElement (options) {
     } else {
         $.notify({message: 'Element not found...'}, {allow_dismiss: true, type: 'danger'});
         return;
+    }
+}
+
+function selectElement(options) {
+    var name = options.name,
+        type = options.type.toLowerCase().replace(/\W/g,"-"),
+        id = toId(name,'-' + type),
+        element = ifmlModel.attributes.cells._byId[id];
+
+    if (element) {
+        selectedElement = element;
+        console.log(selectedElement);
+    } else {
+        $.notify({message: 'Element not found...'}, {allow_dismiss: true, type: 'danger'});
     }
 }
 

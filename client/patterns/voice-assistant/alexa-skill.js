@@ -27,6 +27,7 @@ exports.handler = skillBuilder
         MasterDetailsModelIntentHandler = require('./handlers/guided/MasterDetailsModelIntentHandler.js').MasterDetailsModelIntentHandler,
         MoveBoardModelIntentHandler = require('./handlers/advanced/MoveBoardModelIntentHandler').MoveBoardModelIntentHandler,
         PersonalPagesModelIntentHandler = require('./handlers/guided/PersonalPagesModelIntentHandler.js').PersonalPagesModelIntentHandler,
+        SelectElementModelIntentHandler = require('./handlers/advanced/SelectElementModelIntentHandler.js').SelectElementModelIntentHandler,
         SessionEndedRequestHandler = require('./handlers/defaults/SessionEndedRequestHandler.js').SessionEndedRequestHandler,
         ShareContentModelIntentHandler = require('./handlers/guided/ShareContentModelIntentHandler.js').ShareContentModelIntentHandler,
         SocialNetworkModelIntentHandler = require('./handlers/guided/SocialNetworkModelIntentHandler.js').SocialNetworkModelIntentHandler,
