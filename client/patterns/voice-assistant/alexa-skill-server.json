@@ -352,13 +352,15 @@
                             "name": "name",
                             "type": "IFML_ELEMENT_NAME",
                             "samples": [
-                                ""
+                                "It is {name}"
                             ]
                         },
                         {
                             "name": "type",
                             "type": "IFML_ELEMENT_TYPE",
                             "samples": [
+                                "a {type}",
+                                "It is a {type}",
                                 ""
                             ]
                         },
@@ -366,6 +368,10 @@
                             "name": "firstDirection",
                             "type": "IFML_DIRECTION",
                             "samples": [
+                                "I want to drag and drop the element {firstDirection}",
+                                "drag and drop the element {firstDirection}",
+                                "move the element {firstDirection}",
+                                "I want to move the element {firstDirection}",
                                 ""
                             ]
                         },
@@ -373,6 +379,9 @@
                             "name": "firstDelta",
                             "type": "AMAZON.NUMBER",
                             "samples": [
+                                "move the element for {firstDelta} pixels",
+                                "I need to move the element for {firstDelta} pixels",
+                                "I want to move the element for {firstDelta} pixels",
                                 ""
                             ]
                         },
@@ -393,12 +402,12 @@
                         "drag and drop {name} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
                         "drag and drop {name} {firstDirection} for {firstDelta}",
                         "drag and drop {name}",
-                        "drag and drop{name} {type}",
+                        "drag and drop {name} {type}",
                         "move {name}",
                         "move {name} {type}",
                         "move {name} {type} {firstDirection} for {firstDelta}",
                         "move {type} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
-                        "drag and drop{name} {type} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
+                        "drag and drop {name} {type} {firstDirection} for {firstDelta} and {secondDirection} for {secondDelta}",
                         "drag and drop {name} {type} {firstDirection} for {firstDelta}"
                     ]
                 }
@@ -878,10 +887,6 @@
                     ]
                 },
                 {
-                    "name": "",
-                    "values": []
-                },
-                {
                     "name": "IFML_ELEMENT_TYPE",
                     "values": [
                         {
@@ -1061,16 +1066,7 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.1263543885966.24429760108"
-                            },
-                            "validations": [
-                                {
-                                    "type": "isNotInSet",
-                                    "prompt": "Slot.Validation.600295670316.865989312032.530603774699",
-                                    "values": [
-                                        "asiodiasdoasdio"
-                                    ]
-                                }
-                            ]
+                            }
                         },
                         {
                             "name": "properties",

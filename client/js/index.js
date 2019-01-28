@@ -809,7 +809,7 @@ function dragDropElement (options) {
 
     var name = options.name,
         type = options.type.toLowerCase().replace(/\W/g,"-"),
-        id = toId(name,type),
+        id = toId(name,'-' + type),
         firstDirection = options.firstDirection,
         firstDelta = options.firstDelta,
         secondDirection = options.secondDirection,
@@ -819,7 +819,7 @@ function dragDropElement (options) {
             y: 0
         };
 
-    var element = ifmlModel.attributes.cells.model._byId[id];
+    var element = ifmlModel.attributes.cells._byId[id];
 
     if (element) {
         try {
