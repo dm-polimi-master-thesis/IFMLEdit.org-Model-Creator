@@ -15,7 +15,7 @@ function update(cell) {
     for (var key in tree) {
         if(tree['step-' + count + '-form']){
             var step = tree['step-' + count + '-form'],
-                parentViewContainer = graph.attributes.cells._byId[step.attributes.parent];
+                parentViewContainer = graph.getCell(step.attributes.parent);
 
             steps.push({ name: parentViewContainer.attributes.name, formName: step.attributes.name, fields: _.map(step.attributes.fields, function (f) { return { label: f.label, value: f.label, type: ko.observable(f.type || 'text'), name: ko.observable(f.name || '') } }) });
 

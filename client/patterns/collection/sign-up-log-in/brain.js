@@ -108,8 +108,8 @@ function brain(options) {
     }
     if (logInFound && signUpFound) {
 
-        var signUpParent = graph.attributes.cells._byId[tree['sign-up-form'].attributes.parent],
-            logInParent = graph.attributes.cells._byId[tree['log-in-form'].attributes.parent];
+        var signUpParent = graph.getCell(tree['sign-up-form'].attributes.parent),
+            logInParent = graph.getCell(tree['log-in-form'].attributes.parent);
 
         var logInLinks = _.filter(graph.getConnectedLinks(tree['log-in-form'],{deep:'true', outbound:'true'}), function (link) {return link.attributes.target.id === signUpParent.attributes.id}),
             signUpLinks = _.filter(graph.getConnectedLinks(tree['sign-up-form'],{deep:'true', outbound:'true'}), function (link) {return link.attributes.target.id === logInParent.attributes.id});

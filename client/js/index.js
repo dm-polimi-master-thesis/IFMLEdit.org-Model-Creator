@@ -686,6 +686,7 @@ socket.on('delete', deleteElement);
 socket.on('drag-and-drop', dragDropElement);
 socket.on('select', selectElement);
 socket.on('resize', resizeElement);
+socket.on('insert', insertElement)
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -760,7 +761,7 @@ function generateViewContainer(options) {
             $.notify({message: 'You try to insert a View Container with XOR property in a position not allowed by the hierarchy of the elements.'}, {allow_dismiss: true, type: 'danger'});
             return;
         } else {
-            var parent = ifmlModel.attributes.cells.model._byId[properties.parent];
+            var parent = ifmlModel.getCell(properties.parent);
             if (parent.attributes.xor) {
                 $.notify({message: 'You try to insert a View Container with XOR property in a position not allowed by the hierarchy of the elements (the parent is a XOR View Container).'}, {allow_dismiss: true, type: 'danger'});
                 return;
@@ -769,7 +770,7 @@ function generateViewContainer(options) {
     }
     if (properties.landmark || properties.default) {
         if (properties.parent) {
-            var parent = ifmlModel.attributes.cells.model._byId[properties.parent];
+            var parent = ifmlModel.getCell(properties.parent);
             if (!parent.attributes.xor) {
                 $.notify({message: 'You try to insert a View Container with Landmark or Default property in a position not allowed by the hierarchy of the elements (the parent is not a XOR View Container).'}, {allow_dismiss: true, type: 'danger'});
                 return;
@@ -777,13 +778,11 @@ function generateViewContainer(options) {
         }
     }
     if (options.parent) {
-        var parent = ifmlModel.attributes.cells.model._byId[properties.parent];
+        var parent = ifmlModel.getCell(properties.parent);
         if (!parent) {
             $.notify({message: 'The parent does not exist'}, {allow_dismiss: true, type: 'danger'});
             return;
         }
-
-        //var ancestors = parent.getAncestors()
     }
 
     if (!options.parent) {
@@ -819,7 +818,7 @@ function dragDropElement (options) {
             y: 0
         };
 
-    var element = ifmlModel.attributes.cells._byId[id];
+    var element = ifmlModel.getCell(id);
 
     if (element) {
         try {
@@ -878,7 +877,7 @@ function selectElement(options) {
     var name = options.name,
         type = options.type.toLowerCase().replace(/\W/g,"-"),
         id = toId(name,'-' + type),
-        element = ifmlModel.attributes.cells._byId[id];
+        element = ifmlModel.getCell(id);
 
     if (element) {
         selectedElement = element;
@@ -895,7 +894,7 @@ function resizeElement (options) {
         direction,
         delta = options.delta;
 
-    var element = id ? ifmlModel.attributes.cells._byId[id] : selectedElement;
+    var element = id ? ifmlModel.getCell(id) : selectedElement;
 
     if (element) {
         try {
@@ -928,6 +927,129 @@ function resizeElement (options) {
         $.notify({message: 'Element not found... Select an existing element.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
+}
+
+async function insertElement (options) {
+    var elementName = options.name,
+        elementType = options.type ? options.type.toLowerCase().replace(/\W/g,"-") : undefined,
+        elementStereotype,
+        size,
+        parentName = options.parent,
+        childName = options.child,
+        childType = options.childType,
+        idElement = elementName ? toId(elementName,'-' + elementType) : undefined,
+        idParent = parentName ? toId(parentName,'-view-container') : undefined,
+        idChild = childName && childType ? toId(childName,'-' + childType) : undefined,
+        position = options.position,
+        element = idElement ? ifmlModel.getCell(idElement) : undefined,
+        parent = idParent ? ifmlModel.getCell(idParent) : undefined,
+        child = idChild ? ifmlModel.getCell(idChild) : undefined,
+        template = {
+            elements: [],
+            relations: []
+        };;
+
+    if (idChild && !child) {
+        $.notify({message: 'Child element not found... Repeat the command and select an existing child element.'}, {allow_dismiss: true, type: 'danger'});
+        return;
+    }
+    if (!parent) {
+        $.notify({message: 'Parent element not found... Repeat the command and select an existing parent element.'}, {allow_dismiss: true, type: 'danger'});
+        return;
+    }
+    if (!element) {
+        switch (elementType) {
+          case 'view-container':
+            elementType = 'ifml.ViewContainer';
+            size = { height: 160, width: 200 }
+            break;
+            break;
+          case 'action':
+            elementType = 'ifml.Action';
+            size = { height: 50, width: 75 }
+            break;
+          case 'event':
+            elementType = 'ifml.Event';
+            size = { height: 20, width: 20 }
+            break;
+          case 'form':
+            elementType = 'ifml.ViewComponent';
+            elementStereotype = 'form';
+            size = { height: 60, width: 150 }
+            break;
+          case 'list':
+            elementType = 'ifml.ViewComponent';
+            elementStereotype = 'list';
+            size = { height: 60, width: 150 };
+            break;
+          case 'details':
+            elementType = 'ifml.ViewComponent';
+            elementStereotype = 'details';
+            size = { height: 60, width: 150 };
+            break;
+
+        }
+
+        template.elements.push(generator(template, {
+            type: elementType,
+            id: idValidator(idElement),
+            name: options.name,
+            stereotype: elementStereotype,
+            size: size
+        }));
+
+        element = ifml.fromJSON(template)[0];
+    }
+
+    var paddingCoordinates = {
+            nw: { x: parent.position().x + 20, y: parent.position().y + 40 },
+            ne: { x: parent.position().x + parent.size().width - 20, y: parent.position().y + 40 },
+            sw: { x: parent.position().x + 20, y: parent.position().y + parent.size().height - 20 },
+            se: { x: parent.position().x + parent.size().width - 20, y: parent.size().height - 20 }
+        };
+    console.log(parent);
+    if (parent.getEmbeddedCells().length === 0) {
+        element.position(parent.position().x + 20, parent.position().y + 40);
+        console.log(_.cloneDeep(element));
+        var elementCoordinates = {
+                nw: { x: element.position().x, y: element.position().y },
+                ne: { x: element.position().x + element.size().width, y: element.position().y },
+                sw: { x: element.position().x, y: element.position().y + element.size().height },
+                se: { x: element.position().x + element.size().width, y: element.size().height }
+            };
+        if (paddingCoordinates.nw.x <= elementCoordinates.nw.x && paddingCoordinates.nw.y <= elementCoordinates.nw.y && paddingCoordinates.se.x >= elementCoordinates.se.x && paddingCoordinates.se.y >= elementCoordinates.se.y) {
+            console.log(2);
+            ifmlModel.addCell(element);
+        } else {
+            await resize(element,parent,elementCoordinates);
+
+            element.position(parent.position().x + 20, parent.position().y + 40);
+            ifmlModel.addCell(element);
+
+        }
+    }
+}
+
+function resize(element,parent,elementCoordinates) {
+  return new Promise(resolve => {
+      if (parent.size().width <= element.size().width) {
+          var delta = Math.abs((parent.position().x + parent.size().width) - (elementCoordinates.nw.x + element.size().width));
+
+          delta = (delta/10) % 2 === 0 ? delta : delta + 5;
+
+          ifmlBoard.resizeElementVoiceAssistant(parent,delta,'w');
+          ifmlBoard.resizeElementVoiceAssistant(parent,delta,'e');
+      }
+      if (parent.size().height <= element.size().height) {
+          var delta = Math.abs((parent.position().y + parent.size().height) - (elementCoordinates.nw.y + element.size().height));
+          delta = (delta/10) % 2 === 0 ? delta : delta + 5;
+          console.log(parent,delta,delta/2,'n');
+
+          ifmlBoard.resizeElementVoiceAssistant(parent,delta,'n');
+          ifmlBoard.resizeElementVoiceAssistant(parent,delta,'s');
+      }
+      setTimeout(resolve,100);
+  });
 }
 
 function ecommerce(options) {

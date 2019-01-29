@@ -22,6 +22,7 @@ exports.handler = skillBuilder
         GenerateViewContainerModelIntentHandler = require('./handlers/advanced/GenerateViewContainerModelIntentHandler').GenerateViewContainerModelIntentHandler,
         GuidedModelIntentHandler = require('./handlers/guided/GuidedModelIntentHandler.js').GuidedModelIntentHandler,
         HelpIntentHandler = require('./handlers/defaults/HelpIntentHandler.js').HelpIntentHandler,
+        InsertElementModelIntentHandler = require('./handlers/advanced/InsertElementModelIntentHandler.js').InsertElementModelIntentHandler,
         LaunchRequestHandler = require('./handlers/invocation/LaunchRequestHandler.js').LaunchRequestHandler,
         LikesModelIntentHandler = require('./handlers/guided/LikesModelIntentHandler.js').LikesModelIntentHandler,
         MasterDetailsModelIntentHandler = require('./handlers/guided/MasterDetailsModelIntentHandler.js').MasterDetailsModelIntentHandler,

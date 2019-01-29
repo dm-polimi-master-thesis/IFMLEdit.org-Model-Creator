@@ -16,7 +16,7 @@ function load(template,cell) {
     tree['pattern-container'].prop('name',template.name);
 
     while (count >= 1) {
-        var parentViewContainer = graph.attributes.cells._byId[tree['step-' + count + '-form'].attributes.parent],
+        var parentViewContainer = graph.getCell(tree['step-' + count + '-form'].attributes.parent),
             regularValues = fieldsManipulator.toRegularValues(template.steps[count-1].fields),
             specialValues = fieldsManipulator.toSpecialValues(template.steps[count-1].fields),
             errorValues = fieldsManipulator.toErrorValues(regularValues);

@@ -518,9 +518,23 @@
                         {
                             "name": "parent",
                             "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "position",
+                            "type": "IFML_DIRECTION"
+                        },
+                        {
+                            "name": "child",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "childType",
+                            "type": "IFML_ELEMENT_TYPE"
                         }
                     ],
                     "samples": [
+                        "Insert {name} {type} inside {parent} view container {position} respect to {child} {childType}",
+                        "Move {name} {type} inside {parent} view container {position} respect to {child} {childType}",
                         "Move {name} {type} inside {parent} view container",
                         "Insert {name} {type} inside {parent} view container"
                     ]
@@ -1365,6 +1379,27 @@
                         {
                             "name": "parent",
                             "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "position",
+                            "type": "IFML_DIRECTION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "child",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "childType",
+                            "type": "IFML_ELEMENT_TYPE",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
