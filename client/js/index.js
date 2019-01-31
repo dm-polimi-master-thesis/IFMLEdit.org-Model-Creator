@@ -881,7 +881,6 @@ function selectElement(options) {
 
     if (element) {
         selectedElement = element;
-        console.log(selectedElement);
     } else {
         $.notify({message: 'Element not found...'}, {allow_dismiss: true, type: 'danger'});
     }
@@ -936,24 +935,25 @@ async function insertElement (options) {
         size,
         parentName = options.parent,
         childName = options.child,
-        childType = options.childType,
+        childType = options.childType ? options.childType.replace(/\W/g,"-") : undefined,
         idElement = elementName ? toId(elementName,'-' + elementType) : undefined,
         idParent = parentName ? toId(parentName,'-view-container') : undefined,
         idChild = childName && childType ? toId(childName,'-' + childType) : undefined,
         position = options.position,
-        element = idElement ? ifmlModel.getCell(idElement) : undefined,
+        elements = idElement && ifmlModel.getCell(idElement) ? _.flattenDeep([ifmlModel.getCell(idElement), ifmlModel.getCell(idElement).getEmbeddedCells({deep:'true'})]) : [],
+        links = [],
         parent = idParent ? ifmlModel.getCell(idParent) : undefined,
         child = idChild ? ifmlModel.getCell(idChild) : undefined,
         template = {
             elements: [],
             relations: []
-        };;
+        };
 
     if (idChild && !child) {
         $.notify({message: 'Child element not found... Repeat the command and select an existing child element.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
-    if (child && parent && !child.attributes.parent === parent.id) {
+    if (child && parent && !(child.attributes.parent === parent.id)) {
         $.notify({message: 'The selected child is not really a child of the selected parent.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
@@ -961,12 +961,12 @@ async function insertElement (options) {
         $.notify({message: 'Parent element not found... Repeat the command and select an existing parent element.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
-    if (element && parent.id === element.attributes.parent) {
+    if (elements[0] && parent.id === ifmlModel.getCell(idElement).attributes.parent) {
         $.notify({message: 'The element is already insert in the selected parent view container.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
 
-    if (!element) {
+    if (!elements[0]) {
         switch (elementType) {
           case 'view-container':
             elementType = 'ifml.ViewContainer';
@@ -1008,50 +1008,69 @@ async function insertElement (options) {
             parent: parent.id,
             size: size
         }));
-        console.log(parent);
-        console.log(template);
 
-        element = ifml.fromJSON({ elements: template.elements , relations: []})[0];
+        elements = [ifml.fromJSON({ elements: template.elements , relations: []})[0]];
+    } else {
+        elements = _.filter(elements, function (element) { return !element.isLink() });
+        /*
+        _.forEach(elements, function (element) {
+            var connectedLinks = ifmlModel.getConnectedLinks(element);
+
+            _.forEach(connectedLinks, function (link) {
+                fadeOut(link,'.connection');
+                fadeOut(link,'.marker-source');
+                fadeOut(link,'.marker-target');
+            });
+
+            links.push(connectedLinks);
+
+            if (element.attributes.type === 'ifml.Event') {
+                fadeOut(element,'.marker');
+            } else {
+                fadeOut(element,'.ifml-element');
+            }
+        });
+
+        links = _.flattenDeep(links);
+        await delay(1500);*/
     }
 
     if (!child) {
-        console.log(1);
-        element.position(parent.position().x + 20, parent.position().y + 40);
+        _.forEach(elements, function (element) {
+            element.position(parent.position().x + 20, parent.position().y + 40);
+        })
     } else {
-        console.log(2);
         switch (position) {
           case 'up':
-            console.log('up');
-            console.log(child);
-            var x = child.position().x - (element.size().width/2 + child.size().width/2),
-                y = child.position().y - (element.size().height - 20);
-            element.position(x,y);
+            var x = child.position().x - (elements[0].size().width/2 - child.size().width/2),
+                y = child.position().y - (elements[0].size().height + 20);
             break;
           case 'down':
-            console.log('down');
-            console.log(child);
-            var x = child.position().x - (element.size().width/2 + child.size().width/2),
+            var x = child.position().x - (child.size().width/2 - child.size().width/2),
                 y = child.position().y + parent.size().height + 20;
-            element.position(x,y);
             break;
           case 'right':
-            console.log('right');
-            console.log(child);
-            var x = child.position().x + (element.size().width + 20),
-                y = child.position().y - (element.size().height/2 - child.size().height/2);
-            element.position(x,y);
+            var x = child.position().x + (child.size().width + 20),
+                y = child.position().y - (elements[0].size().height/2 - child.size().height/2);
             break;
           case 'left':
-            console.log('left');
-            console.log(child);
-            var x = child.position().x - element.size().width - 20,
-                y = child.position().y - (element.size().height/2 - child.size().height/2);
-            element.position(x,y);
+            var x = child.position().x - elements[0].size().width - 20,
+                y = child.position().y - (elements[0].size().height/2 - child.size().height/2);
             break;
-
         }
+        _.forEach(elements, function (element,index) {
+            if(index !== 0){
+                var delta = {
+                        x: Math.abs(elements[0].position().x - element.position().x),
+                        y: Math.abs(element.position().y - elements[0].position().y)
+                    };
+                element.position(x + delta.x, y + delta.y);
+            }
+        })
+
+        elements[0].position(x,y);
+        debugger;
     }
-    console.log(3);
     var paddingCoordinates = {
             nw: { x: parent.position().x + 20, y: parent.position().y + 40 },
             ne: { x: parent.position().x + parent.size().width - 20, y: parent.position().y + 40 },
@@ -1059,60 +1078,47 @@ async function insertElement (options) {
             se: { x: parent.position().x + parent.size().width - 20, y: parent.position().y + parent.size().height - 20 }
         },
         elementCoordinates = {
-            nw: { x: element.position().x, y: element.position().y },
-            ne: { x: element.position().x + element.size().width, y: element.position().y },
-            sw: { x: element.position().x, y: element.position().y + element.size().height },
-            se: { x: element.position().x + element.size().width, y: element.position().y + element.size().height }
+            nw: { x: elements[0].position().x, y: elements[0].position().y },
+            ne: { x: elements[0].position().x + elements[0].size().width, y: elements[0].position().y },
+            sw: { x: elements[0].position().x, y: elements[0].position().y + elements[0].size().height },
+            se: { x: elements[0].position().x + elements[0].size().width, y: elements[0].position().y + elements[0].size().height }
         };
-    console.log('padding',_.cloneDeep(paddingCoordinates));
-    console.log('elementCoordinates',_.cloneDeep(elementCoordinates));
+        console.log(paddingCoordinates);
+        console.log(elementCoordinates);
     if (!(paddingCoordinates.nw.x <= elementCoordinates.nw.x && paddingCoordinates.nw.y <= elementCoordinates.nw.y && paddingCoordinates.se.x >= elementCoordinates.se.x && paddingCoordinates.se.y >= elementCoordinates.se.y)) {
-      console.log(4);
         if (paddingCoordinates.nw.x > elementCoordinates.nw.x) {
-            var delta = paddingCoordinates.nx.x - elementCoordinates.nw.x;
+            var delta = paddingCoordinates.nw.x - elementCoordinates.nw.x;
             resizeX(parent, parent.position().x - delta, parent.size().width + delta);
         }
         if (paddingCoordinates.ne.x < elementCoordinates.ne.x) {
             var delta = elementCoordinates.ne.x - paddingCoordinates.ne.x;
-            console.log(delta);
             resizeX(parent, parent.position().x, parent.size().width + delta);
         }
         if (paddingCoordinates.nw.y > elementCoordinates.nw.y) {
-            var delta = paddingCoordinates.nw.y - elementCoordinates.nw.x;
-            resizeY(parent, parent.position().y - delta, parent.size().height + delta);
+            var delta = paddingCoordinates.nw.y - elementCoordinates.nw.y;
+            await resizeY(parent, parent.position().y - delta, parent.size().height + delta);
         }
         if (paddingCoordinates.sw.y < elementCoordinates.sw.y) {
             var delta = elementCoordinates.sw.y - paddingCoordinates.sw.y;
             resizeY(parent, parent.position().y, parent.size().height + delta);
         }
     }
-    var rect = {x: elementCoordinates.nw.x - 20, y: elementCoordinates.nw.y -20, width: element.size().width, height: element.size().height },
+    await delay(1000);
+    var rect = {x: elementCoordinates.nw.x - 20, y: elementCoordinates.nw.y -20, width: elements[0].size().width, height: elements[0].size().height },
         modelsInArea = ifmlModel.findModelsInArea(rect);
         modelsInArea = _.filter(modelsInArea, function (el) { return el.id !== parent.id && el.attributes.parent === parent.id })
-        console.log(modelsInArea);
     if (modelsInArea.length > 0) {
-      console.log(5);
         if (!child) {
-            console.log(6);
-            console.log(_.cloneDeep(element));
             var min = modelsInArea.reduce((minX, el) => el.position().x < minX ? el.position().x : minX, modelsInArea[0].position().x),
                 delta = elementCoordinates.ne.x - min + 20;
-            console.log(element.position());
-            console.log(min);
-            console.log(delta);
-            console.log(_.cloneDeep(element));
-            element.position(element.position().x - delta, element.position().y);
-            console.log(element.position());
-            console.log(_.cloneDeep(parent));
-            await resizeX(parent, element.position().x - 20, parent.size().width + delta);
-            console.log(_.cloneDeep(parent));
-            console.log('never');
+            elements[0].position(elements[0].position().x - delta, elements[0].position().y);
+            await resizeX(parent, elements[0].position().x - 20, parent.size().width + delta);
         } else {
-          console.log(7);
+            console.log(modelsInArea);
             switch (position) {
               case 'up':
                 var max = modelsInArea.reduce((maxY, el) => (el.position().y + el.size().height) < maxY ? (el.position().y + el.size().height) : maxY, modelsInArea[0].position().y + modelsInArea[0].size().height),
-                    delta = elementCoordinates.nw.y - max + 20,
+                    delta = elementCoordinates.nw.y - max - 20,
                     newParentPos = parent.position().y;
 
                 _.forEach(modelsInArea, function (el) {
@@ -1123,7 +1129,6 @@ async function insertElement (options) {
                     }
                 })
                 await resizeY(parent, newParentPos, parent.size().height + (newParentPos - parent.position().y));
-                break;
               case 'down':
                 var min = modelsInArea.reduce((minY, el) => el.position().y < minY ? el.position().y : minY, modelsInArea[0].position().y),
                     delta = elementCoordinates.sw.y - min + 20,
@@ -1133,11 +1138,11 @@ async function insertElement (options) {
                     transitionY(el, el.position().y + delta);
 
                     if ((parent.position().y + newParentSize) < (el.position().y + delta + el.size().height + 20)) {
-                        newParentSize = newParentSize + ((l.position().y + delta + el.size().height + 20) - newParentSize);
+                        newParentSize = newParentSize + ((el.position().y + delta + el.size().height + 20) - newParentSize);
                     }
                 })
                 await resizeY(parent, parent.position().y, newParentSize);
-                break;
+                break;*/
               case 'right':
                 var min = modelsInArea.reduce((minX, el) => el.position().x < minX ? el.position().x : minX, modelsInArea[0].position().x),
                     delta = elementCoordinates.ne.x - min + 20,
@@ -1147,15 +1152,14 @@ async function insertElement (options) {
                     transitionX(el, el.position().x + delta);
 
                     if ((parent.position().x + newParentSize) < (el.position().x + delta + el.size().width + 20)) {
-                        newParentSize = newParentSize + ((l.position().x + delta + el.size().width + 20) - newParentSize);
+                        newParentSize = newParentSize + ((el.position().x + delta + el.size().width + 20) - (parent.position().x + newParentSize));
                     }
                 })
                 await resizeX(parent, parent.position().x, newParentSize);
                 break;
               case 'left':
-                newParentPos = parent.position().x;
-                var max = modelsInArea.reduce((maxX, el) => (el.position().x + el.size().width) < maxX ? (el.position().x + el.size().width) : maxX, modelsInArea[0].position().x + modelsInArea[0].size().width),
-                    delta = max - element.position().x + 20,
+                var max = modelsInArea.reduce((maxX, el) => (el.position().x + el.size().width) > maxX ? (el.position().x + el.size().width) : maxX, modelsInArea[0].position().x + modelsInArea[0].size().width),
+                    delta = max - elements[0].position().x + 20,
                     newParentPos = parent.position().x;
 
                 _.forEach(modelsInArea, function (el) {
@@ -1165,89 +1169,108 @@ async function insertElement (options) {
                         newParentPos = el.position().x - delta - 20;
                     }
                 })
-                await resizeX(parent, newParentPos, parent.size().width);
+                await resizeX(parent, newParentPos, parent.size().width + (parent.position().x - newParentPos));
                 break;
-
             }
         }
     }
-    console.log(8);
-    if(element.attributes.parent && parent.id !== element.attributes.parent) {
-
-        console.log(parent);
-        console.log(_.cloneDeep(element));
-        console.log(ifmlModel);
-        var oldParent = ifmlModel.getCell(element.attributes.parent);
-        console.log(oldParent);
-        oldParent.unembed(element);
-    }
-    console.log(9);
-    ifmlModel.addCell(element);
-    parent.embed(element);
-
-    /*if (paddingCoordinates.nw.x <= elementCoordinates.nw.x && paddingCoordinates.nw.y <= elementCoordinates.nw.y && paddingCoordinates.se.x >= elementCoordinates.se.x && paddingCoordinates.se.y >= elementCoordinates.se.y) {
-        ifmlModel.addCell(element);
-    } else {
-
-        if (paddingCooridinates.ne.x < elementCoordinates.ne.x || paddingCooridinates.nw.x > elementCoordinates.nw.x) {
-            var delta = Math.abs((parent.position().x + parent.size().width) - (elementCoordinates.nw.x + element.size().width));
-            delta = (delta/10) % 2 === 0 ? delta : delta + 5;
-
-            parent.transition('position/x', element.position().x - 20, {
-                duration: 500
-            });
+    if(ifmlModel.getCell(idElement)) {
+        if(elements[0].attributes.parent){
+          var oldParent = ifmlModel.getCell(elements[0].attributes.parent);
+          oldParent.unembed(elements[0]);
         }
-        await resize({
-            element: element,
-            parent: parent,
-            elementCoordinates: elementCoordinates,
-            ifmlModel: ifmlModel
-        }).then(function(str){
-            console.log(str);
-            element.position(parent.position().x + 20, parent.position().y + 40);
-            ifmlModel.addCell(element);
-        })*/
+
+        parent.embed(elements[0]);
+        _.forEach(elements, function (element) {
+            if (element.attributes.parent) {
+                var parent = ifmlModel.getCell(element.attributes.parent);
+
+                element.set('z',parent.attributes.z + 1);
+            }
+
+            if (element.attributes.type === 'ifml.Event') {
+                fadeIn(element,'.marker');
+            } else {
+                fadeIn(element,'.ifml-element');
+            }
+        });
+        _.forEach(links, function (link) {
+            fadeIn(link,'.connection');
+            fadeIn(link,'.marker-source');
+            fadeIn(link,'.marker-target');
+        });
+
+        links = _.flattenDeep(links);
+    } else {
+      await delay(200);
+      ifmlModel.addCells(_.flattenDeep(elements,links));
+      parent.embed(elements[0]);
+    }
+}
+
+async function fadeIn(element, path) {
+    element.attr(path + '/fill-opacity',1);
+    element.attr(path + '/stroke-opacity',1);
+    var opacity = 0;
+    for(var i = 0; i < 10; i ++) {
+        opacity += 0.1;
+        element.attr(path + '/stroke-opacity',opacity);
+        element.attr(path + '/fill-opacity',opacity);
+        await delay(10);
+    }
+}
+
+async function fadeOut(element, path) {
+    element.attr(path + '/fill-opacity',0);
+    element.attr(path + '/stroke-opacity',0);
+    var opacity = 1;
+    for(var i = 0; i < 10; i++) {
+        opacity -= 0.1;
+        element.attr(path + '/stroke-opacity',opacity);
+        element.attr(path + '/fill-opacity',opacity);
+        await delay(10);
+    }
 }
 
 function transitionX(element, newPos) {
     return new Promise(resolve => {
         element.transition('position/x', newPos, {
-            duration: 500
+            duration: 100
         });
-        setTimeout(resolve,500);
+        setTimeout(resolve,100);
     });
 }
 
 function transitionY(element, newPos) {
     return new Promise(resolve => {
         element.transition('position/y', newPos, {
-            duration: 500
+            duration: 100
         });
-        setTimeout(resolve,500);
+        setTimeout(resolve,100);
     });
 }
 
 function resizeX(element, newPos, newSize) {
     return new Promise(resolve => {
         element.transition('position/x', newPos, {
-            duration: 500
+            duration: 100
         });
         element.transition('size/width', newSize, {
-            duration: 500
+            duration: 100
         });
-        setTimeout(resolve,500);
+        setTimeout(resolve,100);
     });
 }
 
 function resizeY(element, newPos, newSize) {
     return new Promise(resolve => {
         element.transition('position/y', newPos, {
-            duration: 500
+            duration: 100
         });
         element.transition('size/height', newSize, {
-            duration: 500
+            duration: 100
         });
-        setTimeout(resolve,500);
+        setTimeout(resolve,100);
     });
 }
 
