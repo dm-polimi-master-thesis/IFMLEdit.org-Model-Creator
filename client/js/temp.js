@@ -260,7 +260,7 @@ if (modelsInElementArea.length > 0) {
                   }
               });
 
-              var maxUpMiddle = upMiddle.reduce((max, el) => (el.position().y + el.size().height) > max ? (el.position().y + el.size().height) : max, upMiddle[0].position().y + upMiddle[0].size().height),
+              var maxUpMiddle = upMiddle.length > 0 ? .reduce((max, el) => (el.position().y + el.size().height) > max ? (el.position().y + el.size().height) : max, upMiddle[0].position().y + upMiddle[0].size().height),
                   deltaUpMiddle = maxUpMiddle - elementCoordinates.nw.y + 20,
                   minDownMiddle = downMiddle.reduce((min, el) => el.position().y < min ? el.position().y : min, downMiddle[0].position().y),
                   deltaDownMiddle = elementCoordinates.sw.y - min + 20;

@@ -1025,7 +1025,7 @@ async function insertElement (options) {
         if (!recursion) {
             var num = elements.length;
             elements = _.filter(elements, function (element) { return !element.isLink() });
-            /*_.forEach(elements, function (element) {
+            _.forEach(elements, function (element) {
                 var connectedLinks = ifmlModel.getConnectedLinks(element);
 
                 _.forEach(connectedLinks, function (link) {
@@ -1044,12 +1044,14 @@ async function insertElement (options) {
             });
 
             links = _.flattenDeep(links);
-            await delay(num * 150);*/
+            await delay(num * 100);
         }
     }
 
     if (!child) {
         if (!recursion) {
+            console.log(1);
+            console.log(elements);
             _.forEach(elements, function (element) {
                 element.position(parent.position().x + 20, parent.position().y + 40);
             })
@@ -1085,10 +1087,8 @@ async function insertElement (options) {
                         y: Math.abs(element.position().y - initialPos.y)
                     };
                 element.position(elements[0].position().x + delta.x, elements[0].position().y + delta.y);
-                console.log(element);
             }
         })
-        debugger;
     }
     var paddingCoordinates = {
             nw: { x: parent.position().x + 20, y: parent.position().y + 40 },
@@ -1104,38 +1104,44 @@ async function insertElement (options) {
         },
         modelsInParentArea = ifmlModel.findModelsInArea({ x: parent.position().x, y: parent.position().y, width: parent.size().width, height: parent.size().height }),
         cloneParentSubGraph = ifmlModel.cloneSubgraph(modelsInParentArea);
-        console.log(modelsInParentArea);
+        console.log(2);
+        console.log(paddingCoordinates);
         console.log(cloneParentSubGraph);
-
+        console.log(paddingCoordinates);
+        console.log(elementCoordinates);
     if (!(paddingCoordinates.nw.x <= elementCoordinates.nw.x && paddingCoordinates.nw.y <= elementCoordinates.nw.y && paddingCoordinates.se.x >= elementCoordinates.se.x && paddingCoordinates.se.y >= elementCoordinates.se.y)) {
         if (paddingCoordinates.nw.x > elementCoordinates.nw.x) {
+            console.log(3);
             var delta = paddingCoordinates.nw.x - elementCoordinates.nw.x;
             positionX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].position().x - delta);
             sizeX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().width + delta);
         }
         if (paddingCoordinates.ne.x < elementCoordinates.ne.x) {
+            console.log(4);
             var delta = elementCoordinates.ne.x - paddingCoordinates.ne.x;
             sizeX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].width + delta);
         }
         if (paddingCoordinates.nw.y > elementCoordinates.nw.y) {
+            console.log(5);
             var delta = paddingCoordinates.nw.y - elementCoordinates.nw.y;
             positionY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].position().y - delta);
             sizeY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().height + delta);
         }
         if (paddingCoordinates.sw.y < elementCoordinates.sw.y) {
+            console.log(6);
             var delta = elementCoordinates.sw.y - paddingCoordinates.sw.y;
             sizeY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().height + delta);
         }
     }
-
-    var rect = {x: elementCoordinates.nw.x - 20, y: elementCoordinates.nw.y -20, width: elements[0].size().width, height: elements[0].size().height },
+    var rect = {x: elementCoordinates.nw.x - 20, y: elementCoordinates.nw.y - 20, width: elements[0].size().width + 20, height: elements[0].size().height + 20 },
         modelsInElementArea = ifmlModel.findModelsInArea(rect);
         modelsInElementArea = _.filter(modelsInElementArea, function (el) { return el.id !== parent.id && el.attributes.parent === parent.id });
-        console.log(_.cloneDeep(modelsInElementArea));
+
     if (modelsInElementArea.length > 0) {
+
         if (!child) {
-            var min = modelsInElementArea.reduce((minX, el) => el.position().x < minX ? el.position().x : minX, modelsInElementArea[0].position().x),
-                delta = elementCoordinates.ne.x - min + 20;
+            var min = modelsInElementArea.length > 0 ? modelsInElementArea.reduce((min, el) => el.position().x < min ? el.position().x : min, modelsInElementArea[0].position().x) : 0,
+                delta = modelsInElementArea.length > 0 ? elementCoordinates.ne.x - min + 20 : 0;
 
             _.forEach(elements, function (el) {
                 el.position(el.position().x - delta, el.position().y);
@@ -1159,19 +1165,12 @@ async function insertElement (options) {
                       }
                   });
 
-                  var maxRightMiddle = _.chain(rightMiddle)
-                                        .map(function (el) { return el.position().x + el.size().width })
-                                        .max()
-                                        .value(),
-                      minLeftMiddle = _.chain(leftMiddle)
-                                       .map(function (el) { return el.position().x })
-                                       .min()
-                                       .value(),
-                      deltaRightMiddle = maxRightMiddle - elementCoordinates.nw.x + 20,
-                      deltaLeftMiddle = elementCoordinates.ne.x - min + 20;
+                  var maxRightMiddle = rightMiddle.length > 0 ? rightMiddle.reduce((max, el) => (el.position().y + el.size().height) > max ? el.position().y + el.size().height : max, rightMiddle[0].position().y + rightMiddle[0].size().height) : 0,
+                      minLeftMiddle = leftMiddle.length > 0 ? leftMiddle.reduce((min, el) => el.position().y < min ? el.position().y : min, leftMiddle[0].position().y) : 0,
+                      deltaRightMiddle = rightMiddle.length > 0 ? maxRightMiddle - elementCoordinates.nw.x + 20 : 0,
+                      deltaLeftMiddle = leftMiddle.length > 0 ? lementCoordinates.ne.x - min + 20 : 0;
 
                   _.forEach(rightMiddle, function (el) {
-                    console.log(3);
                       var delta = cloneParentSubGraph[el.id].position().x - deltaRightMiddle;
                       positionX(cloneParentSubGraph, el, delta);
 
@@ -1182,7 +1181,6 @@ async function insertElement (options) {
                       }
                   })
                   _.forEach(leftMiddle, function (el) {
-                    console.log(4);
                       var delta = cloneParentSubGraph[el.id].position().x - deltaLeftMiddle;
                       positionX(cloneParentSubGraph, el, delta);
 
@@ -1195,7 +1193,7 @@ async function insertElement (options) {
 
               case 'right':
               case 'left':
-                  var middle = Math.round((elementCoordinates.sw.x - elementCoordinates.nw.x)/2),
+                  var middle = Math.round((elementCoordinates.sw.y - elementCoordinates.nw.y)/2),
                       upMiddle = [],
                       downMiddle = [];
 
@@ -1206,39 +1204,21 @@ async function insertElement (options) {
                           downMiddle.push(el);
                       }
                   });
-                  console.log(upMiddle);
-                  console.log(downMiddle);
-                  var maxUpMiddle = _.chain(upMiddle)
-                                     .map(function (el) { return el.position().y + el.size().height})
-                                     .max()
-                                     .value(),
-                      minDownMiddle = _.chain(downMiddle)
-                                       .map(function (el) { return el.position().y })
-                                       .min()
-                                       .value(),
-                      deltaUpMiddle = maxUpMiddle ? maxUpMiddle - elementCoordinates.nw.y + 20 : 0,
-                      deltaDownMiddle = minDownMiddle ? elementCoordinates.sw.y - min + 20 : 0;
-                  console.log(maxUpMiddle);
-                  console.log(minDownMiddle);
-                  console.log(deltaUpMiddle);
-                  console.log(deltaDownMiddle);
+                  var maxUpMiddle = upMiddle.length > 0 ? upMiddle.reduce((max, el) => (el.position().y + el.size().height) > max ? el.position().y + el.size().height : max, upMiddle[0].position().y + upMiddle[0].size().height) : 0,
+                      minDownMiddle = downMiddle.length > 0 ? downMiddle.reduce((min, el) => el.position().y < min ? el.position().y : min, downMiddle[0].position().y) : 0,
+                      deltaUpMiddle = upMiddle.length > 0 ? maxUpMiddle - elementCoordinates.nw.y + 20 : 0,
+                      deltaDownMiddle = downMiddle.length > 0 ? elementCoordinates.sw.y - min + 20 : 0;
                   _.forEach(upMiddle, function (el) {
-                      console.log(1);
-                      console.log(_.cloneDeep(el));
-                      console.log(deltaUpMiddle);
-                      var delta = cloneParentSubGraph[el.id].position().y - deltaUpMiddle;
-                      positionY(cloneParentSubGraph, el, delta);
+                      positionY(cloneParentSubGraph, el, cloneParentSubGraph[el.id].position().y - deltaUpMiddle);
 
-                      if ((cloneParentSubGraph[parent.id].position().y + 20) > cloneParentSubGraph[el.id].position().y) {
-                          var delta = cloneParentSubGraph[parent.id].position(). y+ 20 - cloneParentSubGraph[el.id].position().y;
-                          positionY(cloneParentSubGraph, parent, cloneParentSubGraph[el.id].position().y - 20);
+                      if (cloneParentSubGraph[el.id].position().y < (cloneParentSubGraph[parent.id].position().y + 20)) {
+                          var delta = (cloneParentSubGraph[parent.id].position().y) - cloneParentSubGraph[el.id].position().y + 40;
+                          positionY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].position().y - delta);
                           sizeY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().height + delta);
                       }
                   })
                   _.forEach(downMiddle, function (el) {
-                      console.log(2);
-                      var delta = cloneParentSubGraph[el.id].position().y - deltaDownMiddle;
-                      positionY(cloneParentSubGraph, el, delta);
+                      positionY(cloneParentSubGraph, el, cloneParentSubGraph[el.id].position().y + deltaDownMiddle);
 
                       if ((cloneParentSubGraph[parent.id].position().y + cloneParentSubGraph[parent.id].size().height - 20) < (cloneParentSubGraph[el.id].position().y)) {
                           var delta = cloneParentSubGraph[el.id].position().y - (cloneParentSubGraph[parent.id].position().y + cloneParentSubGraph[parent.id].size().height - 20);
@@ -1323,13 +1303,16 @@ async function insertElement (options) {
             }
         });
     }
-    resize(parent, cloneParentSubGraph[parent.id].position(), cloneParentSubGraph[parent.id].size());
+    await resize(parent, cloneParentSubGraph[parent.id].position(), cloneParentSubGraph[parent.id].size());
+
+    var num = modelsInParentArea.length;
 
     _.forEach(modelsInParentArea, function (el) {
-        console.log(el);
         translateX(el,cloneParentSubGraph[el.id].position().x);
         translateY(el,cloneParentSubGraph[el.id].position().y);
     })
+
+    await delay(300);
 
     if (!recursion) {
         if(ifmlModel.getCell(idElement)) {
@@ -1361,38 +1344,39 @@ async function insertElement (options) {
 
             links = _.flattenDeep(links);
         } else {
+            console.log('entro');
             fadeIn(elements[0],'.ifml-element');
-            ifmlModel.addCell(_.flattenDeep(elements[0]));
+            ifmlModel.addCell(elements[0]);
             parent.embed(elements[0]);
         }
     }
 }
 
 function positionX (subGraph,node,x) {
-    subGraph[node.id].position( x, node.position().y );
+    subGraph[node.id].position(x, subGraph[node.id].position().y);
 }
 
 function positionY (subGraph,node,y) {
-    subGraph[node.id].position( node.position().x, y );
+    subGraph[node.id].position(subGraph[node.id].position().x, y);
 }
 
 function sizeX (subGraph,node,width) {
-    subGraph[node.id].position({ width: width, height: node.size().height });
+    subGraph[node.id].resize(width,subGraph[node.id].size().height);
 }
 
 function sizeY (subGraph,node,height) {
-    subGraph[node.id].position({ width: node.size().width, height: height });
+    subGraph[node.id].resize(subGraph[node.id].size().width, height);
 }
 
 async function fadeIn(element, path) {
     element.attr(path + '/fill-opacity',1);
     element.attr(path + '/stroke-opacity',1);
     var opacity = 0;
-    for(var i = 0; i < 10; i ++) {
-        opacity += 0.1;
+    for(var i = 0; i < 5; i ++) {
+        opacity += 0.2;
         element.attr(path + '/stroke-opacity',opacity);
         element.attr(path + '/fill-opacity',opacity);
-        await delay(10);
+        await delay(1);
     }
 }
 
@@ -1400,59 +1384,62 @@ async function fadeOut(element, path) {
     element.attr(path + '/fill-opacity',0);
     element.attr(path + '/stroke-opacity',0);
     var opacity = 1;
-    for(var i = 0; i < 10; i++) {
-        opacity -= 0.1;
+    for(var i = 0; i < 5; i++) {
+        opacity -= 0.2;
         element.attr(path + '/stroke-opacity',opacity);
         element.attr(path + '/fill-opacity',opacity);
-        await delay(10);
+        await delay(1);
     }
 }
 
 function translateX(element, newPos) {
     return new Promise(resolve => {
         element.transition('position/x', newPos, {
-            duration: 100
+            duration: 200
         });
-        setTimeout(resolve,100);
+        setTimeout(resolve,200);
     });
 }
 
 function translateY(element, newPos) {
     return new Promise(resolve => {
         element.transition('position/y', newPos, {
-            duration: 100
+            duration: 200
         });
-        setTimeout(resolve,100);
+        setTimeout(resolve,200);
     });
 }
 
 function resizeX(element, newPos, newSize) {
     return new Promise(resolve => {
         element.transition('position/x', newPos, {
-            duration: 100
+            duration: 200
         });
         element.transition('size/width', newSize, {
-            duration: 100
+            duration: 200
         });
-        setTimeout(resolve,100);
+        setTimeout(resolve,200);
     });
 }
 
 function resizeY(element, newPos, newSize) {
     return new Promise(resolve => {
         element.transition('position/y', newPos, {
-            duration: 100
+            duration: 200
         });
         element.transition('size/height', newSize, {
-            duration: 100
+            duration: 200
         });
-        setTimeout(resolve,100);
+        setTimeout(resolve,200);
     });
 }
 
-function resize(element, newPos, newSize) {
-    resizeX(element, newPos.x, newSize.width);
-    resizeY(element, newPos.y, newSize.height);
+async function resize(element, newPos, newSize) {
+    return new Promise(resolve => {
+        resizeX(element, newPos.x, newSize.width);
+        resizeY(element, newPos.y, newSize.height);
+        setTimeout(resolve,500);
+    });
 };
 
 function delay(ms) {
