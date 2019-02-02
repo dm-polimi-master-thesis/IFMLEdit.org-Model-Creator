@@ -1170,40 +1170,53 @@ async function insertElement (options) {
                   var middle = Math.round((elementCoordinates.ne.x - elementCoordinates.nw.x)/2),
                       rightMiddle = [],
                       leftMiddle = [],
-                      rectRightToMiddle = {x: clonedGraph[parent.id].position().x, y: elementCoordinates.nw.y, width: middle - clonedGraph[parent.id].position().x, height: clonedGraph[idElement].size().height },
+                      rectRightToMiddle = {x: clonedGraph[parent.id].position().x, y: elementCoordinates.nw.y, width: (elementCoordinates.nw.x + middle) - clonedGraph[parent.id].position().x, height: clonedGraph[idElement].size().height },
                       rightToElement = ifmlModel.findModelsInArea(rectRightToMiddle),
-                      rectLeftToMiddle = {x: middle, y: elementCoordinates.nw.y, width: clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width - middle, height: clonedGraph[idElement].size().height },
+                      rectLeftToMiddle = {x: middle, y: elementCoordinates.nw.y, width: (clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width) - (elementCoordinates.nw.x + middle), height: clonedGraph[idElement].size().height },
                       leftToElement = ifmlModel.findModelsInArea(rectLeftToMiddle);
 
-                  rightToElement = _.filter(rightToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().x <= middle });
-                  leftToElement = _.filter(leftToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().x > middle});
+                  rightToElement = _.filter(rightToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().x <= (elementCoordinates.nw.x + middle) });
+                  leftToElement = _.filter(leftToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().x > (elementCoordinates.nw.x + middle)});
 
                   _.forEach(modelsInElementArea, function (el) {
-                      if(el.position().x <= middle) {
-                          rightMiddle.push(el);
-                      } else {
+                      if(el.position().x <= (elementCoordinates.nw.x + middle)) {
+                          console.log('left',middle,el.position().x,elementCoordinates);
                           leftMiddle.push(el);
+                      } else {
+                          console.log('right',middle,el.position().x,elementCoordinates);
+                          rightMiddle.push(el);
                       }
                   });
 
-                  var maxRightMiddle = rightMiddle.length > 0 ? rightMiddle.reduce((max, el) => (el.position().y + el.size().height) > max ? el.position().y + el.size().height : max, rightMiddle[0].position().y + rightMiddle[0].size().height) : 0,
-                      minLeftMiddle = leftMiddle.length > 0 ? leftMiddle.reduce((min, el) => el.position().y < min ? el.position().y : min, leftMiddle[0].position().y) : 0,
-                      deltaRightMiddle = rightMiddle.length > 0 ? maxRightMiddle - elementCoordinates.nw.x + 20 : 0,
-                      deltaLeftMiddle = leftMiddle.length > 0 ? elementCoordinates.ne.x - min + 20 : 0;
+                  var minRightMiddle = rightMiddle.length > 0 ? rightMiddle.reduce((min, el) => el.position().x  < min ? el.position().x : min, rightMiddle[0].position().x) : 0,
+                      maxLeftMiddle = leftMiddle.length > 0 ? leftMiddle.reduce((max, el) => (el.position().x + el.size().width) > max ? (el.position().x + el.size().width) : max, leftMiddle[0].position().x + leftMiddle[0].size().width) : 0,
+                      deltaRightMiddle = rightMiddle.length > 0 ? elementCoordinates.nw.x - minRightMiddle + 20 : 0,
+                      deltaLeftMiddle = leftMiddle.length > 0 ? maxLeftMiddle - elementCoordinates.ne.x + 20 : 0;
+
+                  console.log(minRightMiddle);
+                  console.log(maxLeftMiddle);
+                  console.log(deltaRightMiddle);
+                  console.log(deltaLeftMiddle);
+                  console.log(rightToElement);
+                  console.log(leftToElement);
 
                   _.forEach(rightToElement, function (el) {
-                      var delta = clonedGraph[el.id].position().x - deltaRightMiddle;
-                      positionX(clonedGraph, el, delta);
+                      console.log(clonedGraph[el.id].position());
+                      positionX(clonedGraph, el, clonedGraph[el.id].position().x - deltaRightMiddle);
+                      console.log(clonedGraph[el.id].position());
 
                       if ((clonedGraph[parent.id].position().x + 20) > clonedGraph[el.id].position().x) {
+                          console.log(clonedGraph[el.id].position());
                           var delta = clonedGraph[parent.id].position().x + 20 - clonedGraph[el.id].position().x;
+                          console.log(clonedGraph[el.id].position());
                           positionX(clonedGraph, parent, clonedGraph[el.id].position().x - 20);
                           sizeX(clonedGraph, parent, clonedGraph[parent.id].size().width + delta);
                       }
                   })
                   _.forEach(leftToElement, function (el) {
-                      var delta = clonedGraph[el.id].position().x - deltaLeftMiddle;
-                      positionX(clonedGraph, el, delta);
+                      console.log(clonedGraph[el.id].position());
+                      positionX(clonedGraph, el, clonedGraph[el.id].position().x - deltaLeftMiddle);
+                      console.log(clonedGraph[el.id].position());
 
                       if ((clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width - 20) < (clonedGraph[el.id].position().x)) {
                           var delta = clonedGraph[el.id].position().x - (clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width - 20);
@@ -1221,17 +1234,17 @@ async function insertElement (options) {
                   var middle = Math.round((elementCoordinates.sw.y - elementCoordinates.nw.y)/2),
                       upMiddle = [],
                       downMiddle = [],
-                      rectUpToMiddle = {x: elementCoordinates.nw.x, y: clonedGraph[parent.id].position().y, width: clonedGraph[idElement].size().width, height: middle - clonedGraph[parent.id].position().y },
+                      rectUpToMiddle = {x: elementCoordinates.nw.x, y: clonedGraph[parent.id].position().y, width: clonedGraph[idElement].size().width, height: (elementCoordinates.nw.y + middle) - clonedGraph[parent.id].position().y },
                       upToElement = ifmlModel.findModelsInArea(rectUpToMiddle),
-                      rectDownToMiddle = {x: elementCoordinates.nw.x, y: middle, width: clonedGraph[idElement].size().width, height: (clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height) - middle },
+                      rectDownToMiddle = {x: elementCoordinates.nw.x, y: (elementCoordinates.nw.y + middle), width: clonedGraph[idElement].size().width, height: (clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height) - (elementCoordinates.nw.y + middle) },
                       downToElement = ifmlModel.findModelsInArea(rectDownToMiddle);
 
-                  upToElement = _.filter(upToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().y <= middle });
-                  downToElement = _.filter(downToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().y > middle});
+                  upToElement = _.filter(upToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().y <= (elementCoordinates.nw.y + middle) });
+                  downToElement = _.filter(downToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().y > (elementCoordinates.nw.y + middle)});
 
 
                   _.forEach(modelsInElementArea, function (el) {
-                      if(el.position().y <= middle) {
+                      if(el.position().y <= (elementCoordinates.nw.y + middle)) {
                           upMiddle.push(el);
                       } else {
                           downMiddle.push(el);
