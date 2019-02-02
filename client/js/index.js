@@ -381,7 +381,7 @@ $('#ifml > .wrapper-example-modal').click(function () {
         });
     }});
     return false;
-}).click();
+})//.click();
 
 $('#ifml > .wrapper-pattern-modal').click(function () {
     createModalPatterns({patterns: patterns, type: 'create', load: function (pattern) {
@@ -931,8 +931,6 @@ function resizeElement (options) {
 async function insertElement (options) {
     var elementName = options.name,
         elementType = options.type ? options.type.toLowerCase().replace(/\W/g,"-") : undefined,
-        elementStereotype,
-        size,
         parentName = options.parent,
         childName = options.child,
         childType = options.childType ? options.childType.replace(/\W/g,"-") : undefined,
@@ -940,7 +938,8 @@ async function insertElement (options) {
         idParent = parentName ? toId(parentName,'-view-container') : undefined,
         idChild = childName && childType ? toId(childName,'-' + childType) : undefined,
         position = options.position,
-        elements = idElement && ifmlModel.getCell(idElement) ? _.flattenDeep([ifmlModel.getCell(idElement), ifmlModel.getCell(idElement).getEmbeddedCells({deep:'true'})]) : [],
+        clonedGraph = options.clone || ifmlModel.cloneSubgraph(ifmlModel.getCells()),
+        elements = [],
         links = [],
         parent = idParent ? ifmlModel.getCell(idParent) : undefined,
         child = idChild ? ifmlModel.getCell(idChild) : undefined,
@@ -948,21 +947,33 @@ async function insertElement (options) {
         template = {
             elements: [],
             relations: []
-        };
+        },
+        elementStereotype,
+        size;
 
-    if (idChild && !child) {
+    if(idElement && ifmlModel.getCell(idElement)) {
+        if(!recursion) {
+            console.log(1);
+            elements = _.flattenDeep([ifmlModel.getCell(idElement), ifmlModel.getCell(idElement).getEmbeddedCells({deep:'true'})]);
+        } else {
+            console.log(2);
+            elements = _.flattenDeep([clonedGraph[idElement], ifmlModel.getCell(idElement).getEmbeddedCells({deep:'true'})])
+        }
+    }
+
+    if (!recursion && idChild && !child) {
         $.notify({message: 'Child element not found... Repeat the command and select an existing child element.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
-    if (child && parent && !(child.attributes.parent === parent.id)) {
+    if (!recursion && child && parent && !(child.attributes.parent === parent.id)) {
         $.notify({message: 'The selected child is not really a child of the selected parent.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
-    if (!parent) {
+    if (!recursion && !parent) {
         $.notify({message: 'Parent element not found... Repeat the command and select an existing parent element.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
-    if (elements[0] && parent.id === ifmlModel.getCell(idElement).attributes.parent) {
+    if (!recursion && elements[0] && parent.id === ifmlModel.getCell(idElement).attributes.parent) {
         $.notify({message: 'The element is already insert in the selected parent view container.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
@@ -972,10 +983,10 @@ async function insertElement (options) {
     }
 
     var modelElements = ifmlModel.getElements(),
-        rightToParent = parent.parent === undefined ? _.filter(modelElements, function (element) { return parent.position().x >= element.position().x && parent.id !== element.id }) : undefined,
-        leftToParent = parent.parent === undefined ? _.filter(modelElements, function (element) { return (parent.position().x + parent.size().width) <= element.position().x && parent.id !== element.id }) : undefined,
-        upToParent = parent.parent === undefined ? _.filter(modelElements, function (element) { return parent.position().y >= element.position().y && parent.id !== element.id }) : undefined,
-        downToParent = parent.parent === undefined ? _.filter(modelElements, function (element) { return (parent.position().y + parent.size().height) <= element.position().y && parent.id !== element.id }) : undefined;
+        rightToParent = parent.parent === undefined ? _.filter(modelElements, function (element) { return (parent.position().x + parent.size().width) <= element.position().x && element.id != idElement }) : undefined,
+        leftToParent = parent.parent === undefined ? _.filter(modelElements, function (element) { return (element.position().x + element.size().width) <= parent.position().x && element.id != idElement }) : undefined,
+        upToParent = parent.parent === undefined ? _.filter(modelElements, function (element) { return (element.position().y + element.size().height) <= parent.position().y && element.id != idElement }) : undefined,
+        downToParent = parent.parent === undefined ? _.filter(modelElements, function (element) { return (parent.position().y + parent.size().height) <= element.position().y && element.id != idElement }) : undefined;
 
     if (!elements[0]) {
         switch (elementType) {
@@ -1021,10 +1032,12 @@ async function insertElement (options) {
         }));
 
         elements = [ifml.fromJSON({ elements: template.elements , relations: []})[0]];
+        clonedGraph[idElement] = elements[0];
     } else {
+        var num = elements.length;
+        elements = _.filter(elements, function (element) { return !element.isLink() });
+
         if (!recursion) {
-            var num = elements.length;
-            elements = _.filter(elements, function (element) { return !element.isLink() });
             _.forEach(elements, function (element) {
                 var connectedLinks = ifmlModel.getConnectedLinks(element);
 
@@ -1090,72 +1103,80 @@ async function insertElement (options) {
             }
         })
     }
-    var paddingCoordinates = {
-            nw: { x: parent.position().x + 20, y: parent.position().y + 40 },
-            ne: { x: parent.position().x + parent.size().width - 20, y: parent.position().y + 40 },
-            sw: { x: parent.position().x + 20, y: parent.position().y + parent.size().height - 20 },
-            se: { x: parent.position().x + parent.size().width - 20, y: parent.position().y + parent.size().height - 20 }
+
+    var modelsInParentArea = ifmlModel.findModelsInArea({ x: clonedGraph[parent.id].position().x, y: clonedGraph[parent.id].position().y, width: clonedGraph[parent.id].size().width, height: clonedGraph[parent.id].size().height }),
+        el = elements[0],
+        par = clonedGraph[parent.id],
+        paddingCoordinates = {
+            nw: { x: par.position().x + 20, y: par.position().y + 40 },
+            ne: { x: par.position().x + par.size().width - 20, y: par.position().y + 40 },
+            sw: { x: par.position().x + 20, y: par.position().y + par.size().height - 20 },
+            se: { x: par.position().x + par.size().width - 20, y: par.position().y + par.size().height - 20 }
         },
         elementCoordinates = {
-            nw: { x: elements[0].position().x, y: elements[0].position().y },
-            ne: { x: elements[0].position().x + elements[0].size().width, y: elements[0].position().y },
-            sw: { x: elements[0].position().x, y: elements[0].position().y + elements[0].size().height },
-            se: { x: elements[0].position().x + elements[0].size().width, y: elements[0].position().y + elements[0].size().height }
-        },
-        modelsInParentArea = ifmlModel.findModelsInArea({ x: parent.position().x, y: parent.position().y, width: parent.size().width, height: parent.size().height }),
-        cloneParentSubGraph = ifmlModel.cloneSubgraph(modelsInParentArea);
-        console.log(2);
-        console.log(paddingCoordinates);
-        console.log(cloneParentSubGraph);
-        console.log(paddingCoordinates);
-        console.log(elementCoordinates);
+            nw: { x: el.position().x, y: el.position().y },
+            ne: { x: el.position().x + el.size().width, y: el.position().y },
+            sw: { x: el.position().x, y: el.position().y + el.size().height },
+            se: { x: el.position().x + el.size().width, y: el.position().y + el.size().height }
+        };
     if (!(paddingCoordinates.nw.x <= elementCoordinates.nw.x && paddingCoordinates.nw.y <= elementCoordinates.nw.y && paddingCoordinates.se.x >= elementCoordinates.se.x && paddingCoordinates.se.y >= elementCoordinates.se.y)) {
         if (paddingCoordinates.nw.x > elementCoordinates.nw.x) {
             console.log(3);
             var delta = paddingCoordinates.nw.x - elementCoordinates.nw.x;
-            positionX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].position().x - delta);
-            sizeX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().width + delta);
+            positionX(clonedGraph, parent, clonedGraph[parent.id].position().x - delta);
+            sizeX(clonedGraph, parent, clonedGraph[parent.id].size().width + delta);
         }
         if (paddingCoordinates.ne.x < elementCoordinates.ne.x) {
             console.log(4);
             var delta = elementCoordinates.ne.x - paddingCoordinates.ne.x;
-            sizeX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].width + delta);
+            sizeX(clonedGraph, parent, clonedGraph[parent.id].width + delta);
         }
         if (paddingCoordinates.nw.y > elementCoordinates.nw.y) {
             console.log(5);
             var delta = paddingCoordinates.nw.y - elementCoordinates.nw.y;
-            positionY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].position().y - delta);
-            sizeY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().height + delta);
+            positionY(clonedGraph, parent, clonedGraph[parent.id].position().y - delta);
+            sizeY(clonedGraph, parent, clonedGraph[parent.id].size().height + delta);
         }
         if (paddingCoordinates.sw.y < elementCoordinates.sw.y) {
             console.log(6);
             var delta = elementCoordinates.sw.y - paddingCoordinates.sw.y;
-            sizeY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().height + delta);
+            sizeY(clonedGraph, parent, clonedGraph[parent.id].size().height + delta);
         }
     }
     var rect = {x: elementCoordinates.nw.x - 20, y: elementCoordinates.nw.y - 20, width: elements[0].size().width + 20, height: elements[0].size().height + 20 },
         modelsInElementArea = ifmlModel.findModelsInArea(rect);
-        modelsInElementArea = _.filter(modelsInElementArea, function (el) { return el.id !== parent.id && el.attributes.parent === parent.id });
+        console.log(modelsInElementArea);
+        modelsInElementArea = _.filter(modelsInElementArea, function (el) { return el.id !== parent.id && el.attributes.parent === parent.id && el.id !== idElement });
+
+    console.log(modelsInElementArea);
 
     if (modelsInElementArea.length > 0) {
 
-        if (!child) {
+        if (!child && !recursion) {
             var min = modelsInElementArea.length > 0 ? modelsInElementArea.reduce((min, el) => el.position().x < min ? el.position().x : min, modelsInElementArea[0].position().x) : 0,
                 delta = modelsInElementArea.length > 0 ? elementCoordinates.ne.x - min + 20 : 0;
 
             _.forEach(elements, function (el) {
+                console.log(el);
                 el.position(el.position().x - delta, el.position().y);
             })
 
-            positionX(cloneParentSubGraph, parent, elements[0].position().x - 20);
-            sizeX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().width + delta);
-        } else {
+            positionX(clonedGraph, parent, elements[0].position().x - 20);
+            sizeX(clonedGraph, parent, clonedGraph[parent.id].size().width + delta);
+        } else if (child || recursion){
             switch (position) {
               case 'up':
               case 'down':
                   var middle = Math.round((elementCoordinates.ne.x - elementCoordinates.nw.x)/2),
                       rightMiddle = [],
-                      leftMiddle = [];
+                      leftMiddle = [],
+                      rectRightToMiddle = {x: clonedGraph[parent.id].position().x, y: elementCoordinates.nw.y, width: middle - clonedGraph[parent.id].position().x, height: clonedGraph[idElement].size().height },
+                      rightToElement = ifmlModel.findModelsInArea(rectRightToMiddle),
+                      rectLeftToMiddle = {x: middle, y: elementCoordinates.nw.y, width: clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width - middle, height: clonedGraph[idElement].size().height },
+                      leftToElement = ifmlModel.findModelsInArea(rectLeftToMiddle);
+
+                  rightToElement = _.filter(rightToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().x <= middle });
+                  leftToElement = _.filter(leftToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().x > middle});
 
                   _.forEach(modelsInElementArea, function (el) {
                       if(el.position().x <= middle) {
@@ -1168,34 +1189,46 @@ async function insertElement (options) {
                   var maxRightMiddle = rightMiddle.length > 0 ? rightMiddle.reduce((max, el) => (el.position().y + el.size().height) > max ? el.position().y + el.size().height : max, rightMiddle[0].position().y + rightMiddle[0].size().height) : 0,
                       minLeftMiddle = leftMiddle.length > 0 ? leftMiddle.reduce((min, el) => el.position().y < min ? el.position().y : min, leftMiddle[0].position().y) : 0,
                       deltaRightMiddle = rightMiddle.length > 0 ? maxRightMiddle - elementCoordinates.nw.x + 20 : 0,
-                      deltaLeftMiddle = leftMiddle.length > 0 ? lementCoordinates.ne.x - min + 20 : 0;
+                      deltaLeftMiddle = leftMiddle.length > 0 ? elementCoordinates.ne.x - min + 20 : 0;
 
-                  _.forEach(rightMiddle, function (el) {
-                      var delta = cloneParentSubGraph[el.id].position().x - deltaRightMiddle;
-                      positionX(cloneParentSubGraph, el, delta);
+                  _.forEach(rightToElement, function (el) {
+                      var delta = clonedGraph[el.id].position().x - deltaRightMiddle;
+                      positionX(clonedGraph, el, delta);
 
-                      if ((cloneParentSubGraph[parent.id].position().x + 20) > cloneParentSubGraph[el.id].position().x) {
-                          var delta = cloneParentSubGraph[parent.id].position().x + 20 - cloneParentSubGraph[el.id].position().x;
-                          positionX(cloneParentSubGraph, parent, cloneParentSubGraph[el.id].position().x - 20);
-                          sizeX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().width + delta);
+                      if ((clonedGraph[parent.id].position().x + 20) > clonedGraph[el.id].position().x) {
+                          var delta = clonedGraph[parent.id].position().x + 20 - clonedGraph[el.id].position().x;
+                          positionX(clonedGraph, parent, clonedGraph[el.id].position().x - 20);
+                          sizeX(clonedGraph, parent, clonedGraph[parent.id].size().width + delta);
                       }
                   })
-                  _.forEach(leftMiddle, function (el) {
-                      var delta = cloneParentSubGraph[el.id].position().x - deltaLeftMiddle;
-                      positionX(cloneParentSubGraph, el, delta);
+                  _.forEach(leftToElement, function (el) {
+                      var delta = clonedGraph[el.id].position().x - deltaLeftMiddle;
+                      positionX(clonedGraph, el, delta);
 
-                      if ((cloneParentSubGraph[parent.id].position().x + cloneParentSubGraph[parent.id].size().width - 20) < (cloneParentSubGraph[el.id].position().x)) {
-                          var delta = cloneParentSubGraph[el.id].position().x - (cloneParentSubGraph[parent.id].position().x + cloneParentSubGraph[parent.id].size().width - 20);
-                          sizeX(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().width + delta);
+                      if ((clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width - 20) < (clonedGraph[el.id].position().x)) {
+                          var delta = clonedGraph[el.id].position().x - (clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width - 20);
+                          sizeX(clonedGraph, parent, clonedGraph[parent.id].size().width + delta);
                       }
                   });
                   break;
 
               case 'right':
               case 'left':
+                  console.log('entro');
+                  console.log(elements[0]);
+                  console.log(clonedGraph);
+                  console.log(clonedGraph[elements[0].id]);
                   var middle = Math.round((elementCoordinates.sw.y - elementCoordinates.nw.y)/2),
                       upMiddle = [],
-                      downMiddle = [];
+                      downMiddle = [],
+                      rectUpToMiddle = {x: elementCoordinates.nw.x, y: clonedGraph[parent.id].position().y, width: clonedGraph[idElement].size().width, height: middle - clonedGraph[parent.id].position().y },
+                      upToElement = ifmlModel.findModelsInArea(rectUpToMiddle),
+                      rectDownToMiddle = {x: elementCoordinates.nw.x, y: middle, width: clonedGraph[idElement].size().width, height: (clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height) - middle },
+                      downToElement = ifmlModel.findModelsInArea(rectDownToMiddle);
+
+                  upToElement = _.filter(upToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().y <= middle });
+                  downToElement = _.filter(downToElement, function (el) { return el.attributes.parent === parent.id && el.id !== idElement && el.id !== parent.id && el.position().y > middle});
+
 
                   _.forEach(modelsInElementArea, function (el) {
                       if(el.position().y <= middle) {
@@ -1208,21 +1241,22 @@ async function insertElement (options) {
                       minDownMiddle = downMiddle.length > 0 ? downMiddle.reduce((min, el) => el.position().y < min ? el.position().y : min, downMiddle[0].position().y) : 0,
                       deltaUpMiddle = upMiddle.length > 0 ? maxUpMiddle - elementCoordinates.nw.y + 20 : 0,
                       deltaDownMiddle = downMiddle.length > 0 ? elementCoordinates.sw.y - min + 20 : 0;
-                  _.forEach(upMiddle, function (el) {
-                      positionY(cloneParentSubGraph, el, cloneParentSubGraph[el.id].position().y - deltaUpMiddle);
 
-                      if (cloneParentSubGraph[el.id].position().y < (cloneParentSubGraph[parent.id].position().y + 20)) {
-                          var delta = (cloneParentSubGraph[parent.id].position().y) - cloneParentSubGraph[el.id].position().y + 40;
-                          positionY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].position().y - delta);
-                          sizeY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().height + delta);
+                  _.forEach(upToElement, function (el) {
+                      positionY(clonedGraph, el, clonedGraph[el.id].position().y - deltaUpMiddle);
+
+                      if (clonedGraph[el.id].position().y < (clonedGraph[parent.id].position().y + 20)) {
+                          var delta = (clonedGraph[parent.id].position().y) - clonedGraph[el.id].position().y + 40;
+                          positionY(clonedGraph, parent, clonedGraph[parent.id].position().y - delta);
+                          sizeY(clonedGraph, parent, clonedGraph[parent.id].size().height + delta);
                       }
                   })
-                  _.forEach(downMiddle, function (el) {
-                      positionY(cloneParentSubGraph, el, cloneParentSubGraph[el.id].position().y + deltaDownMiddle);
+                  _.forEach(downToElement, function (el) {
+                      positionY(clonedGraph, el, clonedGraph[el.id].position().y + deltaDownMiddle);
 
-                      if ((cloneParentSubGraph[parent.id].position().y + cloneParentSubGraph[parent.id].size().height - 20) < (cloneParentSubGraph[el.id].position().y)) {
-                          var delta = cloneParentSubGraph[el.id].position().y - (cloneParentSubGraph[parent.id].position().y + cloneParentSubGraph[parent.id].size().height - 20);
-                          sizeY(cloneParentSubGraph, parent, cloneParentSubGraph[parent.id].size().height + delta);
+                      if ((clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height - 20) < (clonedGraph[el.id].position().y)) {
+                          var delta = clonedGraph[el.id].position().y - (clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height - 20);
+                          sizeY(clonedGraph, parent, clonedGraph[parent.id].size().height + delta);
                       }
                   });
                   break;
@@ -1233,18 +1267,21 @@ async function insertElement (options) {
     if (parent.attributes.parent !== undefined) {
         var options = {
                 name: parent.attributes.name,
-                type: parent.attributes.type,
+                type: 'view container',
                 parent: parent.attributes.parent,
+                clone: clonedGraph,
+                position: position || 'left',
                 recursion: true
             };
         console.log(options);
         insertElement(options);
+
     } else {
         var parentExtPadding = {
-            nw: { x: cloneParentSubGraph[parent.id].position().x - 20, y: cloneParentSubGraph[parent.id].position().y - 20 },
-            ne: { x: cloneParentSubGraph[parent.id].position().x + cloneParentSubGraph[parent.id].width + 20, y: cloneParentSubGraph[parent.id].position().y - 20},
-            sw: { x: cloneParentSubGraph[parent.id].position().x - 20, y: cloneParentSubGraph[parent.id].position().y + cloneParentSubGraph[parent.id].size().height + 20 },
-            se: { x: cloneParentSubGraph[parent.id].position().x + cloneParentSubGraph[parent.id].size().width + 20, y: cloneParentSubGraph[parent.id].position().y + cloneParentSubGraph[parent.id].size().height +20 }
+            nw: { x: clonedGraph[parent.id].position().x - 20, y: clonedGraph[parent.id].position().y - 20 },
+            ne: { x: clonedGraph[parent.id].position().x + clonedGraph[parent.id].width + 20, y: clonedGraph[parent.id].position().y - 20},
+            sw: { x: clonedGraph[parent.id].position().x - 20, y: clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height + 20 },
+            se: { x: clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width + 20, y: clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height +20 }
         };
 
         _.forEach(upToParent, function (el) {
@@ -1303,13 +1340,12 @@ async function insertElement (options) {
             }
         });
     }
-    await resize(parent, cloneParentSubGraph[parent.id].position(), cloneParentSubGraph[parent.id].size());
-
+    await resize(parent, clonedGraph[parent.id].position(), clonedGraph[parent.id].size());
     var num = modelsInParentArea.length;
 
     _.forEach(modelsInParentArea, function (el) {
-        translateX(el,cloneParentSubGraph[el.id].position().x);
-        translateY(el,cloneParentSubGraph[el.id].position().y);
+        translateX(el,clonedGraph[el.id].position().x);
+        translateY(el,clonedGraph[el.id].position().y);
     })
 
     await delay(300);
