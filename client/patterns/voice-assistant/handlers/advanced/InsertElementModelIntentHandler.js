@@ -13,8 +13,14 @@ const InsertElementModelIntentHandler = {
             childType = handlerInput.requestEnvelope.request.intent.slots.childType.value ? handlerInput.requestEnvelope.request.intent.slots.childType.resolutions.resolutionsPerAuthority[0].values[0].value.name : undefined,
             message;
 
-        if (name && type && parent) {
-            var message = 'Insert ' + name + ' ' + type + ' inside ' + parent;
+        if (parent) {
+            var message = 'Insert ';
+
+            if (name && type) {
+                message += name + ' ' + type + ' ';
+            }
+
+            message += 'inside ' + parent;
 
             sessionAttributes.notify = {
                 message: message,
@@ -37,11 +43,11 @@ const InsertElementModelIntentHandler = {
                 .getResponse();
         } else {
             sessionAttributes.notify = {
-                message: 'You forgot to provide non negligible information. The name and the type of the element and the name of the parent view container are required information. In addition, you can define the position respect to an other element of the view container',
+                message: 'What is the name of the parent view container inside which you want to insert the element?',
                 messageType: 'warning'
             };
             return handlerInput.responseBuilder
-                .speak('You forgot to provide non negligible information. The name and the type of the element and the name of the parent view container are required information. In addition, you can define the position respect to an other element of the view container')
+                .addDelegateDirective()
                 .getResponse();
         }
     }

@@ -7,7 +7,6 @@ const GenerateViewContainerModelIntentHandler = {
         var sessionAttributes = handlerInput.attributesManager.getSessionAttributes(),
             name = handlerInput.requestEnvelope.request.intent.slots.name.value
             properties = handlerInput.requestEnvelope.request.intent.slots.properties.value ? handlerInput.requestEnvelope.request.intent.slots.properties.resolutions.resolutionsPerAuthority[0].values[0].value.name : undefined,
-            parent = handlerInput.requestEnvelope.request.intent.slots.parent.value,
             message;
 
         if (name) {
@@ -52,10 +51,6 @@ const GenerateViewContainerModelIntentHandler = {
 
             message += 'View Container with name ' + name;
 
-            if (parent) {
-                message += ' and parent ' + parent
-            }
-
             sessionAttributes.notify = {
                 message: message,
                 messageType: 'success'
@@ -64,8 +59,7 @@ const GenerateViewContainerModelIntentHandler = {
                 operation: 'generate-view-container',
                 options: {
                     name: name,
-                    properties: properties || {},
-                    parent: parent
+                    properties: properties || {}
                 }
             }
             return handlerInput.responseBuilder
