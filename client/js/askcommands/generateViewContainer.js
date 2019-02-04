@@ -10,7 +10,8 @@ var generator = require('../ifml/utilities/generator/elementGenerator.js').gener
     idValidator = require('../ifml/utilities/validator/idValidator.js').idValidator;
 
 function generateViewContainer(options) {
-    var id = toId(options.name,'view-container'),
+    var ifmlModel = options.ifmlModel,
+        id = toId(options.name,'view-container'),
         properties = options.properties,
         template = {
             elements: [],
@@ -38,26 +39,17 @@ function generateViewContainer(options) {
             }
         }
     }
-    if (options.parent) {
-        var parent = ifmlModel.getCell(properties.parent);
-        if (!parent) {
-            $.notify({message: 'The parent does not exist'}, {allow_dismiss: true, type: 'danger'});
-            return undefined;
-        }
-    }
 
-    if (!options.parent) {
-        template.elements.push(generator(template, {
-            type: 'ifml.ViewContainer',
-            id: idValidator(id),
-            name: options.name,
-            xor: properties.xor,
-            landmark: properties.landmark,
-            default: properties.default,
-            parent: options.parent || undefined
-        }));
-        return template;
-    }
+    template.elements.push(generator(template, {
+        type: 'ifml.ViewContainer',
+        id: idValidator(id),
+        name: options.name,
+        xor: properties.xor,
+        landmark: properties.landmark,
+        default: properties.default,
+        parent: undefined
+    }));
+    return template;
 }
 
 exports.generateViewContainer = generateViewContainer;

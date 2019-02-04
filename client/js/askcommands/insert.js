@@ -34,6 +34,25 @@ async function insert (options) {
         elementStereotype,
         size;
 
+    if (elementType === 'event') {
+        if(idElement && ifmlModel.getCell(idElement)) {
+            $.notify({message: 'Another event with the same name is already present in the model'}, {allow_dismiss: true, type: 'danger'});
+            return;
+        }
+        template.elements.push(generator(template, {
+            type: 'ifml.Event',
+            id: idValidator(idElement),
+            name: options.name,
+            text: options.name,
+            parent: parent.id,
+            position: {x: parent.position().x, y: parent.position().y + 40}
+        }));
+
+        var element = ifml.fromJSON({ elements: template.elements , relations: []})[0];
+        ifmlModel.addCell(element);
+        return;
+    }
+
     if(idElement && ifmlModel.getCell(idElement)) {
         if(!recursion) {
             elements = _.flattenDeep([ifmlModel.getCell(idElement), ifmlModel.getCell(idElement).getEmbeddedCells({deep:'true'})]);
@@ -62,10 +81,6 @@ async function insert (options) {
     }
     if (!recursion && elements[0] && parent.id === ifmlModel.getCell(idElement).attributes.parent) {
         $.notify({message: 'The element is already insert in the selected parent view container.'}, {allow_dismiss: true, type: 'danger'});
-        return;
-    }
-    if (elementType === 'event') {
-        $.notify({message: 'Insert command is not available for the Event type. Use the generate command instead.'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
 
@@ -452,6 +467,12 @@ async function insert (options) {
             parent.embed(elements[0]);
         }
     }
+
+    links = _.filter(modelElements, function (link) { return link.isLink() });
+
+    _.forEach(links, function (link) {
+        link.router('orthogonal');
+    });
 }
 
 function positionX (subGraph,node,x) {

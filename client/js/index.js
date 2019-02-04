@@ -683,11 +683,13 @@ socket.on('social-network', socialnetwork);
 socket.on('zoom', zoom);
 socket.on('move-board', moveBoard);
 socket.on('generate-view-container', generateViewContainer);
+socket.on('generate', generateElement);
 socket.on('delete', deleteElement);
 socket.on('drag-and-drop', dragDropElement);
 socket.on('select', selectElement);
 socket.on('resize', resizeElement);
-socket.on('insert', insertElement)
+socket.on('insert', insertElement);
+socket.on('connect-elements', connectElements);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -713,13 +715,47 @@ function generateViewContainer(options) {
     }
 }
 
+function generateElement(options) {
+    console.log('generate',options);
+    options.ifmlModel = ifmlModel;
+
+    var template = askCommands.generate(options);
+
+    if (template) {
+        voiceAssistantModelGenerator(template);
+    }
+}
+
 function deleteElement(options) {
+    options.ifmlModel = ifmlModel;
     options.selectedElement = selectedElement;
+    console.log(options);
     askCommands.delete(options);
+}
+
+function connectElements(options) {
+    console.log('connect',options);
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    console.log(options);
+    var template = askCommands.connect(options);
+
+    if (template) {
+      var link = ifml.fromJSON({ elements: template.elements , relations: []})[0],
+          source = _.filter(template.relations, function (relation) { return relation.type === 'source' })[0],
+          target = _.filter(template.relations, function (relation) { return relation.type === 'target' })[0];
+
+      link.attributes.source = { id: source.source };
+      link.attributes.target = { id: target.target };
+
+      link.router('orthogonal');
+      ifmlModel.addCell(link);
+    }
 }
 
 function dragDropElement (options) {
     options.ifmlBoard = ifmlBoard;
+    options.ifmlModel = ifmlModel;
     options.selectedElement = selectedElement;
     askCommands.dragDrop(options);
 }

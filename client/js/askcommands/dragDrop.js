@@ -10,6 +10,7 @@ var toId = require('../ifml/utilities/validator/toId.js').toId;
 function dragDrop(options) {
     console.log(options);
     var ifmlBoard = options.ifmlBoard,
+        ifmlModel = options.ifmlModel,
         name = options.name,
         type = options.type ? options.type.toLowerCase().replace(/\W/g,"-") : undefined,
         id = name ? toId(name,'-' + type) : undefined,

@@ -5,7 +5,7 @@ const GenerateViewContainerModelIntentHandler = {
     },
     handle(handlerInput) {
         var sessionAttributes = handlerInput.attributesManager.getSessionAttributes(),
-            name = handlerInput.requestEnvelope.request.intent.slots.name.value
+            name = handlerInput.requestEnvelope.request.intent.slots.name.value,
             properties = handlerInput.requestEnvelope.request.intent.slots.properties.value ? handlerInput.requestEnvelope.request.intent.slots.properties.resolutions.resolutionsPerAuthority[0].values[0].value.name : undefined,
             message;
 

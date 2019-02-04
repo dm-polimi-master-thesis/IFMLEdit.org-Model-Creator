@@ -8,7 +8,18 @@
 var toId = require('../ifml/utilities/validator/toId.js').toId;
 
 function deleteElement(options) {
+    var name = options.name,
+        type = options.type ? options.type.toLowerCase().replace(/\W/g,"-") : undefined,
+        id = name ? toId(name,'-' + type) : undefined;
+
     var element = id ? ifmlModel.getCell(id) : options.selectedElement;
+
+    if (element) {
+        element.remove();
+    } else {
+        $.notify({message: 'Element not found... Select an existing element to remove.'}, {allow_dismiss: true, type: 'danger'});
+        return;
+    }
 }
 
 exports.deleteElement = deleteElement;

@@ -270,31 +270,23 @@
                         {
                             "name": "properties",
                             "type": "IFML_CONTAINER_PROPERTIES"
-                        },
-                        {
-                            "name": "parent",
-                            "type": "IFML_ELEMENT_NAME"
                         }
                     ],
                     "samples": [
                         "generate new {properties} view container",
-                        "generate new {properties} view container with parent {parent}",
-                        "generate view container with parent {parent}",
-                        "add view container with parent {parent}",
-                        "add new {properties} view container with parent {parent}",
+                        "generate view container",
+                        "add view container",
+                        "add new {properties} view container",
                         "add a new {properties} view container",
-                        "view container with parent {parent}",
-                        "new {properties} view container with parent {parent}",
+                        "view container",
                         "new {properties} view container",
                         "{properties} view container",
-                        "{properties} view container with name {name} and parent {parent}",
-                        "new {properties} view container with name {name} and parent {parent}",
+                        "{properties} view container with name {name}",
+                        "new {properties} view container with name {name}",
                         "Add a new {properties} view container with name {name}",
-                        "Add a new {properties} view container with name {name} and parent {parent}",
                         "view container with name {name}",
-                        "view container with name {name} and parent {parent}",
-                        "New view container with name {name} and parent {parent}",
-                        "Add a new view container with name {name} and parent {parent}",
+                        "New view container with name {name}",
+                        "Add a new view container with name {name}",
                         "add a new view container",
                         "I want to add a new view container"
                     ]
@@ -351,21 +343,11 @@
                     "slots": [
                         {
                             "name": "name",
-                            "type": "IFML_ELEMENT_NAME",
-                            "samples": [
-                                "The name is {name}",
-                                "{name}",
-                                "It is {name}"
-                            ]
+                            "type": "IFML_ELEMENT_NAME"
                         },
                         {
                             "name": "type",
-                            "type": "IFML_ELEMENT_TYPE",
-                            "samples": [
-                                "a {type}",
-                                "It is a {type}",
-                                "The type is {type}"
-                            ]
+                            "type": "IFML_ELEMENT_TYPE"
                         },
                         {
                             "name": "firstDirection",
@@ -397,6 +379,7 @@
                         }
                     ],
                     "samples": [
+                        "drag and drop {type} {firstDirection} for {firstDelta} pixels",
                         "drag and drop {type} {firstDirection} for {firstDelta}",
                         "drag and drop {type} {firstDirection}",
                         "move {type} {firstDirection}",
@@ -503,13 +486,7 @@
                     "slots": [
                         {
                             "name": "name",
-                            "type": "IFML_ELEMENT_NAME",
-                            "samples": [
-                                "{name}",
-                                "Is {name}",
-                                "The name is {name}",
-                                "It is {name}"
-                            ]
+                            "type": "IFML_ELEMENT_NAME"
                         },
                         {
                             "name": "type",
@@ -517,7 +494,15 @@
                         },
                         {
                             "name": "parent",
-                            "type": "IFML_ELEMENT_NAME"
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "It is {parent}",
+                                "The parent view container is {parent}",
+                                "The parent is {parent}",
+                                "The view container is {parent}",
+                                "{parent} view container",
+                                "{parent}"
+                            ]
                         },
                         {
                             "name": "position",
@@ -533,10 +518,125 @@
                         }
                     ],
                     "samples": [
+                        "Add a new {name} type inside {parent} view container {position} respect to {child} {childType}",
+                        "Generate {name} {type} inside {parent} view container {position} respect to {child} {childType}",
+                        "Add a new {name} type inside {parent} view container",
+                        "Generate {name} type inside {parent} view container",
                         "Insert {name} {type} inside {parent} view container {position} respect to {child} {childType}",
                         "Move {name} {type} inside {parent} view container {position} respect to {child} {childType}",
                         "Move {name} {type} inside {parent} view container",
                         "Insert {name} {type} inside {parent} view container"
+                    ]
+                },
+                {
+                    "name": "GenerateElementModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "it's name is {name}",
+                                "the name is {name}",
+                                "it's {name}",
+                                "it is {name}",
+                                "{name}"
+                            ]
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "samples": [
+                                "{type}",
+                                "it's {type}",
+                                "it is {type}",
+                                "the type is {type}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Generate a new element",
+                        "Create element",
+                        "Add a new element",
+                        "Generate element",
+                        "Create a new element",
+                        "Add a new {type}",
+                        "Add {name} {type}",
+                        "Add new {type}",
+                        "Add new {name}",
+                        "Add new {name} {type}",
+                        "Generate a new {type}",
+                        "Generate new {name} {type}",
+                        "Generate new {type}",
+                        "Generate {name} {type}",
+                        "Create new {type}",
+                        "Create new {name} {type}",
+                        "Create a new {type}",
+                        "Create {name} {type}"
+                    ]
+                },
+                {
+                    "name": "ConnectElementsModelIntent",
+                    "slots": [
+                        {
+                            "name": "source",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "sourceType",
+                            "type": "IFML_ELEMENT_TYPE"
+                        },
+                        {
+                            "name": "destination",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "the destination is {destination}",
+                                "{destination}",
+                                "it's {destination}",
+                                "it is {destination}",
+                                "The name is {destination}"
+                            ]
+                        },
+                        {
+                            "name": "destinationType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "samples": [
+                                "{destinationType}",
+                                "it's {destinationType}",
+                                "it is {destinationType}",
+                                "the type is {destinationType}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Connect to {destination}",
+                        "Connect to {destination} {destinationType}",
+                        "Connect {source} {sourceType} to {destination} {destinationType}",
+                        "Connect elements"
+                    ]
+                },
+                {
+                    "name": "DeleteElementModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "delete element",
+                        "delete",
+                        "remove element",
+                        "remove",
+                        "remove {name} {type}",
+                        "remove {type}",
+                        "remove {name}",
+                        "delete {type}",
+                        "delete {name} {type}",
+                        "delete {name}"
                     ]
                 }
             ],
@@ -1217,13 +1317,6 @@
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
-                        },
-                        {
-                            "name": "parent",
-                            "type": "IFML_ELEMENT_NAME",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
                         }
                     ]
                 },
@@ -1236,19 +1329,15 @@
                             "name": "name",
                             "type": "IFML_ELEMENT_NAME",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.785408354430.1066837535586"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {}
                         },
                         {
                             "name": "type",
                             "type": "IFML_ELEMENT_TYPE",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.785408354430.132259589837"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {}
                         },
                         {
                             "name": "firstDirection",
@@ -1364,10 +1453,8 @@
                             "name": "name",
                             "type": "IFML_ELEMENT_NAME",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.672853002908.127025490888"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {}
                         },
                         {
                             "name": "type",
@@ -1380,8 +1467,10 @@
                             "name": "parent",
                             "type": "IFML_ELEMENT_NAME",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.168109225942.829268274416"
+                            }
                         },
                         {
                             "name": "position",
@@ -1399,6 +1488,91 @@
                         },
                         {
                             "name": "childType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "GenerateElementModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1070450206575.445934740103"
+                            }
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1070450206575.1535977950607"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ConnectElementsModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "source",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "sourceType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "destination",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.173767966095.356141118694"
+                            }
+                        },
+                        {
+                            "name": "destinationType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.173767966095.704699221846"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "DeleteElementModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "type",
                             "type": "IFML_ELEMENT_TYPE",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
@@ -1614,6 +1788,60 @@
                     {
                         "type": "PlainText",
                         "value": "What is the name of the element you want to insert inside the parent view container?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.168109225942.829268274416",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the parent view container inside which you want to insert the element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1070450206575.445934740103",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the element you want to create?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1070450206575.1535977950607",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the element you want to create?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.173767966095.356141118694",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the destination element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.173767966095.704699221846",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the destination element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.45478215990.71218929863",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the element you want to delete?"
                     }
                 ]
             }

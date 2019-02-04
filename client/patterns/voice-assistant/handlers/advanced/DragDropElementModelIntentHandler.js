@@ -14,7 +14,7 @@ const DragDropElementModelIntentHandler = {
             message = 'Drag and drop ';
 
         if (name && type) {
-            message += name + ' ' + type;
+            message += name + ' ' + type + ' ';
         }
         if (firstDirection && firstDelta) {
             firstDelta = firstDelta / 10 > 0 ? (firstDelta - (firstDelta % 10)) : 10;

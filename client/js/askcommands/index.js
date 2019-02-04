@@ -6,8 +6,10 @@
 "use strict";
 
 exports.commands = {
+    connect: require('./connect.js').connect,
     delete: require('./delete.js').deleteElement,
     dragDrop: require('./dragDrop.js').dragDrop,
+    generate: require('./generate.js').generate,
     generateViewContainer: require('./generateViewContainer.js').generateViewContainer,
     insert: require('./insert.js').insert,
     modelGenerator: require('./modelGenerator.js').modelGenerator,
