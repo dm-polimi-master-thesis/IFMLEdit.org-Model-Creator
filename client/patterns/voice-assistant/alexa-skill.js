@@ -7,6 +7,10 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
     .addRequestHandlers(
+        AddFieldModelIntentHandler = require('./handlers/advanced/AddFieldModelIntentHandler.js').AddFieldModelIntentHandler,
+        AddFilterModelIntentHandler = require('./handlers/advanced/AddFilterModelIntentHandler').AddFilterModelIntentHandler,
+        AddParameterModelIntentHandler = require('./handlers/advanced/AddParameterModelIntentHandler.js').AddParameterModelIntentHandler,
+        AddResultModelIntentHandler = require('./handlers/advanced/AddResultModelIntentHandler').AddResultModelIntentHandler,
         AdvancedModelIntentHandler = require('./handlers/advanced/AdvancedModelIntentHandler.js').AdvancedModelIntentHandler,
         BlogModelIntentHandler = require('./handlers/guided/BlogModelIntentHandler.js').BlogModelIntentHandler,
         CancelAndStopIntentHandler = require('./handlers/defaults/CancelAndStopIntentHandler.js').CancelAndStopIntentHandler,
@@ -32,6 +36,10 @@ exports.handler = skillBuilder
         MasterDetailsModelIntentHandler = require('./handlers/guided/MasterDetailsModelIntentHandler.js').MasterDetailsModelIntentHandler,
         MoveBoardModelIntentHandler = require('./handlers/advanced/MoveBoardModelIntentHandler').MoveBoardModelIntentHandler,
         PersonalPagesModelIntentHandler = require('./handlers/guided/PersonalPagesModelIntentHandler.js').PersonalPagesModelIntentHandler,
+        RemoveFieldModelIntentHandler = require('./handlers/advanced/RemoveFieldModelIntentHandler').RemoveFieldModelIntentHandler,
+        RemoveFilterModelIntentHandler = require('./handlers/advanced/RemoveFilterModelIntentHandler').RemoveFilterModelIntentHandler,
+        RemoveParameterModelIntentHandler = require('./handlers/advanced/RemoveParameterModelIntentHandler').RemoveParameterModelIntentHandler,
+        RemoveResultModelIntentHandler = require('./handlers/advanced/RemoveResultModelIntentHandler').RemoveResultModelIntentHandler,
         ResizeElementModelIntentHandler = require('./handlers/advanced/ResizeElementModelIntentHandler.js').ResizeElementModelIntentHandler,
         SelectElementModelIntentHandler = require('./handlers/advanced/SelectElementModelIntentHandler.js').SelectElementModelIntentHandler,
         SessionEndedRequestHandler = require('./handlers/defaults/SessionEndedRequestHandler.js').SessionEndedRequestHandler,

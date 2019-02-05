@@ -691,6 +691,14 @@ socket.on('resize', resizeElement);
 socket.on('insert', insertElement);
 socket.on('insert-event', insertEvent);
 socket.on('connect-elements', connectElements);
+socket.on('add-field', addField);
+socket.on('remove-field', removeField);
+socket.on('add-filter', addFilter);
+socket.on('remove-filter', removeFilter);
+socket.on('add-parameter', addParameter);
+socket.on('remove-parameter', removeParameter);
+socket.on('add-result', addResult);
+socket.on('remove-result', removeResult);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -770,7 +778,6 @@ function selectElement(options) {
     } else {
         $.notify({message: 'Element not found... Select an existing element'}, {allow_dismiss: true, type: 'danger'});
     }
-
 }
 
 function resizeElement (options) {
@@ -794,6 +801,54 @@ function insertEvent (options) {
   options.ifmlModel = ifmlModel;
   options.selectedElement = selectedElement;
   askCommands.insertEvent(options);
+}
+
+function addField (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.addField(options);
+}
+
+function removeField (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.removeField(options);
+}
+
+function addFilter (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.addFilter(options);
+}
+
+function removeFilter (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.removeFilter(options);
+}
+
+function addParameter (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.addParameter(options);
+}
+
+function removeParameter (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.removeParameter(options);
+}
+
+function addResult (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.addResult(options);
+}
+
+function removeResult (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.removeResult(options);
 }
 
 function demo(options) {

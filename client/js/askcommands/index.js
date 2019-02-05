@@ -6,6 +6,10 @@
 "use strict";
 
 exports.commands = {
+    addField: require('./addField.js').addField,
+    addFilter: require('./addFilter.js').addFilter,
+    addParameter: require('./addParameter.js').addParameter,
+    addResult: require('./addResult.js').addResult,
     connect: require('./connect.js').connect,
     delete: require('./delete.js').deleteElement,
     dragDrop: require('./dragDrop.js').dragDrop,
@@ -15,6 +19,10 @@ exports.commands = {
     insertEvent: require('./insertEvent.js').insertEvent,
     modelGenerator: require('./modelGenerator.js').modelGenerator,
     moveBoard: require('./moveBoard.js').moveBoard,
+    removeField: require('./removeField.js').removeField,
+    removeFilter: require('./removeFilter.js').removeFilter,
+    removeParameter: require('./removeParameter.js').removeParameter,
+    removeResult: require('./removeResult.js').removeResult,
     resize: require('./resize.js').resize,
     select: require('./select.js').select,
     zoom: require('./zoom.js').zoom

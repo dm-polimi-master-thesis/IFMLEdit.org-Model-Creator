@@ -36,10 +36,15 @@ function connect(options) {
         return undefined;
     }
 
+    if (!sourceType) {
+        sourceType = sourceElement.attributes.type;
+    }
+
     switch (sourceType) {
       case 'form':
       case 'list':
       case 'details':
+      case 'ifml.ViewComponent':
         if (targetType === 'action' || targetType === 'event' || targetType === 'view-container') {
           $.notify({message: 'Target element type not admited by the IFML policy for a View Component element...'}, {allow_dismiss: true, type: 'danger'});
           return undefined;
@@ -52,8 +57,9 @@ function connect(options) {
         }));
         return template;
       case 'event':
+      case 'ifml.Event':
         if (targetType === 'event' ) {
-          $.notify({message: 'Target element type not admited by the IFML policy for a View Component element...'}, {allow_dismiss: true, type: 'danger'});
+          $.notify({message: 'Target element type not admited by the IFML policy for a Event element...'}, {allow_dismiss: true, type: 'danger'});
           return undefined;
         }
         template.elements.push(generator(template, {
@@ -64,7 +70,7 @@ function connect(options) {
         }));
         return template;
       default:
-        $.notify({message: 'Source element type not admited by the IFML policy for a View Component element...'}, {allow_dismiss: true, type: 'danger'});
+        $.notify({message: 'Source element type not admited by the IFML policy...'}, {allow_dismiss: true, type: 'danger'});
         return undefined;
     }
 }

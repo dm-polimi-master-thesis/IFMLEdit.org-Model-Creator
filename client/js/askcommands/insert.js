@@ -34,8 +34,6 @@ async function insert (options) {
         elementStereotype,
         size;
 
-    console.log(elementType);
-
     if (elementType === 'event') {
         if(idElement && ifmlModel.getCell(idElement)) {
             $.notify({message: 'Another event with the same name is already present in the model'}, {allow_dismiss: true, type: 'danger'});
@@ -53,6 +51,11 @@ async function insert (options) {
         var element = ifml.fromJSON({ elements: template.elements , relations: []})[0];
         ifmlModel.addCell(element);
         return;
+    }
+
+    if (elementType === 'navigation-flow' || elementType === 'data-flow') {
+        $.notify({message: 'Insert command is not provided for link element.'}, {allow_dismiss: true, type: 'danger'});
+            return;
     }
 
     if(idElement && ifmlModel.getCell(idElement)) {
@@ -351,7 +354,6 @@ async function insert (options) {
                   })
                   _.forEach(downToElement, function (el) {
                       positionY(clonedGraph, el, clonedGraph[el.id].position().y + deltaDownMiddle);
-                      console.log(_.cloneDeep(el));
                       _.forEach(el.getEmbeddedCells({deep:'true'}), function (embed) {
                           if (!moved[embed.id] && !embed.isLink()) {
                               positionY(clonedGraph, embed, clonedGraph[embed.id].position().y + deltaDownMiddle);

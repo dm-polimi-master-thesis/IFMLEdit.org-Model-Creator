@@ -671,6 +671,330 @@
                         "Generate {name} event inside {parent} {type} {position}",
                         "Add {name} event inside {parent} {type} {position}"
                     ]
+                },
+                {
+                    "name": "AddFieldModelIntent",
+                    "slots": [
+                        {
+                            "name": "fieldName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "Call it {fieldName}",
+                                "{fieldName}",
+                                "it's {fieldName}",
+                                "it is {fieldName}",
+                                "the name is {fieldName}",
+                                "the name of the attribute is {fieldName}"
+                            ]
+                        },
+                        {
+                            "name": "fieldType",
+                            "type": "IFML_ATTRIBUTE_TYPE"
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "elementType",
+                            "type": "IFML_ELEMENT_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "Add {fieldName} field of type {fieldType} to {elementName} {elementType}",
+                        "Add {fieldName} field of type {fieldType}",
+                        "Add {fieldName} field",
+                        "Add {fieldName} field to {elementName} {elementType}",
+                        "Add field",
+                        "Add field {fieldName} to {elementName} {elementType}",
+                        "Add field {fieldName}",
+                        "Add field {fieldName} of type {fieldType}",
+                        "Add field {fieldName} of type {fieldType} to {elementName} {elementType}"
+                    ]
+                },
+                {
+                    "name": "RemoveFieldModelIntent",
+                    "slots": [
+                        {
+                            "name": "fieldName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{fieldName}",
+                                "it's {fieldName}",
+                                "it is {fieldName}",
+                                "the name is {fieldName}",
+                                "the name of the attribute is {fieldName}"
+                            ]
+                        },
+                        {
+                            "name": "fieldType",
+                            "type": "IFML_ATTRIBUTE_TYPE"
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "elementType",
+                            "type": "IFML_ELEMENT_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "Remove {fieldName} field of type {fieldType} from {elementName} {elementType}",
+                        "Remove {fieldName} field of type {fieldType}",
+                        "Remove {fieldName} field",
+                        "Remove {fieldName} field from {elementName} {elementType}",
+                        "Remove attribute",
+                        "Remove field {fieldName} from {elementName} {elementType}",
+                        "Remove field {fieldName}",
+                        "Remove field {fieldName} of type {fieldType}",
+                        "Remove field {fieldName} of type {fieldType} from {elementName} {elementType}"
+                    ]
+                },
+                {
+                    "name": "AddFilterModelIntent",
+                    "slots": [
+                        {
+                            "name": "filterName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "Call it {filterName}",
+                                "{filterName}",
+                                "it's {filterName}",
+                                "it is {filterName}",
+                                "the name is {filterName}",
+                                "the name of the attribute is {filterName}"
+                            ]
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Add filter",
+                        "Add filter {filterName} to {elementName} list",
+                        "Add filter {filterName}",
+                        "Add {filterName} filter to {elementName} list",
+                        "Add {filterName} filter"
+                    ]
+                },
+                {
+                    "name": "RemoveFilterModelIntent",
+                    "slots": [
+                        {
+                            "name": "filterName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{filterName}",
+                                "it's {filterName}",
+                                "it is {filterName}",
+                                "the name is {filterName}",
+                                "the name of the attribute is {filterName}"
+                            ]
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Remove filter",
+                        "Remove filter {filterName} from {elementName} list",
+                        "Remove filter {filterName}",
+                        "Remove {filterName} filter from {elementName} list",
+                        "Remove {filterName} filter"
+                    ]
+                },
+                {
+                    "name": "AddParameterModelIntent",
+                    "slots": [
+                        {
+                            "name": "parameterName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "Call it {parameterName}",
+                                "{parameterName}",
+                                "it's {parameterName}",
+                                "it is {parameterName}",
+                                "the name is {parameterName}",
+                                "the name of the parameter is {parameterName}"
+                            ]
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Add parameter",
+                        "Add parameter {parameterName} to {elementName} action",
+                        "Add parameter {parameterName}",
+                        "Add {parameterName} parameter to {elementName} action",
+                        "Add {parameterName} parameter"
+                    ]
+                },
+                {
+                    "name": "RemoveParameterModelIntent",
+                    "slots": [
+                        {
+                            "name": "parameterName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{parameterName}",
+                                "it's {parameterName}",
+                                "it is {parameterName}",
+                                "the name is {parameterName}",
+                                "the name of the parameter is {parameterName}"
+                            ]
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Remove parameter",
+                        "Remove parameter {parameterName} from {elementName} action",
+                        "Remove parameter {parameterName}",
+                        "Remove {parameterName} parameter from {elementName} action",
+                        "Remove {parameterName} parameter"
+                    ]
+                },
+                {
+                    "name": "AddResultModelIntent",
+                    "slots": [
+                        {
+                            "name": "resultName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "Call it {resultName}",
+                                "{resultName}",
+                                "it's {resultName}",
+                                "it is {resultName}",
+                                "the name is {resultName}",
+                                "the name of the result is {resultName}"
+                            ]
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Add result",
+                        "Add result {resultName} to {elementName} action",
+                        "Add result {resultName}",
+                        "Add {resultName} result to {elementName} action",
+                        "Add {resultName} result"
+                    ]
+                },
+                {
+                    "name": "RemoveResultModelIntent",
+                    "slots": [
+                        {
+                            "name": "resultName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{resultName}",
+                                "it's {resultName}",
+                                "it is {resultName}",
+                                "the name is {resultName}",
+                                "the name of the result is {resultName}"
+                            ]
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Remove result",
+                        "Remove result {resultName} from {elementName} action",
+                        "Remove result {resultName}",
+                        "Remove {resultName} result from {elementName} action",
+                        "Remove {resultName} result"
+                    ]
+                },
+                {
+                    "name": "AddBindingModelIntent",
+                    "slots": [
+                        {
+                            "name": "input",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{input}",
+                                "it's {input}",
+                                "it is {input}",
+                                "the input is {input}",
+                                "the input of the binding is {input}"
+                            ]
+                        },
+                        {
+                            "name": "output",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{output}",
+                                "it's {output}",
+                                "it is {output}",
+                                "the output is {output}",
+                                "the output of the binding is {output}"
+                            ]
+                        },
+                        {
+                            "name": "element",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "Add binding",
+                        "Add binding to {element} {type} with input {input} and output {output}",
+                        "Add binding with input {input} and output {output}"
+                    ]
+                },
+                {
+                    "name": "RemoveBindingModelIntent",
+                    "slots": [
+                        {
+                            "name": "input",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{input}",
+                                "it's {input}",
+                                "it is {input}",
+                                "the input is {input}",
+                                "the input of the binding is {input}"
+                            ]
+                        },
+                        {
+                            "name": "output",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{output}",
+                                "it's {output}",
+                                "it is {output}",
+                                "the output is {output}",
+                                "the output of the binding is {output}"
+                            ]
+                        },
+                        {
+                            "name": "element",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "Remove binding",
+                        "Remove binding to {element} {type} with input {input} and output {output}",
+                        "Remove binding with input {input} and output {output}"
+                    ]
                 }
             ],
             "types": [
@@ -1152,6 +1476,16 @@
                     "values": [
                         {
                             "name": {
+                                "value": "data flow"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "navigation flow"
+                            }
+                        },
+                        {
+                            "name": {
                                 "value": "form"
                             }
                         },
@@ -1193,6 +1527,51 @@
                         {
                             "name": {
                                 "value": "plus"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_ATTRIBUTE_TYPE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "textarea"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "radio"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "checkbox"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "reset"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hidden object"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hidden"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "password"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "text"
                             }
                         }
                     ]
@@ -1647,6 +2026,296 @@
                             "prompts": {}
                         }
                     ]
+                },
+                {
+                    "name": "AddFieldModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "fieldName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.645149254760.677266513325"
+                            }
+                        },
+                        {
+                            "name": "fieldType",
+                            "type": "IFML_ATTRIBUTE_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "elementType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "RemoveFieldModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "fieldName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.34363922762.1740305646"
+                            }
+                        },
+                        {
+                            "name": "fieldType",
+                            "type": "IFML_ATTRIBUTE_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "elementType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "AddParameterModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "parameterName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1540186612159.852502125663"
+                            }
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "RemoveParameterModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "parameterName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1008664911287.144890004569"
+                            }
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "AddResultModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "resultName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1255409110893.851692121543"
+                            }
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "RemoveResultModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "resultName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.666782941290.425398998668"
+                            }
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "AddBindingModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "input",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.973043669858.1339430244563"
+                            }
+                        },
+                        {
+                            "name": "output",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.973043669858.380817188026"
+                            }
+                        },
+                        {
+                            "name": "element",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "RemoveBindingModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "input",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.810889580026.1035882045488"
+                            }
+                        },
+                        {
+                            "name": "output",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.810889580026.574480134228"
+                            }
+                        },
+                        {
+                            "name": "element",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "AddFilterModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "filterName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.289089931932.1088593079755"
+                            }
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "RemoveFilterModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "filterName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.618851209604.1213249552948"
+                            }
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -1928,6 +2597,114 @@
                     {
                         "type": "PlainText",
                         "value": "What is the type of the parent element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.645149254760.677266513325",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the attribute you want to add?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.34363922762.1740305646",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the attribute you want to remove?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1540186612159.852502125663",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the parameter you want to add?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1008664911287.144890004569",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the parameter you want to remove?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1255409110893.851692121543",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the result you want to add?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.666782941290.425398998668",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the result you want to remove?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.973043669858.1339430244563",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the input name of the binding?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.973043669858.380817188026",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the output name of the attribute?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.810889580026.1035882045488",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the {input} name of the binding?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.810889580026.574480134228",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the {output} name of the binding?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.289089931932.1088593079755",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the filter you want to add?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.618851209604.1213249552948",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the filter you want to remove?"
                     }
                 ]
             }

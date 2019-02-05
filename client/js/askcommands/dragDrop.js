@@ -8,7 +8,6 @@
 var toId = require('../ifml/utilities/validator/toId.js').toId;
 
 function dragDrop(options) {
-    console.log(options);
     var ifmlBoard = options.ifmlBoard,
         ifmlModel = options.ifmlModel,
         name = options.name,
