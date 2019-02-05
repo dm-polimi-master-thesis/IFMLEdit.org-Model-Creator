@@ -8,7 +8,8 @@
 var toId = require('../ifml/utilities/validator/toId.js').toId;
 
 function deleteElement(options) {
-    var name = options.name,
+    var ifmlModel = options.ifmlModel,
+        name = options.name,
         type = options.type ? options.type.toLowerCase().replace(/\W/g,"-") : undefined,
         id = name ? toId(name,'-' + type) : undefined;
 

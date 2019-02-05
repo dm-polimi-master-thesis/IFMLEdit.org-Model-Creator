@@ -379,6 +379,7 @@
                         }
                     ],
                     "samples": [
+                        "drag and drop {name} {type} {firstDirection} for {firstDelta} pixels",
                         "drag and drop {type} {firstDirection} for {firstDelta} pixels",
                         "drag and drop {type} {firstDirection} for {firstDelta}",
                         "drag and drop {type} {firstDirection}",
@@ -637,6 +638,38 @@
                         "delete {type}",
                         "delete {name} {type}",
                         "delete {name}"
+                    ]
+                },
+                {
+                    "name": "InsertEventModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE"
+                        },
+                        {
+                            "name": "position",
+                            "type": "IFML_DIRECTION"
+                        }
+                    ],
+                    "samples": [
+                        "Add {name} event {position}",
+                        "Create {name} event {position}",
+                        "Insert {name} event {position}",
+                        "New {name} event {position}",
+                        "Insert {name} event inside {parent} {type} {position}",
+                        "New {name} event inside {parent} {type} {position}",
+                        "Create {name} event inside {parent} {type} {position}",
+                        "Generate {name} event inside {parent} {type} {position}",
+                        "Add {name} event inside {parent} {type} {position}"
                     ]
                 }
             ],
@@ -1579,6 +1612,41 @@
                             "prompts": {}
                         }
                     ]
+                },
+                {
+                    "name": "InsertEventModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "parent",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "type",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "position",
+                            "type": "IFML_DIRECTION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -1842,6 +1910,24 @@
                     {
                         "type": "PlainText",
                         "value": "What is the name of the element you want to delete?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.856332862183.1224837463795",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the parent element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.856332862183.303937161880",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the parent element?"
                     }
                 ]
             }

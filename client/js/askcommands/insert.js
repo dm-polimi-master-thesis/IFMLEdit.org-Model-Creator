@@ -34,6 +34,8 @@ async function insert (options) {
         elementStereotype,
         size;
 
+    console.log(elementType);
+
     if (elementType === 'event') {
         if(idElement && ifmlModel.getCell(idElement)) {
             $.notify({message: 'Another event with the same name is already present in the model'}, {allow_dismiss: true, type: 'danger'});

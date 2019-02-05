@@ -689,6 +689,7 @@ socket.on('drag-and-drop', dragDropElement);
 socket.on('select', selectElement);
 socket.on('resize', resizeElement);
 socket.on('insert', insertElement);
+socket.on('insert-event', insertEvent);
 socket.on('connect-elements', connectElements);
 
 function notify(options){
@@ -748,7 +749,6 @@ function connectElements(options) {
       link.attributes.source = { id: source.source };
       link.attributes.target = { id: target.target };
 
-      link.router('orthogonal');
       ifmlModel.addCell(link);
     }
 }
@@ -780,13 +780,20 @@ function resizeElement (options) {
     askCommands.resize(options);
 }
 
-function insertElement(options) {
+function insertElement (options) {
     options.ifml = ifml;
     options.ifmlModel = ifmlModel;
     if (selectedElement) {
         options.selectedElementId = selectedElement.id;
     };
     askCommands.insert(options);
+}
+
+function insertEvent (options) {
+  options.ifml = ifml;
+  options.ifmlModel = ifmlModel;
+  options.selectedElement = selectedElement;
+  askCommands.insertEvent(options);
 }
 
 function demo(options) {

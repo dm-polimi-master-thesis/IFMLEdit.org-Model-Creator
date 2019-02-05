@@ -12,6 +12,7 @@ exports.commands = {
     generate: require('./generate.js').generate,
     generateViewContainer: require('./generateViewContainer.js').generateViewContainer,
     insert: require('./insert.js').insert,
+    insertEvent: require('./insertEvent.js').insertEvent,
     modelGenerator: require('./modelGenerator.js').modelGenerator,
     moveBoard: require('./moveBoard.js').moveBoard,
     resize: require('./resize.js').resize,

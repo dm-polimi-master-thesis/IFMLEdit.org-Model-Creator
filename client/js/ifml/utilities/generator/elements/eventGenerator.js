@@ -22,7 +22,7 @@ function generateEvent(template, options) {
                 }
             }
         },
-        id: idValidator(template.elements, options.name, '-event'),
+        id: options.id || idValidator(template.elements, options.name, '-event'),
         type: 'ifml.Event'
     }
 }
