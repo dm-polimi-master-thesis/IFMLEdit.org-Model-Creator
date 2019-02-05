@@ -7,6 +7,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
     .addRequestHandlers(
+        AddBindingModelIntentHandler = require('./handlers/advanced/AddBindingModelIntentHandler').AddBindingModelIntentHandler,
         AddFieldModelIntentHandler = require('./handlers/advanced/AddFieldModelIntentHandler.js').AddFieldModelIntentHandler,
         AddFilterModelIntentHandler = require('./handlers/advanced/AddFilterModelIntentHandler').AddFilterModelIntentHandler,
         AddParameterModelIntentHandler = require('./handlers/advanced/AddParameterModelIntentHandler.js').AddParameterModelIntentHandler,
@@ -36,6 +37,7 @@ exports.handler = skillBuilder
         MasterDetailsModelIntentHandler = require('./handlers/guided/MasterDetailsModelIntentHandler.js').MasterDetailsModelIntentHandler,
         MoveBoardModelIntentHandler = require('./handlers/advanced/MoveBoardModelIntentHandler').MoveBoardModelIntentHandler,
         PersonalPagesModelIntentHandler = require('./handlers/guided/PersonalPagesModelIntentHandler.js').PersonalPagesModelIntentHandler,
+        RemoveBindingModelIntentHandler = require('./handlers/advanced/RemoveBindingModelIntentHandler').RemoveBindingModelIntentHandler,
         RemoveFieldModelIntentHandler = require('./handlers/advanced/RemoveFieldModelIntentHandler').RemoveFieldModelIntentHandler,
         RemoveFilterModelIntentHandler = require('./handlers/advanced/RemoveFilterModelIntentHandler').RemoveFilterModelIntentHandler,
         RemoveParameterModelIntentHandler = require('./handlers/advanced/RemoveParameterModelIntentHandler').RemoveParameterModelIntentHandler,

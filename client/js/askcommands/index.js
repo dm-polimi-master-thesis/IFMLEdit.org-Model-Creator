@@ -6,6 +6,7 @@
 "use strict";
 
 exports.commands = {
+    addBinding: require('./addBinding.js').addBinding,
     addField: require('./addField.js').addField,
     addFilter: require('./addFilter.js').addFilter,
     addParameter: require('./addParameter.js').addParameter,
@@ -19,6 +20,7 @@ exports.commands = {
     insertEvent: require('./insertEvent.js').insertEvent,
     modelGenerator: require('./modelGenerator.js').modelGenerator,
     moveBoard: require('./moveBoard.js').moveBoard,
+    removeBinding: require('./addBinding.js').removeBinding,
     removeField: require('./removeField.js').removeField,
     removeFilter: require('./removeFilter.js').removeFilter,
     removeParameter: require('./removeParameter.js').removeParameter,

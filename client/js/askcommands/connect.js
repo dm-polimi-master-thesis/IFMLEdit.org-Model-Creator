@@ -51,7 +51,7 @@ function connect(options) {
         }
         template.elements.push(generator(template, {
             type: 'ifml.DataFlow',
-            name: 'From ' + sourceElement.id + ' to ' + targetElement.id,
+            name: sourceElement.attributes.name + ' ' + targetElement.attributes.name,
             source: sourceElement.id,
             target: targetElement.id
         }));

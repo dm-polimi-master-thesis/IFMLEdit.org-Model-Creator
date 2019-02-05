@@ -699,6 +699,8 @@ socket.on('add-parameter', addParameter);
 socket.on('remove-parameter', removeParameter);
 socket.on('add-result', addResult);
 socket.on('remove-result', removeResult);
+socket.on('add-binding', addBinding);
+socket.on('remove-binding', removeBinding);
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -849,6 +851,18 @@ function removeResult (options) {
     options.ifmlModel = ifmlModel;
     options.selectedElement = selectedElement;
     askCommands.removeResult(options);
+}
+
+function addBinding (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.addBinding(options);
+}
+
+function removeBinding (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.removeBinding(options);
 }
 
 function demo(options) {
