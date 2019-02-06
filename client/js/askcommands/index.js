@@ -20,12 +20,13 @@ exports.commands = {
     insertEvent: require('./insertEvent.js').insertEvent,
     modelGenerator: require('./modelGenerator.js').modelGenerator,
     moveBoard: require('./moveBoard.js').moveBoard,
-    removeBinding: require('./addBinding.js').removeBinding,
+    removeBinding: require('./removeBinding.js').removeBinding,
     removeField: require('./removeField.js').removeField,
     removeFilter: require('./removeFilter.js').removeFilter,
     removeParameter: require('./removeParameter.js').removeParameter,
     removeResult: require('./removeResult.js').removeResult,
     resize: require('./resize.js').resize,
-    select: require('./select.js').select,
+    selectElement: require('./selectElement.js').selectElement,
+    selectFlow: require('./selectFlow.js').selectFlow,
     zoom: require('./zoom.js').zoom
 }

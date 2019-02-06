@@ -12,8 +12,8 @@ var _ = require('lodash'),
 
 async function removeBinding (options) {
     var ifmlModel = options.ifmlModel,
-        input = options.input,
-        output = options.output,
+        input = options.input.toLowerCase(),
+        output = options.output.toLowerCase(),
         elementName = options.element,
         elementType = options.elementType ? options.elementType.toLowerCase().replace(/\W/g,"-") : undefined,
         idElement = elementName && elementType ? toId(elementName,'-' + elementType) : undefined;
@@ -32,6 +32,7 @@ async function removeBinding (options) {
     var bindings = element.attributes.bindings;
     bindings = _.filter(bindings, function (binding) { return binding.input !== input && binding.output !== output });
     element.attributes.bindings = bindings;
+    element._labelChanged();
     return;
 }
 

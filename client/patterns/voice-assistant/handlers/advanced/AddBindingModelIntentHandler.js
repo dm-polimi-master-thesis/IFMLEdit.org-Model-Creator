@@ -7,12 +7,12 @@ const AddBindingModelIntentHandler = {
         var sessionAttributes = handlerInput.attributesManager.getSessionAttributes(),
             input = handlerInput.requestEnvelope.request.intent.slots.input.value,
             output = handlerInput.requestEnvelope.request.intent.slots.output.value,
-            elementName = handlerInput.requestEnvelope.request.intent.slots.elementName.value,
-            elementType = handlerInput.requestEnvelope.request.intent.slots.elementType.value ? handlerInput.requestEnvelope.request.intent.slots.elementType.resolutions.resolutionsPerAuthority[0].values[0].value.name : undefined,
+            elementName = handlerInput.requestEnvelope.request.intent.slots.element.value,
+            elementType = handlerInput.requestEnvelope.request.intent.slots.type.value ? handlerInput.requestEnvelope.request.intent.slots.type.resolutions.resolutionsPerAuthority[0].values[0].value.name : undefined,
             message;
 
         if (input && output) {
-            message = 'Add binding with input' + input + ' and output ' + output;
+            message = 'Add binding with input ' + input + ' and output ' + output;
 
             if (elementName && elementType) {
                 message += ' to ' + elementName + ' ' + elementType;

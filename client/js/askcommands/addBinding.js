@@ -12,8 +12,8 @@ var _ = require('lodash'),
 
 async function addBinding (options) {
     var ifmlModel = options.ifmlModel,
-        input = options.input,
-        output = options.output,
+        input = options.input.toLowerCase(),
+        output = options.output.toLowerCase(),
         elementName = options.element,
         elementType = options.elementType ? options.elementType.toLowerCase().replace(/\W/g,"-") : undefined,
         idElement = elementName && elementType ? toId(elementName,'-' + elementType) : undefined;
@@ -36,7 +36,11 @@ async function addBinding (options) {
 
     switch (source.attributes.type) {
       case 'ifml.ViewComponent':
-        sourceFields = source.attributes.fields;
+        if (target.attributes.stereotype === 'form') {
+            sourceFields = source.attributes.fields;
+        } else {
+            sourceFields = _.uniq(_.flattenDeep([{label:'id'}, source.attributes.fields]));
+        }
         break;
       case 'ifml.Action':
         sourceFields = source.attributes.results;
@@ -58,7 +62,7 @@ async function addBinding (options) {
         } else if (target.attributes.stereotype === 'form') {
             targetFields = target.attributes.fields;
         } else {
-            targetFields = ['id'];
+            targetFields = [{label:'id'}];
         }
         break;
       case 'ifml.Action':
@@ -66,19 +70,26 @@ async function addBinding (options) {
         break;
     }
 
-    sourceFields = _.filter(sourceFields, function (field) { return field.label === output });
-    targetFields = _.filter(targetFields, function (field) { return field.label === input });
+    console.log(sourceFields);
+    console.log(targetFields);
+    console.log(input);
+    console.log(output);
 
     var bindings = element.attributes.bindings,
+        bindingInputs = _.map(bindings, function (binding) { return binding.input}),
         duplicates = _.filter(bindings, function (binding) { return binding.input === input && binding.output === output });
+
+    sourceFields = _.filter(sourceFields, function (field) { return field.label.toLowerCase() === output });
+    targetFields = _.filter(targetFields, function (field) { return field.label.toLowerCase() === input && !_.includes(bindingInputs,input) });
 
     if (duplicates.length > 0) {
         $.notify({message: 'The binding is already present...'}, {allow_dismiss: true, type: 'danger'});
         return;
     }
 
-    if (sourceFields.length > 0 && targetFields > 0) {
+    if (sourceFields.length > 0 && targetFields.length > 0) {
         element.attributes.bindings.push({ input: input, output: output });
+        element._labelChanged();
     } else {
         $.notify({message: 'Input or output field not present in the target or source element...'}, {allow_dismiss: true, type: 'danger'});
         return;

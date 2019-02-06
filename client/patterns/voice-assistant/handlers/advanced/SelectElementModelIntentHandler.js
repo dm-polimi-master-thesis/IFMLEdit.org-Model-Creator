@@ -16,7 +16,7 @@ const SelectElementModelIntentHandler = {
                 messageType: 'success'
             };
             sessionAttributes.advanced = {
-                operation: 'select',
+                operation: 'select-element',
                 options: {
                     name: name,
                     type: type

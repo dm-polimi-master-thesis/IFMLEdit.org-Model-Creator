@@ -10,7 +10,8 @@ var generator = require('../ifml/utilities/generator/elementGenerator.js').gener
     idValidator = require('../ifml/utilities/validator/idValidator.js').idValidator;
 
 function connect(options) {
-    var ifmlModel = options.ifmlModel,
+    var ifml = options.ifml,
+        ifmlModel = options.ifmlModel,
         source = options.source,
         target = options.destination,
         sourceType = options.sourceType ? options.sourceType.toLowerCase().replace(/\W/g,"-") : undefined,
@@ -27,13 +28,13 @@ function connect(options) {
 
     if (!sourceElement && !targetElement) {
         $.notify({message: 'Source element and target element not found... Select a existing elements.'}, {allow_dismiss: true, type: 'danger'});
-        return undefined;
+        return;
     } else if (!sourceElement) {
         $.notify({message: 'Source element not found... Select an existing element.'}, {allow_dismiss: true, type: 'danger'});
-        return undefined;
+        return;
     } else if (!targetElement) {
         $.notify({message: 'Target element not found... Select an existing element.'}, {allow_dismiss: true, type: 'danger'});
-        return undefined;
+        return;
     }
 
     if (!sourceType) {
@@ -47,20 +48,20 @@ function connect(options) {
       case 'ifml.ViewComponent':
         if (targetType === 'action' || targetType === 'event' || targetType === 'view-container') {
           $.notify({message: 'Target element type not admited by the IFML policy for a View Component element...'}, {allow_dismiss: true, type: 'danger'});
-          return undefined;
+          return;
         }
         template.elements.push(generator(template, {
             type: 'ifml.DataFlow',
-            name: sourceElement.attributes.name + ' ' + targetElement.attributes.name,
+            name:  'From ' + sourceElement.id + ' to ' + targetElement.id,
             source: sourceElement.id,
             target: targetElement.id
         }));
-        return template;
+        break;
       case 'event':
       case 'ifml.Event':
         if (targetType === 'event' ) {
           $.notify({message: 'Target element type not admited by the IFML policy for a Event element...'}, {allow_dismiss: true, type: 'danger'});
-          return undefined;
+          return;
         }
         template.elements.push(generator(template, {
             type: 'ifml.NavigationFlow',
@@ -68,10 +69,26 @@ function connect(options) {
             source: sourceElement.id,
             target: targetElement.id
         }));
-        return template;
+        break;
       default:
         $.notify({message: 'Source element type not admited by the IFML policy...'}, {allow_dismiss: true, type: 'danger'});
         return undefined;
+    }
+
+    if (template) {
+      var link = ifml.fromJSON({ elements: template.elements , relations: []})[0],
+          source = _.filter(template.relations, function (relation) { return relation.type === 'source' })[0],
+          target = _.filter(template.relations, function (relation) { return relation.type === 'target' })[0];
+
+      if (ifmlModel.getCell(link.id)) {
+          $.notify({message: 'The link you want to add is already present in the model...'}, {allow_dismiss: true, type: 'danger'});
+          return;
+      }
+
+      link.attributes.source = { id: source.source };
+      link.attributes.target = { id: target.target };
+
+      ifmlModel.addCell(link);
     }
 }
 

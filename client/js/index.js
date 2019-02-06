@@ -686,7 +686,8 @@ socket.on('generate-view-container', generateViewContainer);
 socket.on('generate', generateElement);
 socket.on('delete', deleteElement);
 socket.on('drag-and-drop', dragDropElement);
-socket.on('select', selectElement);
+socket.on('select-element', selectElement);
+socket.on('select-flow', selectFlow);
 socket.on('resize', resizeElement);
 socket.on('insert', insertElement);
 socket.on('insert-event', insertEvent);
@@ -745,22 +746,11 @@ function deleteElement(options) {
 }
 
 function connectElements(options) {
-    console.log('connect',options);
+    options.ifml = ifml;
     options.ifmlModel = ifmlModel;
     options.selectedElement = selectedElement;
-    console.log(options);
-    var template = askCommands.connect(options);
 
-    if (template) {
-      var link = ifml.fromJSON({ elements: template.elements , relations: []})[0],
-          source = _.filter(template.relations, function (relation) { return relation.type === 'source' })[0],
-          target = _.filter(template.relations, function (relation) { return relation.type === 'target' })[0];
-
-      link.attributes.source = { id: source.source };
-      link.attributes.target = { id: target.target };
-
-      ifmlModel.addCell(link);
-    }
+    askCommands.connect(options);
 }
 
 function dragDropElement (options) {
@@ -773,12 +763,24 @@ function dragDropElement (options) {
 function selectElement(options) {
     options.ifmlModel = ifmlModel;
 
-    var element = askCommands.select(options);
+    var element = askCommands.selectElement(options);
 
     if (element) {
         selectedElement = element;
     } else {
         $.notify({message: 'Element not found... Select an existing element'}, {allow_dismiss: true, type: 'danger'});
+    }
+}
+
+function selectFlow(options) {
+    options.ifmlModel = ifmlModel;
+
+    var element = askCommands.selectFlow(options);
+
+    if (element) {
+        selectedElement = element;
+    } else {
+        $.notify({message: 'Flow not found... Select an existing element'}, {allow_dismiss: true, type: 'danger'});
     }
 }
 

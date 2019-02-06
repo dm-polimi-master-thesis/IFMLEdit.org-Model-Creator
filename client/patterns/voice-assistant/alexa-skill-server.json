@@ -995,6 +995,72 @@
                         "Remove binding to {element} {type} with input {input} and output {output}",
                         "Remove binding with input {input} and output {output}"
                     ]
+                },
+                {
+                    "name": "SelectFlowModelIntent",
+                    "slots": [
+                        {
+                            "name": "sourceName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{sourceName}",
+                                "the name of the source element is {sourceName}",
+                                "the name is {sourceName}",
+                                "it's {sourceName}",
+                                "it is {sourceName}"
+                            ]
+                        },
+                        {
+                            "name": "sourceType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "samples": [
+                                "{sourceType}",
+                                "The type of the source element is {sourceType}",
+                                "The type is {sourceType}",
+                                "It's {sourceType} ",
+                                "It is {sourceType}"
+                            ]
+                        },
+                        {
+                            "name": "targetName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "{targetName}",
+                                "The name of the target element is {targetName}",
+                                "The name is {targetName}",
+                                "It's {targetName}",
+                                "It is {targetName}"
+                            ]
+                        },
+                        {
+                            "name": "targetType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "samples": [
+                                "{targetType}",
+                                "the type of the target element is {targetType}",
+                                "the type is {targetType}",
+                                "it's {targetType}",
+                                "it is {targetType}"
+                            ]
+                        },
+                        {
+                            "name": "flowType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "samples": [
+                                "{flowType}",
+                                "It's {flowType}",
+                                "It is {flowType}",
+                                "The type of the target flow is {flowType}",
+                                "The type is {flowType}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Select {flowType}",
+                        "Select binding",
+                        "Select link",
+                        "Select from {sourceName} {sourceType} to {targetName} {targetType} {flowType}"
+                    ]
                 }
             ],
             "types": [
@@ -1190,6 +1256,46 @@
                 {
                     "name": "IFML_ELEMENT_NAME",
                     "values": [
+                        {
+                            "name": {
+                                "value": "from child form to home list"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "from house details to friends list"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "from shop details to catalog form"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "from test list to build form"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "from movie form to chips details"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "from check list to shop detailss"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "model"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "models"
+                            }
+                        },
                         {
                             "name": {
                                 "value": "details container"
@@ -2316,6 +2422,58 @@
                             "prompts": {}
                         }
                     ]
+                },
+                {
+                    "name": "SelectFlowModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "sourceName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.144895175436.902959109343"
+                            }
+                        },
+                        {
+                            "name": "sourceType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.144895175436.327323069446"
+                            }
+                        },
+                        {
+                            "name": "targetName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.144895175436.424812624954"
+                            }
+                        },
+                        {
+                            "name": "targetType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.144895175436.1075327686593"
+                            }
+                        },
+                        {
+                            "name": "flowType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.144895175436.204758755488"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -2705,6 +2863,51 @@
                     {
                         "type": "PlainText",
                         "value": "What is the name of the filter you want to remove?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.144895175436.902959109343",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the source element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.144895175436.327323069446",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the source element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.144895175436.424812624954",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name of the target element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.144895175436.1075327686593",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the target element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.144895175436.204758755488",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the flow you want to select?"
                     }
                 ]
             }

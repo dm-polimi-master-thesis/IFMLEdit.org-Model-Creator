@@ -44,6 +44,7 @@ exports.handler = skillBuilder
         RemoveResultModelIntentHandler = require('./handlers/advanced/RemoveResultModelIntentHandler').RemoveResultModelIntentHandler,
         ResizeElementModelIntentHandler = require('./handlers/advanced/ResizeElementModelIntentHandler.js').ResizeElementModelIntentHandler,
         SelectElementModelIntentHandler = require('./handlers/advanced/SelectElementModelIntentHandler.js').SelectElementModelIntentHandler,
+        SelectFlowModelIntentHandler = require('./handlers/advanced/SelectFlowModelIntentHandler.js').SelectFlowModelIntentHandler,
         SessionEndedRequestHandler = require('./handlers/defaults/SessionEndedRequestHandler.js').SessionEndedRequestHandler,
         ShareContentModelIntentHandler = require('./handlers/guided/ShareContentModelIntentHandler.js').ShareContentModelIntentHandler,
         SocialNetworkModelIntentHandler = require('./handlers/guided/SocialNetworkModelIntentHandler.js').SocialNetworkModelIntentHandler,

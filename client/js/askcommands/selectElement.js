@@ -7,7 +7,7 @@
 
 var toId = require('../ifml/utilities/validator/toId.js').toId;
 
-function select(options) {
+function selectElement(options) {
     var ifmlModel = options.ifmlModel,
         name = options.name,
         type = options.type.toLowerCase().replace(/\W/g,"-"),
@@ -17,4 +17,4 @@ function select(options) {
     return element;
 }
 
-exports.select = select;
+exports.selectElement = selectElement;
