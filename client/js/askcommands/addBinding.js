@@ -70,11 +70,6 @@ async function addBinding (options) {
         break;
     }
 
-    console.log(sourceFields);
-    console.log(targetFields);
-    console.log(input);
-    console.log(output);
-
     var bindings = element.attributes.bindings,
         bindingInputs = _.map(bindings, function (binding) { return binding.input}),
         duplicates = _.filter(bindings, function (binding) { return binding.input === input && binding.output === output });

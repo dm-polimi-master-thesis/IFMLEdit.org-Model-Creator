@@ -702,6 +702,11 @@ socket.on('add-result', addResult);
 socket.on('remove-result', removeResult);
 socket.on('add-binding', addBinding);
 socket.on('remove-binding', removeBinding);
+socket.on('set-name', setElementName);
+socket.on('set-type', setEventType);
+socket.on('set-container', setContainer);
+socket.on('set-collection', setCollection);
+
 
 function notify(options){
     $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
@@ -865,6 +870,30 @@ function removeBinding (options) {
     options.ifmlModel = ifmlModel;
     options.selectedElement = selectedElement;
     askCommands.removeBinding(options);
+}
+
+function setElementName (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.setElementName(options);
+}
+
+function setEventType (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.setEventType(options);
+}
+
+function setContainer (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.setContainer(options);
+}
+
+function setCollection (options) {
+    options.ifmlModel = ifmlModel;
+    options.selectedElement = selectedElement;
+    askCommands.setCollection(options);
 }
 
 function demo(options) {

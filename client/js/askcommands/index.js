@@ -26,6 +26,10 @@ exports.commands = {
     removeParameter: require('./removeParameter.js').removeParameter,
     removeResult: require('./removeResult.js').removeResult,
     resize: require('./resize.js').resize,
+    setCollection: require('./setCollection.js').setCollection,
+    setContainer: require('./setContainer.js').setContainer,
+    setElementName: require('./setElementName.js').setElementName,
+    setEventType: require('./setEventType.js').setEventType,
     selectElement: require('./selectElement.js').selectElement,
     selectFlow: require('./selectFlow.js').selectFlow,
     zoom: require('./zoom.js').zoom

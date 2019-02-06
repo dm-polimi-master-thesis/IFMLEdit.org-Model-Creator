@@ -951,6 +951,7 @@
                         }
                     ],
                     "samples": [
+                        "Add binding with output {output} and input {input}",
                         "Add binding",
                         "Add binding to {element} {type} with input {input} and output {output}",
                         "Add binding with input {input} and output {output}"
@@ -992,7 +993,7 @@
                     ],
                     "samples": [
                         "Remove binding",
-                        "Remove binding to {element} {type} with input {input} and output {output}",
+                        "Remove binding from {element} {type} with input {input} and output {output}",
                         "Remove binding with input {input} and output {output}"
                     ]
                 },
@@ -1060,6 +1061,150 @@
                         "Select binding",
                         "Select link",
                         "Select from {sourceName} {sourceType} to {targetName} {targetType} {flowType}"
+                    ]
+                },
+                {
+                    "name": "AddPatternModelIntent",
+                    "slots": [
+                        {
+                            "name": "patternType",
+                            "type": "IFML_PATTERN_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "Add {patternType} pattern",
+                        "Add pattern {patternType}"
+                    ]
+                },
+                {
+                    "name": "RemovePatternModelIntent",
+                    "slots": [
+                        {
+                            "name": "patternType",
+                            "type": "IFML_PATTERN_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "Remove {patternType} pattern",
+                        "Remove pattern {patternType}"
+                    ]
+                },
+                {
+                    "name": "SetElementNameModelIntent",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "the name is {name}",
+                                "it's {name}",
+                                "it is {name}"
+                            ]
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "elementType",
+                            "type": "IFML_ELEMENT_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "Assign the name {name}",
+                        "Assign the name {name} to {elementName} {elementType}",
+                        "Name {elementName} {elementType} to {name}",
+                        "Set the name of {elementName} {elementType} to {name}",
+                        "Set Name",
+                        "Set name {name} to {elementName} {elementType}",
+                        "Set {name} name to {elementName} {elementType}",
+                        "Set name to {name}"
+                    ]
+                },
+                {
+                    "name": "SetEventTypeModelIntent",
+                    "slots": [
+                        {
+                            "name": "eventType",
+                            "type": "IFML_EVENT_TYPE",
+                            "samples": [
+                                "the type is {eventType}",
+                                "{eventType}",
+                                "it's {eventType}",
+                                "it is {eventType}"
+                            ]
+                        },
+                        {
+                            "name": "eventName",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Set the type of {eventName} event to {eventType}",
+                        "Set event type",
+                        "Set event type to {eventType}"
+                    ]
+                },
+                {
+                    "name": "SetCollectionModelIntent",
+                    "slots": [
+                        {
+                            "name": "collectionName",
+                            "type": "IFML_ELEMENT_NAME"
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "samples": [
+                                "is {collectionName}",
+                                "it's {collectionName}",
+                                "it is {collectionName}",
+                                "the name is {collectionName}"
+                            ]
+                        },
+                        {
+                            "name": "elementType",
+                            "type": "IFML_ELEMENT_TYPE"
+                        }
+                    ],
+                    "samples": [
+                        "Set {collectionName} to the collection name of {elementName} {elementType}",
+                        "Give {collectionName} to the collection name of {elementName} {elementType}",
+                        "Give to the collection name of {elementName} {elementType} the name {collectionName}",
+                        "Give the name {collectionName} to the collection name of {elementName} {elementType}",
+                        "Give the name {collectionName} to the collection name",
+                        "Set the collection name of {elementName} {elementType} to {collectionName}",
+                        "Name the collection {collectionName}",
+                        "Assign {collectionName} to the collection of {elementName} {elementType}",
+                        "Assign {collectionName} to the collection",
+                        "Assign the name {collectionName} to the collection",
+                        "Assign to the collection the name {collectionName}",
+                        "Name the collection of {elementName} {elementType} {collectionName}",
+                        "Give {collectionName} to the collection name",
+                        "Set {collectionName} to the collection name",
+                        "Set the collection name to {collectionName}"
+                    ]
+                },
+                {
+                    "name": "SetContainerModelIntent",
+                    "slots": [
+                        {
+                            "name": "operation",
+                            "type": "IFML_OPERATION_TYPE"
+                        },
+                        {
+                            "name": "property",
+                            "type": "IFML_CONTAINER_PROPERTIES"
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "{operation} {property} to {elementName} view container",
+                        "{operation} {property} from {elementName} view container",
+                        "{operation} {property}"
                     ]
                 }
             ],
@@ -1256,36 +1401,6 @@
                 {
                     "name": "IFML_ELEMENT_NAME",
                     "values": [
-                        {
-                            "name": {
-                                "value": "from child form to home list"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "from house details to friends list"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "from shop details to catalog form"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "from test list to build form"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "from movie form to chips details"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "from check list to shop detailss"
-                            }
-                        },
                         {
                             "name": {
                                 "value": "model"
@@ -1678,6 +1793,126 @@
                         {
                             "name": {
                                 "value": "text"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_PATTERN_TYPE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "wizard"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sign up log in"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "restricted search"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "multilevel master detail"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "master detail"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "input data validation"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "in place log in"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "faceted search"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "content management"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "basic search"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "alphabetical filter"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_PATTERN_NODE_TYPE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "sign up"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "log in"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "intermediate step"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "start step"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_EVENT_TYPE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "system"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "selection"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "user"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "IFML_OPERATION_TYPE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "remove"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "add"
                             }
                         }
                     ]
@@ -2474,6 +2709,89 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "SetElementNameModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1113789192256.617635433889"
+                            }
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "elementType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "SetEventTypeModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "eventType",
+                            "type": "IFML_EVENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.856242634454.692673193927"
+                            }
+                        },
+                        {
+                            "name": "eventName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "SetCollectionModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "collectionName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "elementName",
+                            "type": "IFML_ELEMENT_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1422585344864.709392990992"
+                            }
+                        },
+                        {
+                            "name": "elementType",
+                            "type": "IFML_ELEMENT_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -2908,6 +3226,33 @@
                     {
                         "type": "PlainText",
                         "value": "What is the type of the flow you want to select?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1113789192256.617635433889",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name you want to give to the element?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.856242634454.692673193927",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type you want to give to the event?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1422585344864.709392990992",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the name you want to give to the collection?"
                     }
                 ]
             }
