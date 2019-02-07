@@ -147,7 +147,8 @@
             ],
             "pattern": [{
               "type": "node",
-              "value": "sign up and log in"
+              "value": "sign up and log in",
+              "state": "log in"
             }]
          },
          "metadata":{
@@ -234,7 +235,8 @@
             ],
             "pattern": [{
               "type": "node",
-              "value": "sign up and log in"
+              "value": "sign up and log in",
+              "state": "sign up"
             }]
          },
          "metadata":{

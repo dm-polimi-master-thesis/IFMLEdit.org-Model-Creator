@@ -7,6 +7,7 @@
 var idValidator = require('../../validator/idValidator.js').idValidator;
 
 function generateFlow(template, options) {
+    console.log(options.filters);
     var bindings = [];
     if(options.fields !== undefined){
       bindings = _.map(options.fields, function(field){
@@ -18,14 +19,15 @@ function generateFlow(template, options) {
     }
 
     if(options.filters !== undefined){
-      bindings.push(_.map(options.filters, function(filter){
+      bindings = _.map(options.filters, function(filter){
         return {
           input: filter.label,
           output: filter.label
         }
-      }));
+      });
     }
-
+    console.log(bindings);
+    console.log(_.flattenDeep(bindings));
     return {
         attributes: {
             bindings: _.flattenDeep(bindings),

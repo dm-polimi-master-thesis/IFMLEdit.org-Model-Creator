@@ -21,9 +21,10 @@ function addPattern(options) {
 
           for (var i = 0; i < steps; i++) {
               stepsArray.push({
-                  name: "Step " + (i + 1),
-                  collection: "collection-" + (i + 1),
-                  fields: []
+                  name: 'Step ' + (i + 1),
+                  collection: 'collection-' + (i + 1),
+                  fields: [{ label: 'field-' + (i + 1), value: 'field-' + (i + 1), type: 'text', name: '' }],
+                  filters: [{ label: 'field-' + (i + 1), value: 'field-' + (i + 1), type: 'text', name: '' }]
               })
           }
 
@@ -45,8 +46,8 @@ function addPattern(options) {
 
           for (var i = 0; i < steps; i++) {
               stepsArray.push({
-                  name: "Step " + (i + 1),
-                  formName: "Step " + (i + 1) + " Form",
+                  name: 'Step ' + (i + 1),
+                  formName: 'Step ' + (i + 1) + ' Form',
                   fields: []
               })
           }

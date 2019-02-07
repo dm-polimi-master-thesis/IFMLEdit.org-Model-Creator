@@ -10,7 +10,7 @@ const AddPatternModelIntentHandler = {
             message;
 
         if (patternType) {
-            if (!steps && patternType === 'wizard' || patternType === 'multilevel master detail') {
+            if (!steps && (patternType === 'wizard' || patternType === 'multilevel master detail')) {
                 sessionAttributes.notify = {
                     message: 'Specify the number of steps the pattern require.',
                     messageType: 'warning'

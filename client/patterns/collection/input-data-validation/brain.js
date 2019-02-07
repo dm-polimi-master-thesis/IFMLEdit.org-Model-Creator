@@ -47,7 +47,6 @@ function brain(options) {
 
       if (round && trip) {
           options.pattern.tree = tree;
-          console.log(tree);
           swal(
             'Input Data Validation Found',
             'Click on the pattern settings to manage the pattern',

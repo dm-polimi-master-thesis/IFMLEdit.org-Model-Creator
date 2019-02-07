@@ -16,7 +16,7 @@ function create(signUpLogIn){
   var template = signUpLogIn.logOut ? _.cloneDeep(logOut) : _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
-  if(inputDataValidation.voiceCommand) {
+  if(signUpLogIn.voiceCommand) {
       return template;
   }
 

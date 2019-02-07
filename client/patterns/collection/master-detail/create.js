@@ -17,7 +17,7 @@ function create(masterDetail){
       modelElementsHash;
 
   if(masterDetail.voiceCommand) {
-      return template;
+      return _.cloneDeep(format);
   }
 
   if (masterDetail.xor) {
