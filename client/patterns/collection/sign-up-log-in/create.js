@@ -14,13 +14,22 @@ var _ = require('lodash'),
 
 function create(signUpLogIn){
   var template = signUpLogIn.logOut ? _.cloneDeep(logOut) : _.cloneDeep(format),
-      modelElementsHash = toHash(template.elements),
-      signUpRegularValues = fieldsManipulator.toRegularValues(signUpLogIn.signUp.fields),
+      modelElementsHash = toHash(template.elements);
+
+  if(inputDataValidation.voiceCommand) {
+      return template;
+  }
+
+  var signUpRegularValues = fieldsManipulator.toRegularValues(signUpLogIn.signUp.fields),
       signUpSpecialValues = fieldsManipulator.toSpecialValues(signUpLogIn.signUp.fields),
       signUpErrorValues = fieldsManipulator.toErrorValues(signUpRegularValues),
       logInRegularValues = fieldsManipulator.toRegularValues(signUpLogIn.logIn.fields),
       logInSpecialValues = fieldsManipulator.toSpecialValues(signUpLogIn.logIn.fields),
       logInErrorValues = fieldsManipulator.toErrorValues(logInRegularValues);
+
+  if(signUpLogIn.voiceCommand) {
+      return template;
+  }
 
   configurator(modelElementsHash['sign-up-and-log-in-pattern-view-container'], template, {
       pattern: [{

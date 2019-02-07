@@ -18,8 +18,8 @@ function load(template,cell) {
     tree['data-entry-form'].attributes.fields = template.data.fields;
     tree['validate-action'].attributes.parameters = _.flattenDeep([regularValues, specialValues]);
     tree['validate-action'].attributes.results = _.flattenDeep([errorValues, regularValues, specialValues]);
-    tree['validate-flow'].attributes.bindings = _.map(_.flattenDeep([regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
-    tree['failed-validate-flow'].attributes.bindings = _.map(_.flattenDeep([errorValues, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
+    tree['validate-flow'].prop('bindings', _.map(_.flattenDeep([regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}}));
+    tree['failed-validate-flow'].prop('bindings', _.map(_.flattenDeep([errorValues, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}}));
 }
 
 exports.load = load;

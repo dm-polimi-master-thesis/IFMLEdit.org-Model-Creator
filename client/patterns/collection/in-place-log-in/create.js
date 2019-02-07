@@ -14,8 +14,13 @@ var _ = require('lodash'),
 
 function create(inPlaceLogIn){
   var template = inPlaceLogIn.editorOption ? _.cloneDeep(editor) : _.cloneDeep(format),
-      modelElementsHash = toHash(template.elements),
-      editorRegularValues = fieldsManipulator.toRegularValues(inPlaceLogIn.editor.fields),
+      modelElementsHash = toHash(template.elements);
+
+  if(inPlaceLogIn.voiceCommand) {
+      return template;
+  }
+
+  var editorRegularValues = fieldsManipulator.toRegularValues(inPlaceLogIn.editor.fields),
       editorSpecialValues = fieldsManipulator.toSpecialValues(inPlaceLogIn.editor.fields),
       editorErrorValues = fieldsManipulator.toErrorValues(editorRegularValues),
       logInRegularValues = fieldsManipulator.toRegularValues(inPlaceLogIn.logIn.fields),

@@ -5,7 +5,11 @@
             "name":"Master Detail Pattern",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": [{
+              "type": "root",
+              "value": "master detail"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -78,7 +82,11 @@
             "collection":"masters",
             "filters":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "master detail"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -106,7 +114,11 @@
                "text",
                "to"
             ],
-            "collection":"masters"
+            "collection":"masters",
+            "pattern": [{
+              "type": "node",
+              "value": "master detail"
+            }]
          },
          "metadata":{
             "graphics":{

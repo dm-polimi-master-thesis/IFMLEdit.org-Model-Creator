@@ -83,8 +83,7 @@ async function addBinding (options) {
     }
 
     if (sourceFields.length > 0 && targetFields.length > 0) {
-        element.attributes.bindings.push({ input: input, output: output });
-        element._labelChanged();
+        element.prop('bindings', element.attributes.binding.push({ input: input, output: output }));
     } else {
         $.notify({message: 'Input or output field not present in the target or source element...'}, {allow_dismiss: true, type: 'danger'});
         return;

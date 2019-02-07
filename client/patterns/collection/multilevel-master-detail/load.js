@@ -23,7 +23,7 @@ function load(template,cell) {
         tree['step-' + count + '-list'].attributes.filters = count !== 1 ? steps[count-2].filters : [];
 
         if (count !== steps.length) {
-            tree['step-' + count + '-flow'].attributes.bindings = _.map(steps[count-1].filters, function (f) {return {input: f.label, output: f.label}});
+            tree['step-' + count + '-flow'].prop('bindings', _.map(steps[count-1].filters, function (f) {return {input: f.label, output: f.label}}));
         }
         count--;
     }

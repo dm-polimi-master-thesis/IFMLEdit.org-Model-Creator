@@ -5,7 +5,11 @@
             "name":"Sign up and Log In Pattern",
             "default":true,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": [{
+              "type": "root",
+              "value": "sign up and log in"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -30,7 +34,11 @@
             ],
             "results":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "sign up and log in"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -136,7 +144,11 @@
             "stereotype":"form",
             "fields":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "sign up and log in"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -219,7 +231,11 @@
             "stereotype":"form",
             "fields":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "sign up and log in"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -316,7 +332,11 @@
                {
                   "label":"password-error"
                }
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "sign up and log in"
+            }]
          },
          "metadata":{
             "graphics":{

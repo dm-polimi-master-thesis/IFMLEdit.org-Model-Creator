@@ -706,6 +706,7 @@ socket.on('set-name', setElementName);
 socket.on('set-type', setEventType);
 socket.on('set-container', setContainer);
 socket.on('set-collection', setCollection);
+socket.on('add-pattern', addPattern);
 
 
 function notify(options){
@@ -733,7 +734,6 @@ function generateViewContainer(options) {
 }
 
 function generateElement(options) {
-    console.log('generate',options);
     options.ifmlModel = ifmlModel;
 
     var template = askCommands.generate(options);
@@ -894,6 +894,17 @@ function setCollection (options) {
     options.ifmlModel = ifmlModel;
     options.selectedElement = selectedElement;
     askCommands.setCollection(options);
+}
+
+function addPattern (options) {
+    console.log('add-pattern');
+    options.ifmlModel = ifmlModel;
+
+    var template = askCommands.addPattern(options);
+
+    if (template) {
+        voiceAssistantModelGenerator(template);
+    }
 }
 
 function demo(options) {

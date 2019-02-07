@@ -14,8 +14,13 @@ var _ = require('lodash'),
 
 function create(facetedSearch){
   var template = _.cloneDeep(format),
-      modelElementsHash = toHash(template.elements),
-      specialValues = fieldsManipulator.toSpecialValues(facetedSearch.filters.fields);
+      modelElementsHash = toHash(template.elements);
+
+  if(facetedSearch.voiceCommand) {
+      return template;
+  }
+
+  var specialValues = fieldsManipulator.toSpecialValues(facetedSearch.filters.fields);
 
   configurator(modelElementsHash['faceted-search-pattern-view-container'], template, {
       pattern: [{
@@ -54,7 +59,7 @@ function create(facetedSearch){
   configurator(modelElementsHash['details-view-container'], template, {
       name: facetedSearch.details.name
   });
-  configurator(modelElementsHash['selected-details'], template, {
+  configurator(modelElementsHash['result-details'], template, {
       name: facetedSearch.details.name,
       collection: facetedSearch.list.collection,
       fields: facetedSearch.details.fields,

@@ -82,6 +82,8 @@ function modelGenerator (options) {
           return model;
       }).value();
 
+      var beforeAdd = ifmlModel.getCells();
+
       ifmlModel.addCells(toBeAdded);
       ifmlBoard.clearHistory();
 
@@ -92,7 +94,9 @@ function modelGenerator (options) {
       return;
   }
 
-  ifmlBoard.zoomE();
+  if (beforeAdd.length === 0) {
+      ifmlBoard.zoomE();
+  }
 
   return false;
 }

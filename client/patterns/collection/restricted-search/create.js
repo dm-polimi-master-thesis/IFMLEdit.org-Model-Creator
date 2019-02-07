@@ -15,6 +15,10 @@ function create(restrictedSearch){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
+  if(restrictedSearch.voiceCommand) {
+      return template;
+  }
+
   configurator(modelElementsHash['restricted-search-pattern-view-container'], template, {
       pattern: [{
         type: 'root',

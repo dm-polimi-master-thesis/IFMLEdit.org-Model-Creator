@@ -5,7 +5,11 @@
             "name":"Faceted Search",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": [{
+              "type": "root",
+              "value": "faceted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -98,7 +102,11 @@
             "collection":"",
             "filters":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "faceted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -121,7 +129,11 @@
             "stereotype":"form",
             "fields":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "faceted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -144,7 +156,11 @@
             "stereotype":"form",
             "fields":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "faceted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -163,12 +179,16 @@
       },
       {
          "attributes":{
-            "name":"",
+            "name":"Result",
             "stereotype":"details",
             "fields":[
 
             ],
-            "collection":""
+            "collection":"",
+            "pattern": [{
+              "type": "node",
+              "value": "faceted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -182,7 +202,7 @@
                }
             }
          },
-         "id":"selected-details",
+         "id":"result-details",
          "type":"ifml.ViewComponent"
       },
       {
@@ -326,7 +346,7 @@
       {
          "type":"hierarchy",
          "parent":"details-view-container",
-         "child":"selected-details"
+         "child":"result-details"
       },
       {
          "type":"hierarchy",
@@ -371,7 +391,7 @@
       {
          "type":"target",
          "flow":"selected-navigation-flow",
-         "target":"selected-details"
+         "target":"result-details"
       },
       {
          "type":"target",

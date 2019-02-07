@@ -22,8 +22,8 @@ function load(template,cell) {
     tree['log-in-form'].attributes.fields = template.logIn.fields;
     tree['log-in-send-action'].attributes.parameters = _.flattenDeep([logInRegularValues, logInSpecialValues, { label: contentToSend.label }]);
     tree['log-in-send-action'].attributes.results = _.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues, { label: contentToSend.label }]);
-    tree['log-in-send-flow'].attributes.bindings = _.map(_.flattenDeep([logInRegularValues, logInSpecialValues, { label: contentToSend.label }]), function (f) {return {input: f.label, output: f.label}});
-    tree['failed-log-in-send-flow'].attributes.bindings = _.map(_.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues, { label: contentToSend.label }]), function (f) {return {input: f.label, output: f.label}});
+    tree['log-in-send-flow'].prop('bindings', _.map(_.flattenDeep([logInRegularValues, logInSpecialValues, { label: contentToSend.label }]), function (f) {return {input: f.label, output: f.label}}));
+    tree['failed-log-in-send-flow'].prop('bindings', _.map(_.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues, { label: contentToSend.label }]), function (f) {return {input: f.label, output: f.label}}));
 
 
     if(tree['editor-form']){
@@ -31,9 +31,9 @@ function load(template,cell) {
         tree['editor-form'].attributes.fields = template.editor.fields;
         tree['content-send-action'].attributes.parameters = _.flattenDeep([editorRegularValues, editorSpecialValues]);
         tree['content-send-action'].attributes.results = _.flattenDeep([editorErrorValues, editorRegularValues, editorSpecialValues, { label: contentToSend.label }]);
-        tree['editor-flow'].attributes.bindings = _.map(_.flattenDeep([editorRegularValues, editorSpecialValues]), function (f) {return {input: f.label, output: f.label}});
-        tree['failed-editor-flow'].attributes.bindings = _.map(_.flattenDeep([editorErrorValues, editorRegularValues, editorSpecialValues]), function (f) {return {input: f.label, output: f.label}});
-        tree['log-in-flow'].attributes.bindings = _.map(_.flattenDeep([editorRegularValues, editorSpecialValues]), function (f) {return {input: f.label, output: f.label}});
+        tree['editor-flow'].prop('bindings', _.map(_.flattenDeep([editorRegularValues, editorSpecialValues]), function (f) {return {input: f.label, output: f.label}}));
+        tree['failed-editor-flow'].prop('bindings', _.map(_.flattenDeep([editorErrorValues, editorRegularValues, editorSpecialValues]), function (f) {return {input: f.label, output: f.label}}));
+        tree['log-in-flow'].prop('bindings', _.map(_.flattenDeep([editorRegularValues, editorSpecialValues]), function (f) {return {input: f.label, output: f.label}}));
     }
 }
 

@@ -17,7 +17,7 @@ function load(template,cell) {
     if(tree['data-entry-form']){
         tree['data-entry-form'].prop('name',template.name);
         tree['data-entry-form'].attributes.fields = template.dataEntry.fields;
-        tree['save-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
+        tree['save-data-entry-flow'].prop('bindings', _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}}));
         tree['save-action'].attributes.parameters = _.flattenDeep([{ label: 'id' }, regularValues, specialValues]);
         tree['save-action'].attributes.results = _.flattenDeep([{ label: 'id' }, errorValues, regularValues, specialValues]);
     }
@@ -32,13 +32,13 @@ function load(template,cell) {
     }
     if(tree['load-content-action']){
         tree['load-content-action'].attributes.results = _.flattenDeep([{ label: 'id', value: 'id', type: 'hidden', name: '' }, regularValues, specialValues]);
-        tree['load-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
+        tree['load-data-entry-flow'].prop('bindings', _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}}));
     }
     if(tree['failed-data-entry-flow']){
-        tree['failed-data-entry-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, errorValues, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
+        tree['failed-data-entry-flow'].prop('bindings', _.map(_.flattenDeep([{ label: 'id' }, errorValues, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}}));
     }
     if(tree['modify-flow']){
-        tree['modify-flow'].attributes.bindings = _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}});
+        tree['modify-flow'].prop('bindings', _.map(_.flattenDeep([{ label: 'id' }, regularValues, specialValues]), function (f) {return {input: f.label, output: f.label}}));
     }
 }
 

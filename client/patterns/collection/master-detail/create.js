@@ -16,6 +16,10 @@ function create(masterDetail){
   var template,
       modelElementsHash;
 
+  if(masterDetail.voiceCommand) {
+      return template;
+  }
+
   if (masterDetail.xor) {
     template= _.cloneDeep(xor);
     modelElementsHash = toHash(template.elements);

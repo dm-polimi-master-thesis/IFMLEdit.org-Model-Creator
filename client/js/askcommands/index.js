@@ -10,6 +10,7 @@ exports.commands = {
     addField: require('./addField.js').addField,
     addFilter: require('./addFilter.js').addFilter,
     addParameter: require('./addParameter.js').addParameter,
+    addPattern: require('./addPattern.js').addPattern,
     addResult: require('./addResult.js').addResult,
     connect: require('./connect.js').connect,
     delete: require('./delete.js').deleteElement,

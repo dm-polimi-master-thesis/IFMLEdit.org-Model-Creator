@@ -6,7 +6,10 @@
             "default":false,
             "landmark":false,
             "xor":false,
-            "pattern": []
+            "pattern": [{
+              "type": "root",
+              "value": "alphabetical filter"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -100,7 +103,10 @@
 
             ],
             "collection":"",
-            "pattern": []
+            "pattern": [{
+              "type": "node",
+              "value": "alphabetical filter"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -130,7 +136,10 @@
             "filters":[
 
             ],
-            "pattern": []
+            "pattern": [{
+              "type": "node",
+              "value": "alphabetical filter"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -158,7 +167,10 @@
             "filters":[
 
             ],
-            "pattern": []
+            "pattern": [{
+              "type": "node",
+              "value": "alphabetical filter"
+            }]
          },
          "metadata":{
             "graphics":{

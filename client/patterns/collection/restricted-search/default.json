@@ -5,7 +5,11 @@
             "name":"Restricted Search",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": [{
+              "type": "root",
+              "value": "restricted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -94,7 +98,11 @@
             "stereotype":"form",
             "fields":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "restricted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -121,7 +129,11 @@
             "collection":"categories",
             "filters":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "restricted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -150,7 +162,11 @@
                {
                   "label":"category"
                }
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "restricted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -193,7 +209,11 @@
             "fields":[
 
             ],
-            "collection":"products"
+            "collection":"products",
+            "pattern": [{
+              "type": "node",
+              "value": "restricted search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -252,7 +272,7 @@
       {
          "attributes":{
             "bindings":[
-              
+
             ]
          },
          "metadata":{

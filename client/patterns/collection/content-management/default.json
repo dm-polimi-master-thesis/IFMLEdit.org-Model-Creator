@@ -5,7 +5,11 @@
             "name":"Content Management Pattern",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": [{
+              "type": "root",
+              "value": "content management"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -54,7 +58,11 @@
                {
                   "label":"id"
                }
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "content management"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -82,7 +90,11 @@
             ],
             "results":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "content management"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -110,7 +122,11 @@
             ],
             "results":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "content management"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -317,7 +333,11 @@
             "stereotype":"form",
             "fields":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "content management"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -341,7 +361,11 @@
             "fields":[
 
             ],
-            "collection":"page"
+            "collection":"page",
+            "pattern": [{
+              "type": "node",
+              "value": "content management"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -384,7 +408,11 @@
             "fields":[
 
             ],
-            "collection":""
+            "collection":"",
+            "pattern": [{
+              "type": "node",
+              "value": "content management"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -411,7 +439,11 @@
             "collection":"",
             "filters":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "content management"
+            }]
          },
          "metadata":{
             "graphics":{

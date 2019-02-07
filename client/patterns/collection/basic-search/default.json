@@ -5,7 +5,11 @@
             "name":"Basic Search",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": [{
+              "type": "root",
+              "value": "basic search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -68,7 +72,7 @@
       },
       {
          "attributes":{
-            "name":"Product",
+            "name":"Result",
             "default":false,
             "landmark":false,
             "xor":false
@@ -85,7 +89,7 @@
                }
             }
          },
-         "id":"product-view-container",
+         "id":"result-view-container",
          "type":"ifml.ViewContainer"
       },
       {
@@ -94,7 +98,11 @@
             "stereotype":"form",
             "fields":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "basic search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -121,7 +129,11 @@
             "collection":"",
             "filters":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "basic search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -140,12 +152,16 @@
       },
       {
          "attributes":{
-            "name":"Product",
+            "name":"Result",
             "stereotype":"details",
             "fields":[
 
             ],
-            "collection":"products"
+            "collection":"",
+            "pattern": [{
+              "type": "node",
+              "value": "basic search"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -159,7 +175,7 @@
                }
             }
          },
-         "id":"product-details",
+         "id":"result-details",
          "type":"ifml.ViewComponent"
       },
       {
@@ -179,7 +195,7 @@
                }
             }
          },
-         "id":"selected-product-event",
+         "id":"selected-result-event",
          "type":"ifml.Event"
       },
       {
@@ -210,7 +226,7 @@
 
             }
          },
-         "id":"selected-product-navigation-flow",
+         "id":"selected-result-navigation-flow",
          "type":"ifml.NavigationFlow"
       },
       {
@@ -266,7 +282,7 @@
       {
          "type":"hierarchy",
          "parent":"xor-view-container",
-         "child":"product-view-container"
+         "child":"result-view-container"
       },
       {
          "type":"hierarchy",
@@ -280,13 +296,13 @@
       },
       {
          "type":"hierarchy",
-         "parent":"product-view-container",
-         "child":"product-details"
+         "parent":"result-view-container",
+         "child":"result-details"
       },
       {
          "type":"hierarchy",
          "parent":"results-list",
-         "child":"selected-product-event"
+         "child":"selected-result-event"
       },
       {
          "type":"hierarchy",
@@ -300,8 +316,8 @@
       },
       {
          "type":"source",
-         "flow":"selected-product-navigation-flow",
-         "source":"selected-product-event"
+         "flow":"selected-result-navigation-flow",
+         "source":"selected-result-event"
       },
       {
          "type":"source",
@@ -315,8 +331,8 @@
       },
       {
          "type":"target",
-         "flow":"selected-product-navigation-flow",
-         "target":"product-details"
+         "flow":"selected-result-navigation-flow",
+         "target":"result-details"
       },
       {
          "type":"target",

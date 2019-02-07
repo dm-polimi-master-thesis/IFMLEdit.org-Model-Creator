@@ -13,8 +13,13 @@ var _ = require('lodash'),
 
 function create(inputDataValidation){
   var template = _.cloneDeep(format),
-      modelElementsHash = toHash(template.elements),
-      regularValues = fieldsManipulator.toRegularValues(inputDataValidation.data.fields),
+      modelElementsHash = toHash(template.elements);
+
+  if(inputDataValidation.voiceCommand) {
+      return template;
+  }
+
+  var regularValues = fieldsManipulator.toRegularValues(inputDataValidation.data.fields),
       specialValues = fieldsManipulator.toSpecialValues(inputDataValidation.data.fields),
       errorValues = fieldsManipulator.toErrorValues(regularValues);
 

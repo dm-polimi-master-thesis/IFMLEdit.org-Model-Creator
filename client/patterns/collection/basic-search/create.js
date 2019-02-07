@@ -15,6 +15,10 @@ function create(basicSearch){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
+  if(basicSearch.voiceCommand) {
+      return template;
+  }
+
   configurator(modelElementsHash['basic-search-pattern-view-container'], template, {
       pattern: [{
         type: 'root',
@@ -41,10 +45,10 @@ function create(basicSearch){
         value: 'basic search'
       }]
   });
-  configurator(modelElementsHash['product-view-container'], template, {
+  configurator(modelElementsHash['result-view-container'], template, {
       name: basicSearch.details.name
   });
-  configurator(modelElementsHash['product-details'], template, {
+  configurator(modelElementsHash['result-details'], template, {
       name: basicSearch.details.name,
       collection: basicSearch.list.collection,
       fields: basicSearch.details.fields,

@@ -15,8 +15,13 @@ var _ = require('lodash'),
 
 function create(pageManagement){
   var template = _.cloneDeep(format),
-      modelElementsHash = toHash(template.elements),
-      regularValues = fieldsManipulator.toRegularValues(pageManagement.dataEntry.fields),
+      modelElementsHash = toHash(template.elements);
+
+  if(pageManagement.voiceCommand) {
+      return template;
+  }
+
+  var regularValues = fieldsManipulator.toRegularValues(pageManagement.dataEntry.fields),
       specialValues = fieldsManipulator.toSpecialValues(pageManagement.dataEntry.fields),
       errorValues = fieldsManipulator.toErrorValues(regularValues);
 

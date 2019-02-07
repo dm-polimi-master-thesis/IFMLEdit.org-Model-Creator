@@ -5,7 +5,11 @@
             "name":"In Place Log In",
             "default":false,
             "landmark":false,
-            "xor":false
+            "xor":false,
+            "pattern": [{
+              "type": "root",
+              "value": "in-place log in"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -30,7 +34,11 @@
             ],
             "results":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "in-place log in"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -78,7 +86,11 @@
             ],
             "results":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "in-place log in"
+            }]
          },
          "metadata":{
             "graphics":{
@@ -140,7 +152,11 @@
             "stereotype":"form",
             "fields":[
 
-            ]
+            ],
+            "pattern": [{
+              "type": "node",
+              "value": "in-place log in"
+            }]
          },
          "metadata":{
             "graphics":{

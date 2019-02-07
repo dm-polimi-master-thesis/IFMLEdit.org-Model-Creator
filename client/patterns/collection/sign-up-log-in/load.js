@@ -23,12 +23,12 @@ function load(template,cell) {
     tree['sign-up-form'].attributes.fields = template.signUp.fields;
     tree['log-in-action'].attributes.parameters = _.flattenDeep([logInRegularValues, logInSpecialValues]);
     tree['log-in-action'].attributes.results = _.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues]);
-    tree['log-in-flow'].attributes.bindings = _.map(_.flattenDeep([logInRegularValues, logInSpecialValues]), function (f) {return {input: f.label, output: f.label}});
-    tree['failed-log-in-flow'].attributes.bindings = _.map(_.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues]), function (f) {return {input: f.label, output: f.label}});
+    tree['log-in-flow'].prop('bindings', _.map(_.flattenDeep([logInRegularValues, logInSpecialValues]), function (f) {return {input: f.label, output: f.label}}));
+    tree['failed-log-in-flow'].prop('bindings', _.map(_.flattenDeep([logInErrorValues, logInRegularValues, logInSpecialValues]), function (f) {return {input: f.label, output: f.label}}));
     tree['sign-up-action'].attributes.parameters = _.flattenDeep([signUpRegularValues, signUpSpecialValues]);
     tree['sign-up-action'].attributes.results = _.flattenDeep([signUperrorValues, signUpRegularValues, signUpSpecialValues]);
-    tree['sign-up-flow'].attributes.bindings = _.map(_.flattenDeep([signUpRegularValues, signUpSpecialValues]), function (f) {return {input: f.label, output: f.label}});
-    tree['failed-sign-up-flow'].attributes.bindings = _.map(_.flattenDeep([signUperrorValues, signUpRegularValues, signUpSpecialValues]), function (f) {return {input: f.label, output: f.label}});
+    tree['sign-up-flow'].prop('bindings', _.map(_.flattenDeep([signUpRegularValues, signUpSpecialValues]), function (f) {return {input: f.label, output: f.label}}));
+    tree['failed-sign-up-flow'].prop('bindings', _.map(_.flattenDeep([signUperrorValues, signUpRegularValues, signUpSpecialValues]), function (f) {return {input: f.label, output: f.label}}));
 }
 
 exports.load = load;

@@ -11,7 +11,7 @@ function load(template,cell) {
 
     tree['pattern-container'].prop('name',template.name);
     tree['keyword-form'].attributes.fields = template.search;
-    tree['keyword-flow'].attributes.bindings = [{input: template.search[0].label, output: template.search[0].label }];
+    tree['keyword-flow'].prop('bindings',[{input: template.search[0].label, output: template.search[0].label }]);
     tree['results-list'].prop('collection',template.list.collection);
     tree['results-list'].attributes.fields = template.list.fields;
     tree['results-list'].attributes.filters = template.search;

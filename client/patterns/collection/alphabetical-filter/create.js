@@ -15,6 +15,10 @@ function create(alphabeticalFilter){
   var template = _.cloneDeep(format),
       modelElementsHash = toHash(template.elements);
 
+  if(alphabeticalFilter.voiceCommand) {
+      return template;
+  }
+
   configurator(modelElementsHash['alphabetical-filter-pattern-view-container'], template, {
       pattern: [{
         type: 'root',
