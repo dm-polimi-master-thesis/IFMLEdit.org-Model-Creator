@@ -7,7 +7,7 @@ const EcommerceModelIntentHandler = {
             && !handlerInput.attributesManager.getSessionAttributes().nextStep;
     },
     handle(handlerInput) {
-        var speechText = 'The products that you intend to sell are homogeneous or require to be divided into categories and sub-categories?',
+        var speechText = 'The products you intend to sell are homogeneous or require to be divided into categories and sub-categories?',
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {

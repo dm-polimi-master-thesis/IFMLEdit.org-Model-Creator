@@ -187,6 +187,7 @@
                             "name": "likePolicy",
                             "type": "IFML_AGREE_POLICY",
                             "samples": [
+                                "I think it is a {likePolicy} idea",
                                 "It is {likePolicy} for me",
                                 "It is {likePolicy}",
                                 "It is a {likePolicy}",
@@ -1068,25 +1069,26 @@
                     "slots": [
                         {
                             "name": "patternType",
-                            "type": "IFML_PATTERN_TYPE"
+                            "type": "IFML_PATTERN_TYPE",
+                            "samples": [
+                                "it's {patternType}",
+                                "it is {patternType}",
+                                "{patternType}",
+                                "the pattern is {patternType}"
+                            ]
+                        },
+                        {
+                            "name": "steps",
+                            "type": "AMAZON.NUMBER"
                         }
                     ],
                     "samples": [
+                        "Add pattern {patternType} with {steps} step",
+                        "Add pattern {patternType} with {steps} steps",
+                        "Add {patternType} pattern with {steps} step",
+                        "Add {patternType} pattern with {steps} steps",
                         "Add {patternType} pattern",
                         "Add pattern {patternType}"
-                    ]
-                },
-                {
-                    "name": "RemovePatternModelIntent",
-                    "slots": [
-                        {
-                            "name": "patternType",
-                            "type": "IFML_PATTERN_TYPE"
-                        }
-                    ],
-                    "samples": [
-                        "Remove {patternType} pattern",
-                        "Remove pattern {patternType}"
                     ]
                 },
                 {
@@ -1224,6 +1226,7 @@
                             "name": {
                                 "value": "show and sell products",
                                 "synonyms": [
+                                    "show and sell",
                                     "show and sell products",
                                     "sell products",
                                     "show products",
@@ -1290,6 +1293,7 @@
                             "name": {
                                 "value": "categories",
                                 "synonyms": [
+                                    "heterogeneous",
                                     "the second",
                                     "categories and subcategories",
                                     "subcategories",
@@ -1354,6 +1358,7 @@
                             "name": {
                                 "value": "allow",
                                 "synonyms": [
+                                    "review",
                                     "not a bad",
                                     "not bad",
                                     "can",
@@ -1401,6 +1406,141 @@
                 {
                     "name": "IFML_ELEMENT_NAME",
                     "values": [
+                        {
+                            "name": {
+                                "value": "wizard pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sign up and log in pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sign up log in pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "log in pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sign up pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "restricted search pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "multilevel master detail pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "master detail pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "input data validation pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "in place log in pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "faceted search pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "content management pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "basic search pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "alphabetical filter pattern"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sign up and log in"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sign up log in"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sign up"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "restricted search"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "input data validation"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "in place log in"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "faceted search"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "content management"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "basic search"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "wizard"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "master detail"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "multilevel master detail"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "alphabetical filter"
+                            }
+                        },
                         {
                             "name": {
                                 "value": "model"
@@ -2792,6 +2932,29 @@
                             "prompts": {}
                         }
                     ]
+                },
+                {
+                    "name": "AddPatternModelIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "patternType",
+                            "type": "IFML_PATTERN_TYPE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1045160863519.1343352752978"
+                            }
+                        },
+                        {
+                            "name": "steps",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -3253,6 +3416,15 @@
                     {
                         "type": "PlainText",
                         "value": "What is the name you want to give to the collection?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1045160863519.1343352752978",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What is the type of the pattern you want to add?"
                     }
                 ]
             }
