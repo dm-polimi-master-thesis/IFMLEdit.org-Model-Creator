@@ -380,6 +380,7 @@
                         }
                     ],
                     "samples": [
+                        "drag and drop {firstDirection} for {firstDelta} pixels",
                         "drag and drop {name} {type} {firstDirection} for {firstDelta} pixels",
                         "drag and drop {type} {firstDirection} for {firstDelta} pixels",
                         "drag and drop {type} {firstDirection} for {firstDelta}",
@@ -464,6 +465,7 @@
                         }
                     ],
                     "samples": [
+                        "Resize {name} {type} {direction} for {sign} {delta} pixels",
                         "Resize {direction} for {delta} pixels",
                         "Resize {name} {direction} for {delta} pixels",
                         "Resize {type} {direction} for {delta} pixels",
@@ -1142,6 +1144,7 @@
                         }
                     ],
                     "samples": [
+                        "Set type to {eventType}",
                         "Set the type of {eventName} event to {eventType}",
                         "Set event type",
                         "Set event type to {eventType}"
@@ -1170,6 +1173,7 @@
                         }
                     ],
                     "samples": [
+                        "Assign the name {collectionName} to the collection of {elementName} {elementType}",
                         "Set {collectionName} to the collection name of {elementName} {elementType}",
                         "Give {collectionName} to the collection name of {elementName} {elementType}",
                         "Give to the collection name of {elementName} {elementType} the name {collectionName}",
