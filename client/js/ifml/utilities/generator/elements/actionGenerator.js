@@ -18,7 +18,7 @@ function generateAction(template, options) {
         graphics: {
            position: options.position || { x: 0, y: 0 },
            size: options.size || { height: 70, width: 110 },
-           parent: options.parent
+           parent: options.parent || undefined
         }
      },
      id: idValidator(template.elements, options.name,'-action'),

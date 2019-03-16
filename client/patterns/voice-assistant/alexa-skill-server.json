@@ -47,6 +47,8 @@
                             "name": "purpose",
                             "type": "IFML_APPLICATION_TYPE",
                             "samples": [
+                                "I want to build a {purpose} application",
+                                "I need to build a {purpose} application",
                                 "ask people to {purpose}",
                                 "The purpose of the application must be {purpose}",
                                 "The purpose of the application is to {purpose}",

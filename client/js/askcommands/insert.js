@@ -134,9 +134,13 @@ async function insert (options) {
             name: options.name,
             text: options.name,
             stereotype: elementStereotype,
-            parent: parent.id,
             size: size
         }));
+
+        console.log(template);
+        console.log(template.elements);
+        console.log(ifml.fromJSON({ elements: template.elements , relations: []}));
+        console.log(ifml.fromJSON({ elements: template.elements , relations: []})[0]);
 
         elements = [ifml.fromJSON({ elements: template.elements , relations: []})[0]];
         clonedGraph[idElement] = elements[0];

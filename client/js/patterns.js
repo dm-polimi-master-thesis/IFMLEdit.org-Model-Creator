@@ -7,12 +7,6 @@
 
 exports.patterns = [
   {
-    category: "Content Management",
-    list: [
-      {id: "content-management", title: "Content Management", type: "content-modification", image: "patterns/preview/content-management.png", description: "In blogs and page-based content management systems there is a fixed schema consisting of a hierarchical collection of pages. In these systems an intuitive interface is made available to the user, in order to adding new pages, editing their content, organizing pages in hierarchies, defining the pages' order in menus, and setting the graphical properties and visibility of pages. This pattern meets all the specific needs of a page-based content-management system.", html: require("../patterns/collection/content-management/content-management.html"), createPattern: require("../patterns/collection/content-management/index.js").SettingsPattern , updatePattern: require("../patterns/collection/content-management/update.js").update}
-    ]
-  },
-  {
     category: "Content Navigation",
     list: [
       {id: "alphabetical-filter", title: "Alphabetical Filter", type: "content-navigation", image: "patterns/preview/alphabetical-filter.png", description: "When the objects to be accessed are numerous but possess a meaningful attribute that allows them to be accessed alphabetically, a useful access pattern consists of providing an alphabetic filter to partition the collection into chunks.", html: require("../patterns/collection/alphabetical-filter/alphabetical-filter.html"), createPattern: require("../patterns/collection/alphabetical-filter/index.js").SettingsPattern, updatePattern: require("../patterns/collection/alphabetical-filter/update.js").update},
@@ -20,6 +14,12 @@ exports.patterns = [
       {id: "master-detail", title: "Master Detail", type: "content-navigation", image: "patterns/preview/master-detail.png", description: "The master detail pattern is the simplest data access pattern. A list ViewComponent is used to present some instances (the so called master list), and a selection Event permits the user to access the details of one instance at a time.", html: require("../patterns/collection/master-detail/master-detail.html"), createPattern: require("../patterns/collection/master-detail/index.js").SettingsPattern, updatePattern: require("../patterns/collection/master-detail/update.js").update},
       {id: "multilevel-master-detail", title: "Multilevel Master Detail", type: "content-navigation", image: "patterns/preview/multilevel-master-detail.png", description: "Sometimes called \"cascaded index\" it consists of a sequence of List ViewComponents defined over distinct classes, such that each List specifies a change of focus from one object (selected from the index) to the set of objects related to it via an association role. In the end, a single object is shown in a Details ViewComponent, or several objects are shown in a List ViewComponent. A typical usage of the pattern exploits one or more data access classes to build a navigation path to the instances of a core class.", html: require("../patterns/collection/multilevel-master-detail/multilevel-master-detail.html"), createPattern: require("../patterns/collection/multilevel-master-detail/index.js").SettingsPattern, updatePattern: require("../patterns/collection/multilevel-master-detail/update.js").update},
       {id: "up-back-navigation", title: "Up and Back Navigation", type: "content-navigation", image: "patterns/preview/up-back-navigation.png", description: "The Up and Back navigation links are classic orientation helpers. In particular: the Up link refers to some hierarchical structure associated with the interface. It leads the user to the superior ViewElement in the View hierarchy. Instead, the Back link refers to the chronology of the user's interaction; it leads back in time to the last visited ViewElement.", html: require("../patterns/collection/up-back-navigation/up-back-navigation.html"), createPattern: require("../patterns/collection/up-back-navigation/index.js").SettingsPattern, updatePattern: require("../patterns/collection/up-back-navigation/update.js").update}
+    ]
+  },
+  {
+    category: "Content Management",
+    list: [
+      {id: "content-management", title: "Content Management", type: "content-modification", image: "patterns/preview/content-management.png", description: "In blogs and page-based content management systems there is a fixed schema consisting of a hierarchical collection of pages. In these systems an intuitive interface is made available to the user, in order to adding new pages, editing their content, organizing pages in hierarchies, defining the pages' order in menus, and setting the graphical properties and visibility of pages. This pattern meets all the specific needs of a page-based content-management system.", html: require("../patterns/collection/content-management/content-management.html"), createPattern: require("../patterns/collection/content-management/index.js").SettingsPattern , updatePattern: require("../patterns/collection/content-management/update.js").update}
     ]
   },
   {
