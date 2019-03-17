@@ -90,10 +90,11 @@ async function insert (options) {
     }
 
     var modelElements = ifmlModel.getElements(),
-        rightToParent = parent.attributes.parent === undefined ? _.filter(modelElements, function (element) { return (parent.position().x + parent.size().width) <= element.position().x && element.id !== idElement }) : undefined,
-        leftToParent = parent.attributes.parent === undefined ? _.filter(modelElements, function (element) { return (element.position().x + element.size().width) <= parent.position().x && element.id !== idElement }) : undefined,
-        upToParent = parent.attributes.parent === undefined ? _.filter(modelElements, function (element) { return (element.position().y + element.size().height) <= parent.position().y && element.id !== idElement }) : undefined,
-        downToParent = parent.attributes.parent === undefined ? _.filter(modelElements, function (element) { return (parent.position().y + parent.size().height) <= element.position().y && element.id !== idElement }) : undefined;
+        elementChildren = !recursion ? _.map(elements, function(el) { return el.id }) : options.elementChildren,
+        rightToParent = parent.attributes.parent === undefined ? _.filter(modelElements, function (element) { return (parent.position().x + parent.size().width) <= element.position().x && !_.includes(elementChildren,element.id) }) : undefined,
+        leftToParent = parent.attributes.parent === undefined ? _.filter(modelElements, function (element) { return (element.position().x + element.size().width) <= parent.position().x && !_.includes(elementChildren,element.id) }) : undefined,
+        upToParent = parent.attributes.parent === undefined ? _.filter(modelElements, function (element) { return (element.position().y + element.size().height) <= parent.position().y && !_.includes(elementChildren,element.id) }) : undefined,
+        downToParent = parent.attributes.parent === undefined ? _.filter(modelElements, function (element) { return (parent.position().y + parent.size().height) <= element.position().y && !_.includes(elementChildren,element.id) }) : undefined;
 
     if (!elements[0]) {
         switch (elementType) {
@@ -207,6 +208,7 @@ async function insert (options) {
         positionY(clonedGraph, elements[0], y);
 
         _.forEach(elements, function (element,index) {
+            console.log(element);
             if(index !== 0){
                 var delta = {
                         x: Math.abs(initialPos.x - element.position().x),
@@ -216,6 +218,7 @@ async function insert (options) {
                 positionX(clonedGraph, element, elements[0].position().x + delta.x);
                 positionY(clonedGraph, element, elements[0].position().y + delta.y);
             }
+            console.log(element);
         })
     }
     var modelsInParentArea = ifmlModel.findModelsInArea({ x: clonedGraph[parent.id].position().x, y: clonedGraph[parent.id].position().y, width: clonedGraph[parent.id].size().width, height: clonedGraph[parent.id].size().height }),
@@ -357,8 +360,10 @@ async function insert (options) {
                       }
                   })
                   _.forEach(downToElement, function (el) {
+                      console.log(el);
                       positionY(clonedGraph, el, clonedGraph[el.id].position().y + deltaDownMiddle);
                       _.forEach(el.getEmbeddedCells({deep:'true'}), function (embed) {
+                          console.log(embed);
                           if (!moved[embed.id] && !embed.isLink()) {
                               positionY(clonedGraph, embed, clonedGraph[embed.id].position().y + deltaDownMiddle);
                               moved[embed.id] = true;
@@ -380,20 +385,28 @@ async function insert (options) {
                 name: parent.attributes.name,
                 type: 'view container',
                 parent: parent.attributes.parent,
+                elementChildren: elementChildren,
                 clone: clonedGraph,
                 position: position || 'left',
                 recursion: true,
                 ifml: ifml,
                 ifmlModel: ifmlModel
             };
+        debugger;
         insert(options);
     } else {
+        debugger;
         var parentExtPadding = {
             nw: { x: clonedGraph[parent.id].position().x - 20, y: clonedGraph[parent.id].position().y - 20 },
             ne: { x: clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width + 20, y: clonedGraph[parent.id].position().y - 20},
             sw: { x: clonedGraph[parent.id].position().x - 20, y: clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height + 20 },
             se: { x: clonedGraph[parent.id].position().x + clonedGraph[parent.id].size().width + 20, y: clonedGraph[parent.id].position().y + clonedGraph[parent.id].size().height +20 }
         };
+
+        console.log(upToParent);
+        console.log(downToParent);
+        console.log(rightToParent);
+        console.log(leftToParent);
 
         var maxUp = upToParent.length > 0 ? upToParent.reduce((max, el) => (el.position().y + el.size().height) > max ? el.position().y + el.size().height : max, upToParent[0].position().y + upToParent[0].size().height) : 0,
             deltaUp = upToParent.length > 0 ? maxUp - parentExtPadding.nw.y : 0;
