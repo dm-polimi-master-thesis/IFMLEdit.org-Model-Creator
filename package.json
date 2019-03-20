@@ -31,7 +31,7 @@
   "dependencies": {
     "aliasify": "^2.1.0",
     "almost": "^1.0.1",
-    "almost-joint": "^1.0.0-beta",
+    "almost-joint": "github:molinellidavide/almostjs-joint",
     "ask-sdk": "^2.3.0",
     "ask-sdk-core": "^2.3.0",
     "ask-sdk-model": "^1.11.1",
