@@ -45,6 +45,10 @@ gulp.task('images', function () {
     return gulp.src('./client/img/*').pipe(gulp.dest('./public/img'));
 });
 
+gulp.task('svg', function () {
+    return gulp.src('./client/svg/*').pipe(gulp.dest('./public/svg'));
+});
+
 gulp.task('examples', function () {
     return merge(
         gulp.src('./client/examples/*.png').pipe(gulp.dest('./public/examples')),
@@ -60,15 +64,6 @@ gulp.task('patterns', function () {
 
 gulp.task('favicon', function () {
     return icongen('./client/favicon.svg', './public');
-});
-
-gulp.task('temp', function () {
-    return gulp.src('./node_modules/almost-joint/dist/almost-joint.js')
-            .pipe(gulpif(!production, sourcemaps.init()))
-            .pipe(minifyjs())
-            .pipe(rename({suffix: '.min'}))
-            .pipe(gulpif(!production, sourcemaps.write('./')))
-            .pipe(gulp.dest('./public/js'));
 });
 
 gulp.task('vendor', function () {
@@ -400,9 +395,9 @@ gulp.task('demo-web-client', gulp.parallel('demo-web-client-index', 'demo-web-cl
 gulp.task('demo-mobile', gulp.parallel('demo-mobile-index', 'demo-mobile-html', 'demo-mobile-css', 'demo-mobile-images', 'demo-mobile-js'));
 
 if (production) {
-    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns', 'alexa-skill', 'temp'));
+    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'favicon', 'examples', 'patterns', 'alexa-skill', 'svg'));
 } else {
-    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns', 'alexa-skill', 'temp'));
+    gulp.task('build', gulp.parallel('html', 'index', 'demo-web-server', 'demo-web-client', 'demo-mobile', 'vendor', 'sass', 'images', 'examples', 'patterns', 'alexa-skill', 'svg'));
 }
 
 gulp.task('default', gulp.series('clean', 'build'), function () {

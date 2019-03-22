@@ -8,10 +8,13 @@ const CancelAndStopIntentHandler = {
         var speechText = 'Goodbye!',
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        sessionAttributes.notify = {
+        /*sessionAttributes.notify = {
           message: 'Goodbye!',
           messageType: 'success'
-        };
+        };*/
+
+        sessionAttributes.welcome = false;
+        sessionAttributes.goodbye = true;
 
         return handlerInput.responseBuilder
             .speak(speechText)

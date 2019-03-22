@@ -8,9 +8,10 @@ const CreateModelIntentHandler = {
         var sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {
-            message: 'Let\'s start!',
-            messageType: 'success'
+            message: 'Let\'s start!'
         };
+
+        sessionAttributes.welcome = false;
 
         return handlerInput.responseBuilder
             .addDelegateDirective()

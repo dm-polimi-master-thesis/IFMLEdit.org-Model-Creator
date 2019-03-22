@@ -11,6 +11,9 @@ const SessionEndedRequestHandler = {
           messageType: 'success'
         };
 
+        sessionAttributes.welcome = false;
+        sessionAttributes.goodbye = true;
+
         return handlerInput.responseBuilder.getResponse();
     },
 };

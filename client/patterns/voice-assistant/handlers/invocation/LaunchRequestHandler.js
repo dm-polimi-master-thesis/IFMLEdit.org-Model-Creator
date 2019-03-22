@@ -5,11 +5,8 @@ const LaunchRequestHandler = {
     handle(handlerInput) {
         var speechText = 'Welcome to IFML model creator!',
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
-        sessionAttributes.notify = {
-            message: 'Welcome!',
-            messageType: 'success'
-        };
+        
+        sessionAttributes.welcome = true;
 
         return handlerInput.responseBuilder
             .speak(speechText)

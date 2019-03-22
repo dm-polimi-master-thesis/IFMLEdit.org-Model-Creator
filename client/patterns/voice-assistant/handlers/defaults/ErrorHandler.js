@@ -7,10 +7,13 @@ const ErrorHandler = {
         var speechText = 'Sorry, I can\'t understand the command. Please say again.',
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        sessionAttributes.notify = {
+        /*sessionAttributes.notify = {
           message: 'Error!',
           messageType: 'danger'
-        };
+        };*/
+
+        sessionAttributes.welcome = false;
+        sessionAttributes.goodbye = true;
 
         return handlerInput.responseBuilder
             .speak(speechText)

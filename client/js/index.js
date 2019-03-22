@@ -34,6 +34,7 @@ var _ = require('lodash'),
     createIFClient = require('./ifclient').IFClient,
     AException = require('almost').Exception,
     partialModelValidator = require('./ifml/utilities/validator/partialModelValidator.js').partialModelValidator,
+    createModalAssistant = require('./modalassistant').ModalAssistant,
     askTemplates = require('./ask-templates.js').templates,
     askCommands = require('./askcommands/index.js').commands,
     generator = require('./ifml/utilities/generator/elementGenerator.js').generator,
@@ -672,8 +673,11 @@ $('#pcn').removeClass('active');
 
 
 var socket = io("http://localhost:3000"),
-    selectedElement;
+    selectedElement,
+    modalAssistant;
 
+socket.on('welcome', welcome);
+socket.on('goodbye', goodbye);
 socket.on('notify', notify);
 socket.on('demo', demo);
 socket.on('e-commerce', ecommerce);
@@ -709,8 +713,61 @@ socket.on('set-collection', setCollection);
 socket.on('add-pattern', addPattern);
 
 
+function welcome() {
+    modalAssistant = createModalAssistant();
+}
+
+function goodbye() {
+    modalAssistant.close();
+}
+
 function notify(options){
-    $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
+    /*if (options.welcome || options.guided) {
+        if (options.open) {
+          Swal.mixin({
+            input: 'text',
+            confirmButtonText: 'Next &rarr;',
+            showCancelButton: true,
+            progressSteps: ['1', '2', '3']
+            }).queue([
+            {
+              title: 'Question 1',
+              text: 'Chaining swal2 modals is easy'
+            },
+            'Question 2',
+            'Question 3'
+            ]).then((result) => {
+            if (result.value) {
+              Swal.fire({
+                title: 'All done!',
+                html:
+                  'Your answers: <pre><code>' +
+                    JSON.stringify(result.value) +
+                  '</code></pre>',
+                confirmButtonText: 'Lovely!'
+              })
+            }
+          })
+        } else if (options.close) {
+
+        } else {
+
+        }
+    }*/
+    if (options.message) {
+        modalAssistant.message(options.message);
+    } else {
+        modalAssistant.message('');
+    }
+    if (options.description) {
+        modalAssistant.description(options.description);
+    } else {
+        modalAssistant.description('');
+    }
+
+    if (options.advanced) {
+        $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
+    }
 }
 
 function zoom(options) {

@@ -28,6 +28,12 @@ function createRouter(io) {
         }).then(done => {
             var options = done.sessionAttributes;
 
+            if (options.welcome) {
+                socket.emit('welcome');
+            }
+            if (options.goodbye) {
+                socket.emit('goodbye');
+            }
             if (options.notify) {
                 socket.emit('notify', options.notify);
             }

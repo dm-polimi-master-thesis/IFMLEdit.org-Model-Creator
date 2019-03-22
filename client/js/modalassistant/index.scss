@@ -1,0 +1,26 @@
+.modal-assistant{
+
+      position: absolute;
+  float: left;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  bottom: auto;
+
+    .modal-content {
+      color: #18222d !important;
+      background-color: white;
+      text-align: center;
+      padding: 0!important;
+    }
+
+    .modal-body {
+        min-height: 450px !important;
+        height: 450px !important;
+    }
+
+    .img-responsive {
+        max-width: 250px;
+        margin-top: 30px;
+    }
+}

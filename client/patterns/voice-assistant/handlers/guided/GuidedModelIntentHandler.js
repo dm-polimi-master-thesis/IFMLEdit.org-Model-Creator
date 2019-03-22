@@ -20,6 +20,9 @@ const GuidedModelIntentHandler = {
             pattern: [],
         };
 
+        sessionAttributes.welcome = false;
+        sessionAttributes.guided = true;
+
         sessionAttributes.state = 'IN_PROGRESS';
 
         return handlerInput.responseBuilder
