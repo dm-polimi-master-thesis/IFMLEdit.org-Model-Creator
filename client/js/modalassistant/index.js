@@ -34,11 +34,12 @@ function GuidedTourViewModel(options, close) {
             self.steps.push(step);
         });
 
-        /*if (options.end) {
+        if (options.end) {
+            console.log('entro');
             setTimeout(function () {
                 self.close();
             }, 3000);
-        }*/
+        }
     }
 
     return self;
