@@ -17,8 +17,7 @@
         <text data-bind="text:question"></text>
     </center>
     <ul class="list" data-bind="foreach: steps">
-        <li class="step">
-            <img class="icon-svg" data-bind="attr: { src: svg }"/>
+        <li class="step" data-bind="attr: { id: 'pattern-' + $index() }">
             <span class="pattern" data-bind="text:step"></span>
         </li>
     </ul>

@@ -42,7 +42,9 @@ function createRouter(io) {
                 done.sessionAttributes = {};
             }
             if (options.state && options.state === 'COMPLETED') {
-                socket.emit(options.model.type, options.model);
+                setTimeout(function () {
+                  socket.emit(options.model.type, options.model);
+                }, 1000);
                 done.sessionAttributes = {};
             }
             if (options.advanced) {

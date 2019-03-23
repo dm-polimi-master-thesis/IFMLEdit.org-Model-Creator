@@ -12,7 +12,7 @@ const ShareContentModelIntentHandler = {
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {
-            message: 'Share Contents'
+            message: 'What type of content users can share?'
         };
 
         return handlerInput.responseBuilder

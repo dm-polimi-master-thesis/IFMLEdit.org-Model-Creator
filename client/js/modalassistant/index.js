@@ -22,24 +22,35 @@ function GuidedTourViewModel(options, close) {
 
     self.close = close;
     self.next = function (options) {
+
         var index = parseInt($('.is-active')[0].id.slice(-1));
+
+        self.question(options.message);
+        _.forEach(options.steps, function (step) {
+            self.steps.push(step);
+
+            var svg;
+
+            if (step.svg === './svg/okay-animated.svg') {
+                svg = require('../../svg/okay-animated.svg');
+            } else if (step.svg === './svg/delete-animated.svg') {
+                svg = require('../../svg/delete-animated.svg');
+            }
+
+            $('#pattern-' + (self.steps().length - 1)).prepend(svg);
+        });
 
         $('.is-active').removeClass('is-active');
         $('#step-' + index).find('.progress-bar__bar').css('transform','translateX(100%)');
-        $('#step-' + (index + 1)).addClass('is-active');
 
-        self.question(options.message);
-
-        _.forEach(options.steps, function (step) {
-            self.steps.push(step);
-        });
-
-        if (options.end) {
-            console.log('entro');
-            setTimeout(function () {
-                self.close();
-            }, 3000);
+        if (!options.end) {
+            $('#step-' + (index + 1)).addClass('is-active');
         }
+
+        setTimeout(function () {
+            $('#svg-style').remove();
+        }, 500);
+
     }
 
     return self;

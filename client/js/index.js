@@ -727,6 +727,12 @@ function notify(options){
             modalAssistant.guidedTour(options);
         } else {
             modalAssistant.app.next(options);
+
+            if (options.end) {
+                setTimeout(function () {
+                    modalAssistant.close();
+                }, 2000);
+            }
         }
     } else if (options.advanced) {
         $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
