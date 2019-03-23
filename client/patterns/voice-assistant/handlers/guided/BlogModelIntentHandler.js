@@ -9,12 +9,13 @@ const BlogModelIntentHandler = {
             && !handlerInput.attributesManager.getSessionAttributes().nextStep;
     },
     handle(handlerInput) {
-        var speechText = 'Are the articles relative to the same topic or they can divided in categories and sub-categories?',
+        var speechText = 'Articles are homogeneous or heterogeneous?',
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {
-            message: 'Blog',
-            messageType: 'success'
+            message: 'Are the articles relative to the same topic or they can divided in categories and sub-categories?',
+            guided: true,
+            purpose: 'blog'
         };
 
         sessionAttributes.model.type = 'blog';

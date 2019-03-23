@@ -12,18 +12,19 @@ const LikesModelIntentHandler = {
         if (answer === 'allow') {
             sessionAttributes.model.pattern.push('like-content-management-pattern');
             sessionAttributes.notify = {
-              message: 'Allow Likes!',
-              messageType: 'success'
+                steps: [{step: 'Likes Content Management Pattern', svg: './svg/okay-animated.svg'}],
+                guided: true
             };
         } else if (answer === 'deny') {
-            sessionAttributes.notify = {
-              message: 'Deny Likes!',
-              messageType: 'success'
-            };
+          sessionAttributes.notify = {
+              steps: [{step: 'Likes Content Management Pattern', svg: './svg/delete-animated.svg'}],
+              guided: true
+          };
         }
 
         switch (sessionAttributes.model.type) {
           case 'social-network':
+              sessionAttributes.notify.message = 'Users can establish relationships?';
               sessionAttributes.nextStep = 'friends-content-management-pattern-handler';
               return handlerInput.responseBuilder
                   .speak('In traditional social networks users can establish relationships. Is this your case?')

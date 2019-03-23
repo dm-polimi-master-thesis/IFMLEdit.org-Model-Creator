@@ -1,0 +1,25 @@
+<div id="guided-modal-content" class="guided-modal">
+    <center class="steps-navigator">
+        <div class="container-fluid">
+              <ul class="list-unstyled multi-steps" data-bind="foreach: progressBar">
+                  <li data-bind="attr: { id: 'step-' + $index() }, css: { 'is-active': active }">
+                      <span data-bind="text:step"></span>
+                      <!-- ko if: $index() !== ($parent.progressBar().length - 1) -->
+                      <div class="progress-bar progress-bar--success">
+                          <div class="progress-bar__bar"></div>
+                      </div>
+                      <!-- /ko -->
+                  </li>
+              </ul>
+        </div>
+    </center>
+    <center class="question">
+        <text data-bind="text:question"></text>
+    </center>
+    <ul class="list" data-bind="foreach: steps">
+        <li class="step">
+            <img class="icon-svg" data-bind="attr: { src: svg }"/>
+            <span class="pattern" data-bind="text:step"></span>
+        </li>
+    </ul>
+</div>

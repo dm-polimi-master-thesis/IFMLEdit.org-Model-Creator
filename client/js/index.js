@@ -722,51 +722,29 @@ function goodbye() {
 }
 
 function notify(options){
-    /*if (options.welcome || options.guided) {
-        if (options.open) {
-          Swal.mixin({
-            input: 'text',
-            confirmButtonText: 'Next &rarr;',
-            showCancelButton: true,
-            progressSteps: ['1', '2', '3']
-            }).queue([
-            {
-              title: 'Question 1',
-              text: 'Chaining swal2 modals is easy'
-            },
-            'Question 2',
-            'Question 3'
-            ]).then((result) => {
-            if (result.value) {
-              Swal.fire({
-                title: 'All done!',
-                html:
-                  'Your answers: <pre><code>' +
-                    JSON.stringify(result.value) +
-                  '</code></pre>',
-                confirmButtonText: 'Lovely!'
-              })
-            }
-          })
-        } else if (options.close) {
-
-        } else {
-
+    if (options.guided) {
+        if (options.purpose) {
+            modalAssistant.guidedTour(options);
+        } else {
+            modalAssistant.app.next(options);
         }
-    }*/
-    if (options.message) {
-        modalAssistant.message(options.message);
-    } else {
-        modalAssistant.message('');
-    }
-    if (options.description) {
-        modalAssistant.description(options.description);
-    } else {
-        modalAssistant.description('');
-    }
-
-    if (options.advanced) {
+    } else if (options.advanced) {
         $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
+    } else {
+        if (options.message) {
+            modalAssistant.content.message(options.message);
+        } else {
+            modalAssistant.content.message('');
+        }
+        if (options.description) {
+            modalAssistant.content.description(options.description);
+        } else {
+            modalAssistant.content.description('');
+        }
+
+        if (options.advanced) {
+            $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
+        }
     }
 }
 

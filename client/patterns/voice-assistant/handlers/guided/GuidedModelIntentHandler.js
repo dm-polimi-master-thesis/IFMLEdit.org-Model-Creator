@@ -11,8 +11,7 @@ const GuidedModelIntentHandler = {
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {
-            message: 'What is the primary purpose?',
-            messageType: 'success'
+            message: 'What is the primary purpose?'
         };
 
         sessionAttributes.model = {

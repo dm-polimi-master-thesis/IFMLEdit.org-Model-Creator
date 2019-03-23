@@ -12,19 +12,20 @@ const CrowdPolicyModelIntentHandler = {
         if (answer === 'publish') {
             sessionAttributes.model.pattern.push('master-policy');
             sessionAttributes.notify = {
-              message: 'Master Policy',
-              messageType: 'success'
+                steps: [{step: 'Master and Worker profiles', svg: './svg/okay-animated.svg'}],
+                guided: true
             };
         } else if (answer === 'perform') {
             sessionAttributes.model.pattern.push('worker-policy');
             sessionAttributes.notify = {
-              message: 'Worker Policy',
-              messageType: 'success'
+                steps: [{step: 'Worker profile', svg: './svg/okay-animated.svg'}],
+                guided: true
             };
         }
 
         switch (sessionAttributes.model.type) {
           case 'crowdsourcing':
+              sessionAttributes.notify.message = 'Are tasks hmogeneous or heterogeneous?';
               sessionAttributes.nextStep = 'master-details-pattern-handler';
 
               return handlerInput.responseBuilder

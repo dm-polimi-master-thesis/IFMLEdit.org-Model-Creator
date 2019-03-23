@@ -12,24 +12,26 @@ const FavoriteModelIntentHandler = {
         if (answer === 'allow') {
             sessionAttributes.model.pattern.push('favorite-content-management-pattern');
             sessionAttributes.notify = {
-              message: 'Allow wish list!',
-              messageType: 'success'
+                steps: [{step: 'Favorite Content Management Pattern', svg: './svg/okay-animated.svg'}],
+                guided: true
             };
         } else if (answer === 'deny') {
-            sessionAttributes.notify = {
-              message: 'Deny wish list!',
-              messageType: 'success'
-            };
+          sessionAttributes.notify = {
+              steps: [{step: 'Comment Content Management Pattern', svg: './svg/delete-animated.svg'}],
+              guided: true
+          };
         }
 
         switch (sessionAttributes.model.type) {
           case 'e-commerce':
+              sessionAttributes.notify.message = 'Do you want a payment procedure?';
               sessionAttributes.nextStep = 'wizard-pattern-handler';
               return handlerInput.responseBuilder
                   .speak('The payment procedure is managed through a wizard pattern that progressively require information to the customer. It\'s good for you or do you want to create your personal procedure independently?')
                   .addElicitSlotDirective('wizardPolicy')
                   .getResponse();
           case 'blog':
+              sessionAttributes.notify.message = 'Do you want to allow comments to the articles?';
               sessionAttributes.nextStep = 'comment-content-management-pattern-handler';
               return handlerInput.responseBuilder
                   .speak('Do you want to allow or deny comments to the articles?')

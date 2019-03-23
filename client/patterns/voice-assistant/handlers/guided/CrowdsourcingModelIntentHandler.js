@@ -11,8 +11,9 @@ const CrowdsourcingModelIntentHandler = {
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {
-            message: 'Crowdsourcing',
-            messageType: 'success'
+            message: 'Users can publish tasks?',
+            guided: true,
+            purpose: 'crowdsourcing'
         };
 
         sessionAttributes.model.type = 'crowdsourcing';

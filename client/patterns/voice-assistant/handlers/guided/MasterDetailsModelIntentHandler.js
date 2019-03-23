@@ -12,25 +12,28 @@ const MasterDetailsModelIntentHandler = {
         if (answer === 'categories') {
             sessionAttributes.model.pattern.push('multilevel-master-details','restricted-search');
             sessionAttributes.notify = {
-              message: 'Multilevel Master Details',
-              messageType: 'success'
+                steps: [{step: 'Multilevel Master Detail', svg: './svg/okay-animated.svg'},{step: 'Restricted Search', svg: './svg/okay-animated.svg'}],
+                guided: true
             };
         } else if (answer === 'homogeneous') {
             sessionAttributes.model.pattern.push('master-details','basic-search');
             sessionAttributes.notify = {
-              message: 'Master Details',
-              messageType: 'success'
+                steps: [{step: 'Master Detail', svg: './svg/okay-animated.svg'},{step: 'Basic Search', svg: './svg/okay-animated.svg'}],
+                guided: true
             };
         }
 
         switch (sessionAttributes.model.type) {
           case 'e-commerce':
+              sessionAttributes.notify.message = 'Do you want to allow reviews of the products?';
               sessionAttributes.nextStep = 'comment-content-management-pattern-handler';
               return handlerInput.responseBuilder
                   .speak('Do you want to allow or deny reviews of the products?')
                   .addElicitSlotDirective('commentPolicy')
                   .getResponse();
           case 'crowdsourcing':
+              sessionAttributes.notify.message = 'Great! I think we have finished';
+              sessionAttributes.notify.end = true;
               handlerInput.requestEnvelope.request.dialogState = 'COMPLETED';
               sessionAttributes.state = 'COMPLETED';
               sessionAttributes.nextStep = undefined;
@@ -39,6 +42,7 @@ const MasterDetailsModelIntentHandler = {
                   .withShouldEndSession(false)
                   .getResponse();
           case 'blog':
+              sessionAttributes.notify.message = 'Are you interested in creating a sort of community?';
               sessionAttributes.nextStep = 'personal-pages-content-management-pattern-handler';
               return handlerInput.responseBuilder
                   .speak('Are you interested in creating a sort of community where user can publish articles or users can only visualize and execute operations on published articles?')

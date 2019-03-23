@@ -12,10 +12,11 @@ const SocialNetworkModelIntentHandler = {
         var speechText = 'Can user comment posts or they can only visualize them?',
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        sessionAttributes.notify = {
-            message: 'Social Network',
-            messageType: 'success'
-        };
+            sessionAttributes.notify = {
+                message: 'Can user comment posts?',
+                guided: true,
+                purpose: 'social-network'
+            };
 
         sessionAttributes.model.type = 'social-network';
         sessionAttributes.nextStep = 'comment-content-management-pattern-handler';

@@ -6,58 +6,42 @@
 
 var _ = require('lodash');
 
-function ModalAssistantViewModel(options,close) {
+function ModalAssistantViewModel(options) {
     var self = this;
 
-    self.close = close;
-    self.message = ko.observable('Welcome in IFML Model Creator');
+    self.message = ko.observable('Welcome to IFML Model Creator');
     self.description = ko.observable('How can I help you?');
+}
 
-    /*self.guided = function () {
-      var result = self.pattern.transform();
+function GuidedTourViewModel(options, close) {
+    var self = this;
 
-      if(result !== undefined){
-        self.close();
-      }
-    }*/
+    self.question = ko.observable(options.message),
+    self.progressBar = ko.observableArray(options.progressBar),
+    self.steps = ko.observableArray([]);
 
-    /*self.nextStep = function () {
-      $('#pattern-home').removeClass()
-          .addClass('pattern-home-out')
-          .animate({opacity:0,left:'-20px'},1000, function () {
-              $(this).hide();
+    self.close = close;
+    self.next = function (options) {
+        var index = parseInt($('.is-active')[0].id.slice(-1));
 
-              if(self.pattern === undefined || self.pattern.id !== self.home.selected().id){
-                if(!(self.pattern === undefined)){
-                  $('#' + self.pattern.id + '-settings-content').remove();
-                }
-                var el = $(self.home.selected().html);
-                $('#pattern-settings').append(el)
-                    .addClass('pattern-settings-in')
-                    .animate({opacity:1,left:'0px'},800, function () {})
-                    .show();
-                    self.pattern = self.home.selected().createPattern({ id: self.home.selected().id });
-              } else {
-                $('#pattern-settings').addClass('pattern-settings-in')
-                .animate({opacity:1,left:'0px'},800, function () {})
-                .show();
-              }
-              self.firstStep(false);
-          });
-    }*/
+        $('.is-active').removeClass('is-active');
+        $('#step-' + index).find('.progress-bar__bar').css('transform','translateX(100%)');
+        $('#step-' + (index + 1)).addClass('is-active');
 
-    /*self.back = function () {
-      $('#pattern-settings').removeClass()
-          .addClass('pattern-settings-out')
-          .animate({opacity: 0, left: '20px'},800, function(){
-            $(this).hide();
-            self.firstStep(true);
-            $('#pattern-home').removeClass()
-                .addClass("pattern-home-back-in")
-                .animate({opacity:1,left:'0px'},800, function () {})
-                .show();
-          });
-    }*/
+        self.question(options.message);
+
+        _.forEach(options.steps, function (step) {
+            self.steps.push(step);
+        });
+
+        /*if (options.end) {
+            setTimeout(function () {
+                self.close();
+            }, 3000);
+        }*/
+    }
+
+    return self;
 }
 
 function ModalAssistant(options) {
@@ -75,12 +59,39 @@ function ModalAssistant(options) {
         el.remove();
     }
 
-    var home = new ModalAssistantViewModel( {} , function () { el.modal('hide'); });
+    self.close = function () { el.modal('hide') };
+    self.content = new ModalAssistantViewModel();
+    self.guidedTour = function (options) {
+        $('#assistant-modal-home').remove();
 
-    ko.applyBindings(home, el.find('#assistant-modal')[0]);
+        var el = $(require('./guided.html'));
+
+        $('.modal-body').append(el);
+
+        switch (options.purpose) {
+          case 'e-commerce':
+            options.progressBar = [{step: 'Organization', active: true},{step: 'Reviews', active: false},{step: 'Favorite', active: false},{step: 'Payment', active: false},{step: 'Finish', active: false}];
+            break;
+          case 'blog':
+            options.progressBar = [{step: 'Organization', active: true},{step: 'Community', active: false},{step: 'Favorite', active: false},{step: 'Comments', active: false},{step: 'Finish', active: false}];
+            break;
+          case 'social-network':
+            options.progressBar = [{step: 'Comments', active: true},{step: 'Likes', active: false},{step: 'Relationships', active: false},{step: 'Finish', active: false}];
+            break;
+          case 'crowdsourcing':
+            options.progressBar = [{step: 'Tasks', active: true},{step: 'Organization', active: false},{step: 'Finish', active: false}];
+            break;
+        }
+
+        self.app = new GuidedTourViewModel(options, self.close);
+
+        ko.applyBindings(self.app, el[0]);
+    }
+
+    ko.applyBindings(self.content, el.find('#assistant-modal-home')[0]);
     el.modal('show').on('hidden.bs.modal', tearDown);
 
-    return home;
+    return self;
 }
 
 exports.ModalAssistant = ModalAssistant;

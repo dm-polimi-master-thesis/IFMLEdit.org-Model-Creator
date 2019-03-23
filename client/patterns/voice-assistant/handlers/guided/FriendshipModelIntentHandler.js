@@ -12,19 +12,21 @@ const FriendshipModelIntentHandler = {
         if (answer === 'allow') {
             sessionAttributes.model.pattern.push('friends-content-management-pattern','basic-search');
             sessionAttributes.notify = {
-              message: 'Allow Friendship!',
-              messageType: 'success'
+                steps: [{step: 'Friends Content Management Pattern', svg: './svg/okay-animated.svg'}],
+                guided: true
             };
         } else if (answer === 'deny') {
-            sessionAttributes.notify = {
-              message: 'Deny Friendship!',
-              messageType: 'success'
-            };
+          sessionAttributes.notify = {
+              steps: [{step: 'Friends Content Management Pattern', svg: './svg/delete-animated.svg'}],
+              guided: true
+          };
         }
 
         switch (sessionAttributes.model.type) {
           case 'social-network':
               handlerInput.requestEnvelope.request.dialogState = 'COMPLETED';
+              sessionAttributes.notify.message = 'Great! I think we have finished';
+              sessionAttributes.notify.end = true;
               sessionAttributes.state = 'COMPLETED';
               sessionAttributes.nextStep = undefined;
 

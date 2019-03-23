@@ -10,7 +10,7 @@ const AdvancedModelIntentHandler = {
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {
-            message: 'Build your advanced model!',
+            message: 'Let\'s start!',
             messageType: 'success'
         };
 

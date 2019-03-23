@@ -8,7 +8,7 @@ const CreateModelIntentHandler = {
         var sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {
-            message: 'Let\'s start!'
+            message: 'Guided or advanced mode?'
         };
 
         sessionAttributes.welcome = false;
