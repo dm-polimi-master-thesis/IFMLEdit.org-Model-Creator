@@ -39,6 +39,27 @@ $grey-light: #e1e1e1;
         max-width: 250px;
         margin-top: 30px;
     }
+
+		.fadeIn {
+    		opacity: 1;
+    		animation: fadeIn 0.5s linear;
+		}
+
+		.fadeOut {
+    		opacity: 0;
+    		animation: fadeOut 0.5s linear;
+		}
+
+
+		@keyframes fadeOut {
+  			0% { opacity: 1 }
+  			100% { opacity: 0 }
+		}
+
+		@keyframes fadeIn {
+  			0% { opacity: 0 }
+  			100% { opacity: 1 }
+		}
 }
 
 .guided-modal {

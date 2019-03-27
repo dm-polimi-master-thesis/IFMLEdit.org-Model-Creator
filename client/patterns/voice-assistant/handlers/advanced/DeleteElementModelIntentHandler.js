@@ -12,7 +12,8 @@ const DeleteElementModelIntentHandler = {
         if (name && !type) {
             sessionAttributes.notify = {
                 message: 'What is the type of the element you want to delete?',
-                messageType: 'warning'
+                messageType: 'warning',
+                advanced: true
             };
             return handlerInput.responseBuilder
                 .speak('What is the type of the element you want to delete?')

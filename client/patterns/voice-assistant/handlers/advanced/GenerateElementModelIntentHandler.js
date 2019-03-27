@@ -12,7 +12,8 @@ const GenerateElementModelIntentHandler = {
         if (type !== 'view container' && type !== 'action') {
             sessionAttributes.notify = {
                 message: 'You try to generate an element that require to be insert inside a parent. Use insert command instead.',
-                messageType: 'danger'
+                messageType: 'danger',
+                advanced: true
             };
 
             return handlerInput.responseBuilder

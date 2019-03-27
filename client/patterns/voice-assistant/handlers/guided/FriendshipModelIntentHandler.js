@@ -25,7 +25,7 @@ const FriendshipModelIntentHandler = {
         switch (sessionAttributes.model.type) {
           case 'social-network':
               handlerInput.requestEnvelope.request.dialogState = 'COMPLETED';
-              sessionAttributes.notify.message = 'Great! I think we have finished';
+              sessionAttributes.notify.message = 'Great! I think we have finished..';
               sessionAttributes.notify.end = true;
               sessionAttributes.state = 'COMPLETED';
               sessionAttributes.nextStep = undefined;

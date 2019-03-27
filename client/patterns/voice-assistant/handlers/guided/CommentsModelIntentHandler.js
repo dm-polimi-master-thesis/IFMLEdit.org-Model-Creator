@@ -32,7 +32,7 @@ const CommentsModelIntentHandler = {
                   .getResponse();
           case 'blog':
               handlerInput.requestEnvelope.request.dialogState = 'COMPLETED';
-              sessionAttributes.notify.message = 'Great! I think we have finished';
+              sessionAttributes.notify.message = 'Great! I think we have finished..';
               sessionAttributes.notify.end = true;
               sessionAttributes.state = 'COMPLETED';
               sessionAttributes.nextStep = undefined;

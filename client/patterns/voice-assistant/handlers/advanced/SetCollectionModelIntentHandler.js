@@ -19,7 +19,8 @@ const SetCollectionModelIntentHandler = {
 
             sessionAttributes.notify = {
                 message: message,
-                messageType: 'success'
+                messageType: 'success',
+                advanced: true
             };
             sessionAttributes.advanced = {
                 operation: 'set-collection',

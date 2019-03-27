@@ -735,22 +735,17 @@ function notify(options){
             }
         }
     } else if (options.advanced) {
-        $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
-    } else {
-        if (options.message) {
+        if (options.end) {
             modalAssistant.content.message(options.message);
-        } else {
-            modalAssistant.content.message('');
-        }
-        if (options.description) {
-            modalAssistant.content.description(options.description);
-        } else {
-            modalAssistant.content.description('');
-        }
 
-        if (options.advanced) {
+            setTimeout(function () {
+                modalAssistant.close();
+            }, 2000);
+        } else {
             $.notify({message: options.message}, {allow_dismiss: true, type: options.messageType});
         }
+    } else {
+        modalAssistant.message(options);
     }
 }
 

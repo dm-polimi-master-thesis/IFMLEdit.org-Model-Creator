@@ -24,7 +24,8 @@ const InsertElementModelIntentHandler = {
 
             sessionAttributes.notify = {
                 message: message,
-                messageType: 'success'
+                messageType: 'success',
+                advanced: true
             };
             sessionAttributes.advanced = {
                 operation: 'insert',

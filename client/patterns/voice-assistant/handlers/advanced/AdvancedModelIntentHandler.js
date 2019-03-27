@@ -11,7 +11,8 @@ const AdvancedModelIntentHandler = {
 
         sessionAttributes.notify = {
             message: 'Let\'s start!',
-            messageType: 'success'
+            advanced: true,
+            end: true
         };
 
         handlerInput.requestEnvelope.request.dialogState = "COMPLETED"

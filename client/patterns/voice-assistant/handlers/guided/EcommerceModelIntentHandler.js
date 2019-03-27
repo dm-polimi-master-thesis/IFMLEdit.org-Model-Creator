@@ -11,7 +11,7 @@ const EcommerceModelIntentHandler = {
             sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         sessionAttributes.notify = {
-            message: 'Prodocts are homogeneous or heterogeneous?',
+            message: 'Products are homogeneous or heterogeneous?',
             guided: true,
             purpose: 'e-commerce'
         };

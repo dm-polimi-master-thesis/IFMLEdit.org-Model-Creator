@@ -17,7 +17,7 @@ const FavoriteModelIntentHandler = {
             };
         } else if (answer === 'deny') {
           sessionAttributes.notify = {
-              steps: [{step: 'Comment Content Management Pattern', svg: './svg/delete-animated.svg'}],
+              steps: [{step: 'Favorite Content Management Pattern', svg: './svg/delete-animated.svg'}],
               guided: true
           };
         }

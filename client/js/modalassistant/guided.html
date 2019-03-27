@@ -1,4 +1,4 @@
-<div id="guided-modal-content" class="guided-modal">
+<div id="guided-modal-content" class="guided-modal fadeIn">
     <center class="steps-navigator">
         <div class="container-fluid">
               <ul class="list-unstyled multi-steps" data-bind="foreach: progressBar">
@@ -14,11 +14,11 @@
         </div>
     </center>
     <center class="question">
-        <text data-bind="text:question"></text>
+        <text id="message" data-bind="text:question"></text>
     </center>
     <ul class="list" data-bind="foreach: steps">
         <li class="step" data-bind="attr: { id: 'pattern-' + $index() }">
-            <span class="pattern" data-bind="text:step"></span>
+            <span id="pattern" class="pattern fadeIn" data-bind="text:step"></span>
         </li>
     </ul>
 </div>

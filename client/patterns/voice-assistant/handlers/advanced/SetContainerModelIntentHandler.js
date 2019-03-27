@@ -18,7 +18,8 @@ const SetContainerModelIntentHandler = {
 
             sessionAttributes.notify = {
                 message: message,
-                messageType: 'success'
+                messageType: 'success',
+                advanced: true
             };
             sessionAttributes.advanced = {
                 operation: 'set-container',

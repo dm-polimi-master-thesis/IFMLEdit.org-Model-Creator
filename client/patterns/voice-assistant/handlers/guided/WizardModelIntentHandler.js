@@ -24,7 +24,7 @@ const WizardModelIntentHandler = {
 
         switch (sessionAttributes.model.type) {
           case 'e-commerce':
-              sessionAttributes.notify.message = 'Great! I think we have finished';
+              sessionAttributes.notify.message = 'Great! I think we have finished..';
               sessionAttributes.notify.end = true;
               handlerInput.requestEnvelope.request.dialogState = 'COMPLETED';
               sessionAttributes.state = 'COMPLETED';

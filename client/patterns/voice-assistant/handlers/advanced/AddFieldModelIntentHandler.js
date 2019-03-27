@@ -23,7 +23,8 @@ const AddFieldModelIntentHandler = {
 
             sessionAttributes.notify = {
                 message: message,
-                messageType: 'success'
+                messageType: 'success',
+                advanced: true
             };
             sessionAttributes.advanced = {
                 operation: 'add-field',

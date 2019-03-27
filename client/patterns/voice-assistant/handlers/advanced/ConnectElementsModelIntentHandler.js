@@ -14,7 +14,8 @@ const ConnectElementsModelIntentHandler = {
         if (source && !sourceType) {
             sessionAttributes.notify = {
                 message: 'What is the type of the source element you want to connect?',
-                messageType: 'warning'
+                messageType: 'warning',
+                advanced: true
             };
             return handlerInput.responseBuilder
                 .speak('What is the type of the source element you want to connect?')
