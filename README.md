@@ -1,6 +1,6 @@
-# IFMLEdit.org
+# IFMLEdit.org Model Creator
 
-A simple IFML Web Editor
+Integration of a voice assistant for support the realization of models in IFMLEdit.org, a simple IFML Web Editor for the fast prototype of web and mobile applications.
 
 ## Installation
 
