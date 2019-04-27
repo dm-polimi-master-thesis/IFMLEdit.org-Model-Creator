@@ -7,7 +7,7 @@
 var _ = require('lodash'),
     modelRules = require('./modelrules').rules,
     elementRules = require('./elementrules').rules,
-    extensionRules = require('./extensionRules').rules,
+    extensionRules = require('./extensionrules').rules,
     createTransformer = require('almost').createTransformer;
 
 exports.transform = createTransformer({

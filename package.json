@@ -31,7 +31,7 @@
   "dependencies": {
     "aliasify": "^2.1.0",
     "almost": "^1.0.1",
-    "almost-joint": "github:davide-molinelli-master-thesis/almostjs-joint",
+    "almost-joint": "https://github.com/davide-molinelli-master-thesis/almostjs-joint.git",
     "ask-sdk": "^2.3.0",
     "ask-sdk-core": "^2.3.0",
     "ask-sdk-model": "^1.11.1",
@@ -64,7 +64,7 @@
     "jointjs": "^2.0.0",
     "jquery": "3.1.1",
     "jszip": "^2.5.0",
-    "knockout": "^3.4.0",
+    "knockout": "3.4.0",
     "lambda-local": "^1.5.2",
     "lodash": "^3.10.1",
     "material-design-icons-iconfont": "^2.0.4",
