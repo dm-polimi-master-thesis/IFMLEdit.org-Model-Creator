@@ -25,3 +25,6 @@ __To stop server__
 ```bash
 npm stop
 ```
+# Aknowledgment
+- Carlo Bernaschina, creator of IFMLEdit.org: https://github.com/B3rn475/IFMLEdit.org.git
+- Emanuele Falzone, contributor
