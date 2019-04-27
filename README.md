@@ -29,5 +29,5 @@ npm stop
 The JSON file of the Amazon Alexa Skill can be found [here](https://github.com/dm-polimi-master-thesis/IFMLEdit.org-Model-Creator/blob/master/client/patterns/voice-assistant/alexa-skill-server.json).
 
 # Aknowledgment
-- Carlo Bernaschina, creator of IFMLEdit.org: https://github.com/B3rn475/IFMLEdit.org.git
+- Carlo Bernaschina, creator of [IFMLEdit.org](https://github.com/B3rn475/IFMLEdit.org.git)
 - Emanuele Falzone, contributor
